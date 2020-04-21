@@ -1,7 +1,8 @@
-# he3
+
+# He3
 He3, a multi-window, floating  browser
 
-![he3_logo](helium_logo.png "He3 does windows")
+![he3_logo](he3_logo.png "He3 does windows")
 
 He3 supports multiple windows as documents, each with their own
 settings as well as global preferences such as playlists and history, and
@@ -68,5 +69,4 @@ and automatically when the app terminates.
 History catalogs in order of viewing, all loaded URLs be they local, remote
 or web sites. History is itself a "playlist" whose name can be tailored by 
 altering its name in the playlist editor.
-
 
