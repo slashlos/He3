@@ -1,6 +1,7 @@
 
 # He3
-He3, a multi-window, floating  browser
+
+He3, a multi-window, floating  browser, above all else.
 
 ![he3_logo](he3_logo.png "He3 does windows")
 
@@ -69,4 +70,3 @@ and automatically when the app terminates.
 History catalogs in order of viewing, all loaded URLs be they local, remote
 or web sites. History is itself a "playlist" whose name can be tailored by 
 altering its name in the playlist editor.
-
