@@ -1,0 +1,20 @@
+
+Author:
+    CD M Santiago
+
+History
+
+  1.0, April 20, 2020
+    CD M Santiago
+      fork and rename from Helium 1.9 by Jaden Geller
+      document windows and tabs,
+      playlists - global / shared, savable items
+      balloon images https://pixabay.com
+      Finder status and dock menus,
+      local, global preferences,
+      value transformers,
+      user agent editing,
+      document history,
+      contextual menu,
+      release notes
+      about box
