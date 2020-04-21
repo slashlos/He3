@@ -1,2 +1,2 @@
 # He3
-Helium 3, a multi-window, floating  browser
+He3, a multi-window, floating  browser, above all others.
