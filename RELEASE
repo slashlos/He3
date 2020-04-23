@@ -1,6 +1,6 @@
 <html>
 <head>
-<meta name="AppleTitle" content="Helium Release Notes">
+<meta name="AppleTitle" content="He3 Release Notes">
 <style>
 p.small {
     line-height: 0.7;
@@ -16,10 +16,26 @@ p.block {
 }
 </style>
 
-<title>Helium 3 Release Notes</title>
+<title>He3 Release Notes</title>
 </head>
 <body style="color:black;font-size:12px">
-<h1>Release 3</h1>
+<h1>He3</h1>
+<h4>A running release summary of commit changes:</h4>
+
+<h2>Build 7226</h2>
+<p class="block">
+8a52546|20/04/22 Update he3_stark.html<br>
+d87acb6|20/04/22 Update he3_start.html<br>
+41445a9|20/04/22 initial commit<br>
+220dd17|20/04/20 more helium migrations<br>
+4df51b0|20/04/20 migrations from helium 3<br>
+5272d7c|20/04/20 Update README.md<br>
+50db2ff|20/04/20 rename to He3<br>
+953cc78|20/04/20 Update README.md<br>
+ef3fb36|20/04/20 Initial commit<br>
+</p>
+
+<h1>Helium 3</h1>
 <h4>A running release summary of commit changes:</h4>
 
 <h2>Build 7226</h2>

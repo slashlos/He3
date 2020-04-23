@@ -88,7 +88,7 @@
 	<key>CFBundleHelpBookName</key>
 	<string>${PRODUCT_NAME} Help</string>
 	<key>CFBundleIconFile</key>
-	<string>appIcon</string>
+	<string>AppIcon</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -127,7 +127,7 @@
 		<key>Allow Arbitrary Loads in Web Content</key>
 		<true/>
 		<key>Allow Arbritary Leads</key>
-		<string></string>
+		<true/>
 		<key>NSIncludesSubdomains</key>
 		<true/>
 	</dict>
