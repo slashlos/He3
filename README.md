@@ -5,7 +5,7 @@ He3, a multi-window, floating  browser, above all else.
 
 ![he3_logo](he3_logo.png "He3 does windows")
 
-He3 supports multiple windows as documents, each with their own
+He3 - formerly known as "Helium 3", supports multiple windows as documents, each with their own
 settings as well as global preferences such as playlists and history, and
 supporting multiple windows via a Finder status and dock icon menus.
 
