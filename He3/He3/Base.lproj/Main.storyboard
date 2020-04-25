@@ -76,8 +76,8 @@
                                     <constraint firstAttribute="width" constant="63" id="7Uk-vG-vC2"/>
                                     <constraint firstAttribute="height" constant="63" id="QHL-Z2-r2I"/>
                                 </constraints>
-                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="appIcon" imagePosition="only" alignment="center" focusRingType="none" imageScaling="proportionallyUpOrDown" inset="2" id="yuU-sy-pjW">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="He3" imagePosition="only" alignment="center" alternateImage="he3_logo" focusRingType="none" imageScaling="proportionallyUpOrDown" inset="2" id="yuU-sy-pjW">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
@@ -1816,10 +1816,11 @@ Gw
         </scene>
     </scenes>
     <resources>
+        <image name="He3" width="512" height="512"/>
         <image name="NSActionTemplate" width="14" height="14"/>
         <image name="NSAddTemplate" width="11" height="11"/>
         <image name="NSRefreshTemplate" width="11" height="15"/>
         <image name="NSRemoveTemplate" width="11" height="11"/>
-        <image name="appIcon" width="512" height="512"/>
+        <image name="he3_logo" width="512" height="512"/>
     </resources>
 </document>

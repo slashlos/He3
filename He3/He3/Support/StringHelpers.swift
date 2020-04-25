@@ -8,6 +8,8 @@
 //
 
 import Foundation
+import Down
+
 import CoreAudioKit
 ///import CommonCrypto
 
@@ -307,7 +309,14 @@ extension NSString {
         let data = NSData.init(data: (asset?.data)!)
         let text = String.init(data: data as Data, encoding: String.Encoding.utf8)
         
-        return text!
+		if fromAsset.hasSuffix("-md"), let html = try? Down(markdownString: text!).toHTML()
+		{
+			return String(format: "<html><body>%@</body></html>", html)
+		}
+		else
+		{
+			return text!
+		}
     }
 }
 
@@ -320,9 +329,15 @@ extension NSAttributedString {
             text = try NSAttributedString.init(data: data as Data, options:[NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.rtf], documentAttributes: nil)
             return text
         } catch {
-            let chars = String.init(data: data as Data, encoding: String.Encoding.utf8)
-            text = NSAttributedString.init(string: chars!)
-            return text
+            let chars = String.init(data: data as Data, encoding: String.Encoding.utf8)!
+			if fromAsset.hasSuffix("-md"), let html = try? Down(markdownString: chars).toHTML()
+			{
+				return NSAttributedString.init(string: String(format: "<html><body>%@</body></html>", html))
+			}
+			else
+			{
+				return NSAttributedString.init(string: chars)
+			}
         }
     }
 }

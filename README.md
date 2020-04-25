@@ -1,7 +1,7 @@
 
 # He3
 
-He3, a multi-window, floating  browser, above all else.
+He3 is a multi-window, floating  browser, above all else.
 
 ![he3_logo](he3_logo.png "He3 does windows")
 
@@ -30,7 +30,7 @@ Check out the videos on He3 on YouTube:
 ## Getting Started - He3
 
 Like prior versions, windows will float over your work but now being
-a multiple window applcation, document based, some setting were made document
+a multiple window application, document based, some setting were made document
 based, while some are global.
 
 ### Status Icon Menu
@@ -59,7 +59,7 @@ From all He3 windows, a contextual menu item, Playlists, gains access to
 all recorded information stored within the users applications default store
 for He3.
 
-He3 does provide a means to save and retrival entire playlist or items,
+He3 does provide a means to save and retrieve entire playlist or items,
 by drag-n-drop from the the playlist table views. Also playlist items can
 be dragged from a He3 window document icon into a playlist item or list
 which if "over" will cause the item to be updated.

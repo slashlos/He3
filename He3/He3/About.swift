@@ -80,7 +80,10 @@ class AboutBoxController : NSViewController {
     }
     
     internal func showCredits() {
-        let credits = ["README", "History", "LICENSE", "he3_privacy"];
+		//	Names *must* match up to assets inventory; "-md" are markdown
+		//	requiring processing to html, others are already there as
+		//	attributed strings, else plain text.
+        let credits = ["README-md", "HISTORY-md", "LICENSE", "he3_privacy"];
         
         if AboutBoxController.creditsState >= AboutBoxController.maxStates
         {

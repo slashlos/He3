@@ -3,18 +3,17 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F07BF93245376A800F9D020 /* He3x.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0F07BF92245376A800F9D020 /* He3x.icns */; };
 		0F2370D1244E8CEA009F7914 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2370D0244E8CEA009F7914 /* AppDelegate.swift */; };
 		0F2370D3244E8CEA009F7914 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2370D2244E8CEA009F7914 /* WebViewController.swift */; };
 		0F2370D5244E8CEA009F7914 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2370D4244E8CEA009F7914 /* Document.swift */; };
 		0F2370D7244E8CEC009F7914 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F2370D6244E8CEC009F7914 /* Assets.xcassets */; };
 		0F2370DA244E8CEC009F7914 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F2370D8244E8CEC009F7914 /* Main.storyboard */; };
 		0F2370E6244E8CEC009F7914 /* He3UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2370E5244E8CEC009F7914 /* He3UITests.swift */; };
-		0F2370F2244E8F85009F7914 /* docIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0F2370F0244E8F84009F7914 /* docIcon.icns */; };
-		0F2370F3244E8F85009F7914 /* appIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0F2370F1244E8F85009F7914 /* appIcon.icns */; };
 		0F2370F5244E904E009F7914 /* About.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2370F4244E904E009F7914 /* About.swift */; };
 		0F2370F9244E95DC009F7914 /* Panel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2370F8244E95DC009F7914 /* Panel.swift */; };
 		0F2370FB244E95E3009F7914 /* PlaylistPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2370FA244E95E3009F7914 /* PlaylistPanelController.swift */; };
@@ -39,6 +38,12 @@
 		0F5290B5244F6C0D00A9B9DC /* LoginItemAutoStart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5290AD244F6C0D00A9B9DC /* LoginItemAutoStart.swift */; };
 		0F5290B9244F6C9100A9B9DC /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 0F5290B8244F6C9100A9B9DC /* dsa_pub.pem */; };
 		0F5290BB2450424300A9B9DC /* XHe3.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0F529067244F3FB500A9B9DC /* XHe3.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		0F5290BD2451D3C400A9B9DC /* He3.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0F5290BC2451D3C300A9B9DC /* He3.icns */; };
+		0FBD9BAF2454603200332EEB /* he3_logo.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0FBD9BAE2454603200332EEB /* he3_logo.icns */; };
+		0FBD9BB624546E3900332EEB /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = 0FBD9BB524546E3900332EEB /* Down */; };
+		0FBD9BB8245473C600332EEB /* itemIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0FBD9BB7245473C500332EEB /* itemIcon.icns */; };
+		0FBD9BBA2454746200332EEB /* listIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0FBD9BB92454746200332EEB /* listIcon.icns */; };
+		0FBD9BBC2454767300332EEB /* icntIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0FBD9BBB2454767300332EEB /* icntIcon.icns */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +111,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0F07BF92245376A800F9D020 /* He3x.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = He3x.icns; path = He3/Assets/He3x/He3x.icns; sourceTree = "<group>"; };
 		0F2370CD244E8CEA009F7914 /* He3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = He3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F2370D0244E8CEA009F7914 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0F2370D2244E8CEA009F7914 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -117,8 +123,6 @@
 		0F2370E1244E8CEC009F7914 /* He3UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = He3UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F2370E5244E8CEC009F7914 /* He3UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = He3UITests.swift; sourceTree = "<group>"; };
 		0F2370E7244E8CEC009F7914 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0F2370F0244E8F84009F7914 /* docIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = docIcon.icns; path = He3/Assets/docIcon/docIcon.icns; sourceTree = "<group>"; };
-		0F2370F1244E8F85009F7914 /* appIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = appIcon.icns; path = "He3/Assets/app icon/appIcon.icns"; sourceTree = "<group>"; };
 		0F2370F4244E904E009F7914 /* About.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = About.swift; sourceTree = "<group>"; };
 		0F2370F8244E95DC009F7914 /* Panel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Panel.swift; sourceTree = "<group>"; };
 		0F2370FA244E95E3009F7914 /* PlaylistPanelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistPanelController.swift; sourceTree = "<group>"; };
@@ -157,6 +161,11 @@
 		0F5290AD244F6C0D00A9B9DC /* LoginItemAutoStart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginItemAutoStart.swift; path = He3/Support/LoginItemAutoStart.swift; sourceTree = SOURCE_ROOT; };
 		0F5290AE244F6C0D00A9B9DC /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = He3/Support/Sparkle.framework; sourceTree = SOURCE_ROOT; };
 		0F5290B8244F6C9100A9B9DC /* dsa_pub.pem */ = {isa = PBXFileReference; lastKnownFileType = text; name = dsa_pub.pem; path = He3/Resources/dsa_pub.pem; sourceTree = SOURCE_ROOT; };
+		0F5290BC2451D3C300A9B9DC /* He3.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = He3.icns; path = "He3/Assets/App Icon/He3.icns"; sourceTree = "<group>"; };
+		0FBD9BAE2454603200332EEB /* he3_logo.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = he3_logo.icns; path = "He3/Assets/he3 logo/he3_logo.icns"; sourceTree = "<group>"; };
+		0FBD9BB7245473C500332EEB /* itemIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = itemIcon.icns; path = "He3/Assets/item Icon/itemIcon.icns"; sourceTree = "<group>"; };
+		0FBD9BB92454746200332EEB /* listIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = listIcon.icns; path = "He3/Assets/list Icon/listIcon.icns"; sourceTree = "<group>"; };
+		0FBD9BBB2454767300332EEB /* icntIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = icntIcon.icns; path = He3/Assets/icntIcon/icntIcon.icns; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,6 +173,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0FBD9BB624546E3900332EEB /* Down in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,8 +219,12 @@
 		0F2370C4244E8CEA009F7914 = {
 			isa = PBXGroup;
 			children = (
-				0F2370F1244E8F85009F7914 /* appIcon.icns */,
-				0F2370F0244E8F84009F7914 /* docIcon.icns */,
+				0F5290BC2451D3C300A9B9DC /* He3.icns */,
+				0F07BF92245376A800F9D020 /* He3x.icns */,
+				0FBD9BAE2454603200332EEB /* he3_logo.icns */,
+				0FBD9BBB2454767300332EEB /* icntIcon.icns */,
+				0FBD9BB7245473C500332EEB /* itemIcon.icns */,
+				0FBD9BB92454746200332EEB /* listIcon.icns */,
 				0F2370CF244E8CEA009F7914 /* He3 */,
 				0F529018244F14A400A9B9DC /* He3ShareExtension */,
 				0F52902E244F3A5800A9B9DC /* He3Tests */,
@@ -370,6 +384,9 @@
 				0F52900D244F142800A9B9DC /* PBXTargetDependency */,
 			);
 			name = He3;
+			packageProductDependencies = (
+				0FBD9BB524546E3900332EEB /* Down */,
+			);
 			productName = He3;
 			productReference = 0F2370CD244E8CEA009F7914 /* He3.app */;
 			productType = "com.apple.product-type.application";
@@ -504,6 +521,9 @@
 				Base,
 			);
 			mainGroup = 0F2370C4244E8CEA009F7914;
+			packageReferences = (
+				0FBD9BB424546E3900332EEB /* XCRemoteSwiftPackageReference "Down" */,
+			);
 			productRefGroup = 0F2370CE244E8CEA009F7914 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -523,12 +543,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0FBD9BB8245473C600332EEB /* itemIcon.icns in Resources */,
 				0F2370D7244E8CEC009F7914 /* Assets.xcassets in Resources */,
+				0F5290BD2451D3C400A9B9DC /* He3.icns in Resources */,
 				0F5290B9244F6C9100A9B9DC /* dsa_pub.pem in Resources */,
 				0F237113244E9AA1009F7914 /* Help in Resources */,
-				0F2370F3244E8F85009F7914 /* appIcon.icns in Resources */,
+				0FBD9BBC2454767300332EEB /* icntIcon.icns in Resources */,
+				0FBD9BBA2454746200332EEB /* listIcon.icns in Resources */,
 				0F2370DA244E8CEC009F7914 /* Main.storyboard in Resources */,
-				0F2370F2244E8F85009F7914 /* docIcon.icns in Resources */,
+				0FBD9BAF2454603200332EEB /* he3_logo.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -558,6 +581,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F07BF93245376A800F9D020 /* He3x.icns in Resources */,
 				0F52906D244F3FB500A9B9DC /* Assets.xcassets in Resources */,
 				0F529070244F3FB500A9B9DC /* MainMenu.xib in Resources */,
 			);
@@ -819,7 +843,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = He3;
 				CODE_SIGN_ENTITLEMENTS = He3/He3.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -844,7 +868,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = He3;
 				CODE_SIGN_ENTITLEMENTS = He3/He3.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1116,6 +1140,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0FBD9BB424546E3900332EEB /* XCRemoteSwiftPackageReference "Down" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/iwasrobbed/Down.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0FBD9BB524546E3900332EEB /* Down */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0FBD9BB424546E3900332EEB /* XCRemoteSwiftPackageReference "Down" */;
+			productName = Down;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0F2370C5244E8CEA009F7914 /* Project object */;
 }

@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Down",
+        "repositoryURL": "https://github.com/iwasrobbed/Down.git",
+        "state": {
+          "branch": null,
+          "revision": "2aada56e6a0a5593a58e1ad583bd605b6d0b58dd",
+          "version": "0.9.2"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

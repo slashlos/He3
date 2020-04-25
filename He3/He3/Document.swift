@@ -36,7 +36,7 @@ struct k {
     static let type = "type"
     static let utf8 = "UTF-8"
     static let desktop = "Desktop"
-    static let docIcon = "docIcon"
+    static let docIcon = "itemIcon"
     static let Playlist = "Playlist"
     static let Playlists = "Playlists"
     static let playlists = "playlists"
@@ -1176,7 +1176,7 @@ class Document : NSDocument {
         get {
             switch docGroup {
             case .playlist:
-                return NSImage.init(named: "docIcon")!
+				return NSImage.init(named: k.docIcon)!
 
             default:
                 guard _displayImage == nil else { return _displayImage! }
