@@ -1307,6 +1307,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
     func keyDownMonitor(event: NSEvent) -> Bool {
         switch event.modifierFlags.intersection(NSEvent.ModifierFlags.deviceIndependentFlagsMask) {
         case [NSEvent.ModifierFlags.control, NSEvent.ModifierFlags.option, NSEvent.ModifierFlags.command]:
+            let notif = Notification(name: Notification.Name(rawValue: "quickQuiet"), object: nil)
+            NotificationCenter.default.post(notif)
+			print("control-option-command keys are pressed")
+/*
             print("control-option-command keys are pressed")
             if self.hiddenWindows.count > 0 {
 //                Swift.print("show all windows")
@@ -1347,6 +1351,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
                     win.alphaValue = 0.01
                 }
             }
+*/
             return true
             
         case [NSEvent.ModifierFlags.option, NSEvent.ModifierFlags.command]:
@@ -1387,13 +1392,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
             return self.keyDownMonitor(event: event) ? nil : event
         }
         
-        //  Remember item actions; use when toggle audio/video
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(handleItemAction(_:)),
-            name: NSNotification.Name(rawValue: "He3ItemAction"),
-            object: nil)
-
         //  Synchronize our app menu visibility
         self.syncAppMenuVisibility()
         
@@ -1593,30 +1591,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         NotificationCenter.default.post(notif)
     }
     
-    @objc fileprivate func clearItemAction(_ notification: Notification) {
-        if let itemURL = notification.object as? URL {
-            itemActions[itemURL.absoluteString] = nil
-        }
-    }
-    @objc fileprivate func handleItemAction(_ notification: Notification) {
-        if let item = notification.object as? NSMenuItem {
-            let webView: MyWebView = item.representedObject as! MyWebView
-            let name = webView.url?.absoluteString
-            var dict : Dictionary<String,Any> = itemActions[name!] as? Dictionary<String,Any> ?? Dictionary<String,Any>()
-            itemActions[name!] = dict
-            if item.title == "Mute" {
-                dict["mute"] = item.state == .off
-            }
-            else
-            {
-                dict["play"] = item.title == "Play"
-            }
-            //  Cache item for its target/action we use later
-            dict["item"] = item
-            Swift.print("action[\(String(describing: name))] -> \(dict)")
-        }
-    }
-
     /// Shows alert asking user to input user agent string
     /// Process response locally, validate, dispatch via supplied handler
     func didRequestUserAgent(_ strings: RequestUserStrings,

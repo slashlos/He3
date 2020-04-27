@@ -253,6 +253,13 @@ class He3PanelController : NSWindowController,NSWindowDelegate,NSFilePromiseProv
             selector: #selector(He3PanelController.didUpdateURL(note:)),
             name: NSNotification.Name(rawValue: "He3DidUpdateURL"),
             object: nil)
+		
+        //  Quick Quiet notification
+        NotificationCenter.default.addObserver(
+            self,
+			selector: #selector(He3PanelController.quickQuiet(_:)),
+            name: NSNotification.Name(rawValue: "quickQuiet"),
+            object: nil)
 
         //  We allow drag from title's document icon to self or Finder
         panel.registerForDraggedTypes(NSFilePromiseReceiver.readableDraggedTypes.map { NSPasteboard.PasteboardType($0)})
@@ -1059,7 +1066,38 @@ class He3PanelController : NSWindowController,NSWindowDelegate,NSFilePromiseProv
             }
         }
     }
-    
+	@objc func quickQuiet(_ note: Notification) {
+		print("quickQuiet \(String(describing: webView?.url?.absoluteString))")
+		if let window = self.window, let webView = window.contentView?.subviews.first as? MyWebView, let url = webView.url {
+			if window.alphaValue > 0.01 {
+				if url.isFileURL {
+					DispatchQueue.main.async {
+						webView.evaluateJavaScript("window.webview.pause()", completionHandler: nil)
+					}
+				}
+				window.alphaValue = 0.01
+			}
+			else
+			{
+				let hpc = window.windowController as! He3PanelController
+				if hpc.settings.translucencyPreference.value != .never {
+					window.alphaValue = 1.00
+				}
+				else
+				{
+					let alpha = CGFloat((window.windowController as! He3PanelController).settings.opacityPercentage.value) / 100.0
+					if url.isFileURL {
+						DispatchQueue.main.async {
+							webView.evaluateJavaScript("window.webview.play()", completionHandler: nil)
+						}
+					}
+					window.alphaValue = alpha
+				}
+				hpc.updateTranslucency()
+			}
+		}
+	}
+	
     @objc func updateTitleBar(didChange: Bool) {
         let mouseSeen = mouseOver && !mouseIdle
 
