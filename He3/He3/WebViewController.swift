@@ -762,27 +762,40 @@ override func mouseMoved(with event: NSEvent) {
     //  MARK: Context Menu
     //
     //  Intercepted actions; capture state needed for avToggle()
-    var playPressMenuItem = NSMenuItem()
-    @objc @IBAction func playActionPress(_ sender: NSMenuItem) {
-//        Swift.print("\(playPressMenuItem.title) -> target:\(String(describing: playPressMenuItem.target)) action:\(String(describing: playPressMenuItem.action)) tag:\(playPressMenuItem.tag)")
-        _ = playPressMenuItem.target?.perform(playPressMenuItem.action, with: playPressMenuItem.representedObject)
-        //  this releases original menu item
-        sender.representedObject = self
-        let notif = Notification(name: Notification.Name(rawValue: "He3ItemAction"), object: sender)
-        NotificationCenter.default.post(notif)
+	var pausePlayPressMenuItem : NSMenuItem?
+    @objc @IBAction func pausePlayActionPress(_ sender: NSMenuItem) {
+		if let item = pausePlayPressMenuItem {
+			_ = item.target?.perform(item.action, with: item.representedObject)
+			pausePlayPressMenuItem = nil
+		}
     }
     
-    var mutePressMenuItem = NSMenuItem()
+	var mutePressMenuItem : NSMenuItem?
     @objc @IBAction func muteActionPress(_ sender: NSMenuItem) {
-//        Swift.print("\(mutePressMenuItem.title) -> target:\(String(describing: mutePressMenuItem.target)) action:\(String(describing: mutePressMenuItem.action)) tag:\(mutePressMenuItem.tag)")
-        _ = mutePressMenuItem.target?.perform(mutePressMenuItem.action, with: mutePressMenuItem.representedObject)
-        //  this releases original menu item
-        sender.representedObject = self
-        let notif = Notification(name: Notification.Name(rawValue: "He3ItemAction"), object: sender)
-        NotificationCenter.default.post(notif)
+		if let item = mutePressMenuItem {
+			_ = item.target?.perform(item.action, with: item.representedObject)
+			mutePressMenuItem = nil
+		}
     }
-    
-    //
+    // MARK: TODO javascrit injection
+    //	Capture Pause, Play, Mute action states
+	func captureMenuItems(_ menu: NSMenu) {
+        //  NOTE: cache original menu item so it does not disappear.c
+        for title in ["Play", "Pause", "Mute"] {
+            if let item = menu.item(withTitle: title) {
+                if item.title == "Mute" {
+					mutePressMenuItem = item.copy() as? NSMenuItem
+					Swift.print("capture \(item.title) state: \(item.state) -> target:\(String(describing: item.target)) action:\(String(describing: item.action))")
+                }
+                else
+                {
+					pausePlayPressMenuItem = item.copy() as? NSMenuItem
+					Swift.print("capture \(item.title) state: \(item.state) -> target:\(String(describing: item.target)) action:\(String(describing: item.action))")
+				}
+            }
+        }
+	}
+	
     //  Actions used by contextual menu, or status item, or our app menu
     func publishContextualMenu(_ menu: NSMenu) {
         guard let window = self.window else { return }
@@ -828,32 +841,7 @@ override func mouseMoved(with event: NSEvent) {
         }
         
         //  Intercept these actions so we can record them for later
-        //  NOTE: cache original menu item so it does not disappear
-        for title in ["Play", "Pause", "Mute"] {
-            if let item = menu.item(withTitle: title) {
-                if item.title == "Mute" {
-                    mutePressMenuItem.action = item.action
-                    mutePressMenuItem.target = item.target
-                    mutePressMenuItem.title = item.title
-                    mutePressMenuItem.state = item.state
-                    mutePressMenuItem.tag = item.tag
-                    mutePressMenuItem.representedObject = item
-                    item.action = #selector(self.muteActionPress(_:))
-                    item.target = self
-                }
-                else
-                {
-                    playPressMenuItem.action = item.action
-                    playPressMenuItem.target = item.target
-                    playPressMenuItem.title = item.title
-                    playPressMenuItem.state = item.state
-                    playPressMenuItem.tag = item.tag
-                    playPressMenuItem.representedObject = item
-                    item.action = #selector(self.playActionPress(_:))
-                    item.target = self
-                }
-            }
-        }
+		captureMenuItems(menu)
         var item: NSMenuItem
 
         item = NSMenuItem(title: "Cut", action: #selector(NSText.cut(_:)), keyEquivalent: "")
@@ -2239,6 +2227,11 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, W
         
         //  Restore setting not done by document controller
         if let hpc = heliumPanelController { hpc.documentDidLoad() }
+		
+		//	Capture AV menu items
+		if let webView = webView as? MyWebView, let event = NSApp.currentEvent, let menu = webView.menu(for: event) {
+			webView.captureMenuItems(menu)
+		}
     }
     
     func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
