@@ -45,6 +45,8 @@ Finally, some more sophisticated featutes:
 - limitless windows, tab
 - Playlists `.hpl` and PlayItems `.hpi` are He3 export share file types
 - Snapshots provide instant visual window copy as `.png` files to your destination
+- **Hide Away** - press `CNTL+OPTION+CMND` toggle all windows' visibility
+####
 
 ### Menus
 

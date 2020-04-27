@@ -21,20 +21,11 @@ Wanting a multi-window interface, better viewing support, etc, I decided to fork
 
 Being a GitHub project He3 has drawn from many others to which I give credit here, and being a good citizen hope to do same for others; Enjoy.
 
-### Christian Hoffmann
-- UserSettings.swift
-
-### Samuel Beek
-- StringHelpers.swift
-
-### shdwprince
-- Panel.swift
-
-### Viktor Oreshkin
-- UrlHelpers.swift
-
-### travos-ci.org
-- https://travis-ci.org/stek29/Helium - Swift3
+#### Christian Hoffmann: UserSettings.swift
+#### Samuel Beek: StringHelpers.swift
+#### shdwprince: Panel.swift
+#### Viktor Oreshkin: UrlHelpers.swift
+#### travos-ci.org: [Swift 3](https://travis-ci.org/stek29/Helium)
 
 ### CDMS
 
@@ -55,4 +46,10 @@ Being a GitHub project He3 has drawn from many others to which I give credit her
 - snapshots,
 - App store submission,
 - rebranding to He3.
- 
+
+####
+
+## Incorporated Other works
+[Markdown Rendering in Swift](https://github.com/iwasrobbed/Down)
+
+/los
