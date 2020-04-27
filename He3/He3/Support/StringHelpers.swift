@@ -311,12 +311,13 @@ extension NSString {
         
 		if fromAsset.hasSuffix("-md"), let html = try? Down(markdownString: text!).toHTML()
 		{
-			return String(format: "<html><body>%@</body></html>", html)
+			let htmlDoc = String(format: "<html><body>%@</body></html>", html)
+			let data = Data(htmlDoc.utf8)
+			if let attrs = try? NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
+				return attrs.string
+			}
 		}
-		else
-		{
-			return text!
-		}
+		return text!
     }
 }
 
@@ -332,12 +333,13 @@ extension NSAttributedString {
             let chars = String.init(data: data as Data, encoding: String.Encoding.utf8)!
 			if fromAsset.hasSuffix("-md"), let html = try? Down(markdownString: chars).toHTML()
 			{
-				return NSAttributedString.init(string: String(format: "<html><body>%@</body></html>", html))
+				let htmlDoc = String(format: "<html><body>%@</body></html>", html)
+				let data = Data(htmlDoc.utf8)
+				if let attrs = try? NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil) {
+					return attrs
+				}
 			}
-			else
-			{
-				return NSAttributedString.init(string: chars)
-			}
+			return NSAttributedString.init(string: chars)
         }
     }
 }

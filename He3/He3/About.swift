@@ -9,6 +9,7 @@
 import Foundation
 import AppKit
 import Cocoa
+import WebKit
 
 let kTitleUtility =		16
 let	kTitleNormal =		22
@@ -17,9 +18,11 @@ class AboutBoxController : NSViewController {
 	
     @objc @IBOutlet var toggleButton: NSButton!
 	@objc @IBOutlet var appNameField: NSTextField!
-    @objc @IBOutlet var creditScroll: NSScrollView!
+	@objc @IBOutlet var creditScroll: NSScrollView!
+	@objc @IBOutlet var creditTabView: NSTabView!
 	@objc @IBOutlet var creditsField: NSTextView!
-    @objc @IBOutlet var creditsButton: NSButton!
+	@objc @IBOutlet var creditsViewer: WKWebView!
+	@objc @IBOutlet var creditsButton: NSButton!
     @objc @IBOutlet var versionButton: NSButton!
     @objc @IBOutlet var creditSeparatorBox: NSBox!
     
@@ -85,25 +88,35 @@ class AboutBoxController : NSViewController {
 		//	attributed strings, else plain text.
         let credits = ["README-md", "HISTORY-md", "LICENSE", "he3_privacy"];
         
-        if AboutBoxController.creditsState >= AboutBoxController.maxStates
+        if AboutBoxController.creditState >= AboutBoxController.creditStates
         {
-            AboutBoxController.creditsState = 0
+            AboutBoxController.creditState = 0
         }
         //	Setup our credits; if sender is nil, give 'em long history
-        let creditsString = NSAttributedString.string(fromAsset: credits[AboutBoxController.creditsState])
-        self.creditsField.textStorage?.setAttributedString(creditsString)
+		
+		switch AboutBoxController.creditState {/*
+		case 0,1:
+			let creditsString = NSString.string(fromAsset: credits[AboutBoxController.creditState])
+			creditsViewer.loadHTMLString(creditsString, baseURL: nil)
+			///creditTabView.selectTabViewItem(at: 0)*/
+			
+		default:
+			let creditsString = NSAttributedString.string(fromAsset: credits[AboutBoxController.creditState])
+			self.creditsField.textStorage?.setAttributedString(creditsString)
+			///creditTabView.selectTabViewItem(at: 1)
+		}
     }
     
     @objc @IBAction func cycleCredits(_ sender: Any) {
 
-        AboutBoxController.creditsState += 1
+        AboutBoxController.creditState += 1
 
         if toggleButton.state == .off {
-            if AboutBoxController.creditsState >= AboutBoxController.creditsCount
+            if AboutBoxController.creditState >= AboutBoxController.creditsCount
             {
-                AboutBoxController.creditsState = 0
+                AboutBoxController.creditState = 0
             }
-            creditsButton.title = copyrightStrings![AboutBoxController.creditsState % AboutBoxController.creditsCount]
+            creditsButton.title = copyrightStrings![AboutBoxController.creditState % AboutBoxController.creditStates]
         }
         else
         {
@@ -117,15 +130,15 @@ class AboutBoxController : NSViewController {
 	@objc @IBAction func toggleVersion(_ sender: Any) {
         
         AboutBoxController.versionState += 1
-        if AboutBoxController.versionState >= AboutBoxController.maxStates
+        if AboutBoxController.versionState >= AboutBoxController.versionStates
         {
             AboutBoxController.versionState = 0
         }
 
-        let titles = [ versionData, versionLink, versionDate, "Privacy" ]
+        let titles = [ versionData, versionLink, versionDate ]
         versionButton.title = titles[AboutBoxController.versionState]!
 
-        let tooltip = [ "version", "build", "timestamp", "privacy statement" ]
+        let tooltip = [ "version", "build", "timestamp" ]
         versionButton.toolTip = tooltip[AboutBoxController.versionState];
     }
 
@@ -142,8 +155,9 @@ class AboutBoxController : NSViewController {
     var copyrightStrings: [String]? = nil
 
     static var versionState: Int = 0
-    static var creditsState: Int = 0
-    static let maxStates: Int = 4
+    static let versionStates: Int = 3
+    static var creditState: Int = 0
+	static let creditStates: Int = 4
     static let creditsCount: Int = 2// CDMS, JG, ...
 
     override func viewWillAppear() {
@@ -154,7 +168,7 @@ class AboutBoxController : NSViewController {
 
         appNameField.stringValue = appName
         versionButton.title = versionData!
-        creditsButton.title = copyrightStrings![AboutBoxController.creditsState % AboutBoxController.creditsCount]
+        creditsButton.title = copyrightStrings![AboutBoxController.creditState % AboutBoxController.creditsCount]
 
         if (appNameField.window?.isVisible)! {
             creditsField.scroll(NSMakePoint( 0, 0 ))
@@ -165,7 +179,7 @@ class AboutBoxController : NSViewController {
         toggleVersion(self)
 
         //  Credit criteria initially hidden
-        AboutBoxController.creditsState = 0-1
+        AboutBoxController.creditState = 0-1
         toggleButton.state = .off
         cycleCredits(self)
         toggleContent(self)
@@ -203,6 +217,21 @@ class AboutBoxController : NSViewController {
         // Setup the copyrights field; each separated by "|"
         copyrightStrings = (infoDictionary["NSHumanReadableCopyright"] as? String)?.components(separatedBy: "|")
         toggleButton.state = .off
+		
+		///creditTabView.selectTabViewItem(at: 0)
+    }
+	
+    //  MARK:- TabView Delegate
+    
+    func tabView(_ tabView: NSTabView, willSelect tabViewItem: NSTabViewItem?) {
+        if let item = tabViewItem {
+            Swift.print("tab willSelect: label: \(item.label) ident: \(String(describing: item.identifier))")
+        }
     }
     
+    func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
+        if let item = tabViewItem {
+            Swift.print("tab didSelect: label: \(item.label) ident: \(String(describing: item.identifier))")
+        }
+    }
 }
