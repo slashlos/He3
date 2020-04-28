@@ -596,12 +596,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
     }
     
 	@objc @IBAction func loginAutoLaunchPress(_ sender: NSMenuItem) {
-		let title = appName + " Login Auto Launch"
+		let title = "Automatically launch " + appName + " at Login"
         let alert = NSAlert()
-        var ok = false
 		
-		alert.messageText = "Launch " + appName + " at login"
+		alert.window.title = appName + " Auto Launch At Login"
+		alert.messageText = "Login item"
 		let loginCheckBox = NSButton.init(checkboxWithTitle: title, target: nil, action: nil)
+		loginCheckBox.state = UserSettings.LoginAutoStartAtLaunch.value ? .on : .off
         alert.accessoryView = loginCheckBox
 
 		alert.addButton(withTitle: "Set")
@@ -613,19 +614,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         // Set focus on urlField
         alert.accessoryView!.becomeFirstResponder()
 
-		if let window = NSApp.keyWindow {
-            alert.beginSheetModal(for: window, completionHandler: { response in
-                ok = response == NSApplication.ModalResponse.alertFirstButtonReturn
-            })
-        }
-        else
-        {
-            ok = alert.runModal() == NSApplication.ModalResponse.alertFirstButtonReturn
-        }
-		
-		if ok {
+		//	Run modal since we're a global preference
+		if alert.runModal() == NSApplication.ModalResponse.alertFirstButtonReturn {
 			UserSettings.LoginAutoStartAtLaunch.value = loginCheckBox.state == .on
 		}
+		
+        // Set focus on urlField
+        alert.accessoryView!.becomeFirstResponder()
 	}
 	
 	@objc @IBAction func openFilePress(_ sender: AnyObject) {
@@ -1054,7 +1049,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
                 break
             case "Location services":
                 menuItem.state = isLocationEnabled ? .on : .off
-			case "Login Auto Start At Launch":
+			case "Auto Launch At Login":
 				menuItem.state = UserSettings.LoginAutoStartAtLaunch.value ? .on : .off
             case "Magic URL Redirects":
                 menuItem.state = UserSettings.DisabledMagicURLs.value ? .off : .on
