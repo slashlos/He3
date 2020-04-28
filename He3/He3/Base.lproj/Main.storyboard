@@ -354,6 +354,12 @@
                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                         <menu key="submenu" title="Statics" id="aZx-SB-S34">
                                                             <items>
+                                                                <menuItem title="Auto Launch At Login" toolTip="launch at login" id="ejz-nm-Exc" userLabel="Auto Launch At Login">
+                                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                                    <connections>
+                                                                        <action selector="loginAutoLaunchPress:" target="Voe-Tx-rLC" id="lls-wA-9J3"/>
+                                                                    </connections>
+                                                                </menuItem>
                                                                 <menuItem title="Auto save documents" id="drc-ov-KJT">
                                                                     <modifierMask key="keyEquivalentModifierMask"/>
                                                                     <connections>
@@ -364,12 +370,6 @@
                                                                     <modifierMask key="keyEquivalentModifierMask"/>
                                                                     <connections>
                                                                         <action selector="developerExtrasEnabledPress:" target="Voe-Tx-rLC" id="9cU-cf-41k"/>
-                                                                    </connections>
-                                                                </menuItem>
-                                                                <menuItem title="Login Auto Start At Launch" id="ejz-nm-Exc">
-                                                                    <modifierMask key="keyEquivalentModifierMask"/>
-                                                                    <connections>
-                                                                        <action selector="loginAutoLaunchPress:" target="Voe-Tx-rLC" id="lls-wA-9J3"/>
                                                                     </connections>
                                                                 </menuItem>
                                                                 <menuItem title="Upgrade HTTP -&gt; HTTPS Links" toolTip="promote http:// -&gt; https://" id="bu5-rW-TcR">
