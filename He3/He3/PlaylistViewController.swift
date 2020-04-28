@@ -474,8 +474,8 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         playlistTableView.registerForDraggedTypes([.list,.data,.fileURL,.promise,.files,.string,.URL])
         playitemTableView.registerForDraggedTypes([.item,.data,.fileURL,.promise,.files,.string,.URL])
 
-        playlistTableView.doubleAction = #selector(playPlaylist(_:))
-        playitemTableView.doubleAction = #selector(playPlaylist(_:))
+        playlistTableView.doubleAction = #selector(doubleAction(_:))
+        playitemTableView.doubleAction = #selector(doubleAction(_:))
         
         //  Restore hidden columns in tableviews using defaults
         setupHiddenColumns(playlistTableView, hideit: ["date","tally"])
@@ -775,28 +775,9 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
     var webViewController: WebViewController? = nil
     
     internal func play(_ sender: AnyObject, items: Array<PlayItem>, maxSize: Int) {
-        let viewOptions = appDelegate.newViewOptions
-        var firstHere : Bool = false
-        
-        //  Unless we're the standalone helium playlist window dismiss all
-        if !(self.view.window?.isKind(of: He3Panel.self))! {
-            /// dismiss whatever got us here
-            super.dismiss(sender)
+		var viewOptions = appDelegate.newViewOptions
+        var firstHere = viewOptions == sameWindow
 
-            //  If we were run modally as a window, close it
-            //  current window to be reused for the 1st item
-            if sender.isKind(of: NSTableView.self),
-                let ppc = self.view.window?.windowController, ppc.isKind(of: PlaylistPanelController.self) {
-                NSApp.abortModal()
-                ppc.window?.orderOut(sender)
-            }
-            else
-            {
-                //  unless we want new windows/tabs instead
-                firstHere = viewOptions == sameWindow
-            }
-        }
-        
         //  Try to restore item at its last known location
         for (i,item) in (items.enumerated()).prefix(maxSize) {
             if firstHere {
@@ -813,11 +794,35 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
             }
             
             //  2nd item and on get a new view window
-            appDelegate.newViewOptions.insert(.w_view)
+            viewOptions.insert(.w_view)
         }
     }
     
     //  MARK:- IBActions
+	@objc @IBAction func doubleAction(_ sender: AnyObject) {
+        //  first responder tells us who called so dispatch
+		
+		//	Guard against "fat finger" events
+		guard let whoami = self.view.window?.firstResponder as? PlayTableView else { return }
+		guard whoami.selectedRowIndexes.count > 0, whoami.clickedRow >= 0 && whoami.clickedColumn >= 0 else { return }
+		
+		playPlaylist(sender)
+		
+        //  Unless we're the standalone helium playlist window dismiss all
+        if !(self.view.window?.isKind(of: He3Panel.self))! {
+            /// dismiss whatever got us here
+            super.dismiss(sender)
+
+            //  If we were run modally as a window, close it
+            //  current window to be reused for the 1st item
+            if sender.isKind(of: NSTableView.self),
+                let ppc = self.view.window?.windowController, ppc.isKind(of: PlaylistPanelController.self) {
+                NSApp.abortModal()
+                ppc.window?.orderOut(sender)
+            }
+        }
+	}
+	
     @objc @IBAction func playPlaylist(_ sender: AnyObject) {
         appDelegate.newViewOptions = appDelegate.getViewOptions
         
