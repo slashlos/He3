@@ -160,7 +160,7 @@ class CacheSchemeHandler : NSObject,WKURLSchemeHandler {
 }
 
 class MyWebView : WKWebView {
-    static let poi = OSLog(subsystem: "com.slashlos.helium", category: .pointsOfInterest)
+    static let poi = OSLog(subsystem: "com.slashlos.he3", category: .pointsOfInterest)
     
     // MARK: TODO: load new files in distinct windows
     dynamic var dirty = false
