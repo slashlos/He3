@@ -1149,7 +1149,7 @@ CA
         <scene sceneID="3rF-Wl-9by">
             <objects>
                 <windowController storyboardIdentifier="PlaylistController" id="o3w-13-r8w" customClass="PlaylistPanelController" customModule="He3" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" identifier="Playlists" title="He3 Playlists" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" tabbingIdentifier="playlists" tabbingMode="disallowed" id="9Nm-Xe-vMy" customClass="PlaylistsPanel" customModule="He3" customModuleProvider="target">
+                    <window key="window" identifier="Playlists" title="Playlists" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" tabbingIdentifier="playlists" tabbingMode="disallowed" id="9Nm-Xe-vMy" userLabel="Playlists" customClass="PlaylistsPanel" customModule="He3" customModuleProvider="target">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowCollectionBehavior key="collectionBehavior" moveToActiveSpace="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -1167,10 +1167,10 @@ CA
             </objects>
             <point key="canvasLocation" x="720" y="-32"/>
         </scene>
-        <!--He3 Playlists-->
+        <!--Playlists-->
         <scene sceneID="wcG-7U-Dt5">
             <objects>
-                <viewController title="He3 Playlists" storyboardIdentifier="PlaylistViewController" id="YAy-lX-dae" customClass="PlaylistViewController" customModule="He3" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Playlists" storyboardIdentifier="PlaylistViewController" id="YAy-lX-dae" userLabel="Playlists" customClass="PlaylistViewController" customModule="He3" customModuleProvider="target" sceneMemberID="viewController">
                     <splitView key="view" arrangesAllSubviews="NO" dividerStyle="paneSplitter" vertical="YES" id="1fw-gA-tie">
                         <rect key="frame" x="0.0" y="0.0" width="450" height="272"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -1719,7 +1719,7 @@ Gw
                                             <rect key="frame" x="298" y="25" width="15" height="192"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
-                                        <tableHeaderView key="headerView" id="YTX-gj-uhH" customClass="PlayHeaderView" customModule="Helium">
+                                        <tableHeaderView key="headerView" id="YTX-gj-uhH" customClass="PlayHeaderView" customModule="He3">
                                             <rect key="frame" x="0.0" y="0.0" width="813" height="25"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableHeaderView>
