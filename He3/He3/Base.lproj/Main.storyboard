@@ -366,6 +366,12 @@
                                                                         <action selector="developerExtrasEnabledPress:" target="Voe-Tx-rLC" id="9cU-cf-41k"/>
                                                                     </connections>
                                                                 </menuItem>
+                                                                <menuItem title="Login Auto Start At Launch" id="ejz-nm-Exc">
+                                                                    <modifierMask key="keyEquivalentModifierMask"/>
+                                                                    <connections>
+                                                                        <action selector="loginAutoLaunchPress:" target="Voe-Tx-rLC" id="lls-wA-9J3"/>
+                                                                    </connections>
+                                                                </menuItem>
                                                                 <menuItem title="Upgrade HTTP -&gt; HTTPS Links" toolTip="promote http:// -&gt; https://" id="bu5-rW-TcR">
                                                                     <modifierMask key="keyEquivalentModifierMask"/>
                                                                     <connections>

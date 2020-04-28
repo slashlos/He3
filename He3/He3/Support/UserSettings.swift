@@ -109,4 +109,7 @@ internal struct UserSettings {
     
     //  Developer setting(s)
     static let DeveloperExtrasEnabled = Setting<Bool>("developerExtrasEnabled", defaultValue: false)
+	
+	//	Login Auto Start
+	static let LoginAutoStartAtLaunch = Setting<Bool>("loginAutoStartAtLaunch", defaultValue: false)
 }

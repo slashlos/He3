@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0F529093244F435400A9B9DC"
-               BuildableName = "XHe3-dmg"
-               BlueprintName = "XHe3-dmg"
+               BlueprintIdentifier = "0F529066244F3FB500A9B9DC"
+               BuildableName = "XHe3.app"
+               BlueprintName = "XHe3"
                ReferencedContainer = "container:He3.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -44,9 +44,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0F529093244F435400A9B9DC"
-            BuildableName = "XHe3-dmg"
-            BlueprintName = "XHe3-dmg"
+            BlueprintIdentifier = "0F529066244F3FB500A9B9DC"
+            BuildableName = "XHe3.app"
+            BlueprintName = "XHe3"
             ReferencedContainer = "container:He3.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -61,9 +61,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0F529093244F435400A9B9DC"
-            BuildableName = "XHe3-dmg"
-            BlueprintName = "XHe3-dmg"
+            BlueprintIdentifier = "0F529066244F3FB500A9B9DC"
+            BuildableName = "XHe3.app"
+            BlueprintName = "XHe3"
             ReferencedContainer = "container:He3.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

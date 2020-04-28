@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0F07BF93245376A800F9D020 /* He3x.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0F07BF92245376A800F9D020 /* He3x.icns */; };
 		0F2370D1244E8CEA009F7914 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2370D0244E8CEA009F7914 /* AppDelegate.swift */; };
 		0F2370D3244E8CEA009F7914 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2370D2244E8CEA009F7914 /* WebViewController.swift */; };
 		0F2370D5244E8CEA009F7914 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2370D4244E8CEA009F7914 /* Document.swift */; };
@@ -23,10 +22,6 @@
 		0F529002244F142800A9B9DC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F529001244F142800A9B9DC /* Cocoa.framework */; };
 		0F52900E244F142800A9B9DC /* He3ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0F528FFF244F142800A9B9DC /* He3ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0F529030244F3A5800A9B9DC /* He3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F52902F244F3A5800A9B9DC /* He3Tests.swift */; };
-		0F52906B244F3FB500A9B9DC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F52906A244F3FB500A9B9DC /* AppDelegate.m */; };
-		0F52906D244F3FB500A9B9DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F52906C244F3FB500A9B9DC /* Assets.xcassets */; };
-		0F529070244F3FB500A9B9DC /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F52906E244F3FB500A9B9DC /* MainMenu.xib */; };
-		0F529073244F3FB500A9B9DC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F529072244F3FB500A9B9DC /* main.m */; };
 		0F5290A2244F665900A9B9DC /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F52901B244F14A400A9B9DC /* ShareViewController.swift */; };
 		0F5290A3244F665D00A9B9DC /* ShareViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F52901D244F14A400A9B9DC /* ShareViewController.xib */; };
 		0F5290AF244F6C0D00A9B9DC /* WindowButtonBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5290A6244F6C0C00A9B9DC /* WindowButtonBar.swift */; };
@@ -37,7 +32,6 @@
 		0F5290B4244F6C0D00A9B9DC /* PanelButtonBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5290AC244F6C0D00A9B9DC /* PanelButtonBar.swift */; };
 		0F5290B5244F6C0D00A9B9DC /* LoginItemAutoStart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5290AD244F6C0D00A9B9DC /* LoginItemAutoStart.swift */; };
 		0F5290B9244F6C9100A9B9DC /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 0F5290B8244F6C9100A9B9DC /* dsa_pub.pem */; };
-		0F5290BB2450424300A9B9DC /* XHe3.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0F529067244F3FB500A9B9DC /* XHe3.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0F5290BD2451D3C400A9B9DC /* He3.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0F5290BC2451D3C300A9B9DC /* He3.icns */; };
 		0FBD9BAF2454603200332EEB /* he3_logo.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0FBD9BAE2454603200332EEB /* he3_logo.icns */; };
 		0FBD9BB624546E3900332EEB /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = 0FBD9BB524546E3900332EEB /* Down */; };
@@ -68,7 +62,7 @@
 			remoteGlobalIDString = 0F2370CC244E8CEA009F7914;
 			remoteInfo = He3;
 		};
-		0F5290A0244F654A00A9B9DC /* PBXContainerItemProxy */ = {
+		0FBD9BCB24566C5500332EEB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0F2370C5244E8CEA009F7914 /* Project object */;
 			proxyType = 1;
@@ -89,7 +83,16 @@
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		0F529092244F435400A9B9DC /* CopyFiles */ = {
+		0F5290BA2450422E00A9B9DC /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0FBD9BC124566C1C00332EEB /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = /usr/share/man/man1/;
@@ -97,16 +100,6 @@
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 1;
-		};
-		0F5290BA2450422E00A9B9DC /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 7;
-			files = (
-				0F5290BB2450424300A9B9DC /* XHe3.app in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -129,6 +122,7 @@
 		0F2370FC244E95ED009F7914 /* PanelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PanelController.swift; sourceTree = "<group>"; };
 		0F2370FE244E9601009F7914 /* PlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; };
 		0F237112244E9AA1009F7914 /* Help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Help; sourceTree = "<group>"; };
+		0F2DF8C42458644200707628 /* He3.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = He3.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		0F528FFF244F142800A9B9DC /* He3ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = He3ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F529001244F142800A9B9DC /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		0F529019244F14A400A9B9DC /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
@@ -139,16 +133,6 @@
 		0F52902D244F3A5800A9B9DC /* He3Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = He3Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F52902F244F3A5800A9B9DC /* He3Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = He3Tests.swift; sourceTree = "<group>"; };
 		0F529031244F3A5800A9B9DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0F529067244F3FB500A9B9DC /* XHe3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XHe3.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		0F529069244F3FB500A9B9DC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		0F52906A244F3FB500A9B9DC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		0F52906C244F3FB500A9B9DC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		0F52906F244F3FB500A9B9DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		0F529071244F3FB500A9B9DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0F529072244F3FB500A9B9DC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		0F529074244F3FB500A9B9DC /* XHe3.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = XHe3.entitlements; sourceTree = "<group>"; };
-		0F529094244F435400A9B9DC /* XHe3-dmg */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "XHe3-dmg"; sourceTree = BUILT_PRODUCTS_DIR; };
-		0F529096244F435400A9B9DC /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		0F52909E244F44DA00A9B9DC /* build-dmg.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "build-dmg.sh"; sourceTree = "<group>"; };
 		0F5290A5244F6C0C00A9B9DC /* WKWebViewPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WKWebViewPrivate.h; path = He3/Support/WKWebViewPrivate.h; sourceTree = SOURCE_ROOT; };
 		0F5290A6244F6C0C00A9B9DC /* WindowButtonBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WindowButtonBar.swift; path = He3/Support/WindowButtonBar.swift; sourceTree = SOURCE_ROOT; };
@@ -166,6 +150,8 @@
 		0FBD9BB7245473C500332EEB /* itemIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = itemIcon.icns; path = "He3/Assets/item Icon/itemIcon.icns"; sourceTree = "<group>"; };
 		0FBD9BB92454746200332EEB /* listIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = listIcon.icns; path = "He3/Assets/list Icon/listIcon.icns"; sourceTree = "<group>"; };
 		0FBD9BBB2454767300332EEB /* icntIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = icntIcon.icns; path = He3/Assets/icntIcon/icntIcon.icns; sourceTree = "<group>"; };
+		0FBD9BC324566C1C00332EEB /* He3-dmg */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "He3-dmg"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0FBD9BC524566C1C00332EEB /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,14 +185,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		0F529064244F3FB500A9B9DC /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0F529091244F435400A9B9DC /* Frameworks */ = {
+		0FBD9BC024566C1C00332EEB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -229,8 +208,7 @@
 				0F529018244F14A400A9B9DC /* He3ShareExtension */,
 				0F52902E244F3A5800A9B9DC /* He3Tests */,
 				0F2370E4244E8CEC009F7914 /* He3UITests */,
-				0F529068244F3FB500A9B9DC /* XHe3 */,
-				0F529095244F435400A9B9DC /* XHe3-dmg */,
+				0FBD9BC424566C1C00332EEB /* He3-dmg */,
 				0F529000244F142800A9B9DC /* Frameworks */,
 				0F2370CE244E8CEA009F7914 /* Products */,
 			);
@@ -243,8 +221,7 @@
 				0F2370E1244E8CEC009F7914 /* He3UITests.xctest */,
 				0F528FFF244F142800A9B9DC /* He3ShareExtension.appex */,
 				0F52902D244F3A5800A9B9DC /* He3Tests.xctest */,
-				0F529067244F3FB500A9B9DC /* XHe3.app */,
-				0F529094244F435400A9B9DC /* XHe3-dmg */,
+				0FBD9BC324566C1C00332EEB /* He3-dmg */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -316,29 +293,6 @@
 			path = He3Tests;
 			sourceTree = "<group>";
 		};
-		0F529068244F3FB500A9B9DC /* XHe3 */ = {
-			isa = PBXGroup;
-			children = (
-				0F529069244F3FB500A9B9DC /* AppDelegate.h */,
-				0F52906A244F3FB500A9B9DC /* AppDelegate.m */,
-				0F52906C244F3FB500A9B9DC /* Assets.xcassets */,
-				0F52906E244F3FB500A9B9DC /* MainMenu.xib */,
-				0F529071244F3FB500A9B9DC /* Info.plist */,
-				0F529072244F3FB500A9B9DC /* main.m */,
-				0F529074244F3FB500A9B9DC /* XHe3.entitlements */,
-			);
-			path = XHe3;
-			sourceTree = "<group>";
-		};
-		0F529095244F435400A9B9DC /* XHe3-dmg */ = {
-			isa = PBXGroup;
-			children = (
-				0F529096244F435400A9B9DC /* main.c */,
-				0F52909E244F44DA00A9B9DC /* build-dmg.sh */,
-			);
-			path = "XHe3-dmg";
-			sourceTree = "<group>";
-		};
 		0F5290A4244F6BDA00A9B9DC /* Support */ = {
 			isa = PBXGroup;
 			children = (
@@ -359,10 +313,20 @@
 		0F5290B7244F6C8300A9B9DC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				0F2DF8C42458644200707628 /* He3.playground */,
 				0F237112244E9AA1009F7914 /* Help */,
 				0F5290B8244F6C9100A9B9DC /* dsa_pub.pem */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		0FBD9BC424566C1C00332EEB /* He3-dmg */ = {
+			isa = PBXGroup;
+			children = (
+				0FBD9BC524566C1C00332EEB /* main.swift */,
+				0F52909E244F44DA00A9B9DC /* build-dmg.sh */,
+			);
+			path = "He3-dmg";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -413,6 +377,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0F52900F244F142800A9B9DC /* Build configuration list for PBXNativeTarget "He3ShareExtension" */;
 			buildPhases = (
+				0FBD9BCF2457077900332EEB /* ShellScript */,
 				0F528FFB244F142800A9B9DC /* Sources */,
 				0F528FFC244F142800A9B9DC /* Frameworks */,
 				0F528FFD244F142800A9B9DC /* Resources */,
@@ -444,40 +409,23 @@
 			productReference = 0F52902D244F3A5800A9B9DC /* He3Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		0F529066244F3FB500A9B9DC /* XHe3 */ = {
+		0FBD9BC224566C1C00332EEB /* He3-dmg */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0F529075244F3FB500A9B9DC /* Build configuration list for PBXNativeTarget "XHe3" */;
+			buildConfigurationList = 0FBD9BC724566C1C00332EEB /* Build configuration list for PBXNativeTarget "He3-dmg" */;
 			buildPhases = (
-				0F529063244F3FB500A9B9DC /* Sources */,
-				0F529064244F3FB500A9B9DC /* Frameworks */,
-				0F529065244F3FB500A9B9DC /* Resources */,
+				0FBD9BBF24566C1C00332EEB /* Sources */,
+				0FBD9BC024566C1C00332EEB /* Frameworks */,
+				0FBD9BC124566C1C00332EEB /* CopyFiles */,
+				0FBD9BCA24566C3B00332EEB /* Build DMG */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				0FBD9BCC24566C5500332EEB /* PBXTargetDependency */,
 			);
-			name = XHe3;
-			productName = XHe3;
-			productReference = 0F529067244F3FB500A9B9DC /* XHe3.app */;
-			productType = "com.apple.product-type.application";
-		};
-		0F529093244F435400A9B9DC /* XHe3-dmg */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 0F529098244F435400A9B9DC /* Build configuration list for PBXNativeTarget "XHe3-dmg" */;
-			buildPhases = (
-				0F529090244F435400A9B9DC /* Sources */,
-				0F529091244F435400A9B9DC /* Frameworks */,
-				0F529092244F435400A9B9DC /* CopyFiles */,
-				0F52909D244F444C00A9B9DC /* Build DMG */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				0F5290A1244F654A00A9B9DC /* PBXTargetDependency */,
-			);
-			name = "XHe3-dmg";
-			productName = "XHe3-dmg";
-			productReference = 0F529094244F435400A9B9DC /* XHe3-dmg */;
+			name = "He3-dmg";
+			productName = "He3-dmg";
+			productReference = 0FBD9BC324566C1C00332EEB /* He3-dmg */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -504,10 +452,7 @@
 						CreatedOnToolsVersion = 11.3.1;
 						TestTargetID = 0F2370CC244E8CEA009F7914;
 					};
-					0F529066244F3FB500A9B9DC = {
-						CreatedOnToolsVersion = 11.3.1;
-					};
-					0F529093244F435400A9B9DC = {
+					0FBD9BC224566C1C00332EEB = {
 						CreatedOnToolsVersion = 11.3.1;
 					};
 				};
@@ -532,8 +477,7 @@
 				0F2370E0244E8CEC009F7914 /* He3UITests */,
 				0F528FFE244F142800A9B9DC /* He3ShareExtension */,
 				0F52902C244F3A5800A9B9DC /* He3Tests */,
-				0F529066244F3FB500A9B9DC /* XHe3 */,
-				0F529093244F435400A9B9DC /* XHe3-dmg */,
+				0FBD9BC224566C1C00332EEB /* He3-dmg */,
 			);
 		};
 /* End PBXProject section */
@@ -577,20 +521,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		0F529065244F3FB500A9B9DC /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				0F07BF93245376A800F9D020 /* He3x.icns in Resources */,
-				0F52906D244F3FB500A9B9DC /* Assets.xcassets in Resources */,
-				0F529070244F3FB500A9B9DC /* MainMenu.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0F52909D244F444C00A9B9DC /* Build DMG */ = {
+		0FBD9BCA24566C3B00332EEB /* Build DMG */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -606,7 +540,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\n$(PROJECT_DIR)/XHe3-dmg/build-dmg.sh\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\n$(PROJECT_DIR)/He3-dmg/build-dmg.sh\n";
+		};
+		0FBD9BCF2457077900332EEB /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\nset -x\nbuildPlist=\"He3/Info.plist\"\nsharePlist=\"He3ShareExtension/Info.plist\"\n\nbuildMajor=$(/usr/libexec/PlistBuddy -c \"Print CFBuildMajor\" $sharePlist)\nbuildMinor=$(/usr/libexec/PlistBuddy -c \"Print CFBuildMinor\" $sharePlist)\nbuildPatch=$(/usr/libexec/PlistBuddy -c \"Print CFBuildPatch\" $sharePlist)\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBuildNumber\" $sharePlist)\nbuildDate=$(date \"+%Y%m%d.%H%M%S\")\n\n# Increment the buildNumber if asked\nbuildIncr=$(/usr/libexec/PlistBuddy -c \"Print CFBuildIncrement\" $buildPlist)\nif [ \"$buildIncr\" = \"true\" ];\nthen\n    buildNumber=$(($buildNumber + 1))\nfi\n\n# Formulate the bundle versions\nbundleVersion=$buildMajor.$buildMinor.$buildNumber\nbundleShortVersion=$buildMajor.$buildMinor.$buildPatch\n\n# Set the version numbers in the buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildNumber $buildNumber\" $buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildDate $buildDate\" $buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $bundleVersion\" $buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $bundleShortVersion\" $buildPlist\n\n# Propagate to share\n/usr/libexec/PlistBuddy -c \"Set :CFBuildNumber $buildNumber\" $sharePlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildDate $buildDate\" $sharePlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $bundleVersion\" $sharePlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $bundleShortVersion\" $sharePlist\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -657,16 +608,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		0F529063244F3FB500A9B9DC /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				0F529073244F3FB500A9B9DC /* main.m in Sources */,
-				0F52906B244F3FB500A9B9DC /* AppDelegate.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		0F529090244F435400A9B9DC /* Sources */ = {
+		0FBD9BBF24566C1C00332EEB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -691,10 +633,10 @@
 			target = 0F2370CC244E8CEA009F7914 /* He3 */;
 			targetProxy = 0F529032244F3A5800A9B9DC /* PBXContainerItemProxy */;
 		};
-		0F5290A1244F654A00A9B9DC /* PBXTargetDependency */ = {
+		0FBD9BCC24566C5500332EEB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 0F2370CC244E8CEA009F7914 /* He3 */;
-			targetProxy = 0F5290A0244F654A00A9B9DC /* PBXContainerItemProxy */;
+			targetProxy = 0FBD9BCB24566C5500332EEB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -713,14 +655,6 @@
 				0F52901E244F14A400A9B9DC /* Base */,
 			);
 			name = ShareViewController.xib;
-			sourceTree = "<group>";
-		};
-		0F52906E244F3FB500A9B9DC /* MainMenu.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				0F52906F244F3FB500A9B9DC /* Base */,
-			);
-			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -858,7 +792,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.slashlos.He3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.slashlos.he3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -883,7 +817,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.slashlos.He3;
+				PRODUCT_BUNDLE_IDENTIFIER = com.slashlos.he3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -902,7 +836,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.slashlos.He3UITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.slashlos.he3UITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = He3;
@@ -922,7 +856,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.slashlos.He3UITests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.slashlos.he3UITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = He3;
@@ -944,7 +878,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.slashlos.He3.He3ShareExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.slashlos.he3.He3ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -967,7 +901,7 @@
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.slashlos.He3.He3ShareExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = com.slashlos.he3.He3ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -988,7 +922,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.slashlos.He3Tests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.slashlos.he3Tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/He3.app/Contents/MacOS/He3";
@@ -1008,68 +942,32 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.slashlos.He3Tests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.slashlos.he3Tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/He3.app/Contents/MacOS/He3";
 			};
 			name = Release;
 		};
-		0F529076244F3FB500A9B9DC /* Debug */ = {
+		0FBD9BC824566C1C00332EEB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = XHe3/XHe3.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = VQYGYPHYGE;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = XHe3/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.slashlos.XHe3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
-		0F529077244F3FB500A9B9DC /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = XHe3/XHe3.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = VQYGYPHYGE;
-				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = XHe3/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.slashlos.XHe3;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		0F529099244F435400A9B9DC /* Debug */ = {
+		0FBD9BC924566C1C00332EEB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VQYGYPHYGE;
 				ENABLE_HARDENED_RUNTIME = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		0F52909A244F435400A9B9DC /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = VQYGYPHYGE;
-				ENABLE_HARDENED_RUNTIME = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -1121,20 +1019,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0F529075244F3FB500A9B9DC /* Build configuration list for PBXNativeTarget "XHe3" */ = {
+		0FBD9BC724566C1C00332EEB /* Build configuration list for PBXNativeTarget "He3-dmg" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				0F529076244F3FB500A9B9DC /* Debug */,
-				0F529077244F3FB500A9B9DC /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		0F529098244F435400A9B9DC /* Build configuration list for PBXNativeTarget "XHe3-dmg" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				0F529099244F435400A9B9DC /* Debug */,
-				0F52909A244F435400A9B9DC /* Release */,
+				0FBD9BC824566C1C00332EEB /* Debug */,
+				0FBD9BC924566C1C00332EEB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

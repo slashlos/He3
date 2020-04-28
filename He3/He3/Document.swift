@@ -36,7 +36,9 @@ struct k {
     static let type = "type"
     static let utf8 = "UTF-8"
     static let desktop = "Desktop"
-    static let docIcon = "itemIcon"
+    static let docIcon = "he3_logo"
+	static let listIcon = "listIcon"
+	static let itemIcon = "itemIcon"
     static let Playlist = "Playlist"
     static let Playlists = "Playlists"
     static let playlists = "playlists"
@@ -289,7 +291,7 @@ class PlayList : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
     }
     @objc dynamic var image: NSImage {
         get {
-            return NSImage.init(named: k.He3)!
+            return NSImage.init(named: k.listIcon)!
         }
     }
 
@@ -532,7 +534,7 @@ class PlayItem : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
     }
     @objc dynamic var image: NSImage {
         get {
-            guard link.isFileURL else { return NSImage.init(named: k.docIcon)! }
+            guard link.isFileURL else { return NSImage.init(named: k.itemIcon)! }
             
             let size = NSMakeSize(32.0, 32.0)
                 

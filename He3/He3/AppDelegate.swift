@@ -595,7 +595,40 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         UserSettings.RestoreLocationSvcs.value = isLocationEnabled
     }
     
-    @objc @IBAction func openFilePress(_ sender: AnyObject) {
+	@objc @IBAction func loginAutoLaunchPress(_ sender: NSMenuItem) {
+		let title = appName + " Login Auto Launch"
+        let alert = NSAlert()
+        var ok = false
+		
+		alert.messageText = "Launch " + appName + " at login"
+		let loginCheckBox = NSButton.init(checkboxWithTitle: title, target: nil, action: nil)
+        alert.accessoryView = loginCheckBox
+
+		alert.addButton(withTitle: "Set")
+        alert.addButton(withTitle: "Cancel")
+		
+        //  Have window, but make it active
+        NSApp.activate(ignoringOtherApps: true)
+        
+        // Set focus on urlField
+        alert.accessoryView!.becomeFirstResponder()
+
+		if let window = NSApp.keyWindow {
+            alert.beginSheetModal(for: window, completionHandler: { response in
+                ok = response == NSApplication.ModalResponse.alertFirstButtonReturn
+            })
+        }
+        else
+        {
+            ok = alert.runModal() == NSApplication.ModalResponse.alertFirstButtonReturn
+        }
+		
+		if ok {
+			UserSettings.LoginAutoStartAtLaunch.value = loginCheckBox.state == .on
+		}
+	}
+	
+	@objc @IBAction func openFilePress(_ sender: AnyObject) {
         var viewOptions = ViewOptions(rawValue: sender.tag)
         
         let open = NSOpenPanel()
@@ -1021,7 +1054,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
                 break
             case "Location services":
                 menuItem.state = isLocationEnabled ? .on : .off
-           case "Magic URL Redirects":
+			case "Login Auto Start At Launch":
+				menuItem.state = UserSettings.LoginAutoStartAtLaunch.value ? .on : .off
+            case "Magic URL Redirects":
                 menuItem.state = UserSettings.DisabledMagicURLs.value ? .off : .on
             case "Upgrade HTTP -> HTTPS Links":
                 menuItem.state = UserSettings.PromoteHTTPS.value ? .on : .off
