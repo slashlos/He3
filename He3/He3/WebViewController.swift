@@ -913,16 +913,23 @@ override func mouseMoved(with event: NSEvent) {
         if tabItemUpdated { menu.addItem(NSMenuItem.separator()) }
 
         item = NSMenuItem(title: "New Window", action: #selector(docController.newDocument(_:)), keyEquivalent: "")
+		item.tag = ViewOptions.w_view.rawValue
         item.target = docController
-        item.tag = 1
         menu.addItem(item)
         
+        item = NSMenuItem(title: "New Incognito", action: #selector(docController.altDocument(_:)), keyEquivalent: "")
+        item.keyEquivalentModifierMask = NSEvent.ModifierFlags.shift
+		item.tag = ViewOptions.i_view.rawValue
+        item.isAlternate = true
+        item.target = docController
+        menu.addItem(item)
+
         item = NSMenuItem(title: "New Tab", action: #selector(docController.newDocument(_:)), keyEquivalent: "")
         item.keyEquivalentModifierMask = NSEvent.ModifierFlags.option
+		item.tag = ViewOptions.t_view.rawValue
         item.representedObject = self.window
         item.target = docController
         item.isAlternate = true
-        item.tag = 3
         menu.addItem(item)
         
         // MARK: TODO: Open/Load files in distinct windows
@@ -939,17 +946,17 @@ override func mouseMoved(with event: NSEvent) {
 
         item = NSMenuItem(title: "File in new window…", action: #selector(WebViewController.openFilePress(_:)), keyEquivalent: "")
         item.keyEquivalentModifierMask = NSEvent.ModifierFlags.shift
+		item.tag = ViewOptions.w_view.rawValue
         item.isAlternate = true
         item.target = wvc
-        item.tag = 1
         subOpen.addItem(item)
         
         item = NSMenuItem(title: "File in new tab…", action: #selector(WebViewController.openFilePress(_:)), keyEquivalent: "")
         item.keyEquivalentModifierMask = NSEvent.ModifierFlags.option
+        item.keyEquivalentModifierMask = NSEvent.ModifierFlags.option
         item.representedObject = self.window
         item.isAlternate = true
         item.target = wvc
-        item.tag = 3
         subOpen.addItem(item)
         
         item = NSMenuItem(title: "URL…", action: #selector(WebViewController.openLocationPress(_:)), keyEquivalent: "")
@@ -958,18 +965,18 @@ override func mouseMoved(with event: NSEvent) {
 
         item = NSMenuItem(title: "URL in new window…", action: #selector(WebViewController.openLocationPress(_:)), keyEquivalent: "")
         item.keyEquivalentModifierMask = NSEvent.ModifierFlags.shift
+		item.tag = ViewOptions.w_view.rawValue
         item.representedObject = self.window
         item.isAlternate = true
         item.target = wvc
-        item.tag = 1
         subOpen.addItem(item)
         
         item = NSMenuItem(title: "URL in new tab…", action: #selector(WebViewController.openLocationPress(_:)), keyEquivalent: "")
         item.keyEquivalentModifierMask = NSEvent.ModifierFlags.option
+		item.tag = ViewOptions.t_view.rawValue
         item.representedObject = self.window
         item.isAlternate = true
         item.target = wvc
-        item.tag = 3
         subOpen.addItem(item)
         
         item = NSMenuItem(title: "Playlists", action: #selector(AppDelegate.presentPlaylistSheet(_:)), keyEquivalent: "")

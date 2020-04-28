@@ -432,10 +432,15 @@
                                                 <action selector="newDocument:" target="Ady-hI-5gd" id="MBG-Bq-nZh"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Incognito" alternate="YES" keyEquivalent="n" id="rzt-yA-tvg">
+                                        <menuItem title="New Incognito" tag="4" alternate="YES" keyEquivalent="N" id="rzt-yA-tvg">
+                                            <connections>
+                                                <action selector="altDocument:" target="Ady-hI-5gd" id="zV9-pp-Kyn"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="New Tab" tag="1" keyEquivalent="n" id="p6F-MQ-MMg">
                                             <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                             <connections>
-                                                <action selector="altDocument:" target="Ady-hI-5gd" id="ie2-ID-G9V"/>
+                                                <action selector="newDocument:" target="Ady-hI-5gd" id="nfn-nV-h6N"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Open" id="wiF-om-ZaY">
@@ -891,7 +896,13 @@ CA
                                             <action selector="newDocument:" target="Ady-hI-5gd" id="F4r-B4-BOi"/>
                                         </connections>
                                     </menuItem>
-                                    <menuItem title="Tab" tag="3" alternate="YES" id="kuG-JL-b07">
+                                    <menuItem title="Incognito" tag="4" alternate="YES" id="zBH-xA-PWC">
+                                        <modifierMask key="keyEquivalentModifierMask" shift="YES"/>
+                                        <connections>
+                                            <action selector="altDocument:" target="Ady-hI-5gd" id="yrk-fq-Ety"/>
+                                        </connections>
+                                    </menuItem>
+                                    <menuItem title="Tab" tag="2" alternate="YES" id="kuG-JL-b07">
                                         <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                                         <connections>
                                             <action selector="newDocument:" target="Ady-hI-5gd" id="6K8-jq-Fnh"/>

@@ -192,6 +192,7 @@ struct ViewOptions : OptionSet {
     
     static let w_view            = ViewOptions(rawValue: 1 << 0)
     static let t_view            = ViewOptions(rawValue: 1 << 1)
+	static let i_view			 = ViewOptions(rawValue: 1 << 2)
 }
 let sameWindow : ViewOptions = []
 
