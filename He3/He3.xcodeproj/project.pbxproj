@@ -104,7 +104,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0F07BF92245376A800F9D020 /* He3x.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = He3x.icns; path = He3/Assets/He3x/He3x.icns; sourceTree = "<group>"; };
 		0F2370CD244E8CEA009F7914 /* He3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = He3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F2370D0244E8CEA009F7914 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0F2370D2244E8CEA009F7914 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -199,7 +198,6 @@
 			isa = PBXGroup;
 			children = (
 				0F5290BC2451D3C300A9B9DC /* He3.icns */,
-				0F07BF92245376A800F9D020 /* He3x.icns */,
 				0FBD9BAE2454603200332EEB /* he3_logo.icns */,
 				0FBD9BBB2454767300332EEB /* icntIcon.icns */,
 				0FBD9BB7245473C500332EEB /* itemIcon.icns */,

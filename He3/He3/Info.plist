@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBuildDate</key>
-	<string>20200428.192201</string>
+	<string>20200430.102818</string>
 	<key>CFBuildIncrement</key>
 	<false/>
 	<key>CFBuildMajor</key>
@@ -136,7 +136,9 @@
 	<dict>
 		<key>Allow Arbitrary Loads in Web Content</key>
 		<true/>
-		<key>Allow Arbritary Leads</key>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+		<key>NSAllowsArbitraryLoadsForMedia</key>
 		<true/>
 		<key>NSIncludesSubdomains</key>
 		<true/>

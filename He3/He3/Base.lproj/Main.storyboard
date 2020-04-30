@@ -437,7 +437,7 @@
                                                 <action selector="altDocument:" target="Ady-hI-5gd" id="zV9-pp-Kyn"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="New Tab" tag="1" keyEquivalent="n" id="p6F-MQ-MMg">
+                                        <menuItem title="New Tab" tag="2" alternate="YES" keyEquivalent="n" id="p6F-MQ-MMg">
                                             <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                             <connections>
                                                 <action selector="newDocument:" target="Ady-hI-5gd" id="nfn-nV-h6N"/>
