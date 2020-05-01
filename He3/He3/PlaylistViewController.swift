@@ -19,6 +19,15 @@ class PlayTableView : NSTableView {
             return NSApp.delegate as! AppDelegate
         }
     }
+	var _dragImage : NSImage?
+	var  dragImage : NSImage {
+		get {
+			if  _dragImage == nil {
+				_dragImage = NSImage.init(named: [k.listIcon,k.itemIcon][tag])!
+			}
+			return _dragImage!
+		}
+	}
     override func keyDown(with event: NSEvent) {
         if event.charactersIgnoringModifiers! == String(Character(UnicodeScalar(NSEvent.SpecialKey.delete.rawValue)!)) ||
            event.charactersIgnoringModifiers! == String(Character(UnicodeScalar(NSEvent.SpecialKey.deleteForward.rawValue)!)) {
@@ -57,7 +66,7 @@ class PlayTableView : NSTableView {
     }
 
     override func dragImageForRows(with dragRows: IndexSet, tableColumns: [NSTableColumn], event dragEvent: NSEvent, offset dragImageOffset: NSPointPointer) -> NSImage {
-        return NSApp.applicationIconImage.resize(w: 32, h: 32)
+        return dragImage.resize(w: 32, h: 32)
     }
     
     override func draggingEntered(_ info: NSDraggingInfo) -> NSDragOperation {
