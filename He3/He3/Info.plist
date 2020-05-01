@@ -3,15 +3,15 @@
 <plist version="1.0">
 <dict>
 	<key>CFBuildDate</key>
-	<string>20200430.102818</string>
+	<string>20200501.055013</string>
 	<key>CFBuildIncrement</key>
-	<false/>
+	<true/>
 	<key>CFBuildMajor</key>
 	<integer>1</integer>
 	<key>CFBuildMinor</key>
 	<integer>0</integer>
 	<key>CFBuildNumber</key>
-	<integer>7257</integer>
+	<integer>7259</integer>
 	<key>CFBuildPatch</key>
 	<integer>1</integer>
 	<key>CFBundleDevelopmentRegion</key>
@@ -56,7 +56,7 @@
 		</dict>
 		<dict>
 			<key>CFBundleTypeIconFile</key>
-			<string>appIcon</string>
+			<string>inctIcon</string>
 			<key>CFBundleTypeName</key>
 			<string>Any</string>
 			<key>CFBundleTypeRole</key>
@@ -117,7 +117,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>CFBundleURLIconFile</key>
-			<string>appIcon</string>
+			<string>inctIcon</string>
 			<key>CFBundleURLName</key>
 			<string>he3</string>
 			<key>CFBundleURLSchemes</key>
@@ -127,7 +127,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.0.7257</string>
+	<string>1.0.7259</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>
