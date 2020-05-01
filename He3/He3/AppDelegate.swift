@@ -1917,8 +1917,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
                 return print("No valid URL to handle")
         }
 
-        //  strip helium://
-        let index = rawString.index(rawString.startIndex, offsetBy: 9)
+        //  strip <scheme>://
+		let length = String(k.scheme + "://").count
+        let index = rawString.index(rawString.startIndex, offsetBy: length)
         let urlString = rawString.suffix(from: index)
         
         //  Handle new window here to narrow cast to new or current panel controller
