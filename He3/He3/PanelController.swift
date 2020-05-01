@@ -641,7 +641,7 @@ class He3PanelController : NSWindowController,NSWindowDelegate,NSFilePromiseProv
     struct FloatAboveAllPreference: OptionSet {
         let rawValue: Int
         
-        static let spaces   = FloatAboveAllPreference(rawValue: 0)
+        static var spaces   = FloatAboveAllPreference(rawValue: 0)
         static let disabled = FloatAboveAllPreference(rawValue: 1)
         static let screen   = FloatAboveAllPreference(rawValue: 2)
     }
