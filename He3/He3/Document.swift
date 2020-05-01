@@ -16,7 +16,7 @@ import OSLog
 struct DocGroup : OptionSet {
     let rawValue: Int
 
-    static let he3       = DocGroup(rawValue: 0)
+    static var he3       = DocGroup(rawValue: 0)
     static let playlist  = DocGroup(rawValue: 1)
 }
 let docHe3 : ViewOptions = []
@@ -39,6 +39,7 @@ struct k {
     static let docIcon = "he3_logo"
 	static let listIcon = "listIcon"
 	static let itemIcon = "itemIcon"
+	static let inctIcon = "inctIcon"
     static let Playlist = "Playlist"
     static let Playlists = "Playlists"
     static let playlists = "playlists"
@@ -544,7 +545,7 @@ class PlayItem : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
                 ///return tmpIcon
                 return NSImage(cgImage: tmpImage, size: size)
             }
-            return NSImage.init(named: k.docIcon)!
+            return NSImage.init(named: k.inctIcon)!
         }
     }
     // MARK:- Functions
