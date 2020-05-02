@@ -1169,7 +1169,6 @@ extension NSView {
 
 class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandler, NSMenuDelegate, NSTabViewDelegate, WKHTTPCookieStoreObserver, QLPreviewPanelDataSource, QLPreviewPanelDelegate/*, URLSessionDelegate,URLSessionTaskDelegate,URLSessionDownloadDelegate*/ {
 
-    @available(OSX 10.13, *)
     public func cookiesDidChange(in cookieStore: WKHTTPCookieStore) {
         DispatchQueue.main.async {
             let waitGroup = DispatchGroup()
@@ -1322,7 +1321,7 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, W
         controller.addUserScript(script)
         
         //  make http: -> https: guarded by preference
-        if #available(OSX 10.13, *), UserSettings.PromoteHTTPS.value {
+        if UserSettings.PromoteHTTPS.value {
             //  https://developer.apple.com/videos/play/wwdc2017/220/ 14:05, 21:04
             let jsonString = """
                 [{
@@ -2195,18 +2194,16 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, W
         Swift.print(String(format: "1DP navigationResponse: %p <= %@", webView, url.absoluteString))
         
         //  load cookies
-        if #available(OSX 10.13, *) {
-            if let headerFields = response.allHeaderFields as? [String:String] {
-                Swift.print("\(url.absoluteString) allHeaderFields:\n\(headerFields)")
-                let waitGroup = DispatchGroup()
+		if let headerFields = response.allHeaderFields as? [String:String] {
+			Swift.print("\(url.absoluteString) allHeaderFields:\n\(headerFields)")
+			let waitGroup = DispatchGroup()
 
-                let cookies = HTTPCookie.cookies(withResponseHeaderFields: headerFields, for: url)
-                cookies.forEach({ cookie in
-                    waitGroup.enter()
-                    webView.configuration.websiteDataStore.httpCookieStore.setCookie(cookie, completionHandler: { waitGroup.leave() })
-                })
-            }
-        }
+			let cookies = HTTPCookie.cookies(withResponseHeaderFields: headerFields, for: url)
+			cookies.forEach({ cookie in
+				waitGroup.enter()
+				webView.configuration.websiteDataStore.httpCookieStore.setCookie(cookie, completionHandler: { waitGroup.leave() })
+			})
+		}
         
         guard !url.hasUserContent(), url.hasDataContent(), let suggestion = response.suggestedFilename else { decisionHandler(.allow); return }
         let downloadDir = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first!
@@ -2383,12 +2380,7 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, W
                 
         openPanel.allowsMultipleSelection = parameters.allowsMultipleSelection
         openPanel.canChooseFiles = false
-        if #available(OSX 10.13.4, *) {
-            openPanel.canChooseDirectories = parameters.allowsDirectories
-        } else {
-            openPanel.canChooseDirectories = false
-        }
-        openPanel.canCreateDirectories = false
+        openPanel.canChooseDirectories = parameters.allowsDirectories
         
         openPanel.begin() { (result) -> Void in
             if result == .OK {
