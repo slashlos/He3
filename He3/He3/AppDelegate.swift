@@ -1920,7 +1920,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         //  strip <scheme>://
 		let length = String(k.scheme + "://").count
         let index = rawString.index(rawString.startIndex, offsetBy: length)
-        let urlString = rawString.suffix(from: index)
+		let urlString = UrlHelpers.ensureScheme(String(rawString.suffix(from: index)))
         
         //  Handle new window here to narrow cast to new or current panel controller
         if (viewOptions == sameWindow || !openForBusiness), let wc = NSApp.keyWindow?.windowController {
@@ -1929,10 +1929,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
                 return
             }
         }
-        else
-        {
-            _ = openURLInNewWindow(URL.init(string: String(urlString))!)
-        }
+        _ = openURLInNewWindow(URL.init(string: String(urlString))!)
     }
 
     @objc func handleURLPboard(_ pboard: NSPasteboard, userData: NSString, error: NSErrorPointer) {
