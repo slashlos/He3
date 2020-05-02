@@ -304,13 +304,11 @@ class PlayList : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
     
     // MARK:- Functions
     override init() {
-        let test = k.play + "#"
         date = Date().timeIntervalSinceReferenceDate
         super.init()
 
         list = Array <PlayItem> ()
-        let temp = (String(format:"%p",self)).suffix(4)
-        name = test + temp
+		name = String(format:"%@#%@",k.play,UUID().uuidString)
 
         //  watch shift key changes affecting our playlist
         NotificationCenter.default.addObserver(
@@ -550,7 +548,7 @@ class PlayItem : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
     }
     // MARK:- Functions
     override init() {
-        name = k.item + "#"
+		name = String(format:"%@#%@",k.item,UUID().uuidString)
         link = URL.init(string: "http://")!
         time = 0.0
         date = Date().timeIntervalSinceReferenceDate
@@ -564,9 +562,6 @@ class PlayItem : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
         agent = UserSettings.UserAgent.value
         tabby = false
         super.init()
-        
-        let temp = String(format:"%p",self)
-        name += String(temp.suffix(4))
     }
     init(name:String, link:URL, time:TimeInterval, rank:Int) {
         self.name = name
