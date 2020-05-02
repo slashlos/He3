@@ -22,8 +22,44 @@ p.block {
 <h1>He3</h1>
 <h4>A running release summary of commit changes:</h4>
 
-<h2>Build 7226</h2>
+<h2>1.0.7267</h2>
 <p class="block">
+2b1896c|20/05/01 yank 10.13 guards<br>
+e11cbf6|20/05/01 modernize unique string creations<br>
+5eb7e71|20/05/01 fix URL handler<br>
+a93d706|20/05/01 fix ATS settings<br>
+db70b35|20/05/01 artwork update<br>
+c948866|20/05/01 app store build 1.0.7259<br>
+a2a9427|20/04/30 icon update<br>
+3ba508a|20/04/30 modernize icon selection<br>
+d0941fc|20/04/30 fix null option setting<br>
+ebac4da|20/04/30 update icon usage<br>
+17f1677|20/04/30 update share re: scheme<br>
+2f6c8c0|20/04/30 drop stale bits; naming edits<br>
+edb5034|20/04/30 incognito logo<br>
+8f1058a|20/04/28 He3 artwork updates<br>
+143464e|20/04/28 double action preflight checks<br>
+e8614e5|20/04/28 fold XHe3 in as a preference pane<br>
+b77e073|20/04/28 module renames<br>
+d9a6ec3|20/04/28 moved login launch item<br>
+8a73155|20/04/28 fold external target in<br>
+d9ad1c9|20/04/27 update bundle id<br>
+075d2a3|20/04/27 default http: promotions<br>
+1c8f845|20/04/26 tbd javascript injection to webView<br>
+f286fc9|20/04/26 revised QQ implementation<br>
+00a3fe1|20/04/26 content updates<br>
+b95287e|20/04/26 About updates, markdown renderings<br>
+5389f8d|20/04/26 add 256 icon<br>
+ef91eea|20/04/26 add smaller artwork<br>
+f1f7646|20/04/25 assets overhaul<br>
+b4f276a|20/04/24 adopt markdown as internal store<br>
+b016e20|20/04/22 Update README.md<br>
+813045e|20/04/22 more he3 edits re: rename<br>
+8a52546|20/04/22 Update he3_stark.html<br>
+d87acb6|20/04/22 Update he3_start.html<br>
+41445a9|20/04/22 initial commit<br>
+220dd17|20/04/20 more helium migrations<br>
+4df51b0|20/04/20 migrations from helium 3<br>
 8a52546|20/04/22 Update he3_stark.html<br>
 d87acb6|20/04/22 Update he3_start.html<br>
 41445a9|20/04/22 initial commit<br>
@@ -34,9 +70,6 @@ d87acb6|20/04/22 Update he3_start.html<br>
 953cc78|20/04/20 Update README.md<br>
 ef3fb36|20/04/20 Initial commit<br>
 </p>
-
-<h1>Helium 3</h1>
-<h4>A running release summary of commit changes:</h4>
 
 <h2>Build 7226</h2>
 <p class="block">
