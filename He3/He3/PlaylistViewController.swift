@@ -28,20 +28,11 @@ class PlayTableView : NSTableView {
 			return _dragImage!
 		}
 	}
-    override func keyDown(with event: NSEvent) {
-        if event.charactersIgnoringModifiers! == String(Character(UnicodeScalar(NSEvent.SpecialKey.delete.rawValue)!)) ||
-           event.charactersIgnoringModifiers! == String(Character(UnicodeScalar(NSEvent.SpecialKey.deleteForward.rawValue)!)) {
-            
-            // Take action in the delegate.
-            let delegate: PlaylistViewController = self.delegate as! PlaylistViewController
-            delegate.removePlaylist(self)
-        }
-        else
-        {
-            // still here?
-            super.keyDown(with: event)
-        }
-    }
+	@objc @IBAction func delete(_ sender: Any?) {
+		let delegate: PlaylistViewController = self.delegate as! PlaylistViewController
+		
+		delegate.removePlaylist(self)
+	}
     
     override func mouseDragged(with event: NSEvent) {
         let delegate = self.delegate as! PlaylistViewController
