@@ -65,10 +65,11 @@ class KeyedArchiver : NSKeyedArchiver {
         }
     }
 }
+
 class KeyedUnarchiver : NSKeyedUnarchiver {
     open override class func unarchiveObject(with data: Data) -> Any? {
         do {
-            let object = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSObject.self], from: data)
+			let object = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [PlayList.self,PlayItem.self], from: data)
             return object
         }
         catch let error {
@@ -80,7 +81,7 @@ class KeyedUnarchiver : NSKeyedUnarchiver {
     open override class func unarchiveObject(withFile path: String) -> Any? {
         do {
             let data = try Data(contentsOf: URL.init(fileURLWithPath: path))
-            let object = try unarchivedObject(ofClasses: [NSObject.self], from: data)
+			let object = try unarchiveTopLevelObjectWithData(data)
             return object
         }
         catch let error {
