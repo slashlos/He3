@@ -1334,8 +1334,8 @@ class Document : NSDocument {
         }
     }
     
-    override func revertToSaved(_ sender: Any?) {
- 
+	@objc @IBAction override func revertToSaved(_ sender: (Any)?) {
+		
         //  If we have a file and type revert to them
         if let url = fileURL, let type = fileType {
             do {
