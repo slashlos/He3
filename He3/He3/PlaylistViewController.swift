@@ -942,12 +942,63 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
             
         }
 	}
+	
+	@objc @IBAction func revertDocumentToSaved(_ sender: Any?) {
+        let whoAmI = self.view.window?.firstResponder
+		var docName = "Global Playlist"
+		
+		guard !isLocalPlaylist, let document = self.view.window?.windowController?.document else { return }
+		if isLocalPlaylist, let url = document.fileURL { docName = "\"" + url!.simpleSpecifier + "\"" }
+		
+		let message = "Do you want to revert the to the last saved version?"
+		let infoMsg = isLocalPlaylist ? "Global Playlist" : docName
+		
+        let alert = NSAlert()
+		
+        alert.messageText = message
+        alert.addButton(withTitle: "Revert")
+        alert.addButton(withTitle: "Cancel")
+        alert.informativeText = infoMsg
+        
+        if let window = NSApp.keyWindow {
+            alert.beginSheetModal(for: window, completionHandler: { response in
+				if response == NSApplication.ModalResponse.alertFirstButtonReturn {
+					if self.isLocalPlaylist {
+						document.revert(sender)
+						document.updateChangeCount(.changeCleared)
+					}
+					else
+					{
+						_ = self.appDelegate.restorePlaylists()
+					}
+					(whoAmI as! PlayTableView).reloadData()
+					Swift.print("revert to saved")
+				}
+            })
+        }
+        else
+        {
+			if alert.runModal() == NSApplication.ModalResponse.alertFirstButtonReturn {
+				if isLocalPlaylist {
+					document.revert(sender)
+					document.updateChangeCount(.changeCleared)
+				}
+				else
+				{
+					_ = appDelegate.restorePlaylists()
+				}
+				(whoAmI as! PlayTableView).reloadData()
+				Swift.print("revert to saved")
+			}
+		}
+	}
+	
     @objc @IBAction func restorePlaylists(_ sender: NSButton?) {
         let whoAmI = self.view.window?.firstResponder
+		var names = Array<String>()
 
         //  We want to restore to existing play item or list or global playlists
         if whoAmI == playlistTableView || whoAmI == nil {
-            Swift.print("restore playlist(s)")
             
             let restArray = playlistArrayController.selectedObjects as! [PlayList]
             
@@ -970,6 +1021,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
                         }
                         let playlist = PlayList.init(name: name, list: list)
                         playlistArrayController.addObject(playlist)
+						names.append(name)
                     }
                 }
             }
@@ -1003,14 +1055,14 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
                                 }
                             }
                         }
+						names.append(playlist.name)
                     }
                 }
             }
+			appDelegate.userAlertMessage("Reverted playlist(\(names.count))", info: names.count > 9 ? nil : names.listing)
         }
         else
         {
-            Swift.print("restore playitems(s)")
-            
             var itemArray = playitemArrayController.selectedObjects as! [PlayItem]
             
             if itemArray.count == 0 {
@@ -1020,8 +1072,10 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
             for playitem in itemArray {
                 if let dict = defaults.dictionary(forKey: playitem.link.absoluteString) {
                     playitem.update(with: dict)
+					names.append(playitem.name)
                 }
             }
+			appDelegate.userAlertMessage("Reverted playitem(\(names.count))", info: names.count > 9 ? nil : names.listing)
         }
     }
 
@@ -1067,30 +1121,14 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
             
             for playlist in saveArray {
                 defaults.set(playlist.dictionary(), forKey: playlist.name as String)
-                names.append(String(format: "%@: %d", playlist.name, playlist.list.count))
+                names.append(playlist.name)
                 
                 //  propagate history to our delegate
                 if playlist == historyCache {
                     appDelegate.histories = historyCache.list
                 }
             }
-            
-            //  If no selection we saved *all* to global to be restored
-            if saveArray.count == playlists.count {
-                var names = Array<String>()
-                
-                for playlist in saveArray {
-                    names.append(playlist.name)
-                }
-                defaults.set(names, forKey: k.playlists)
-
-                appDelegate.userAlertMessage("Saved playlists", info: "Playlists globals updated")
-            }
-            else
-            {
-                appDelegate.userAlertMessage("Saved playlists(\(names.count))",
-                    info: (names.count > 8) ? String(format: "%d - too many to list",names.count) : (names.count > 5) ? names.list : names.listing)
-            }
+			appDelegate.userAlertMessage("Saved playlist(\(names.count))", info: names.count > 9 ? nil : names.listing)
         }
         else
         {
@@ -1105,8 +1143,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
                 defaults.set(playitem.dictionary(), forKey: playitem.link.absoluteString)
                 names.append(playitem.name)
             }
-            appDelegate.userAlertMessage("Saved playitems(\(names.count))",
-                info: (names.count > 8) ? String(format: "%d - too many to list",names.count) : (names.count > 5) ? names.list : names.listing)
+            appDelegate.userAlertMessage("Saved playitems(\(names.count))", info: (names.count > 9) ? nil : names.listing)
         }
 
         defaults.synchronize()
@@ -1173,8 +1210,18 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         else
         {
             switch menuItem.title {
-                
+			case "Revert To Saved…":
+				if isLocalPlaylist, let document = self.view.window?.windowController?.document {
+					menuItem.isEnabled = document.hasUnautosavedChanges
+				}
+				else
+				{
+					menuItem.isEnabled = true
+				}
+				break
+				
             default:
+				Swift.print("pl \(menuItem.title)")
                 menuItem.state = UserSettings.DisabledMagicURLs.value ? .off : .on
             }
         }
