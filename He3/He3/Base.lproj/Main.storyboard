@@ -25,7 +25,7 @@
                 </windowController>
                 <customObject id="dMr-pj-6Ro" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-157" y="-1078"/>
+            <point key="canvasLocation" x="-165" y="-929"/>
         </scene>
         <!--About Box Controller-->
         <scene sceneID="S0S-n9-J2C">
@@ -528,7 +528,8 @@ CA
                                                 <action selector="saveDocumentAs:" target="Ady-hI-5gd" id="4If-Hb-lU2"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Revert To Saved…" keyEquivalent="s" id="xOh-zJ-vOA">
+                                        <menuItem title="Revert To Saved…" id="xOh-zJ-vOA">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="revertDocumentToSaved:" target="Ady-hI-5gd" id="ywd-wc-9xA"/>
                                             </connections>
@@ -608,6 +609,21 @@ CA
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="delete:" target="Ady-hI-5gd" id="0Mk-Ml-PaM"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Delete" hidden="YES" keyEquivalent="" allowsKeyEquivalentWhenHidden="YES" id="dcj-Zf-5Iu">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="delete:" target="Ady-hI-5gd" id="cGn-gY-BV2"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Delete" hidden="YES" allowsKeyEquivalentWhenHidden="YES" id="vRN-Yy-rnB">
+                                            <string key="keyEquivalent" base64-UTF8="YES">
+CA
+</string>
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="delete:" target="Ady-hI-5gd" id="usy-WA-Le3"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Select All" keyEquivalent="a" id="Ruw-6m-B2m">
@@ -1776,7 +1792,7 @@ Gw
                         <binding destination="Vul-U2-GKW" name="contentArray" keyPath="selection.list" id="YLG-Or-2uO"/>
                     </connections>
                 </arrayController>
-                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="r0H-gG-FQJ" customClass="PlayItemCornerButton" customModule="He3" customModuleProvider="target">
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="r0H-gG-FQJ" customClass="PlayItemCornerButton" customModule="He3">
                     <rect key="frame" x="0.0" y="0.0" width="11" height="11"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="8" id="M0e-Jn-aca"/>
