@@ -1815,8 +1815,8 @@ Gw
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
             <objects>
-                <windowController storyboardIdentifier="He3Controller" id="B8D-0N-5wS" customClass="He3PanelController" customModule="He3" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" identifier="He3" title="He3 Above All Else" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" tabbingIdentifier="webView" titlebarAppearsTransparent="YES" id="IQv-IB-iLA" customClass="He3Panel" customModule="He3" customModuleProvider="target">
+                <windowController storyboardIdentifier="HeliumController" id="B8D-0N-5wS" customClass="HeliumController" customModule="He3" customModuleProvider="target" sceneMemberID="viewController">
+                    <window key="window" identifier="Helium" title="Above All Else" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" tabbingIdentifier="webView" titlebarAppearsTransparent="YES" id="IQv-IB-iLA" customClass="Panel" customModule="He3" customModuleProvider="target">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" resizable="YES" utility="YES" nonactivatingPanel="YES" HUD="YES" fullSizeContentView="YES"/>
                         <windowCollectionBehavior key="collectionBehavior" moveToActiveSpace="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
