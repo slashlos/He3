@@ -5,6 +5,7 @@
 //  Created by Carlos D. Santiago on 5/11/20.
 //  Copyright © 2020 Carlos D. Santiago. All rights reserved.
 //
+//	MARK:- NOTE: LSUIElemenet is TRUE in Info.plist
 
 import Cocoa
 
