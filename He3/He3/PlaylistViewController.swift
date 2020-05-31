@@ -128,7 +128,7 @@ class PlayCornerView : NSView {
 		let myGrays : [CGFloat]    = [0.80,   0.80,  0.80,  0.75,  0.75,  0.75]
 		let bounds = self.bounds
 		 
-		NSColor.init(calibratedWhite: 0.91, alpha: 1.0).set()
+		NSColor.init(calibratedWhite: 0.929256, alpha: 1.0).set()
 		let insetRect = NSDrawTiledRects(bounds, dirtyRect, mySides, myGrays, 3)
 		let path = NSBezierPath.init(rect: insetRect)
 		path.fill()
