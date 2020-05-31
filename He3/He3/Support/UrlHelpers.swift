@@ -1,6 +1,6 @@
 //
 //  UrlHelpers.swift
-//  He3
+//  He3 (Helium 3)
 //
 //  Created by Viktor Oreshkin on 9.5.17.
 //  Copyright © 2017 Jaden Geller. All rights reserved.
@@ -345,22 +345,41 @@ extension URL {
     }
 }
 
-extension String {
-    var webloc : URL? {
-        get {
-            if let url = URL.init(string: self) {
-                return url
-            }
-            else
-            if let dict : Dictionary = self.propertyList() as? [String:Any] {
-                let urlString = dict["URL"] as! String
-                if let url = URL.init(string: urlString) {
-                    return url
-                }
-            }
-            return nil
-        }
+extension NSURL {
+    
+    func compare(_ other: URL ) -> ComparisonResult {
+        return (self.absoluteString?.compare(other.absoluteString))!
     }
+//  https://stackoverflow.com/a/44908669/564870
+    func resolvedFinderAlias() -> NSURL? {
+        if (self.fileReferenceURL() != nil) { // item exists
+            do {
+                // Get information about the file alias.
+                // If the file is not an alias files, an exception is thrown
+                // and execution continues in the catch clause.
+                let data = try NSURL.bookmarkData(withContentsOf: self as URL)
+                // NSURLPathKey contains the target path.
+                let rv = NSURL.resourceValues(forKeys: [ URLResourceKey.pathKey ], fromBookmarkData: data)
+                var urlString = rv![URLResourceKey.pathKey] as! String
+                if !urlString.hasPrefix("file://") {
+                    urlString = "file://" + urlString
+                }
+				return URL(string: urlString.addingPercentEncoding(
+					withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!)! as NSURL
+            } catch {
+                // We know that the input path exists, but treating it as an alias
+                // file failed, so we assume it's not an alias file so return nil.
+                return nil
+            }
+        }
+        return nil
+    }
+}
+
+extension URL {
+	func resolvedFinderAlias() -> URL? {
+		return (self as NSURL).resolvedFinderAlias() as URL?
+	}
 }
 
 extension URL {

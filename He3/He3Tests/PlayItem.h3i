@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>agent</key>
+	<string>Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.5 Safari/605.1.15</string>
+	<key>alpha</key>
+	<integer>60</integer>
+	<key>date</key>
+	<real>609454783.35029197</real>
+	<key>hover</key>
+	<integer>0</integer>
+	<key>label</key>
+	<integer>0</integer>
+	<key>link</key>
+	<string>file:///Users/slashlos/Movies/GETTYSBURG.m4v</string>
+	<key>name</key>
+	<string>GETTYSBURG</string>
+	<key>plays</key>
+	<integer>1</integer>
+	<key>rank</key>
+	<integer>77</integer>
+	<key>rect</key>
+	<string>{{0, 0}, {0, 0}}</string>
+	<key>time</key>
+	<real>15252.232</real>
+	<key>trans</key>
+	<integer>0</integer>
+</dict>
+</plist>

@@ -1,6 +1,6 @@
 //
 //  StringHelpers.swift
-//  He3
+//  He3 (Helium 3)
 //
 //  Created by Samuel Beek on 16/03/16.
 //  Copyright © 2016 Jaden Geller. All rights reserved.
@@ -9,35 +9,7 @@
 
 import Foundation
 import Down
-
 import CoreAudioKit
-///import CommonCrypto
-
-extension Collection {
-    subscript(safe index: Index) -> Element? {
-        return indices.contains(index) ? self[index] : nil
-    }
-}
-
-//https://stackoverflow.com/questions/21789770/determine-mime-type-from-nsdata
-extension Data {
-    private static let mimeTypeSignatures: [UInt8 : String] = [
-        0xFF : "image/jpeg",
-        0x89 : "image/png",
-        0x47 : "image/gif",
-        0x49 : "image/tiff",
-        0x4D : "image/tiff",
-        0x25 : "application/pdf",
-        0xD0 : "application/vnd",
-        0x46 : "text/plain",
-        ]
-
-    var mimeType: String {
-        var c: UInt8 = 0
-        copyBytes(to: &c, count: 1)
-        return Data.mimeTypeSignatures[c] ?? "application/octet-stream"
-    }
-}
 
 extension String {
     func replacePrefix(_ prefix: String, replacement: String) -> String {
@@ -148,161 +120,6 @@ extension String {
     }
 }
 
-// From https://stackoverflow.com/questions/27624331/unique-values-of-array-in-swift
-extension Array where Element : Hashable {
-    var unique: [Element] {
-        return Array(Set(self))
-    }
-}
-
-// From https://stackoverflow.com/questions/31093678/how-to-get-rid-of-array-brackets-while-printing/31093744#31093744
-extension Sequence {
-    var list: String {
-        return map { "\($0)" }.joined(separator: ", ")
-    }
-    var listing: String {
-        return map { "\($0)" }.joined(separator: "\n")
-    }
-}
-
-// From https://stackoverflow.com/questions/12837965/converting-nsdictionary-to-xml
-/*
-extension Any {
-    func xmlString() -> String {
-        if let booleanValue = (self as? Bool) {
-            return String(format: (booleanValue ? "true" : "false"))
-        }
-        else
-        if let intValue = (self as? Int) {
-            return String(format: "%d", intValue)
-        }
-        else
-        if let floatValue = (self as? Float) {
-            return String(format: "%f", floatValue)
-        }
-        else
-        if let doubleValue = (self as? Double) {
-            return String(format: "%f", doubleValue)
-        }
-        else
-        {
-            return String(format: "<%@>", self)
-        }
-    }
-}
-*/
-func toLiteral(_ value: Any) -> String {
-    if let booleanValue = (value as? Bool) {
-        return String(format: (booleanValue ? "1" : "0"))
-    }
-    else
-    if let intValue = (value as? Int) {
-        return String(format: "%d", intValue)
-    }
-    else
-    if let floatValue = (value as? Float) {
-        return String(format: "%f", floatValue)
-    }
-    else
-    if let doubleValue = (value as? Double) {
-        return String(format: "%f", doubleValue)
-    }
-    else
-    if let stringValue = (value as? String) {
-        return stringValue
-    }
-    else
-    if let dictValue: Dictionary<AnyHashable,Any> = (value as? Dictionary<AnyHashable,Any>)
-    {
-        return dictValue.xmlString(withElement: "Dictionary", isFirstElement: false)
-    }
-    else
-    {
-        return ((value as AnyObject).description)
-    }
-}
-
-extension Array {
-    func xmlString(withElement element: String, isFirstElemenet: Bool) -> String {
-        var xml = String.init()
-
-        xml.append(String(format: "<%@>\n", element))
-        self.forEach { (value) in
-            if let array: Array<Any> = (value as? Array<Any>) {
-                xml.append(array.xmlString(withElement: "Array", isFirstElemenet: false))
-            }
-            else
-            if let dict: Dictionary<AnyHashable,Any> = (value as? Dictionary<AnyHashable,Any>) {
-                xml.append(dict.xmlString(withElement: "Dictionary", isFirstElement: false))
-            }
-            else
-            {/*
-                if let booleanValue = (value as? Bool) {
-                    xml.append(String(format: (booleanValue ? "true" : "false")))
-                }
-                else
-                if let intValue = (value as? Int) {
-                    xml.append(String(format: "%d", intValue))
-                }
-                else
-                if let floatValue = (value as? Float) {
-                    xml.append(String(format: "%f", floatValue))
-                }
-                else
-                if let doubleValue = (value as? Double) {
-                    xml.append(String(format: "%f", doubleValue))
-                }
-                else
-                {
-                    xml.append(String(format: "<%@>", value as! CVarArg))
-                }*/
-                Swift.print("value: \(value)")
-                xml.append(toLiteral(value))
-            }
-        }
-        xml.append(String(format: "<%@>\n", element))
-
-        return xml
-    }
-}
-    
-extension Dictionary {
-    //  Return an XML string from the dictionary
-    func xmlString(withElement element: String, isFirstElement: Bool) -> String {
-        var xml = String.init()
-        
-        if isFirstElement { xml.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n") }
-        
-        xml.append(String(format: "<%@>\n", element))
-        for node in self.keys {
-            let value = self[node]
-            
-            if let array: Array<Any> = (value as? Array<Any>) {
-                xml.append(array.xmlString(withElement: node as! String, isFirstElemenet: false))
-            }
-            else
-            if let dict: Dictionary<AnyHashable,Any> = (value as? Dictionary<AnyHashable,Any>) {
-                xml.append(dict.xmlString(withElement: node as! String, isFirstElement: false))
-            }
-            else
-            {
-                xml.append(String(format: "<%@>", node as! CVarArg))
-                xml.append(toLiteral(value as Any))
-                xml.append(String(format: "</%@>\n", node as! CVarArg))
-            }
-        }
-                
-        xml.append(String(format: "</%@>\n", element))
-
-        return xml
-    }
-    func xmlHTMLString(withElement element: String, isFirstElement: Bool) -> String {
-        let xml = self.xmlString(withElement: element, isFirstElement: isFirstElement)
-        
-        return xml.replacingOccurrences(of: "&", with: "&amp", options: .literal, range: nil)
-    }
-}
-
 extension NSString {
     class func string(fromAsset: String) -> String {
         let asset = NSDataAsset.init(name: fromAsset)
@@ -372,18 +189,6 @@ extension String {
     }
 }
 
-//  https://stackoverflow.com/questions/39075043/how-to-convert-data-to-hex-string-in-swift
-extension Data {
-    private static let hexAlphabet = "0123456789abcdef".unicodeScalars.map { $0 }
-
-    public func hexEncodedString() -> String {
-        return String(self.reduce(into: "".unicodeScalars, { (result, value) in
-            result.append(Data.hexAlphabet[Int(value/16)])
-            result.append(Data.hexAlphabet[Int(value%16)])
-        }))
-    }
-}
-
 //  https://codereview.stackexchange.com/questions/135424/hex-string-to-bytes-nsdata?newreg=06dfe1d5b9964b928631538c9e48d421
 extension String {
     func dataFromHexString() -> Data? {
@@ -422,28 +227,20 @@ extension String {
     }
 }
 
-struct UAHelpers {
-    static func isValidUA(uaString: String) -> Bool {
-        // From https://stackoverflow.com/questions/20569000/regex-for-http-user-agent
-        let regex = try! NSRegularExpression(pattern: ".+?[/\\s][\\d.]+")
-        return (regex.firstMatch(in: uaString, range: uaString.nsrange) != nil)
+extension String {
+    var webloc : URL? {
+        get {
+            if let url = URL.init(string: self) {
+                return url
+            }
+            else
+            if let dict : Dictionary = self.propertyList() as? [String:Any] {
+                let urlString = dict["URL"] as! String
+                if let url = URL.init(string: urlString) {
+                    return url
+                }
+            }
+            return nil
+        }
     }
 }
-/*
-extension Data {
-    // https://forums.swift.org/t/cryptokit-sha256-much-much-slower-than-cryptoswift/27983/12
-    static func sha256(data: Data) -> Data {
-        var buffer = UnsafeMutableRawPointer.allocate(byteCount: Int(CC_SHA256_DIGEST_LENGTH), alignment: 8)
-        var buffer2 = UnsafeMutablePointer<UInt8>.allocate(capacity: Int(CC_SHA256_DIGEST_LENGTH))
-        defer {
-            buffer.deallocate()
-            buffer2.deallocate()
-        }
-        data.withUnsafeBytes { (ptr: UnsafeRawBufferPointer) -> () in
-            CC_SHA256(ptr.baseAddress!, CC_LONG(data.count), buffer.assumingMemoryBound(to: UInt8.self))
-        }
-        CC_SHA256(buffer, CC_LONG(CC_SHA256_DIGEST_LENGTH), buffer2)
-        return Data(buffer: UnsafeBufferPointer(start: buffer2, count: Int(CC_SHA256_DIGEST_LENGTH)))
-    }
-}
-*/

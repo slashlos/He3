@@ -1,6 +1,6 @@
 //
 //  PlaylistPanelController.swift
-//  He3 (He3 3)
+//  He3 (Helium 3)
 //
 //  Created by Carlos D. Santiago on 2/15/17.
 //  Copyright © 2017-2020 CD M Santiago. All rights reserved.

@@ -13,9 +13,14 @@
 //
 import Cocoa
 import CoreLocation
+import ServiceManagement
 import OSLog
 import AppKit
 import WebKit
+
+extension Notification.Name {
+    static let killHe3Launcher = Notification.Name("killHe3Launcher")
+}
 
 struct RequestUserStrings {
     let currentURLString: String?
@@ -120,7 +125,7 @@ fileprivate class SearchField : NSSearchField {
     }
 }
 
-fileprivate class URLField: NSTextField {
+class URLField: NSTextField {
     var title : String?
     var borderColor: NSColor?
 
@@ -145,10 +150,10 @@ fileprivate class URLField: NSTextField {
             let infoDictionary = (Bundle.main.infoDictionary)!
             
             //    Get the app name field
-            let appName = infoDictionary[kCFBundleExecutableKey as String] as? String ?? k.He3
+            let AppName = infoDictionary[kCFBundleExecutableKey as String] as? String ?? k.AppName
             
             //    Setup the version to one we constrict
-            self.title = String(format:"%@ %@", appName,
+            self.title = String(format:"%@ %@", AppName,
                                infoDictionary["CFBundleVersion"] as! CVarArg)
         }
         self.cell?.controlView?.wantsLayer = true
@@ -197,20 +202,21 @@ struct ViewOptions : OptionSet {
 let sameWindow : ViewOptions = []
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationManagerDelegate {
+ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationManagerDelegate {
     static let poi = OSLog(subsystem: "com.slashlos.he3", category: .pointsOfInterest)
 
     //  who we are from 'about'
-    var _appName: String?
-    var  appName: String {
+    var _AppName: String?
+    var  AppName: String {
         get {
-            if _appName == nil {
+            if _AppName == nil {
                 let infoDictionary = (Bundle.main.infoDictionary)!
                 
                 //    Get the app name field
-                _appName = infoDictionary[kCFBundleExecutableKey as String] as? String ?? k.He3
+                _AppName = infoDictionary[kCFBundleExecutableKey as String] as? String ?? k.AppName
+				assert(_AppName == k.AppName, "AppName mistach in defaults vs Info.plist")
             }
-            return _appName!
+            return _AppName!
         }
     }
 
@@ -345,6 +351,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
                 _webPreferences!.javaScriptCanOpenWindowsAutomatically = true;
                 _webPreferences!.javaScriptEnabled = true
                 _webPreferences!.javaEnabled = true
+				
+				//	Always enable inspector but guard its showing
+				_webPreferences?.setValue(true, forKey: "developerExtrasEnabled")
             }
             return _webPreferences!
         }
@@ -353,7 +362,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
     //  MARK:- Global IBAction, but ship to keyWindow when able
     @objc @IBOutlet weak var appMenu: NSMenu!
 	var appStatusItem:NSStatusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-    fileprivate var searchField : SearchField = SearchField.init(withValue: k.He3, modalTitle: "Search")
+    fileprivate var searchField : SearchField = SearchField.init(withValue: k.AppName, modalTitle: "Search")
 
     @objc dynamic var _webSearches : [PlayItem]?
     @objc dynamic var  webSearches : [PlayItem] {
@@ -414,7 +423,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
             let infoDictionary = (Bundle.main.infoDictionary)!
             
             //    Setup the version to one we constrict
-            let title = String(format:"%@ %@", appName,
+            let title = String(format:"%@ %@", AppName,
                                infoDictionary["CFBundleVersion"] as! CVarArg)
 
             return title
@@ -454,7 +463,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
             alertButton1stText: "Set",      alertButton1stInfo: nil,
             alertButton2ndText: "Cancel",   alertButton2ndInfo: nil,
             alertButton3rdText: "Default",  alertButton3rdInfo: UserSettings.HomePageURL.default),
-                          onWindow: NSApp.keyWindow as? He3Panel,
+                          onWindow: NSApp.keyWindow as? Panel,
                           title: "Enter URL",
                           acceptHandler: { (newUrl: String) in
                             UserSettings.HomePageURL.value = newUrl
@@ -538,7 +547,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
     
     var fullScreen : NSRect? = nil
     @objc @IBAction func toggleFullScreen(_ sender: NSMenuItem) {
-        if let keyWindow : He3Panel = NSApp.keyWindow as? He3Panel {
+        if let keyWindow : Panel = NSApp.keyWindow as? Panel {
             keyWindow.heliumPanelController.floatOverFullScreenAppsPress(sender)
         }
     }
@@ -567,7 +576,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         
         //  This could be anything so add/if a doc and initialize
         do {
-            let typeName = fileURL.isFileURL && fileURL.pathExtension == k.hpl ? k.Playlist : k.He3
+            let typeName = fileURL.isFileURL && fileURL.pathExtension == k.hpl ? k.Playlist : k.Helium
             let doc = try docController.makeDocument(withContentsOf: fileURL, ofType: typeName)
             docController.noteNewRecentDocumentURL(fileURL)
             if let window = doc.windowControllers.first?.window {
@@ -580,7 +589,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         }
     }
     
-    @objc @IBAction func locationServicesPress(_ sender: NSMenuItem) {
+	@objc @IBOutlet var launchWindow: NSWindow?
+	@IBAction func launchAutoLoginPress(_ sender: NSMenuItem) {
+        let storyboard = NSStoryboard(name: "Main", bundle: nil)
+
+		let autoLogin = storyboard.instantiateController(withIdentifier: "AutoLaunchController") as! LaunchController
+		if let window = autoLogin.window {
+			launchWindow = window
+			window.makeKeyAndOrderFront(sender)
+		}
+	}
+	
+	@objc @IBAction func locationServicesPress(_ sender: NSMenuItem) {
         if isLocationEnabled {
             locationManager?.stopMonitoringSignificantLocationChanges()
             locationManager?.stopUpdatingLocation()
@@ -596,34 +616,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         UserSettings.RestoreLocationSvcs.value = isLocationEnabled
     }
     
-	@objc @IBAction func loginAutoLaunchPress(_ sender: NSMenuItem) {
-		let title = "Automatically launch " + appName + " at Login"
-        let alert = NSAlert()
-		
-		alert.window.title = appName + " Auto Launch At Login"
-		alert.messageText = "Login item"
-		let loginCheckBox = NSButton.init(checkboxWithTitle: title, target: nil, action: nil)
-		loginCheckBox.state = UserSettings.LoginAutoStartAtLaunch.value ? .on : .off
-        alert.accessoryView = loginCheckBox
-
-		alert.addButton(withTitle: "Set")
-        alert.addButton(withTitle: "Cancel")
-		
-        //  Have window, but make it active
-        NSApp.activate(ignoringOtherApps: true)
-        
-        // Set focus on urlField
-        alert.accessoryView!.becomeFirstResponder()
-
-		//	Run modal since we're a global preference
-		if alert.runModal() == NSApplication.ModalResponse.alertFirstButtonReturn {
-			UserSettings.LoginAutoStartAtLaunch.value = loginCheckBox.state == .on
-		}
-		
-        // Set focus on urlField
-        alert.accessoryView!.becomeFirstResponder()
-	}
-	
 	@objc @IBAction func openFilePress(_ sender: AnyObject) {
         var viewOptions = ViewOptions(rawValue: sender.tag)
         
@@ -672,7 +664,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         }
         
         do {
-            let typeName = url.pathExtension == k.hpl ? k.Playlist : k.He3
+            let typeName = url.pathExtension == k.hpl ? k.Playlist : k.Helium
             let doc = try docController.makeDocument(withContentsOf: url, ofType: typeName)
             if doc.windowControllers.count == 0 { doc.makeWindowControllers() }
             guard let wc = doc.windowControllers.first else { return false }
@@ -714,7 +706,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
             alertButton1stText: "Load",     alertButton1stInfo: nil,
             alertButton2ndText: "Cancel",   alertButton2ndInfo: nil,
             alertButton3rdText: "Home",     alertButton3rdInfo: UserSettings.HomePageURL.value),
-                          onWindow: window as? He3Panel,
+                          onWindow: window as? Panel,
                           title: "Enter URL",
                           acceptHandler: { (urlString: String) in
                             guard let newURL = URL.init(string: urlString) else { return }
@@ -773,7 +765,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
             }
             catch let error {
                 NSApp.presentError(error)
-                Swift.print("Yoink, unable to load playlists")
             }
             return
         }
@@ -814,7 +805,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         do
         {
             let url = URL.init(string: k.ReleaseURL)!
-            let doc = try docController.makeDocument(withContentsOf: url, ofType: k.He3)
+            let doc = try docController.makeDocument(withContentsOf: url, ofType: k.Helium)
             if let window = doc.windowControllers.first?.window {
                 DispatchQueue.main.async { window.makeKeyAndOrderFront(self) }
             }
@@ -825,7 +816,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
 	}
 	
     @objc @IBAction func snapshotAll(_ sender: NSMenuItem) {
-        let notif = Notification(name: Notification.Name(rawValue: "He3SnapshotAll"), object: sender)
+        let notif = Notification(name: Notification.Name(rawValue: "SnapshotAll"), object: sender)
         NotificationCenter.default.post(notif)
     }
 
@@ -867,7 +858,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
             alertButton1stText: "Set",      alertButton1stInfo: nil,
             alertButton2ndText: "Cancel",   alertButton2ndInfo: nil,
             alertButton3rdText: "Default",  alertButton3rdInfo: UserSettings.UserAgent.default),
-                          onWindow: NSApp.keyWindow as? He3Panel,
+                          onWindow: NSApp.keyWindow as? Panel,
                           title: "Default User Agent",
                           acceptHandler: { (newUserAgent: String) in
                             UserSettings.UserAgent.value = newUserAgent
@@ -875,24 +866,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         )
     }
     
-    func modalOKCancel(_ message: String, info: String?) -> Bool {
-        let alert: NSAlert = NSAlert()
-        alert.messageText = message
-        if info != nil {
-            alert.informativeText = info!
-        }
-        alert.alertStyle = NSAlert.Style.warning
-        alert.addButton(withTitle: "OK")
-        alert.addButton(withTitle: "Cancel")
-        let response = alert.runModal()
-        switch response {
-        case NSApplication.ModalResponse.alertFirstButtonReturn:
-            return true
-        default:
-            return false
-        }
-    }
-
     func sheetOKCancel(_ message: String, info: String?,
                        acceptHandler: @escaping (NSApplication.ModalResponse) -> Void) {
         let alert = NSAlert()
@@ -953,52 +926,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         }
         return ok
     }
-    func userTextInput(_ prompt: String, defaultText: String?) -> String? {
-        var text : String? = nil
-
-        // Create alert
-        let alert = NSAlert()
-        alert.alertStyle = NSAlert.Style.informational
-        alert.messageText = prompt
-        
-        // Create urlField
-        let textField = URLField(withValue: defaultText, modalTitle: title)
-        textField.frame = NSRect(x: 0, y: 0, width: 300, height: 20)
-        alert.accessoryView = textField
-
-        // Add urlField and buttons to alert
-        alert.addButton(withTitle: "OK")
-        alert.addButton(withTitle: "Cancel")
-        
-        //  Have window, but make it active
-        NSApp.activate(ignoringOtherApps: true)
-        
-        if let keyWindow = NSApp.keyWindow {
-            if let hpc = keyWindow.windowController as? He3PanelController {
-                textField.borderColor = hpc.homeColor
-            }
-            alert.beginSheetModal(for: keyWindow, completionHandler: { response in
-                // buttons are accept, cancel, default
-                if response == NSApplication.ModalResponse.alertFirstButtonReturn {
-                    // swiftlint:disable:next force_cast
-                    text = (alert.accessoryView as! NSTextField).stringValue
-                 }
-            })
-        }
-        else
-        {
-            //  No window, so load panel modally
-            NSApp.activate(ignoringOtherApps: true)
-
-            if alert.runModal() == NSApplication.ModalResponse.alertFirstButtonReturn {
-                text = (alert.accessoryView as! NSTextField).stringValue
-            }
-        }
-        // Set focus on urlField
-        alert.accessoryView!.becomeFirstResponder()
-        
-        return text
-    }
 
     @objc func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         if menuItem.title.hasPrefix("Redo") {
@@ -1030,18 +957,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
 				menuItem.state = UserSettings.ShareWebCookies.value ? .on : .off
 			case "Store":
 				menuItem.state = UserSettings.StoreWebCookies.value ? .on : .off
-			case "Developer Extras":
-                guard let type = NSApp.keyWindow?.className, type == "WKInspectorWindow" else {
-                    guard let wc = NSApp.keyWindow?.windowController,
-                        let hpc : He3PanelController = wc as? He3PanelController,
-                        let state = hpc.webView?.configuration.preferences.value(forKey: "developerExtrasEnabled") else {
-                            menuItem.state = UserSettings.DeveloperExtrasEnabled.value ? .on : .off
-                            break
-                    }
-                    menuItem.state = (state as! NSNumber).boolValue ? .on : .off
-                    break
-                }
-                menuItem.state = .on
+			case "WebView Inspector":
+				menuItem.state = UserSettings.DeveloperExtrasEnabled.value ? .on : .off
             case "Hide He3 in menu bar":
                 menuItem.state = UserSettings.HideAppMenu.value ? .on : .off
             case "Keep history record":
@@ -1159,7 +1076,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(AppDelegate.haveNewTitle(_:)),
-            name: NSNotification.Name(rawValue: "He3NewURL"),
+            name: NSNotification.Name(rawValue: "NewURL"),
             object: nil)
 
         //  Load sandbox bookmark url when necessary
@@ -1206,11 +1123,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         }
     }
     
-    func restorePlaylists() -> [PlayList] {
+	func restorePlaylists(_  keyPath: String = k.playlists) -> [PlayList] {
         var playlists = [PlayList]()
             
         //  read back playlists as [Dictionary] or [String] keys to each [PlayItem]
-        if let plists = self.defaults.dictionary(forKey: k.playlists) {
+        if let plists = self.defaults.dictionary(forKey: keyPath) {
             for (name,plist) in plists {
                 guard let items = plist as? [Dictionary<String,Any>] else {
                     let playlist = PlayList.init(name: name, list: [PlayItem]())
@@ -1227,20 +1144,34 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
             }
         }
         else
-        if let plists = self.defaults.array(forKey: k.playlists) as? [String] {
+        if let dicts = self.defaults.array(forKey: keyPath) as? [Dictionary<String,Any>] {
+            for dict in dicts {
+				let playlist = PlayList.init(with: dict)
+                playlists.append(playlist)
+            }
+        }
+		else
+        if let plists = self.defaults.array(forKey: keyPath) as? [String] {
             for name in plists {
                 guard let plist = self.defaults.dictionary(forKey: name) else {
-                    let playlist = PlayList.init(name: name, list: [PlayItem]())
+					var list = [PlayItem]()
+					if let items = self.defaults.array(forKey: name) {
+						for item in items {
+							let playitem = PlayItem.init(with: (item as? Dictionary<String, Any>)!)
+							list.append(playitem)
+						}
+					}
+                    let playlist = PlayList.init(name: name, list: list)
                     playlists.append(playlist)
                     continue
                 }
-                let playlist = PlayList.init(with: plist, createMissingItems: true)
+                let playlist = PlayList.init(with: plist)
                 playlists.append(playlist)
             }
         }
         else
         {
-            self.defaults.set([Dictionary<String,Any>](), forKey: k.playlists)
+            self.defaults.set([Dictionary<String,Any>](), forKey: keyPath)
         }
         return playlists
     }
@@ -1252,7 +1183,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
             plists.append(plist.dictionary())
         }
         
-        self.defaults.set(plists, forKey: k.playlists)
+        defaults.set(plists, forKey: k.playlists)
+		defaults.synchronize()
     }
     
     //  Histories restore deferred until requested
@@ -1305,7 +1237,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         let reopenMessage = disableDocumentReOpening ? "do not reopen doc(s)" : "reopen doc(s)"
         let hasVisibleDocs = flag ? "has doc(s)" : "no doc(s)"
         Swift.print("applicationShouldHandleReopen: \(reopenMessage) docs:\(hasVisibleDocs)")
-        if !flag && 0 == docController.documents.count { return !applicationOpenUntitledFile(sender) }
+		if !flag && nil == NSApp.keyWindow { return !applicationOpenUntitledFile(sender) }
         return !disableDocumentReOpening || flag
     }
 
@@ -1414,6 +1346,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
     
     var autoSaveTimer : Timer?
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+		
+		//	Run down our launch if still around
+        let launcherAppId = "com.slashlos.he3.Launcher"
+        let runningApps = NSWorkspace.shared.runningApplications
+        let isRunning = !runningApps.filter { $0.bundleIdentifier == launcherAppId }.isEmpty
+
+        SMLoginItemSetEnabled(launcherAppId as CFString, true)
+
+        if isRunning {
+            DistributedNotificationCenter.default().post(name: .killHe3Launcher, object: Bundle.main.bundleIdentifier!)
+        }
+
         // Local/Global Monitor
         _ /*accessEnabled*/ = AXIsProcessTrustedWithOptions([kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: true] as CFDictionary)
         globalKeyDownMonitor = NSEvent.addGlobalMonitorForEvents(matching: NSEvent.EventTypeMask.flagsChanged) { (event) -> Void in
@@ -1466,6 +1410,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
             }
         })
         if let timer = self.autoSaveTimer { RunLoop.current.add(timer, forMode: .common) }
+		
+		//	Handle Cocoa Auto Layout mechanism exception
+		UserDefaults.standard.set(true, forKey: "NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints")
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -1525,7 +1472,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
     }
 
     func applicationDockMenu(sender: NSApplication) -> NSMenu? {
-        let menu = NSMenu(title: appName)
+        let menu = NSMenu(title: AppName)
         var item: NSMenuItem
 
         item = NSMenuItem(title: "Open", action: #selector(menuClicked(_:)), keyEquivalent: "")
@@ -1625,20 +1572,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
     /// Shows alert asking user to input user agent string
     /// Process response locally, validate, dispatch via supplied handler
     func didRequestUserAgent(_ strings: RequestUserStrings,
-                             onWindow: He3Panel?,
+                             onWindow: Panel?,
                              title: String?,
                              acceptHandler: @escaping (String) -> Void) {
         
         // Create alert
         let alert = NSAlert()
-        alert.icon = NSImage.init(named: k.He3)
+        alert.icon = NSImage.init(named: k.AppName)
         alert.alertStyle = NSAlert.Style.informational
         alert.messageText = strings.alertMessageText
         
         // Create uaField
         let uaField = URLField(withValue: strings.currentURLString, modalTitle: title)
         uaField.frame = NSRect(x: 0, y: 0, width: 300, height: 20)
-        if let hpc = onWindow?.windowController as? He3PanelController {
+        if let hpc = onWindow?.windowController as? HeliumController {
             uaField.borderColor = hpc.homeColor
         }
         
@@ -1722,20 +1669,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
     }
     
     func didRequestSearch(_ strings: RequestUserStrings,
-                          onWindow: He3Panel?,
+                          onWindow: Panel?,
                           title: String?,
                           acceptHandler: @escaping (Bool,URL) -> Void) {
         
         // Create alert
         let alert = NSAlert()
-        alert.icon = NSImage.init(named: k.He3)
+        alert.icon = NSImage.init(named: k.AppName)
         alert.alertStyle = NSAlert.Style.informational
         alert.messageText = strings.alertMessageText
         
         // Create our search field with recent searches
         let search = SearchField(withValue: strings.currentURLString, modalTitle: title)
         search.frame = NSRect(x: 0, y: 0, width: 300, height: 20)
-        if let hpc = onWindow?.windowController as? He3PanelController {
+        if let hpc = onWindow?.windowController as? HeliumController {
             search.borderColor = hpc.homeColor
         }
         (search.cell as! NSSearchFieldCell).maximumRecents = 254
@@ -1818,20 +1765,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
     }
 
     func didRequestUserUrl(_ strings: RequestUserStrings,
-                           onWindow: He3Panel?,
+                           onWindow: Panel?,
                            title: String?,
                            acceptHandler: @escaping (String) -> Void) {
         
         // Create alert
         let alert = NSAlert()
-        alert.icon = NSImage.init(named: k.He3)
+        alert.icon = NSImage.init(named: k.AppName)
         alert.alertStyle = NSAlert.Style.informational
         alert.messageText = strings.alertMessageText
         
         // Create urlField
         let urlField = URLField(withValue: strings.currentURLString, modalTitle: title)
         urlField.frame = NSRect(x: 0, y: 0, width: 300, height: 20)
-        if let hpc = onWindow?.windowController as? He3PanelController {
+        if let hpc = onWindow?.windowController as? HeliumController {
             urlField.borderColor = hpc.homeColor
         }
         alert.accessoryView = urlField
@@ -1856,7 +1803,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         NSApp.activate(ignoringOtherApps: true)
         
         if let urlWindow = onWindow {
-            if let hpc = urlWindow.windowController as? He3PanelController {
+            if let hpc = urlWindow.windowController as? HeliumController {
                 urlField.borderColor = hpc.homeColor
             }
             alert.beginSheetModal(for: urlWindow, completionHandler: { response in
@@ -1924,7 +1871,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         
         //  Handle new window here to narrow cast to new or current panel controller
         if (viewOptions == sameWindow || !openForBusiness), let wc = NSApp.keyWindow?.windowController {
-            if let hpc : He3PanelController = wc as? He3PanelController {
+            if let hpc : HeliumController = wc as? HeliumController {
                 _ = (hpc.contentViewController as! WebViewController).loadURL(text: String(urlString))
                 return
             }
@@ -1938,7 +1885,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
             // Notice: string will contain whole selection, not just the urls
             // So this may (and will) fail. It should instead find url in whole
             // Text somehow
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "He3LoadURLString"), object: selection)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "LoadURLString"), object: selection)
         }
     }
     
@@ -2018,7 +1965,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         let openPanel = NSOpenPanel()
         var baseURL = url
         
-        openPanel.message = "Authorize access to " + baseURL.lastPathComponent
+        openPanel.message = "Authorize base access to " + baseURL.lastPathComponent
         openPanel.prompt = "Authorize"
         openPanel.allowsMultipleSelection = false
         openPanel.canChooseFiles = false
@@ -2144,7 +2091,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         }
         catch let error
         {
-            NSApp.presentError(error)
+			//	Unless we have a window don't bother; allows to
+			//	silently fail until its use is attempted later.
+			if nil != NSApp.keyWindow {
+				DispatchQueue.main.async {
+					///NSApp.presentError(error)
+					self.userAlertMessage(error.localizedDescription,
+										  info: String(format: "Stale, Missing? Update bookmark:\n%@",
+													   url.absoluteString.removingPercentEncoding!))
+				}
+			}
             Swift.print ("Error storing bookmark: \(url)")
             return false
         }
@@ -2192,6 +2148,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         Swift.print ("\(fetch ? "•" : "º") \(bookmark.key)")
         return fetch
     }
+	
+	func isBookmarked(_ url: URL) -> Bool {
+		guard isSandboxed else { return false }
+
+		if let data = bookmarks[url] {
+			if self.fetchBookmark((key: url, value: data)) {
+//                Swift.print ("ß \(url.absoluteString)")
+				return true
+			}
+		}
+		return false
+	}
 }
 
 

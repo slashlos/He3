@@ -3,15 +3,15 @@
 <plist version="1.0">
 <dict>
 	<key>CFBuildDate</key>
-	<string>20200501.234518</string>
+	<string>20200531.141029</string>
 	<key>CFBuildIncrement</key>
-	<false/>
+	<true/>
 	<key>CFBuildMajor</key>
 	<integer>1</integer>
 	<key>CFBuildMinor</key>
 	<integer>0</integer>
 	<key>CFBuildNumber</key>
-	<integer>7266</integer>
+	<integer>8117</integer>
 	<key>CFBuildPatch</key>
 	<integer>1</integer>
 	<key>CFBundleDevelopmentRegion</key>
@@ -21,16 +21,12 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
-				<string>hepi</string>
+				<string>h3i</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>itemIcon</string>
 			<key>CFBundleTypeName</key>
-			<string>DocumentType</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>????</string>
-			</array>
+			<string>Playitem</string>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>LSHandlerRank</key>
@@ -41,7 +37,7 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
-				<string>hepl</string>
+				<string>h3l</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>listIcon</string>
@@ -51,18 +47,24 @@
 			<string>Editor</string>
 			<key>LSHandlerRank</key>
 			<string>Owner</string>
+			<key>LSItemContentTypes</key>
+			<array/>
 			<key>NSDocumentClass</key>
 			<string>$(PRODUCT_MODULE_NAME).Document</string>
 		</dict>
 		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string></string>
+			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>inctIcon</string>
+			<string>icntIcon</string>
 			<key>CFBundleTypeName</key>
 			<string>Any</string>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>LSHandlerRank</key>
-			<string>Owner</string>
+			<string>Default</string>
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.adobe.pdf</string>
@@ -77,7 +79,7 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
-				<string>hein</string>
+				<string>h3c</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>icntIcon</string>
@@ -117,7 +119,7 @@
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>CFBundleURLIconFile</key>
-			<string>inctIcon</string>
+			<string>icntIcon</string>
 			<key>CFBundleURLName</key>
 			<string>he3</string>
 			<key>CFBundleURLSchemes</key>
@@ -127,7 +129,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.0.7266</string>
+	<string>1.0.8117</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>
@@ -162,44 +164,43 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>com.apple.property-list</string>
+				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PlayItem</string>
 			<key>UTTypeIconFile</key>
 			<string>itemIcon</string>
 			<key>UTTypeIdentifier</key>
-			<string>com.slashlos.he3.hpi</string>
+			<string>com.slashlos.he3.h3i</string>
 			<key>UTTypeTagSpecification</key>
-			<dict/>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>h3i</string>
+				</array>
+			</dict>
 		</dict>
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>com.apple.property-list</string>
+				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PlayList</string>
 			<key>UTTypeIconFile</key>
 			<string>listIcon</string>
 			<key>UTTypeIdentifier</key>
-			<string>com.slashlos.he3.hpl</string>
+			<string>com.slashlos.he3.h3l</string>
 			<key>UTTypeTagSpecification</key>
-			<dict/>
-		</dict>
-	</array>
-	<key>UTImportedTypeDeclarations</key>
-	<array>
-		<dict>
-			<key>UTTypeDescription</key>
-			<string>Portable Document Format</string>
-			<key>UTTypeIdentifier</key>
-			<string>com.adobe.pdf</string>
-			<key>UTTypeTagSpecification</key>
-			<dict/>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>h3l</string>
+				</array>
+			</dict>
 		</dict>
 	</array>
 	<key>Use Legacy Swift Language Version</key>
-	<true/>
+	<false/>
 </dict>
 </plist>

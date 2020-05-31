@@ -112,9 +112,12 @@ class CacheSchemeHandler : NSObject,WKURLSchemeHandler {
             dict[k.text] = NSString.string(fromAsset: ident)
             dict[k.mime] = "text/html"
             
-        default:
+		case k.text, k.html:
             let cache = String(format: "%@/%@", group, ident)
             dict = defaults.dictionary(forKey: cache)! as! Dictionary<String, String>
+			
+		default:
+            return
         }
         
         guard let mime = dict[k.mime], var text = dict[k.text] else { return }
@@ -179,13 +182,8 @@ class MyWebView : WKWebView {
     var chromeType: NSPasteboard.PasteboardType { return NSPasteboard.PasteboardType.init(rawValue: "org.chromium.drag-dummy-type") }
     var finderNode: NSPasteboard.PasteboardType { return NSPasteboard.PasteboardType.init(rawValue: "com.apple.finder.node") }
     var webarchive: NSPasteboard.PasteboardType { return NSPasteboard.PasteboardType.init(rawValue: "com.apple.webarchive") }
-    var acceptableTypes: Set<NSPasteboard.PasteboardType> { return [.URL, .fileURL, .list, .item, .html, .pdf, .png, .rtf, .rtfd, .tiff, finderNode, webarchive] }
+    var acceptableTypes: Set<NSPasteboard.PasteboardType> { return [.URL, .fileURL, .html, .pdf, .png, .rtf, .rtfd, .tiff, finderNode, webarchive] }
     var filteringOptions = [NSPasteboard.ReadingOptionKey.urlReadingContentsConformToTypes:NSImage.imageTypes]
-    var htmlContents : String? {
-        didSet {
-            dirty = true
-        }
-    }
     
     var borderView = WebBorderView()
     var loadingIndicator = ProgressIndicator()
@@ -247,8 +245,12 @@ class MyWebView : WKWebView {
     override func willOpenMenu(_ menu: NSMenu, with event: NSEvent) {
 
         //  Pick off javascript items we want to ignore or handle
-        for title in ["Open Link", "Open Link in New Window", "Download Linked File"] {
+        for title in ["Inspect Element", "Open Link", "Open Link in New Window", "Download Linked File"] {
             if let item = menu.item(withTitle: title) {
+				if title == "Inspect Element" {
+					item.isHidden = !UserSettings.DeveloperExtrasEnabled.value
+				}
+				else
                 if title == "Download Linked File" {
                     if let url = selectedURL {
                         item.representedObject = url
@@ -331,9 +333,9 @@ class MyWebView : WKWebView {
         }
     }
     
-    var heliumPanelController : He3PanelController? {
+    var heliumPanelController : HeliumController? {
         get {
-            guard let hpc : He3PanelController = self.window?.windowController as? He3PanelController else { return nil }
+            guard let hpc : HeliumController = self.window?.windowController as? HeliumController else { return nil }
             return hpc
         }
     }
@@ -389,7 +391,7 @@ class MyWebView : WKWebView {
 
         //  Resolve alias before sandbox bookmarking
         if let webloc = url.webloc { return next(url: webloc) }
-        if let original = (url as NSURL).resolvedFinderAlias() { return next(url: original) }
+        if let original = url.resolvedFinderAlias() { return next(url: original) }
 
         if url.isFileURL
         {
@@ -397,7 +399,7 @@ class MyWebView : WKWebView {
                 Swift.print("Yoink, unable to sandbox \(url)")
                 return false
             }
-            let baseURL = appDelegate.authenticateBaseURL(url)
+            let baseURL = url///appDelegate.authenticateBaseURL(url)
                 
             return self.loadFileURL(url, allowingReadAccessTo: baseURL) != nil
         }
@@ -421,28 +423,15 @@ class MyWebView : WKWebView {
     }
     
     func text(_ text : String) -> Bool {
-        if let url = URL.init(string: text) { return next(url: url) }
+		//	We have what appears to be a URL with a scheme so try it
+		if let url = URL.init(string: text), nil != url.scheme { if next(url: url) { return true } }
         
-        if FileManager.default.fileExists(atPath: text) {
-            return next(url: URL.init(fileURLWithPath: text))
-        }
-        
-        if let data = text.data(using: String.Encoding.utf8) {
-            do {
-                let json = try JSONSerialization.jsonObject(with: data, options: [.allowFragments])
-                let wvc = self.window?.contentViewController
-                (wvc as! WebViewController).loadAttributes(dict: json as! Dictionary<String, Any>)
-                return true
-            } catch let error as NSError {
-                Swift.print("json: \(error.code):\(error.localizedDescription): \(text)")
-            }
-        }
-        
+		//	Just send along as text what we have
         guard let url = URL.init(cache: text, embed: true) else { return false }
         return next(url: url)
     }
     
-    func text(attributedString text: NSAttributedString) -> Bool {
+    func text(_ text: NSAttributedString) -> Bool {
         guard let url = URL.init(cache: text, embed: true) else { return false }
         return next(url: url)
     }
@@ -471,7 +460,7 @@ override func mouseMoved(with event: NSEvent) {
 
     // MARK: Drag and Drop - Before Release
     func shouldAllowDrag(_ info: NSDraggingInfo) -> Bool {
-        guard let doc = webViewController?.document, doc.docGroup == .he3 else { return false }
+        guard let doc = webViewController?.document, doc.docGroup == .helium else { return false }
         let pboard = info.draggingPasteboard
         let items = pboard.pasteboardItems!
         var canAccept = false
@@ -557,7 +546,7 @@ override func mouseMoved(with event: NSEvent) {
         for item in items! {
             if handled == items!.count { break }
             
-            if let urlString = item.string(forType: NSPasteboard.PasteboardType(rawValue: kUTTypeURL as String)) {
+			if let urlString = item.string(forType: NSPasteboard.PasteboardType(rawValue: kUTTypeURL as String)), urlString.count > 0 {
                 handled += self.next(url: URL(string: urlString)!) ? 1 : 0
                 continue
             }
@@ -566,15 +555,10 @@ override func mouseMoved(with event: NSEvent) {
                 Swift.print("web type: \(type)")
 
                 switch type {
-                case .files:
-                    if let files = pboard.propertyList(forType: type) {
-                        Swift.print("files \(files)")
-                    }
-                    
                 case .URL, .fileURL:
                     if let urlString = item.string(forType: type), let url = URL.init(string: urlString) {
-                        // MARK: TODO: load new files in distinct windows
-                        if url.isFileURL || dirty { viewOptions.insert(.w_view) }
+                        // MARK: TODO: load new files in distinct windows when dirty
+						if dirty || url.isFileURL { viewOptions.insert(.t_view) }
                         
                         if viewOptions.contains(.t_view) {
                             handled += appDelegate.openURLInNewWindow(url, context: window) ? 1 : 0
@@ -627,68 +611,16 @@ override func mouseMoved(with event: NSEvent) {
                         }
                     }
                     
-                case .list:
-                    if let playlists: Array<AnyObject> = pboard.readObjects(forClasses: [PlayList.classForCoder()], options: options) as Array<AnyObject>? {
-                        for playlist in playlists {
-                            for playitem in playlist.list {
-                                if viewOptions.contains(.t_view) {
-                                    handled += appDelegate.openURLInNewWindow(playitem.link, context: window) ? 1 : 0
-                                }
-                                else
-                                if viewOptions.contains(.w_view) {
-                                    handled += appDelegate.openURLInNewWindow(playitem.link) ? 1 : 0
-                                }
-                                else
-                                {
-                                    handled += self.next(url: playitem.link) ? 1 : 0
-                                }
-                                
-                                //  Multiple files implies new windows
-                                viewOptions.insert(.w_view)
-                            }
-                            handled += 1
-                        }
-                    }
-                    
-                case .item:
-                    if let playitems: Array<AnyObject> = pboard.readObjects(forClasses: [PlayItem.classForCoder()], options: options) as Array<AnyObject>? {
-                        var items = 0
-                        
-                        for playitem in playitems {
-                            Swift.print("item: \(playitem)")
-                            if viewOptions.contains(.t_view) {
-                                items += appDelegate.openURLInNewWindow(playitem.link, context: window) ? 1 : 0
-                            }
-                            else
-                            if viewOptions.contains(.w_view) {
-                                items += appDelegate.openURLInNewWindow(playitem.link) ? 1 : 0
-                            }
-                            else
-                            {
-                                items += self.next(url: playitem.link) ? 1 : 0
-                            }
-                            
-                            //  Multiple files implies new windows
-                            viewOptions.insert(.w_view)
-                            handled += (items == playitems.count) ? 1 : 0
-                        }
-                    }
-                    
-                case .data:
-                    if let data = item.data(forType: type) {
-                        handled += self.data(data) ? 1 : 0
-                    }
-
                 case .rtf, .rtfd:
                     if let data = item.data(forType: type), let text = NSAttributedString(rtf: data, documentAttributes: nil) {
-                        handled += self.text(text.string) ? 1 : 0
+                        handled += self.text(text) ? 1 : 0
                     }
                     
                 case .string, .tabularText:
                     if let text = item.string(forType: type) {
                         handled += self.text(text) ? 1 : 0
                     }
-/*
+
                 case webarchive:
                     if let data = item.data(forType: type) {
                         let html = String(decoding: data, as: UTF8.self)
@@ -732,7 +664,7 @@ override func mouseMoved(with event: NSEvent) {
                             Swift.print("\(type) prop \(String(describing: prop))")
                         }
                     }
-                    
+/*
                 case .filePromise:
                     Swift.print(".filePromise")
                     break
@@ -800,7 +732,7 @@ override func mouseMoved(with event: NSEvent) {
     func publishContextualMenu(_ menu: NSMenu) {
         guard let window = self.window else { return }
         let wvc = window.contentViewController as! WebViewController
-        let hpc = window.windowController as! He3PanelController
+        let hpc = window.windowController as! HeliumController
         let document : Document = hpc.document as! Document
         let settings = (hpc.document as! Document).settings
         let autoHideTitle = hpc.autoHideTitlePreference
@@ -995,12 +927,12 @@ override func mouseMoved(with event: NSEvent) {
         item.submenu = subAuto
         
         item = NSMenuItem(title: "Never", action: #selector(hpc.autoHideTitlePress(_:)), keyEquivalent: "")
-        item.tag = He3PanelController.AutoHideTitlePreference.never.rawValue
+        item.tag = HeliumController.AutoHideTitlePreference.never.rawValue
         item.state = autoHideTitle == .never ? .on : .off
         item.target = hpc
         subAuto.addItem(item)
         item = NSMenuItem(title: "Outside", action: #selector(hpc.autoHideTitlePress(_:)), keyEquivalent: "")
-        item.tag = He3PanelController.AutoHideTitlePreference.outside.rawValue
+        item.tag = HeliumController.AutoHideTitlePreference.outside.rawValue
         item.state = autoHideTitle == .outside ? .on : .off
         item.target = hpc
         subAuto.addItem(item)
@@ -1088,22 +1020,22 @@ override func mouseMoved(with event: NSEvent) {
         subOpacity.addItem(item)
 
         item = NSMenuItem(title: "Never", action: #selector(hpc.translucencyPress(_:)), keyEquivalent: "")
-        item.tag = He3PanelController.TranslucencyPreference.never.rawValue
+        item.tag = HeliumController.TranslucencyPreference.never.rawValue
         item.state = translucency == .never ? .on : .off
         item.target = hpc
         subTranslucency.addItem(item)
         item = NSMenuItem(title: "Always", action: #selector(hpc.translucencyPress(_:)), keyEquivalent: "")
-        item.tag = He3PanelController.TranslucencyPreference.always.rawValue
+        item.tag = HeliumController.TranslucencyPreference.always.rawValue
         item.state = translucency == .always ? .on : .off
         item.target = hpc
         subTranslucency.addItem(item)
         item = NSMenuItem(title: "Mouse Over", action: #selector(hpc.translucencyPress(_:)), keyEquivalent: "")
-        item.tag = He3PanelController.TranslucencyPreference.mouseOver.rawValue
+        item.tag = HeliumController.TranslucencyPreference.mouseOver.rawValue
         item.state = translucency == .mouseOver ? .on : .off
         item.target = hpc
         subTranslucency.addItem(item)
         item = NSMenuItem(title: "Mouse Outside", action: #selector(hpc.translucencyPress(_:)), keyEquivalent: "")
-        item.tag = He3PanelController.TranslucencyPreference.mouseOutside.rawValue
+        item.tag = HeliumController.TranslucencyPreference.mouseOutside.rawValue
         item.state = translucency == .mouseOutside ? .on : .off
         item.target = hpc
         subTranslucency.addItem(item)
@@ -1123,7 +1055,7 @@ override func mouseMoved(with event: NSEvent) {
         item.target = wvc
         menu.addItem(item)
         
-        item = NSMenuItem(title: "Close", action: #selector(He3Panel.performClose(_:)), keyEquivalent: "")
+        item = NSMenuItem(title: "Close", action: #selector(Panel.performClose(_:)), keyEquivalent: "")
         item.target = hpc.window
         menu.addItem(item)
         
@@ -1142,32 +1074,7 @@ override func mouseMoved(with event: NSEvent) {
     }
 }
 
-extension NSView {
-    func fit(_ parentView: NSView) {
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.topAnchor.constraint(equalTo: parentView.topAnchor).isActive = true
-        self.leadingAnchor.constraint(equalTo: parentView.leadingAnchor).isActive = true
-        self.trailingAnchor.constraint(equalTo: parentView.trailingAnchor).isActive = true
-        self.bottomAnchor.constraint(equalTo: parentView.bottomAnchor).isActive = true
-    }
-    func center(_ parentView: NSView) {
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.centerXAnchor.constraint(equalTo: parentView.centerXAnchor).isActive = true
-        self.centerYAnchor.constraint(equalTo: parentView.centerYAnchor).isActive = true
-    }
-    func vCenter(_ parentView: NSView) {
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.centerYAnchor.constraint(equalTo: parentView.centerYAnchor).isActive = true
-    }
-    func top(_ parentView: NSView) {
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.topAnchor.constraint(equalTo: parentView.topAnchor).isActive = true
-        self.leadingAnchor.constraint(equalTo: parentView.leadingAnchor).isActive = true
-        self.trailingAnchor.constraint(equalTo: parentView.trailingAnchor).isActive = true
-    }
-}
-
-class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandler, NSMenuDelegate, NSTabViewDelegate, WKHTTPCookieStoreObserver, QLPreviewPanelDataSource, QLPreviewPanelDelegate/*, URLSessionDelegate,URLSessionTaskDelegate,URLSessionDownloadDelegate*/ {
+class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegate, NSTabViewDelegate, WKHTTPCookieStoreObserver, QLPreviewPanelDataSource, QLPreviewPanelDelegate {
 
     public func cookiesDidChange(in cookieStore: WKHTTPCookieStore) {
         DispatchQueue.main.async {
@@ -1193,19 +1100,19 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, W
             return nil
         }
     }
-    var heliumPanelController : He3PanelController? {
+    var heliumPanelController : HeliumController? {
         get {
-            guard let hpc : He3PanelController = self.view.window?.windowController as? He3PanelController else { return nil }
+            guard let hpc : HeliumController = self.view.window?.windowController as? HeliumController else { return nil }
             return hpc
         }
     }
 
     var trackingTag: NSView.TrackingRectTag? {
         get {
-            return (self.webView.window?.windowController as? He3PanelController)?.viewTrackingTag
+            return (self.webView.window?.windowController as? HeliumController)?.viewTrackingTag
         }
         set (value) {
-            (self.webView.window?.windowController as? He3PanelController)?.viewTrackingTag = value
+            (self.webView.window?.windowController as? HeliumController)?.viewTrackingTag = value
         }
     }
 
@@ -1230,17 +1137,17 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, W
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(WebViewController.loadURL(urlFileURL:)),
-            name: NSNotification.Name(rawValue: "He3LoadURL"),
+            name: NSNotification.Name(rawValue: "LoadURL"),
             object: nil)
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(WebViewController.loadURL(urlString:)),
-            name: NSNotification.Name(rawValue: "He3LoadURLString"),
+            name: NSNotification.Name(rawValue: "LoadURLString"),
             object: nil)
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(WebViewController.snapshot(_:)),
-            name: NSNotification.Name(rawValue: "He3SnapshotAll"),
+            name: NSNotification.Name(rawValue: "SnapshotAll"),
             object: nil)
         
         //  Watch command key changes
@@ -1388,13 +1295,20 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, W
         
         if 0 == loadingIndicator.constraints.count { loadingIndicator.center(view) }
     }
-    
+
     override func viewWillAppear() {
         super.viewWillAppear()
-        
+
+		//	document.fileURL is recent, webView.url is current URL
         if let document = self.document, let url = document.fileURL {
-            _ = loadURL(url: url)
-        }
+			if url != webView.url {
+				_ = loadURL(url: url)
+			}
+			else
+			{
+				webView.needsDisplay = true
+			}
+		}
         else
         {
             clear()
@@ -1404,7 +1318,7 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, W
     override func viewDidAppear() {
         super.viewDidAppear()
         
-        guard let doc = self.document, doc.docGroup == .he3 else { return }
+        guard let doc = self.document, doc.docGroup == .helium else { return }
         
         //  https://stackoverflow.com/questions/32056874/programmatically-wkwebview-inside-an-uiview-with-auto-layout
  
@@ -1474,11 +1388,6 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, W
     // MARK: Actions
     @objc func validateMenuItem(_ menuItem: NSMenuItem) -> Bool{
         switch menuItem.title {
-        case "Developer Extras":
-            guard let state = webView.configuration.preferences.value(forKey: "developerExtrasEnabled") else { return false }
-            menuItem.state = (state as? NSNumber)?.boolValue == true ? .on : .off
-            return true
-
         case "Back":
             return webView.canGoBack
         case "Forward":
@@ -1506,10 +1415,13 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, W
     }
     
     @objc internal func commandKeyDown(_ notification : Notification) {
+		//	Don't bother unless we're a first responder
+		guard self.view.window == NSApp.keyWindow, [webView].contains(self.view.window?.firstResponder) else { return }
+
         let commandKeyDown : NSNumber = notification.object as! NSNumber
         if let window = self.view.window {
             window.isMovableByWindowBackground = commandKeyDown.boolValue
-//            Swift.print(String(format: "CMND %@", commandKeyDown.boolValue ? "v" : "^"))
+///            Swift.print(String(format: "CMND %@", commandKeyDown.boolValue ? "v" : "^"))
         }
     }
     /*
@@ -1518,6 +1430,10 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, W
         snapshot(self)
     }
     */
+	@objc @IBAction func saveDocument(_ sender: Any) {
+		self.document?.save(sender)
+	}
+	
     fileprivate func zoomIn() {
         webView.magnification += 0.1
     }
@@ -1528,10 +1444,6 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, W
     
     fileprivate func resetZoom() {
         webView.magnification = 1
-    }
-
-    @objc @IBAction func developerExtrasEnabledPress(_ sender: NSMenuItem) {
-        self.webView.configuration.preferences.setValue((sender.state != .on), forKey: "developerExtrasEnabled")
     }
 
     @objc @IBAction func openFilePress(_ sender: AnyObject) {
@@ -1551,7 +1463,7 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, W
         open.beginSheetModal(for: window!, completionHandler: { (response: NSApplication.ModalResponse) in
             if response == .OK {
                 // MARK: TODO: load new files in distinct windows
-                if self.webView.dirty { viewOptions.insert(.w_view) }
+                if self.webView.dirty { viewOptions.insert(.t_view) }
 
                 let urls = open.urls
                 var handled = 0
@@ -1591,7 +1503,7 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, W
             alertButton1stText: "Load",     alertButton1stInfo: nil,
             alertButton2ndText: "Cancel",   alertButton2ndInfo: nil,
             alertButton3rdText: "Home",     alertButton3rdInfo: UserSettings.HomePageURL.value),
-                                      onWindow: window as? He3Panel,
+                                      onWindow: window as? Panel,
                                       title: "Enter URL",
                                       acceptHandler: { (urlString: String) in
                                         guard let newURL = URL.init(string: urlString) else { return }
@@ -1622,7 +1534,7 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, W
             alertButton1stText: name,         alertButton1stInfo: info,
             alertButton2ndText: "Cancel",     alertButton2ndInfo: nil,
             alertButton3rdText: "New Window", alertButton3rdInfo: "Results in new window"),
-                                     onWindow: self.view.window as? He3Panel,
+                                     onWindow: self.view.window as? Panel,
                                      title: "Web Search",
                                      acceptHandler: { (newWindow: Bool, searchURL: URL) in
                                         if viewOptions.contains(.t_view) {
@@ -1662,7 +1574,7 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, W
             }
             else
             {
-                appDelegate.userAlertMessage("Failed taking snapshot", info: error?.localizedDescription)
+				self.userAlertMessage("Failed taking snapshot", info: error?.localizedDescription)
                 self.webImageView.image = nil
             }
         }
@@ -1700,7 +1612,7 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, W
         
         //  Form a filename: ~/"<app's name> View Shot <timestamp>"
         var name : String
-        if let url = webView.url, url != webView.homeURL { name = url.lastPathComponent } else { name = appDelegate.appName }
+        if let url = webView.url, url != webView.homeURL { name = url.lastPathComponent } else { name = appDelegate.AppName }
         let path = URL.init(fileURLWithPath: UserSettings.SnapshotsURL.value).appendingPathComponent(
             String(format: "%@ Shapshot at %@.png", name, String.prettyStamp()))
         
@@ -1738,7 +1650,7 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, W
             alertButton1stText:   "Set",      alertButton1stInfo: nil,
             alertButton2ndText:   "Cancel",   alertButton2ndInfo: nil,
             alertButton3rdText:   "Default",  alertButton3rdInfo: UserSettings.UserAgent.default),
-                      onWindow:   self.view.window as? He3Panel,
+                      onWindow:   self.view.window as? Panel,
                          title:   "Custom User Agent",
                  acceptHandler: { (newUserAgent: String) in
                                 self.webView.customUserAgent = newUserAgent
@@ -1826,36 +1738,36 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, W
     // MARK: Javascript
     
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        Swift.print("UCC \(message.name) => \"\(message.body)\"")
+        ///Swift.print("UCC \(message.name) => \"\(message.body)\"")
         
         switch message.name {
         case "newWindowWithUrlDetected":
             if let url = URL.init(string: message.body as! String) {
                 webView.selectedURL = url
-                Swift.print("new win -> \(url.absoluteString)")
+                ///Swift.print("new win -> \(url.absoluteString)")
             }
             
         case "newSelectionDetected":
             if let urlString : String = message.body as? String
             {
                 webView.selectedText = urlString
-                Swift.print("new str -> \(urlString)")
+                ///Swift.print("new str -> \(urlString)")
             }
             
         case "newUrlDetected":
             if let url = URL.init(string: message.body as! String) {
                 webView.selectedURL = url
-                Swift.print("new url -> \(url.absoluteString)")
+                ///Swift.print("new url -> \(url.absoluteString)")
             }
             
         case "clickMe":
-            Swift.print("message: \(message.body)")
+            ///Swift.print("message: \(message.body)")
             break
             
         case "updateCookies":
             guard appDelegate.shareWebCookies,appDelegate.storeWebCookies else { return }
             let updates = (message.body as! String).components(separatedBy: "; ")
-            Swift.print("cookie(\(updates.count)) \(message.body)")
+            ///Swift.print("cookie(\(updates.count)) \(message.body)")
 
             for update in updates {
                 let keyval = update.components(separatedBy: "=")
@@ -1874,14 +1786,14 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, W
                         properties[HTTPCookiePropertyKey("HTTPCookieValue")] = keyval.last!
                         if let updated = HTTPCookie.init(properties: properties) {
                             cookieStorage.setCookie(updated)
-                            Swift.print("+ cookie \(update)")
+                            ///Swift.print("+ cookie \(update)")
                         }
                     }
                 }
             }
             
         default:
-            appDelegate.userAlertMessage("Unhandled user controller message", info: message.name)
+            userAlertMessage("Unhandled user controller message", info: message.name)
         }
     }
 
@@ -1939,7 +1851,7 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, W
 
                     //  Initial recording for this url session
                     if UserSettings.HistorySaves.value, !webView.incognito {
-                        let notif = Notification(name: Notification.Name(rawValue: "He3NewURL"), object: url, userInfo: [k.fini : false, k.view : self.webView as Any])
+                        let notif = Notification(name: Notification.Name(rawValue: "NewURL"), object: url, userInfo: [k.fini : false, k.view : self.webView as Any])
                         NotificationCenter.default.post(notif)
                     }
                     
@@ -1953,7 +1865,7 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, W
                         }
                         else
                         {
-                            title = appDelegate.appName
+                            title = appDelegate.AppName
                         }
                         self.heliumPanelController?.hoverBar?.superview?.toolTip = toolTip.removingPercentEncoding
 
@@ -1970,7 +1882,7 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, W
                                 case (10, 10, _), (10, 11, _), (10, 12, _):
                                     if let oldSize = mwv.window?.contentView?.bounds.size, oldSize != webSize, var origin = mwv.window?.frame.origin, let theme = self.view.window?.contentView?.superview {
                                         var iterator = theme.constraints.makeIterator()
-                                        Swift.print(String(format:"view:%p webView:%p", mwv.superview!, mwv))
+                                        ///Swift.print(String(format:"view:%p webView:%p", mwv.superview!, mwv))
                                         while let constraint = iterator.next()
                                         {
                                             Swift.print("\(constraint.priority) \(constraint)")
@@ -2015,12 +1927,14 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, W
                             })
                         }
                     } else {
-                        title = appDelegate.appName
+                        title = appDelegate.AppName
                     }
                     
+					//	Once we're bookmarked, we cannot be used on another sandbo
+					if appDelegate.isBookmarked(url) { webView.dirty = true }
+					
                     // Remember for later restoration
                     NSApp.changeWindowsItem(self.view.window!, title: title, filename: false)
-
                 }
             }
             
@@ -2093,422 +2007,14 @@ class WebViewController: NSViewController, WKNavigationDelegate, WKUIDelegate, W
         return String(hash)
     }
     
-    // MARK:- Navigation Delegate
+	var quickLookURL : URL?
+	var quickLookFilename: String?
+	func numberOfPreviewItems(in panel: QLPreviewPanel!) -> Int { return 1 }
+	func previewPanel(_ panel: QLPreviewPanel!, previewItemAt index: Int) -> QLPreviewItem! {
+		let url = quickLookURL ?? FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(quickLookFilename!)
+		return url as QLPreviewItem
+	}
 
-    // Redirect Hulu and YouTube to pop-out videos
-    func webView(_ webView: WKWebView,
-                 decidePolicyFor navigationAction: WKNavigationAction,
-                 decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        Swift.print(String(format: "0DP: navigationAction: %p", webView))
-
-        let viewOptions = appDelegate.getViewOptions
-        var url = navigationAction.request.url!
-        
-        guard navigationAction.buttonNumber < 2 else {
-            Swift.print("newWindow with url:\(String(describing: url))")
-            if viewOptions.contains(.t_view) {
-                _ = appDelegate.openURLInNewWindow(url, context: webView.window )
-            }
-            else
-            {
-                _ = appDelegate.openURLInNewWindow(url)
-            }
-            decisionHandler(WKNavigationActionPolicy.cancel)
-            return
-        }
-        
-        guard !UserSettings.DisabledMagicURLs.value else {
-            if let selectedURL = (webView as! MyWebView).selectedURL {
-                url = selectedURL
-            }
-            if navigationAction.buttonNumber > 1 {
-                if viewOptions.contains(.t_view) {
-                    _ = appDelegate.openURLInNewWindow(url, context: webView.window )
-                }
-                else
-                {
-                    _ = appDelegate.openURLInNewWindow(url)
-                }
-                decisionHandler(WKNavigationActionPolicy.cancel)
-            }
-            else
-            {
-                decisionHandler(WKNavigationActionPolicy.allow)
-            }
-            return
-        }
-
-        if let newUrl = UrlHelpers.doMagic(url), newUrl != url {
-            decisionHandler(WKNavigationActionPolicy.cancel)
-            if let selectedURL = (webView as! MyWebView).selectedURL {
-                url = selectedURL
-            }
-            if navigationAction.buttonNumber > 1
-            {
-                if viewOptions.contains(.t_view) {
-                    _ = appDelegate.openURLInNewWindow(newUrl, context: webView.window )
-                }
-                else
-                {
-                    _ = appDelegate.openURLInNewWindow(newUrl)
-                }
-            }
-            else
-            {
-                _ = loadURL(url: newUrl)
-            }
-        }
-        
-        Swift.print("navType: \(navigationAction.navigationType.name)")
-        
-        decisionHandler(WKNavigationActionPolicy.allow)
-    }
-    /*  OPTIONAL @available(OSX 10.15, *)
-     /** @abstract Decides whether to allow or cancel a navigation after its
-     response is known.
-     @param webView The web view invoking the delegate method.
-     @param navigationResponse Descriptive information about the navigation
-     response.
-     @param decisionHandler The decision handler to call to allow or cancel the
-     navigation. The argument is one of the constants of the enumerated type WKNavigationResponsePolicy.
-     @discussion If you do not implement this method, the web view will allow the response, if the web view can show it.
-     */
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, preferences: WKWebpagePreferences, decisionHandler: @escaping (WKNavigationActionPolicy, WKWebpagePreferences) -> Void) {
-    }
-    */
-    var quickLookURL : URL?
-    var quickLookFilename: String?
-    func numberOfPreviewItems(in panel: QLPreviewPanel!) -> Int { return 1 }
-    func previewPanel(_ panel: QLPreviewPanel!, previewItemAt index: Int) -> QLPreviewItem! {
-        let url = quickLookURL ?? FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.appendingPathComponent(quickLookFilename!)
-        return url as QLPreviewItem
-    }
-
-    func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
-        guard let response = navigationResponse.response as? HTTPURLResponse,
-            let url = navigationResponse.response.url else {
-                decisionHandler(.allow)
-                return
-        }
-        
-        Swift.print(String(format: "1DP navigationResponse: %p <= %@", webView, url.absoluteString))
-        
-        //  load cookies
-		if let headerFields = response.allHeaderFields as? [String:String] {
-			Swift.print("\(url.absoluteString) allHeaderFields:\n\(headerFields)")
-			let waitGroup = DispatchGroup()
-
-			let cookies = HTTPCookie.cookies(withResponseHeaderFields: headerFields, for: url)
-			cookies.forEach({ cookie in
-				waitGroup.enter()
-				webView.configuration.websiteDataStore.httpCookieStore.setCookie(cookie, completionHandler: { waitGroup.leave() })
-			})
-		}
-        
-        guard !url.hasUserContent(), url.hasDataContent(), let suggestion = response.suggestedFilename else { decisionHandler(.allow); return }
-        let downloadDir = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first!
-        let saveURL = downloadDir.appendingPathComponent(suggestion)
-        saveURL.saveAs(responseHandler: { saveAsURL in
-            if let saveAsURL = saveAsURL {
-                self.loadFileAsync(url, to: saveAsURL, completion: { (path, error) in
-                    if let error = error {
-                        NSApp.presentError(error)
-                    }
-                    else
-                    {
-                        if appDelegate.isSandboxed { _ = appDelegate.storeBookmark(url: saveAsURL, options: [.withSecurityScope]) }
-                    }
-                })
-            }
-
-            decisionHandler(.cancel)
-            self.backPress(self)
-         })
-    }
-    
-    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        Swift.print(String(format: "1LD: %p didStartProvisionalNavigation: %p %@", navigation, webView, webView.url!.debugDescription))
-        
-        //  Restore setting not done by document controller
-        if let hpc = heliumPanelController { hpc.documentDidLoad() }
-		
-		//	Capture AV menu items
-		if let webView = webView as? MyWebView, let event = NSApp.currentEvent, let menu = webView.menu(for: event) {
-			webView.captureMenuItems(menu)
-		}
-    }
-    
-    func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
-        Swift.print(String(format: "2SR: %p didReceiveServerRedirectForProvisionalNavigation: %p", navigation, webView))
-    }
-    
-    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        Swift.print(String(format: "?LD: %p didFailProvisionalNavigation: %p", navigation, webView) + " \((error as NSError).code): \(error.localizedDescription)")
-        handleError(error)
-    }
-    
-    func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
-        Swift.print(String(format: "2NV: %p - didCommit: %p", navigation, webView))
-    }
-    
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation) {
-        guard let url = webView.url else { return }
-        
-        Swift.print(String(format: "3NV: %p didFinish: %p", navigation, webView) + " \"\(String(describing: webView.title))\" => \(url.absoluteString)")
-        if let doc = self.document, let dict = defaults.dictionary(forKey: url.absoluteString) {
-            doc.restoreSettings(with: dict)
-        }
-        
-        //  Finish recording of for this url session
-        if UserSettings.HistorySaves.value, let webView = (webView as? MyWebView), !webView.incognito {
-            let notif = Notification(name: Notification.Name(rawValue: "He3NewURL"), object: url, userInfo: [k.fini : true, k.view : webView as Any])
-            NotificationCenter.default.post(notif)
-        }
-    }
-    
-    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-        Swift.print(String(format: "?NV: %p didFail: %p", navigation, webView) + " \((error as NSError).code): \(error.localizedDescription)")
-        handleError(error)
-    }
-    
-    fileprivate func handleError(_ error: Error) {
-        let message = error.localizedDescription
-        if (error as NSError).code >= 400 {
-            NSApp.presentError(error)
-        }
-        else
-        if (error as NSError).code < 0 {
-            if let info = error._userInfo as? [String: Any] {
-                if let url = info["NSErrorFailingURLKey"] as? URL {
-                    appDelegate.userAlertMessage(message, info: url.absoluteString)
-                }
-                else
-                if let urlString = info["NSErrorFailingURLStringKey"] as? String {
-                    appDelegate.userAlertMessage(message, info: urlString)
-                }
-            }
-        }
-    }
-    
-    func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        let authMethod = challenge.protectionSpace.authenticationMethod
-        Swift.print(String(format: "2AC: didReceive: %p \(authMethod)", webView))
-
-        guard let serverTrust = challenge.protectionSpace.serverTrust else { return completionHandler(.useCredential, nil) }
-        let exceptions = SecTrustCopyExceptions(serverTrust)
-        SecTrustSetExceptions(serverTrust, exceptions)
-        completionHandler(.useCredential, URLCredential(trust: serverTrust))
-    }
-    
-    func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
-        Swift.print(String(format: "3DT: webViewWebContentProcessDidTerminate: %p", webView))
-        
-        //  If incognito tear down...
-        if let webView = (webView as? MyWebView), webView.incognito {
-            Swift.print("webView specific tear down for incognito...")
-        }
-    }
-    
-    //  MARK:- UI Delegate
-    
-    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration,
-                 for navigationAction: WKNavigationAction,
-                 windowFeatures: WKWindowFeatures) -> WKWebView? {
-        Swift.print(String(format: "UI: %p createWebViewWith:", webView))
-
-        if navigationAction.targetFrame == nil {
-            _ = appDelegate.openURLInNewWindow(navigationAction.request.url!)
-            return nil
-        }
-        
-        //  We really want to use the supplied config, so use custom setup
-        var newWebView : WKWebView?
-        
-        if let newURL = navigationAction.request.url {
-            do {
-                let doc = try NSDocumentController.shared.makeDocument(withContentsOf: newURL, ofType: k.Custom)
-                if let hpc = doc.windowControllers.first, let window = hpc.window, let wvc = window.contentViewController as? WebViewController {
-                    newWebView = MyWebView()
-                    wvc.webView = newWebView as! MyWebView
-                    wvc.viewDidLoad()
-                    
-                    _ = wvc.loadURL(url: newURL)
-                 }
-            } catch let error {
-                NSApp.presentError(error)
-            }
-        }
-
-        return newWebView
-    }
-    
-    func webViewDidClose(_ webView: WKWebView) {
-        Swift.print(String(format: "UI: %p webViewDidClose:", webView))
-        webView.stopLoading()
-    }
-    
-    func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: () -> Void) {
-        Swift.print(String(format: "UI: %p runJavaScriptAlertPanelWithMessage: %@", webView, message))
-
-        appDelegate.userAlertMessage(message, info: nil)
-        completionHandler()
-    }
-    
-    func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: (Bool) -> Void) {
-        Swift.print(String(format: "UI: %p runJavaScriptConfirmPanelWithMessage: %@", webView, message))
-
-        completionHandler( appDelegate.userConfirmMessage(message, info: nil) )
-    }
-    
-    func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: (String?) -> Void) {
-        Swift.print(String(format: "UI: %p runJavaScriptTextInputPanelWithPrompt: %@", webView, prompt))
-
-        completionHandler( appDelegate.userTextInput(prompt, defaultText: defaultText) )
-    }
-    
-    func webView(_ webView: WKWebView, didFinishLoad navigation: WKNavigation) {
-        Swift.print(String(format: "3LD: %p didFinishLoad: %p", navigation, webView))
-        //  deprecated
-    }
-    
-    func webView(_ webView: WKWebView, runOpenPanelWith parameters: WKOpenPanelParameters,
-                 initiatedByFrame frame: WKFrameInfo,
-                 completionHandler: @escaping ([URL]?) -> Void) {
-        Swift.print(String(format: "UI: %p runOpenPanelWith:", webView))
-        
-        let openPanel = NSOpenPanel()
-                
-        openPanel.allowsMultipleSelection = parameters.allowsMultipleSelection
-        openPanel.canChooseFiles = false
-        openPanel.canChooseDirectories = parameters.allowsDirectories
-        
-        openPanel.begin() { (result) -> Void in
-            if result == .OK {
-                completionHandler(openPanel.urls)
-            }
-            else
-            {
-                completionHandler(nil)
-            }
-        }
-    }
-    /*
-    //  MARK:- URLSessionDelegate
-    @available(OSX 10.9, *)
-    func urlSession(_ session: URLSession, didBecomeInvalidWithError error: Error?) {
-        Swift.print(String(format: "SU: %p didBecomeInvalidWithError: %@", session, error?.localizedDescription ?? "?Error"))
-        if let error = error {
-            NSApp.presentError(error)
-        }
-    }
-    
-    @available(OSX 10.9, *)
-    func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        Swift.print(String(format: "SU: %p challenge:", session))
-
-    }
-
-    //  MARK: URLSessionTaskDelegate
-    @available(OSX 10.13, *)
-    func urlSession(_ session: URLSession, task: URLSessionTask, willBeginDelayedRequest request: URLRequest, completionHandler: @escaping (URLSession.DelayedRequestDisposition, URLRequest?) -> Void) {
-        Swift.print(String(format: "SU: %p task: %ld willBeginDelayedRequest: request: %@", session, task.taskIdentifier, request.url?.absoluteString ?? "?url"))
-
-    }
-    
-    @available(OSX 10.13, *)
-    func urlSession(_ session: URLSession, taskIsWaitingForConnectivity task: URLSessionTask) {
-        Swift.print(String(format: "SU: %p task: %ld taskIsWaitingForConnectivity:", session, task.taskIdentifier))
-
-    }
-    
-    @available(OSX 10.9, *)
-    func urlSession(_ session: URLSession, task: URLSessionTask, willPerformHTTPRedirection response: HTTPURLResponse, newRequest request: URLRequest, completionHandler: @escaping (URLRequest?) -> Void) {
-        Swift.print(String(format: "SU: %p task: %ld willPerformHTTPRedirection:", session, task.taskIdentifier))
-
-    }
-    
-    @available(OSX 10.9, *)
-    func urlSession(_ session: URLSession, task: URLSessionTask, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        Swift.print(String(format: "SU: %p task: %ld challenge:", session, task.taskIdentifier))
-
-    }
-    
-    @available(OSX 10.9, *)
-    func urlSession(_ session: URLSession, task: URLSessionTask, needNewBodyStream completionHandler: @escaping (InputStream?) -> Void) {
-        Swift.print(String(format: "SU: %p task: %ld needNewBodyStream:", session, task.taskIdentifier))
-
-    }
-    
-    @available(OSX 10.9, *)
-    func urlSession(_ session: URLSession, task: URLSessionTask, didSendBodyData bytesSent: Int64, totalBytesSent: Int64, totalBytesExpectedToSend: Int64) {
-        Swift.print(String(format: "SU: %p task: %ld didSendBodyData:", session))
-
-    }
-    
-    @available(OSX 10.12, *)
-    func urlSession(_ session: URLSession, task: URLSessionTask, didFinishCollecting metrics: URLSessionTaskMetrics) {
-        Swift.print(String(format: "SU: %p task: %ld didFinishCollecting:", session))
-
-    }
-    
-    @available(OSX 10.9, *)
-    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-        Swift.print(String(format: "SU: %p task: %ld didCompleteWithError:", session))
-
-    }
-    
-    //  MARK: URLSessionDataDelegate
-        
-    @available(OSX 10.9, *)
-    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
-        Swift.print(String(format: "SU: %p dataTask: %ld didReceive response:", session))
-
-    }
-    
-    @available(OSX 10.9, *)
-    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didBecome downloadTask: URLSessionDownloadTask) {
-        Swift.print(String(format: "SD: %p dataTask: %ld downloadTask:", session))
-
-    }
-    
-    @available(OSX 10.11, *)
-    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didBecome streamTask: URLSessionStreamTask) {
-        Swift.print(String(format: "SD: %p dataTask: %ld streamTask:", session))
-
-    }
-    
-    @available(OSX 10.9, *)
-    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
-        Swift.print(String(format: "SD: %p dataTask: %ld didReceive data:", session))
-
-    }
-    
-    @available(OSX 10.9, *)
-    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, willCacheResponse proposedResponse: CachedURLResponse, completionHandler: @escaping (CachedURLResponse?) -> Void) {
-        Swift.print(String(format: "SD: %p dataTask: %ld proposedResponse:", session, dataTask.taskIdentifier))
-        
-    }
-
-    //  MARK: URLSessionDownloadDelegate
-        
-    @available(OSX 10.9, *)
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        Swift.print(String(format: "SU: %p downloadTask: %ld didFinishDownloadingTo:", session, downloadTask.taskIdentifier))
-
-    }
-    
-    @available(OSX 10.9, *)
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
-        Swift.print(String(format: "session: %p downloadTask: %ld didWriteData bytesWritten:", session, downloadTask.taskIdentifier))
-
-    }
-    
-    @available(OSX 10.9, *)
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didResumeAtOffset fileOffset: Int64, expectedTotalBytes: Int64) {
-        Swift.print(String(format: "session: %p downloadTask: %ld didResumeAtOffset:", session, downloadTask.taskIdentifier))
-
-    }
-*/
     //  MARK:- TabView Delegate
     
     func tabView(_ tabView: NSTabView, willSelect tabViewItem: NSTabViewItem?) {

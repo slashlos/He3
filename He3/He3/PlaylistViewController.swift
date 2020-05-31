@@ -1,6 +1,6 @@
 //
 //  PlaylistViewController.swift
-//  Helium
+//  He3 (Helium 3)
 //
 //  Created by Carlos D. Santiago on 2/15/17.
 //  Copyright © 2017-2020 CD M Santiago. All rights reserved.
@@ -13,12 +13,27 @@ import AVFoundation
 import AudioToolbox
 import AppKit
 
-class PlayTableView : NSTableView {
-    var appDelegate : AppDelegate {
-        get {
-            return NSApp.delegate as! AppDelegate
-        }
+extension NSPasteboard.PasteboardType {
+    static let rowDragType = NSPasteboard.PasteboardType("com.slashlos.he3.rowDragDrop")
+}
+
+fileprivate var defaults : UserDefaults {
+    get {
+        return UserDefaults.standard
     }
+}
+fileprivate var appDelegate : AppDelegate {
+    get {
+        return NSApp.delegate as! AppDelegate
+    }
+}
+fileprivate var docController : DocumentController {
+    get {
+        return NSDocumentController.shared as! DocumentController
+    }
+}
+
+class PlayTableView : NSTableView {
 	var _dragImage : NSImage?
 	var  dragImage : NSImage {
 		get {
@@ -28,12 +43,18 @@ class PlayTableView : NSTableView {
 			return _dragImage!
 		}
 	}
+	var pathExtension : String {
+		get {
+			return [k.hpl,k.hpi][tag]
+		}
+	}
+	
 	@objc @IBAction func delete(_ sender: Any?) {
 		let delegate: PlaylistViewController = self.delegate as! PlaylistViewController
 		
 		delegate.removePlaylist(self)
 	}
-    
+    /*
     override func mouseDragged(with event: NSEvent) {
         let delegate = self.delegate as! PlaylistViewController
         let arrayController = [delegate.playlistArrayController,delegate.playitemArrayController][self.tag]!
@@ -44,16 +65,16 @@ class PlayTableView : NSTableView {
         for index in indexSet {
             let object : AnyObject = (arrayController.arrangedObjects as! [AnyObject])[index]
             let item = NSDraggingItem.init(pasteboardWriter: objects[index])
-            let dragImage = object.image.resize(w: 32, h: 32)
+            let dragImage = object.thumbnailImage.resize(w: 32, h: 32)
             item.setDraggingFrame(self.rect(ofRow: index), contents: dragImage)
             item.draggingFrame = self.rect(ofRow: index)
             items.append(item)
         }
         self.beginDraggingSession(with: items, event: event, source: self)
     }
-
+    
     override func draggingSession(_ session: NSDraggingSession, sourceOperationMaskFor context: NSDraggingContext) -> NSDragOperation {
-        return .copy
+		return context == .withinApplication ? .generic : .copy
     }
 
     override func dragImageForRows(with dragRows: IndexSet, tableColumns: [NSTableColumn], event dragEvent: NSEvent, offset dragImageOffset: NSPointPointer) -> NSImage {
@@ -66,12 +87,9 @@ class PlayTableView : NSTableView {
         if pasteboard.canReadItem(withDataConformingToTypes: [NSPasteboard.ReadingOptionKey.urlReadingFileURLsOnly.rawValue]) {
             return .copy
         }
-        return .copy
+        return .generic
     }
-    func tableViewColumnDidResize(notification: NSNotification ) {
-        // Pay attention to column resizes and aggressively force the tableview's cornerview to redraw.
-        self.cornerView?.needsDisplay = true
-    }
+    */
     override func becomeFirstResponder() -> Bool {
         let notif = Notification(name: Notification.Name(rawValue: "NSTableViewSelectionDidChange"), object: self, userInfo: nil)
         (self.delegate as! PlaylistViewController).tableViewSelectionDidChange(notif)
@@ -79,7 +97,42 @@ class PlayTableView : NSTableView {
     }
 }
 
-class PlayItemCornerButton : NSButton {
+class PlayItemCornerButton : NSButton {/*
+	override init(frame frameRect: NSRect) {
+		super.init(frame: frameRect)
+		self.wantsLayer = true
+		self.layer?.backgroundColor = NSColor.blue.cgColor
+	}
+	
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
+		///fatalError("init(coder:) has not been implemented")
+	}*/
+}
+
+class PlayCornerView : NSView {
+	override init(frame frameRect: NSRect) {
+		super.init(frame: frameRect)
+		self.wantsLayer = true
+		self.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
+	}
+	
+	required init?(coder: NSCoder) {
+		///fatalError("init(coder:) has not been implemented")
+		super.init(coder: coder)
+		self.wantsLayer = true
+		self.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
+	}
+	override func draw(_ dirtyRect: NSRect) {
+		let mySides : [NSRectEdge] = [.minY, .maxX, .maxY, .minX, .minY, .maxX]
+		let myGrays : [CGFloat]    = [0.80,   0.80,  0.80,  0.75,  0.75,  0.75]
+		let bounds = self.bounds
+		 
+		NSColor.init(calibratedWhite: 0.91, alpha: 1.0).set()
+		let insetRect = NSDrawTiledRects(bounds, dirtyRect, mySides, myGrays, 3)
+		let path = NSBezierPath.init(rect: insetRect)
+		path.fill()
+	}
 }
 
 class PlayHeaderView : NSTableHeaderView {
@@ -109,37 +162,7 @@ class PlayHeaderView : NSTableHeaderView {
     }
 }
 
-extension NSURL {
-    
-    func compare(_ other: URL ) -> ComparisonResult {
-        return (self.absoluteString?.compare(other.absoluteString))!
-    }
-//  https://stackoverflow.com/a/44908669/564870
-    func resolvedFinderAlias() -> URL? {
-        if (self.fileReferenceURL() != nil) { // item exists
-            do {
-                // Get information about the file alias.
-                // If the file is not an alias files, an exception is thrown
-                // and execution continues in the catch clause.
-                let data = try NSURL.bookmarkData(withContentsOf: self as URL)
-                // NSURLPathKey contains the target path.
-                let rv = NSURL.resourceValues(forKeys: [ URLResourceKey.pathKey ], fromBookmarkData: data)
-                var urlString = rv![URLResourceKey.pathKey] as! String
-                if !urlString.hasPrefix("file://") {
-                    urlString = "file://" + urlString
-                }
-                return URL(string: urlString.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!)!
-            } catch {
-                // We know that the input path exists, but treating it as an alias
-                // file failed, so we assume it's not an alias file so return nil.
-                return nil
-            }
-        }
-        return nil
-    }
-}
-
-class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableViewDelegate,NSMenuDelegate,NSWindowDelegate {
+class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegate,NSWindowDelegate {
 
     @objc @IBOutlet weak var playlistArrayController: NSArrayController!
     @objc @IBOutlet weak var playitemArrayController: NSArrayController!
@@ -151,9 +174,24 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
     //  we are managing a local playlist, so include app delegate histories RONLY
     var isLocalPlaylist : Bool = false
     
-    //  cache playlists read and saved to defaults
-    var appDelegate: AppDelegate = NSApp.delegate as! AppDelegate
-    var defaults = UserDefaults.standard
+    var progressIndicator: NSProgressIndicator!
+	var dragSequenceNo = 0
+
+    // Queue used for initially loading all the photos.
+    var loaderQueue = OperationQueue()
+    
+    // Queue used for reading and writing file promises.
+    var filePromiseQueue: OperationQueue = {
+        let queue = OperationQueue()
+        return queue
+    }()
+    
+    // The temporary directory URL used for accepting file promises.
+    lazy var destinationURL: URL = {
+        let destinationURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("Drops")
+        try? FileManager.default.createDirectory(at: destinationURL, withIntermediateDirectories: true, attributes: nil)
+        return destinationURL
+    }()
 
     var shiftKeyDown : Bool {
         get {
@@ -171,7 +209,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
             }
         }
     }
-    @objc @IBOutlet weak var cornerImage : NSImage! {
+    @objc @IBOutlet weak var itemCornerImage : NSImage! {
         get {
             return NSImage.init(imageLiteralResourceName: self.menuIconName)
         }
@@ -180,14 +218,16 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         }
     }
     
-	@objc @IBOutlet weak var cornerButton : PlayItemCornerButton!
-	@objc @IBAction func cornerAction(_ sender: Any) {
+	@objc @IBOutlet weak var itemCornerButton : PlayItemCornerButton!
+	@objc @IBAction func itemCornerAction(_ sender: Any) {
         // Renumber playlist items via array controller
         playitemTableView.beginUpdates()
         
         //  True - prune duplicates & publish, false resequence
         switch shiftKeyDown {
         case true:
+			let playlist = playlistArrayController.selectedObjects.first as! PlayList
+			playlist.willChangeValue(forKey: k.tally)
             var seen = [String:PlayItem]()
             for (row,item) in (playitemArrayController.arrangedObjects as! [PlayItem]).enumerated().reversed() {
                 if item.plays == 0 { item.plays = 1}
@@ -214,8 +254,9 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
                     }
                 }
             }
-            self.cornerButton.needsDisplay = true
-            
+			playlist.didChangeValue(forKey: k.tally)
+            self.itemCornerButton.needsDisplay = true
+
         case false:
             for (row,item) in (playitemArrayController.arrangedObjects as! [PlayItem]).enumerated() {
                 if let undo = self.undoManager {
@@ -231,7 +272,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         }
         playitemTableView.endUpdates()
 	}
-    @objc @IBOutlet weak var cornerTooltip : NSString! {
+    @objc @IBOutlet weak var itemCornerTooltip : NSString! {
         get {
             if shiftKeyDown {
                 return "Consolidate"
@@ -260,7 +301,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
     }
     var itemIvars : [String] {
         get {
-            return [k.name, k.link, k.time, k.plays, k.rank, k.rect, k.label, k.hover, k.alpha, k.trans, k.temp]
+            return [k.name, k.link, k.time, k.plays, k.rank, k.rect, k.label, k.hover, k.alpha, k.trans, k.link]
         }
     }
 
@@ -322,7 +363,10 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
     }
     
     @objc internal func shiftKeyDown(_ note: Notification) {
-        let keyPaths = ["cornerImage","cornerTooltip"]
+		//	Don't bother unless we're a first responder
+		guard self.view.window == NSApp.keyWindow, [playlistTableView,playitemTableView].contains(self.view.window?.firstResponder) else { return }
+		
+        let keyPaths = ["itemCornerImage","itemCornerTooltip"]
         for keyPath in (keyPaths)
         {
             self.willChangeValue(forKey: keyPath)
@@ -335,6 +379,9 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
     }
     
     @objc internal func optionKeyDown(_ note: Notification) {
+		//	Don't bother unless we're a first responder
+		guard self.view.window == NSApp.keyWindow, [playlistTableView,playitemTableView].contains(self.view.window?.firstResponder) else { return }
+
         let keyPaths = ["playTooltip"]
         for keyPath in (keyPaths)
         {
@@ -379,7 +426,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
                         undo.setActionName(String.init(format: "Edit %@", keyPath!))
                     }
                 })
-                Swift.print(String.init(format: "%@ %@ -> %@", keyPath!, oldValue as! CVarArg, newValue as! CVarArg))
+				Swift.print(String.init(format: "%@.%@ %@ -> %@", (object as AnyObject).name, keyPath!, oldValue as! CVarArg, newValue as! CVarArg))
             }
             
             // playlist names must be unique
@@ -397,7 +444,9 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
             }
         }
         
-        if let doc = self.view.window?.windowController?.document { doc.updateChangeCount(.changeDone) }
+        if let doc = self.view.window?.windowController?.document {
+			Swift.print("doc changed")
+			doc.updateChangeCount(.changeDone) }
     }
     
     //  A bad (duplicate) value was attempted
@@ -470,9 +519,39 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         }
     }
     
+    func setupProgressIndicator() {
+        // Create the progress indicator for asyncronous copies of promised files.
+        progressIndicator = NSProgressIndicator(frame: NSRect())
+        progressIndicator.controlSize = .regular
+        progressIndicator.sizeToFit()
+        progressIndicator.style = .spinning
+        progressIndicator.isHidden = true
+        progressIndicator.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(progressIndicator)
+        // Center it to this view controller.
+        NSLayoutConstraint.activate([
+            progressIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            progressIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
+	
     override func viewDidLoad() {
-        playlistTableView.registerForDraggedTypes([.list,.data,.fileURL,.promise,.files,.string,.URL])
-        playitemTableView.registerForDraggedTypes([.item,.data,.fileURL,.promise,.files,.string,.URL])
+		super.viewDidLoad()
+		
+		setupProgressIndicator()
+		
+        playlistTableView.registerForDraggedTypes(
+            NSFilePromiseReceiver.readableDraggedTypes.map { NSPasteboard.PasteboardType($0) })
+		playlistTableView.registerForDraggedTypes([.rowDragType,.playlist,.playitem,.fileURL,.URL])
+
+		playitemTableView.registerForDraggedTypes(
+            NSFilePromiseReceiver.readableDraggedTypes.map { NSPasteboard.PasteboardType($0) })
+		playitemTableView.registerForDraggedTypes([.rowDragType,.playlist,.playitem,.fileURL,.URL])
+
+        // Determine the kind of source drag originating from this app.
+        // Note, if you want to allow your app to drag items to the Finder's trash can, add ".delete".
+        playlistTableView.setDraggingSourceOperationMask(.copy, forLocal: false)
+        playitemTableView.setDraggingSourceOperationMask(.copy, forLocal: false)
 
         playlistTableView.doubleAction = #selector(doubleAction(_:))
         playitemTableView.doubleAction = #selector(doubleAction(_:))
@@ -485,12 +564,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         if let doc : Document = self.view.window?.windowController?.document as? Document {
             playlistArrayController.add(contentsOf: doc.items)
         }
-    }
-
-    var historyCache: PlayList = PlayList.init(name: UserSettings.HistoryName.value,
-                                                 list: [PlayItem]())
-    
-    override func viewWillAppear() {
+		
         //  Leave non-global extractions contents intact
         if isLocalPlaylist, let doc = self.webViewController?.document, let url = doc.fileURL
         {
@@ -505,6 +579,9 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         }
         else
         {
+			//	Prime global playlists
+			playlistArrayController.add(contentsOf: appDelegate.playlists)
+			
             //  Prune duplicate history entries
             while let oldHistory = playlists.name(UserSettings.HistoryName.value)
             {
@@ -531,11 +608,38 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
 
         //  Start observing any changes
         self.observing = true
-        
-        //  Pin the playitem corner view to the header and scroll bar views
-        guard let cornerView = playitemTableView.cornerView else { return }
-		cornerView.addSubview(cornerButton)
-        cornerButton.center(cornerView)
+		
+		//	Set up our playitem cornerView
+		setupCornerViewFor(playitemTableView, with: itemCornerButton)
+    }
+
+	func createCornerViewFor(_ tableView: NSTableView) {
+		if nil == tableView.cornerView {
+			if let scrollView = tableView.enclosingScrollView,
+				let headerView = tableView.headerView {
+				let rect = NSMakeRect(0, 0,
+									  (scrollView.verticalScroller?.frame.size.width)!,
+									  headerView.frame.size.height)
+				tableView.cornerView = PlayCornerView.init(frame: rect)
+			}
+		}
+	}
+	
+	func setupCornerViewFor(_ tableView: NSTableView, with actionView: NSView) {
+		createCornerViewFor(tableView)
+		
+        //  Center the action view within the cornerView
+		if let cornerView = tableView.cornerView, 0 == cornerView.subviews.count {
+			cornerView.addSubview(actionView)
+			actionView.center(cornerView)
+		}
+	}
+	
+    var historyCache: PlayList = PlayList.init(name: UserSettings.HistoryName.value, list: [PlayItem]())
+    
+    override func viewWillAppear() {
+		//	Ensure we're up to date
+		playitemTableView.cornerView?.needsDisplay = true
     }
     
     override func viewDidAppear() {
@@ -555,7 +659,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         return true
     }
     
-    //  MARK:- Playlist Actions
+    //  MARK:- Play list/item Actions
     //
     //  internal are also used by undo manager callback and by IBActions
     //
@@ -762,7 +866,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
                 }
                 else
                 {
-                    return "Remove selected playitems(s)"
+                    return "Remove selected playitem(s)"
                 }
             }
         }
@@ -791,10 +895,10 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
 
             if appDelegate.openURLInNewWindow(item.link) {
                 print(String(format: "%3d %3d %@", i, item.rank, item.name))
+				
+				//  2nd item and on get a new view window
+				viewOptions.insert(.w_view)
             }
-            
-            //  2nd item and on get a new view window
-            viewOptions.insert(.w_view)
         }
     }
     
@@ -809,7 +913,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
 		playPlaylist(sender)
 		
         //  Unless we're the standalone helium playlist window dismiss all
-        if !(self.view.window?.isKind(of: He3Panel.self))! {
+        if !(self.view.window?.isKind(of: Panel.self))! {
             /// dismiss whatever got us here
             super.dismiss(sender)
 
@@ -861,12 +965,12 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
                                  UserSettings.PlaylistThrottle.keyPath,
                                  throttle)
             
-            appDelegate.sheetOKCancel(message, info: infoMsg,
-                                      acceptHandler: { (button) in
-                                        if button == NSApplication.ModalResponse.alertFirstButtonReturn {
-                                            self.appDelegate.newViewOptions = self.appDelegate.getViewOptions
-                                            self.play(sender, items:list, maxSize: throttle)
-                                        }
+				sheetOKCancel(message, info: infoMsg,
+										  acceptHandler: { (button) in
+											if button == NSApplication.ModalResponse.alertFirstButtonReturn {
+												appDelegate.newViewOptions = appDelegate.getViewOptions
+												self.play(sender, items:list, maxSize: throttle)
+											}
             })
         }
         else
@@ -894,7 +998,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
                 }
                 else
                 {
-                    return "Play selected playitems(s)"
+                    return "Play selected playitem(s)"
                 }
             }
         }
@@ -913,7 +1017,11 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         }
     }
 
-    @objc @IBOutlet weak var restoreButton: NSButton!
+	@IBAction func labelMenuPress(_ sender: NSMenuItem) {
+		Swift.print("labelMenuPress: \(sender.tag)")
+	}
+	
+	@objc @IBOutlet weak var restoreButton: NSButton!
     @objc @IBOutlet weak var restoreButtonTooltip: NSString! {
         get {
             let whoAmI = self.view.window?.firstResponder
@@ -934,7 +1042,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
                 }
                 else
                 {
-                    return "Restore selected playitems(s)"
+                    return "Restore selected playitem(s)"
                 }
             }
         }
@@ -969,7 +1077,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
 					}
 					else
 					{
-						_ = self.appDelegate.restorePlaylists()
+						_ = appDelegate.restorePlaylists()
 					}
 					(whoAmI as! PlayTableView).reloadData()
 					Swift.print("revert to saved")
@@ -1059,7 +1167,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
                     }
                 }
             }
-			appDelegate.userAlertMessage("Reverted playlist(\(names.count))", info: names.count > 9 ? nil : names.listing)
+			userAlertMessage("Reverted playlist(\(names.count))", info: names.count > 9 ? nil : names.listing)
         }
         else
         {
@@ -1075,7 +1183,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
 					names.append(playitem.name)
                 }
             }
-			appDelegate.userAlertMessage("Reverted playitem(\(names.count))", info: names.count > 9 ? nil : names.listing)
+			userAlertMessage("Reverted playitem(\(names.count))", info: names.count > 9 ? nil : names.listing)
         }
     }
 
@@ -1100,7 +1208,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
                 }
                 else
                 {
-                    return "Save selected playitems(s)"
+                    return "Save selected playitem(s)"
                 }
             }
         }
@@ -1128,7 +1236,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
                     appDelegate.histories = historyCache.list
                 }
             }
-			appDelegate.userAlertMessage("Saved playlist(\(names.count))", info: names.count > 9 ? nil : names.listing)
+			userAlertMessage("Saved playlist(\(names.count))", info: names.count > 9 ? nil : names.listing)
         }
         else
         {
@@ -1143,7 +1251,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
                 defaults.set(playitem.dictionary(), forKey: playitem.link.absoluteString)
                 names.append(playitem.name)
             }
-            appDelegate.userAlertMessage("Saved playitems(\(names.count))", info: (names.count > 9) ? nil : names.listing)
+            userAlertMessage("Saved playitem(\(names.count))", info: (names.count > 9) ? nil : names.listing)
         }
 
         defaults.synchronize()
@@ -1159,25 +1267,25 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         
         //  Save or go
         switch (sender! as AnyObject).tag == 0 {
-            case true:
-                // Save to the cache
-                playCache = playlists
-                
-                // If local save that too
-                if isLocalPlaylist, let document = self.view.window?.windowController?.document {
-                    (document as! Document).save(sender)
-                }
-                else
-                {
-                    appDelegate.playlists = playlists
-                }
-            
-            case false:
-                // Restore NON-HISTORY playlist(s) from cache
-                if let historyIndex = playCache.firstIndex(of: historyCache) {
-                    playCache.remove(at: historyIndex)
-                }
-                playlists = playCache
+		case true:
+			// Save to the cache
+			playCache = playlists
+			
+			// If local save that too
+			if isLocalPlaylist, let document = self.view.window?.windowController?.document {
+				(document as! Document).save(sender)
+			}
+			else
+			{
+				appDelegate.playlists = playlists
+			}
+		
+		case false:
+			// Restore NON-HISTORY playlist(s) from cache
+			if let historyIndex = playCache.firstIndex(of: historyCache) {
+				playCache.remove(at: historyIndex)
+			}
+			playlists = playCache
         }
     }
 
@@ -1235,6 +1343,11 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
             return self.view.window?.sheetParent != nil
         }
     }
+	
+	private func tableViewColumnDidResize(notification: NSNotification ) {
+        // Pay attention to column resizes and aggressively force the tableview's cornerview to redraw.
+		self.playitemTableView.cornerView?.needsDisplay = true
+    }
     
     func tableView(_ tableView: NSTableView, dataCellFor tableColumn: NSTableColumn?, row: Int) -> NSCell? {
         guard let column = tableColumn else { return nil }
@@ -1259,25 +1372,115 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
         
         return cell
     }
-    
+	
+	
+	func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
+		let tag = tableView.tag
+		
+		if let column = tableColumn {
+			let view : NSTableCellView = tableView.makeView(withIdentifier: column.identifier, owner: self) as! NSTableCellView
+			let item = ([playlistArrayController,playitemArrayController][tag]?.arrangedObjects as! [AnyObject])[row]
+			
+			switch tag {
+			case 0:
+				if !isLocalPlaylist, item.name == UserSettings.HistoryName.value {
+					if let field = view.textField {
+						field.font = NSFont.init(name: "Helvetica Oblique", size: -1)
+					}
+				}
+				
+				//	load our thumbnails for all our items
+				
+				let loadThumbnails = LoadThumbnailssOperationFor(playlist: item as! PlayList)
+				
+				loadThumbnails.completionBlock = {
+					OperationQueue.main.addOperation {
+						for playitem in item.list {
+							// Set up ourselves to be notified when this item's thumbnail is ready.
+							playitem.thumbnailDelegate = self
+						}
+					}
+				}
+				loaderQueue.addOperation( loadThumbnails )
 
+			case 1:
+				let list : AnyObject = (playlistArrayController.arrangedObjects as! [AnyObject])[playlistArrayController.selectionIndex]
+				if !isLocalPlaylist, list.name == UserSettings.HistoryName.value {
+					if let field = view.textField {
+						field.font = NSFont.init(name: "Helvetica Oblique", size: -1)
+					}
+				}
+				view.toolTip = item.turl
+
+			default:
+				break
+			}
+			
+			view.objectValue = item
+			return view
+		}
+		return nil
+	}
+	
+	
     //  We cannot alter a playitem once plays is non-zero; set to zero to alter
+	@objc func textFieldShouldBecomeEditable(_ textField: PlayTableTextField) -> Bool {
+		let tableView = textField.superview?.superview?.superview as! PlayTableView
+		let item = (textField.superview as! PlayTableCellView).objectValue
+		let tableColumn = textField.tableColumn!
+		
+		if tableView == playlistTableView, let playlist : PlayList = item as? PlayList {
+			guard playlist.name != UserSettings.HistoryName.value else { return false }
+			return tableColumn.identifier == .name
+		}
+		else
+		if tableView == playitemTableView, let playitem : PlayItem = item as? PlayItem {
+			let virgin = playitem.plays == 0
+
+			guard playitem.name != UserSettings.HistoryName.value else { return false }
+			
+			switch tableColumn.identifier {
+			case .link:
+				return !virgin && !appDelegate.isSandboxed
+				
+			case .plays:
+				return true
+				
+			default:
+				return virgin || ![.link,.plays].contains(tableColumn.identifier)
+			}
+		}
+		else
+		{
+			return false
+		}
+	}
+	
     func tableView(_ tableView: NSTableView, shouldEdit tableColumn: NSTableColumn?, row: Int) -> Bool {
- 
+		guard let column = tableColumn else { return false }
         if tableView == playlistTableView {
             let list : AnyObject = (playlistArrayController.arrangedObjects as! [AnyObject])[playlistArrayController.selectionIndex]
-            if list.name == UserSettings.HistoryName.value {
-                return false
-            }
-            return tableColumn?.identifier.rawValue == k.name
+            
+			guard list.name != UserSettings.HistoryName.value else { return false }
+            return column.identifier == .name
         }
         else
         if tableView == playitemTableView {
             let item : AnyObject = (playitemArrayController.arrangedObjects as! [AnyObject])[row]
-            if item.name == UserSettings.HistoryName.value  {
-                return false
-            }
-            return (item as! PlayItem).plays == 0 || tableColumn?.identifier.rawValue != k.plays
+			let virgin = (item as! PlayItem).plays == 0
+
+            guard item.name != UserSettings.HistoryName.value else { return false }
+			
+			switch column.identifier {
+			case .link:
+				return !virgin && !appDelegate.isSandboxed
+				
+			case .plays:
+				return true
+				
+			default:
+				return virgin || ![.link,.plays].contains(tableColumn?.identifier)
+			}
         }
         else
         {
@@ -1299,7 +1502,7 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
             guard !shiftKeyDown else {
                 return String(format: "%d play(s)", item.plays) }
             
-            let temp = item.link.absoluteString
+			let temp = item.turl
 
             if item.name == "search", let args = temp.split(separator: "=").last?.removingPercentEncoding
             {
@@ -1336,510 +1539,20 @@ class PlaylistViewController: NSViewController,NSTableViewDataSource,NSTableView
             hpc.didChangeValue(forKey: String(format: "%@ButtonTooltip", button))
         }
     }
+}
 
-    // MARK:- Drag-n-Drop
-    // MARK:- TODO: crafting modern cocoa app
-    /*
-     * https://developer.apple.com/videos/play/wwdc2016/239
-    func tableView(_ tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {
-        let item = ([playlistArrayController,playitemArrayController][tableView.tag]?.arrangedObjects as! [AnyObject])[row]
-        
-        return item.pasteboardPropertyList(forType: .dict) as? NSPasteboardWriting
-    }
-    */
-    func tableView(_ tableView: NSTableView, writeRowsWith rowIndexes: IndexSet, to pboard: NSPasteboard) -> Bool {
-        Swift.print("\(tableView.tag) writeRowsWith: \(rowIndexes.count)")
-        if tableView == playlistTableView {
-            let objects: [PlayList] = playlistArrayController.arrangedObjects as! [PlayList]
-            var items: [NSPasteboardWriting] = [NSPasteboardWriting]()
-            var promises = [String]()
- 
-            for index in rowIndexes {
-                let item = objects[index]
-                items.append(item)
-                let dict = item.dictionary()
-                let promise = dict.xmlString(withElement: item.className, isFirstElement: true)
-                promises.append(promise)
-            }
-            
-            //let data = NSKeyedArchiver.archivedData(withRootObject: items)
-//            pboard.setPropertyList(items, forType: NSPasteboard.PasteboardType(rawValue: PlayList.className()))
-            pboard.writeObjects(items)
-            pboard.setPropertyList(promises, forType: .promise)
-        }
-        else
-        {
-            let objects: [PlayItem] = playitemArrayController.arrangedObjects as! [PlayItem]
-            var items: [NSPasteboardWriting] = [NSPasteboardWriting]()
-            var promises = [String]()
-            
-            for index in rowIndexes {
-                let item = objects[index]
-                items.append(item)
-                let dict = item.dictionary()
-                let promise = dict.xmlString(withElement: item.className, isFirstElement: true)
-                promises.append(promise)
-            }
-            
-            //let data = NSKeyedArchiver.archivedData(withRootObject: items)
-//            pboard.setPropertyList(data, forType: NSPasteboard.PasteboardType(rawValue: PlayItem.className()))
-            pboard.writeObjects(items)
-            pboard.setPropertyList(promises, forType: .promise)
-        }
-        return true
-    }
+// MARK: - ThumbnailDelegate
+
+extension PlaylistViewController: ThumbnailDelegate {
     
-    var dragSequenceNo = 0
-    func draggingUpdated(_ info: NSDraggingInfo) -> NSDragOperation {
-        if dragSequenceNo != info.draggingSequenceNumber {
-            let sourceTableView = info.draggingSource as? NSTableView
-            let pboard: NSPasteboard = info.draggingPasteboard
-            let items = pboard.pasteboardItems!
-
-            Swift.print("\(String(describing: sourceTableView?.identifier)) draggingUpdate \(items.count) item(s)")
-
-            appDelegate.newViewOptions = appDelegate.getViewOptions
-            dragSequenceNo = info.draggingSequenceNumber
+    func thumbnailDidFinish(_ playitem: PlayItem) {
+        // Finished with generating thumbnail for this playitem.
+		let objects : [PlayItem] = playitemArrayController?.arrangedObjects as! [PlayItem]
+		
+        // Find the row to update the thumbnail.
+		if let itemRow = objects.firstIndex(of: playitem) {
+            // Update the table row.
+            playitemTableView.reloadData(forRowIndexes: IndexSet(integer: itemRow), columnIndexes: IndexSet(integer: 0))
         }
-        return .copy
-    }
-
-    func tableView(_ tableView: NSTableView, namesOfPromisedFilesDroppedAtDestination dropDestination: URL, forDraggedRowsWith indexSet: IndexSet) -> [String] {
-        var names : [String] = [String]()
-        
-        //	Always marshall an array regardless of count
-        if tableView == playlistTableView {
-            let objects: [PlayList] = playlistArrayController.arrangedObjects as! [PlayList]
-            let promise = String(format: "%@%@", objects[0].name,
-                                 objects.count > 2 ? String(format: "+%d", (objects.count - 1)) : "")
-            var playlists = [PlayList]()
-
-            for index in indexSet {
-                playlists.append(objects[index])
-            }
-            if let fileURL = NewFileURLForWriting(path: dropDestination.path, name: promise, type: k.hpl) {
-                if KeyedArchiver.archiveRootObject(playlists, toFile: fileURL.path) {
-                    names.append(fileURL.lastPathComponent)
-                }
-            }
-        }
-        else
-        {
-            let selection = playlistArrayController.selectedObjects.first as! PlayList
-            let objects: [PlayItem] = playitemArrayController.arrangedObjects as! [PlayItem]
-            let name = String(format: "%@(%ld)", selection.name, indexSet.count)
-            let playlist = PlayList.init(name: name, list: [PlayItem]())
-
-            for index in indexSet {
-                let item = objects[index]
-                names.append(item.link.absoluteString)
-            }
-            
-            if let fileURL = NewFileURLForWriting(path: dropDestination.path, name: name, type: k.hpl) {
-                if KeyedArchiver.archiveRootObject([playlist], toFile: fileURL.path) {
-                    names.append(fileURL.lastPathComponent)
-                }
-            }
-        }
-        return names
-    }
-
-    func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation {
-        let sourceTableView = info.draggingSource as? NSTableView
-
-        Swift.print("source \(String(describing: sourceTableView?.identifier))")
-        if dropOperation == .above {
-            let pboard = info.draggingPasteboard;
-            let options = [NSPasteboard.ReadingOptionKey.urlReadingFileURLsOnly : true,
-                           NSPasteboard.ReadingOptionKey.urlReadingContentsConformToTypes : [kUTTypeMovie as String]] as [NSPasteboard.ReadingOptionKey : Any]
-            let items = pboard.readObjects(forClasses: [NSURL.classForCoder()], options: options)
-            let isSandboxed = appDelegate.isSandboxed
-            
-            if items!.count > 0 {
-                for item in items! {
-                    if (item as! URL).isFileURL {
-                        var fileURL : NSURL? = (item as AnyObject).filePathURL!! as NSURL
-
-                        //  Resolve alias before storing bookmark
-                        if let original = fileURL?.resolvedFinderAlias() { fileURL = original as NSURL }
-                        
-                        if isSandboxed != appDelegate.storeBookmark(url: fileURL! as URL) {
-                            Swift.print("Yoink, unable to sandbox \(String(describing: fileURL)))")
-                        }
-
-                        //    if it's a video file, get and set window content size to its dimentions
-                        let track0 = AVURLAsset(url:fileURL! as URL, options:nil).tracks[0]
-                        if track0.mediaType != AVMediaType.video
-                        {
-                            Swift.print("Yoink, unknown media type: \(track0.mediaType) in \(String(describing: fileURL)))")
-                        }
-                    } else {
-                        print("validate item -> \(item)")
-                    }
-                }
-                
-                if isSandboxed != appDelegate.saveBookmarks() {
-                    Swift.print("Yoink, unable to save bookmarks")
-                }
-            }
-            return .copy
-        }
-        return .every
-    }
-    
-    func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool {
-        let pasteboard = info.draggingPasteboard
-        let options = [NSPasteboard.ReadingOptionKey.urlReadingFileURLsOnly : true,
-                       //NSPasteboard.ReadingOptionKey.urlReadingContentsConformToTypes : [kUTTypeMovie as String],
-                       NSPasteboard.ReadingOptionKey(rawValue: PlayList.className()) : true,
-                       NSPasteboard.ReadingOptionKey(rawValue: PlayItem.className()) : true]
-        let sourceTableView = info.draggingSource as? NSTableView
-        let isSandboxed = appDelegate.isSandboxed
-        var play: PlayList? = nil
-        var oldIndexes = [Int]()
-        var oldIndexOffset = 0
-        var newIndexOffset = 0
-        var sandboxed = 0
-
-        //  tableView is our destination; act depending on source
-        tableView.beginUpdates()
-
-        guard let items = info.draggingPasteboard.pasteboardItems else { return false }
-        Swift.print("\(items.count) item(s)")
-
-        // We have intra tableView drag-n-drop ?
-        if tableView == sourceTableView {
-            info.enumerateDraggingItems(options: [], for: tableView, classes: [NSPasteboardItem.self], searchOptions: [:]) {(draggingItem, index, stop) in
-
-                if let str = (draggingItem.item as! NSPasteboardItem).string(forType: NSPasteboard.PasteboardType(rawValue: "public.data")), let index = Int(str) {
-                    oldIndexes.append(index)
-                }
-                // For simplicity, the code below uses `tableView.moveRowAtIndex` to move rows around directly.
-                // You may want to move rows in your content array and then call `tableView.reloadData()` instead.
-                
-                for oldIndex in oldIndexes {
-                    if oldIndex < row {
-                        tableView.moveRow(at: oldIndex + oldIndexOffset, to: row - 1)
-                        oldIndexOffset -= 1
-                    } else {
-                        tableView.moveRow(at: oldIndex, to: row + newIndexOffset)
-                        newIndexOffset += 1
-                    }
-                }
-            }
-        }
-        else
-
-        // We have inter tableView drag-n-drop ?
-        // if source is a playlist, drag its items into the destination via copy
-        // if source is a playitem, drag all items into the destination playlist
-        // creating a new playlist item unless, we're dropping onto an existing.
-        
-        if sourceTableView == playlistTableView {
-            let selectedRowIndexes = sourceTableView?.selectedRowIndexes
-            
-            for index in selectedRowIndexes! {
-                let playlist = (playlistArrayController.arrangedObjects as! [PlayList])[index]
-                for playItem in playlist.list {
-                    add(item: playItem, atIndex: -1)
-                }
-            }
-        }
-        else
-        
-        if sourceTableView == playitemTableView {
-            // These playitems get dropped into a new or append a playlist
-            let items: [PlayItem] = playitemArrayController.arrangedObjects as! [PlayItem]
-            var selectedPlaylist: PlayList? = playlistArrayController.selectedObjects.first as? PlayList
-            let selectedRowIndexes = sourceTableView?.selectedRowIndexes
-
-            if selectedPlaylist != nil && row < tableView.numberOfRows {
-                selectedPlaylist = (playlistArrayController.arrangedObjects as! [PlayList])[row]
-                for index in selectedRowIndexes! {
-                    let item = items[index]
-                    let togo = selectedPlaylist?.list.count
-                    if let undo = self.undoManager {
-                        undo.registerUndo(withTarget: self, handler: {[oldVals = ["item": item, "index": togo!] as [String : Any]] (PlaylistViewController) -> () in
-                            selectedPlaylist?.list.removeLast()
-                            selectedPlaylist?.list.remove(at: oldVals["index"] as! Int)
-                            if !undo.isUndoing {
-                                undo.setActionName("Add PlayItem")
-                            }
-                        })
-                    }
-                    observe(item, keyArray: itemIvars, observing: true)
-                    selectedPlaylist?.list.append(items[index])
-                }
-            }
-            else
-            {
-                add(list: PlayList(), atIndex: -1)
-                tableView.scrollRowToVisible(row)
-                playlistTableView.reloadData()
-            }
-            tableView.selectRowIndexes(IndexSet.init(integer: row), byExtendingSelection: false)
-        }
-        else
-        if pasteboard.canReadItem(withDataConformingToTypes: [PlayList.className(), PlayItem.className()]) {
-            //
-            //  From another PlaylistViewController instance/window
-            //  so use sourceTableView.tag: 0=playlist, 1=playitem.
-            //
-            if let data = pasteboard.data(forType: NSPasteboard.PasteboardType(rawValue: PlayList.className()))
-            {
-                if let items = pasteboard.readObjects(forClasses: [PlayList.classForCoder()], options: options) {
-                    Swift.print(String(format:"%d playlist(s)", items.count))
-                    var playlistSet : IndexSet? = nil
-                    
-                    if 0 == tableView.tag {
-                        playlistSet = playlistTableView.selectedRowIndexes
-                        playlistTableView.selectRowIndexes(IndexSet(integer: row), byExtendingSelection: false)
-                    }
-                    
-                    //  Project cross drops play list <-> item or when drop on
-                    if (0 == tableView.tag && dropOperation == .on) || 1 == tableView.tag {
-                        for play in items {
-                            for item in (play as! PlayList).list {
-                                add(item: item, atIndex: -1)
-                            }
-                        }
-                        if 0 == tableView.tag { playlistTableView.reloadData(forRowIndexes: IndexSet(integer: row), columnIndexes: IndexSet(integer: 0)) }
-                    }
-                    else
-                    {
-                        for play in items as! [PlayList] {
-                            add(list: play, atIndex: -1)
-                        }
-                    }
-                    
-                    if let restoreSet = playlistSet {
-                        playlistTableView.selectRowIndexes(restoreSet, byExtendingSelection: false)
-                    }
-                }
-                else
-                if let items = KeyedUnarchiver.unarchiveObject(with: data) as? [Any] {
-                    Swift.print(String(format:"%d playlist(s)", (items as AnyObject).count))
-                }
-            }
-            else
-            if let data = pasteboard.data(forType: NSPasteboard.PasteboardType(rawValue: PlayItem.className()))
-            {
-                if let items = pasteboard.readObjects(forClasses: [PlayItem.classForCoder()], options: options) {
-                    Swift.print(String(format:"%d playitem(s)", items.count))
-                    var playlistSet : IndexSet? = nil
-                    
-                    //  Select the dropped on playlist(tag:0) if playitemView -> playlistView
-                    if 0 == tableView.tag {
-                        playlistSet = playlistTableView.selectedRowIndexes
-                        playlistTableView.selectRowIndexes(IndexSet(integer: row), byExtendingSelection: false)
-                    }
-                    
-                    for item in items {
-                        add(item: item as! PlayItem, atIndex: -1)
-                    }
-                    
-                    if let restoreSet = playlistSet {
-                        playlistTableView.selectRowIndexes(restoreSet, byExtendingSelection: false)
-                    }
-                }
-                else
-                if let items = KeyedUnarchiver.unarchiveObject(with: data) {
-                    Swift.print(String(format:"%d playitem(s)", (items as AnyObject).count))
-                }
-            }
-            else
-            if let data = pasteboard.data(forType: NSPasteboard.PasteboardType(rawValue: PlayItem.className() + ".dict")) {
-                Swift.print(String(format:"%d playitem dict:", data.count))
-            }
-        }
-        else
-
-        //    We have a Finder drag-n-drop of file or location URLs ?
-        if let items: Array<AnyObject> = pasteboard.readObjects(forClasses: [NSURL.classForCoder()], options: options) as Array<AnyObject>? {
-
-            //  add(item:) and add(list:) affect array controller selection,
-            //  so we must alter selection to the drop row for playlist;
-            //  note that we append items so adjust the newIndexOffset
-            switch tableView {
-            case playlistTableView:
-                switch dropOperation {
-                case .on:
-                    //  selected playlist is already set
-                    play = (playlistArrayController.arrangedObjects as! Array)[row]
-                    playlistArrayController.setSelectionIndex(row)
-
-                default:
-                    play = PlayList()
-                    add(list: play!, atIndex: -1)
-                    playlistTableView.reloadData()
-                    
-                    //  Pick our selected playlist
-                    let index = playlistArrayController.selectionIndexes.first
-                    let selectionRow = index! + 1
-                    tableView.selectRowIndexes(IndexSet.init(integer: selectionRow), byExtendingSelection: false)
-                    newIndexOffset = -row
-                    Swift.print("selection \(String(describing: playlistArrayController.selectedObjects.first))")
-                    Swift.print("     play \(String(describing: play))")
-                }
-                 
-            default: // playitemTableView:
-                play = playlistArrayController.selectedObjects.first as? PlayList
-            }
-
-            for itemURL in items {
-                var fileURL : URL? = (itemURL as AnyObject).filePathURL
-                let dc = NSDocumentController.shared
-                var item: PlayItem?
-
-                //  Resolve alias before storing bookmark
-                if let original = (fileURL! as NSURL).resolvedFinderAlias() { fileURL = original }
-                
-                //  If we already know this url 1) known document, 2) our global items cache, use its settings
-                if let doc = dc.document(for: fileURL!) {
-                    item = (doc as! Document).playitem()
-                }
-                else
-                if let dict = defaults.dictionary(forKey: (fileURL?.absoluteString)!) {
-                    item = PlayItem.init(with: dict)
-                }
-                else
-                {
-                    //  Unknown files have to be sandboxed
-                    if isSandboxed != appDelegate.storeBookmark(url: fileURL! as URL) {
-                        Swift.print("Yoink, unable to sandbox \(String(describing: fileURL)))")
-                    } else { sandboxed += 1 }
-
-                    let path = fileURL!.absoluteString//.stringByRemovingPercentEncoding
-                    let attr = appDelegate.metadataDictionaryForFileAt((fileURL?.path)!)
-                    let time = attr?[kMDItemDurationSeconds] as? Double ?? 0.0
-                    let fuzz = (itemURL as AnyObject).deletingPathExtension!!.lastPathComponent as NSString
-                    let name = fuzz.removingPercentEncoding
-                    let list: Array<PlayItem> = play!.list.sorted(by: { (lhs, rhs) -> Bool in
-                        return lhs.rank < rhs.rank
-                    })
-
-                    item = PlayItem(name:name!,
-                                    link:URL.init(string: path)!,
-                                    time:time,
-                                    rank:(list.count > 0) ? (list.last?.rank)! + 1 : 1)
-                    defaults.set(item?.dictionary(), forKey: (item?.link.absoluteString)!) 
-                }
-                
-                //  Insert item at valid offset, else append
-                if (row+newIndexOffset) < (playitemArrayController.arrangedObjects as AnyObject).count {
-                    add(item: item!, atIndex: row + newIndexOffset)
-                    
-                    //  Dropping on from a sourceTableView implies replacement
-                    if dropOperation == .on {
-                        let playitems: [PlayItem] = (playitemArrayController.arrangedObjects as! [PlayItem])
-                        let oldItem = playitems[row+newIndexOffset+1]
-
-                        //  We've shifted so remove old item at new location
-                        remove(item: oldItem, atIndex: row+newIndexOffset+1)
-                    }
-                }
-                else
-                {
-                    add(item: item!, atIndex: -1)
-                }
-                newIndexOffset += 1
-            }
-        }
-        else
-        {
-            // Try to pick off whatever they sent us
-            for element in pasteboard.pasteboardItems! {
-                for elementType in element.types {
-                    let elementItem = element.string(forType:elementType)
-                    var item: PlayItem?
-                    var url: URL?
-                    
-                    //  Use first playlist name
-                    if elementItem?.count == 0 { continue }
-//                    if !okydoKey { play?.name = elementType }
-
-                    switch (elementType) {
-                    case NSPasteboard.PasteboardType("public.url")://kUTTypeURL
-                        if let testURL = URL(string: elementItem!) {
-                            url = testURL
-                        }
-                        
-                    case NSPasteboard.PasteboardType("public.file-url"),
-                         NSPasteboard.PasteboardType("public.utf8-plain-text")://kUTTypeFileURL
-                        if let testURL = URL(string: elementItem!)?.standardizedFileURL {
-                            url = testURL
-                        }
-                        
-                    case NSPasteboard.PasteboardType("com.apple.finder.node"):
-                        continue // handled as public.file-url
-                    case NSPasteboard.PasteboardType("com.apple.pasteboard.promised-file-content-type"):
-                        if let testURL = URL(string: elementItem!)?.standardizedFileURL {
-                            url = testURL
-                            break
-                        }
-                        continue
-                    default:
-                        Swift.print("type \(elementType) \(elementItem!)")
-                        continue
-                    }
-                    if url == nil { continue }
-                    
-                    //  Resolve finder alias
-                    if let original = (url! as NSURL).resolvedFinderAlias() { url = original }
-                    
-                    if isSandboxed != appDelegate.storeBookmark(url: url!) {
-                        Swift.print("Yoink, unable to sandbox \(String(describing: url)))")
-                    } else { sandboxed += 1 }
-                    
-                    //  If item is in our playitems cache use it
-                    if let dict = defaults.dictionary(forKey: (url?.absoluteString)!) {
-                        item = PlayItem.init(with: dict)
-                    }
-                    else
-                    {
-                        let attr = appDelegate.metadataDictionaryForFileAt((url?.path)!)
-                        let time = attr?[kMDItemDurationSeconds] as? TimeInterval ?? 0.0
-                        let fuzz = url?.deletingPathExtension().lastPathComponent
-                        let name = fuzz?.removingPercentEncoding
-                        //  TODO: we should probably set selection to where row here is as above
-                        let selectedPlaylist = playlistArrayController.selectedObjects.first as? PlayList
-                        let list: Array<PlayItem> = selectedPlaylist!.list.sorted(by: { (lhs, rhs) -> Bool in
-                            return lhs.rank < rhs.rank
-                        })
-                        
-                        item = PlayItem(name: name!,
-                                        link: url!,
-                                        time: time,
-                                        rank: (list.count > 0) ? (list.last?.rank)! + 1 : 1)
-                    }
-                    
-                    if (row+newIndexOffset) < (playitemArrayController.arrangedObjects as AnyObject).count {
-                        add(item: item!, atIndex: row + newIndexOffset)
-
-                        //  Dropping on from a sourceTableView implies replacement
-                        if dropOperation == .on {
-                            let playitems: [PlayItem] = (playitemArrayController.arrangedObjects as! [PlayItem])
-                            let oldItem = playitems[row+newIndexOffset+1]
-
-                            //  We've shifted so remove old item at new location
-                            remove(item: oldItem, atIndex: row+newIndexOffset+1)
-                        }
-                    }
-                    else
-                    {
-                        add(item: item!, atIndex: -1)
-                    }
-                    newIndexOffset += 1
-                }
-            }
-        }
-
-        tableView.endUpdates()
-
-        if sandboxed > 0 && isSandboxed != appDelegate.saveBookmarks() {
-            Swift.print("Yoink, unable to save bookmarks")
-        }
- 
-        return true
     }
 }

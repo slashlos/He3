@@ -1,6 +1,6 @@
 //
 //  UserSettings.swift
-//  He3
+//  He3 (Helium 3)
 //
 //  Created by Christian Hoffmann on 10/31/15.
 //  Copyright © 2015 Jaden Geller. All rights reserved.

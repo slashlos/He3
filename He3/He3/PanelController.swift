@@ -1,6 +1,6 @@
 //
 //  PanelController.swift
-//  He3 (He3 3)
+//  He3 (Helium)
 //
 //  Created by Jaden Geller on 4/9/15.
 //  Copyright (c) 2015 Jaden Geller. All rights reserved.
@@ -26,9 +26,9 @@ class TitleDragButton : NSButton {
  *  apple_ref/doc/uid/TP40017384-Photo_Editor_WindowDraggableButton_swift-DontLinkElementID_22
  */
     //  once our controller appear, update
-    var hpc : He3PanelController? {
+    var hpc : HeliumController? {
         get {
-            return self.window?.windowController as? He3PanelController
+            return self.window?.windowController as? HeliumController
         }
     }
     var homeURL : URL {
@@ -153,7 +153,7 @@ class TitleDragButton : NSButton {
     }
 }
 
-class He3PanelController : NSWindowController,NSWindowDelegate,NSFilePromiseProviderDelegate,NSDraggingSource,NSPasteboardWriting {
+class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProviderDelegate,NSDraggingSource,NSPasteboardWriting {
     var webViewController: WebViewController {
         get {
             return self.window?.contentViewController as! WebViewController
@@ -164,9 +164,9 @@ class He3PanelController : NSWindowController,NSWindowDelegate,NSFilePromiseProv
             return self.webViewController.webView
         }
     }
-    fileprivate var panel: He3Panel! {
+    fileprivate var panel: Panel! {
         get {
-            return (self.window as! He3Panel)
+            return (self.window as! Panel)
         }
     }
     var incognito : Bool {
@@ -240,30 +240,30 @@ class He3PanelController : NSWindowController,NSWindowDelegate,NSFilePromiseProv
         
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(He3PanelController.didBecomeActive),
+            selector: #selector(HeliumController.didBecomeActive),
             name: NSApplication.didBecomeActiveNotification,
             object: nil)
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(He3PanelController.willResignActive),
+            selector: #selector(HeliumController.willResignActive),
             name: NSApplication.willResignActiveNotification,
             object: nil)
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(He3PanelController.didUpdateURL(note:)),
-            name: NSNotification.Name(rawValue: "He3DidUpdateURL"),
+            selector: #selector(HeliumController.didUpdateURL(note:)),
+            name: NSNotification.Name(rawValue: "DidUpdateURL"),
             object: nil)
 		
         //  Quick Quiet notification
         NotificationCenter.default.addObserver(
             self,
-			selector: #selector(He3PanelController.quickQuiet(_:)),
+			selector: #selector(HeliumController.quickQuiet(_:)),
             name: NSNotification.Name(rawValue: "quickQuiet"),
             object: nil)
 
         //  We allow drag from title's document icon to self or Finder
         panel.registerForDraggedTypes(NSFilePromiseReceiver.readableDraggedTypes.map { NSPasteboard.PasteboardType($0)})
-        panel.registerForDraggedTypes([.promise, .URL, .fileURL])
+		panel.registerForDraggedTypes([.rowDragType, .fileURL, .string])
         panel.windowController?.shouldCascadeWindows = true///offsetFromKeyWindow()
 
         // Remember for later restoration
@@ -319,7 +319,47 @@ class He3PanelController : NSWindowController,NSWindowDelegate,NSFilePromiseProv
         }
         setupTrackingAreas(false)
     }
-    
+	
+	// MARK:- TOOO dock tile updating when minimized
+	var dockTileImageView = NSImageView.init()
+	var dockTileUpdateTimer: Timer?
+	func windowWillMiniaturize(_ notification: Notification) {
+		guard self.window == notification.object as? NSWindow else { return }
+		
+		if let timer = dockTileUpdateTimer, timer.isValid { timer.invalidate() }
+		self.dockTileUpdateTimer = Timer.scheduledTimer(withTimeInterval: 6.49, repeats: true, block: { (timer) in
+			if timer.isValid, let webView = self.webView {
+				if let window = self.window, let image = window.contentView?.snapshot {
+					self.dockTileImageView.image = image
+					Swift.print("rect: \(image.alignmentRect)")
+					
+					DispatchQueue.main.async {
+						self.window?.dockTile.contentView = self.dockTileImageView
+						Swift.print("miniUpdate")
+					}
+				}
+				else
+				{
+					webView.takeSnapshot(with: nil) { image, error in
+						if let image = image {
+							self.dockTileImageView.image = image
+							DispatchQueue.main.async {
+								self.window?.dockTile.contentView = self.dockTileImageView
+								Swift.print("webvUpdate")
+							}
+						}
+					}
+				}
+			}
+		})
+        if let timer = self.dockTileUpdateTimer { RunLoop.current.add(timer, forMode: .common) }
+	}
+	func windowDidDeminiaturize(_ notification: Notification) {
+		self.window?.dockTile.contentView = nil
+		dockTileUpdateTimer?.invalidate()
+		dockTileUpdateTimer = nil
+	}
+	
     // MARK:- Mouse events
     var closeButton : PanelButton? {
         get {
@@ -413,7 +453,7 @@ class He3PanelController : NSWindowController,NSWindowDelegate,NSFilePromiseProv
         if promiseURL.isFileURL { return true }
         pasteboard.clearContents()
         pasteboard.writeObjects([self.panel])
-        let dragImage = doc?.displayImage ?? NSImage.init(named: k.He3)
+        let dragImage = doc?.displayImage ?? NSImage.init(named: k.AppName)
         window.drag(dragImage!.resize(w: 32, h: 32), at: dragImageLocation, offset: .zero, event: event, pasteboard: pasteboard, source: window, slideBack: true)
         ///window.standardWindowButton(.documentIconButton)?.dragPromisedFiles(ofTypes: ["fileloc","webloc"], from: dragImage!.alignmentRect, source: self, slideBack: true, event: event)
 
@@ -502,20 +542,17 @@ class He3PanelController : NSWindowController,NSWindowDelegate,NSFilePromiseProv
     }
      https://www.google.com/search?q=big%20kid%20deluxe%20muslin%20fleece%20blanket
     */
-    func pasteboardWriter(forPanel panel: He3Panel) -> NSPasteboardWriting {
+    func pasteboardWriter(forPanel panel: Panel) -> NSPasteboardWriting {
         return promiseFilename as NSString
     }
 
     func pasteboardPropertyList(forType type: NSPasteboard.PasteboardType) -> Any? {
         Swift.print("ppl type: \(type.rawValue)")
         switch type {
-        case .promise:
+        case .rowDragType:
             return KeyedArchiver.archivedData(withRootObject: promiseURL.absoluteString as NSString)
             
-        case .files:
-            return [promiseFilename]
- 
-        case .fileURL, .URL:
+        case .fileURL:
             return KeyedArchiver.archivedData(withRootObject: self.promiseURL)
             
         case .string:
@@ -528,11 +565,9 @@ class He3PanelController : NSWindowController,NSWindowDelegate,NSFilePromiseProv
     }
     
     func writableTypes(for pasteboard: NSPasteboard) -> [NSPasteboard.PasteboardType] {
-        var types : [NSPasteboard.PasteboardType] = [.fileURL, .URL, .string]
+		let types : [NSPasteboard.PasteboardType] = [.rowDragType, .fileURL, .URL, .string]
 
-        types.append((promiseURL.isFileURL ? .files : .promise))
-        Swift.print("wtp \(types)")
-        return types
+         return types
     }
     
     // MARK: - NSFilePromiseProviderDelegate
@@ -824,7 +859,7 @@ class He3PanelController : NSWindowController,NSWindowDelegate,NSFilePromiseProv
     @objc @IBAction func autoHideTitlePress(_ sender: NSMenuItem) {
         guard autoHideTitlePreference.rawValue != sender.tag else { return }
         
-        autoHideTitlePreference = He3PanelController.AutoHideTitlePreference(rawValue: sender.tag)!
+        autoHideTitlePreference = HeliumController.AutoHideTitlePreference(rawValue: sender.tag)!
 
         installTitleFader()
 
@@ -911,7 +946,7 @@ class He3PanelController : NSWindowController,NSWindowDelegate,NSFilePromiseProv
     }
 
     @objc @IBAction func translucencyPress(_ sender: NSMenuItem) {
-        translucencyPreference = He3PanelController.TranslucencyPreference(rawValue: sender.tag)!
+        translucencyPreference = HeliumController.TranslucencyPreference(rawValue: sender.tag)!
         
         if let doc = panel.windowController?.document { doc.updateChangeCount(.changeDone) }
 
@@ -986,7 +1021,7 @@ class He3PanelController : NSWindowController,NSWindowDelegate,NSFilePromiseProv
     func willUpdateTitleBar() {
         //  synchronize prefs to document's panel state
         let nowState = autoHideTitlePreference
-        let othState = autoHideTitlePreference == .never ? He3PanelController.AutoHideTitlePreference.outside : .never
+        let othState = autoHideTitlePreference == .never ? HeliumController.AutoHideTitlePreference.outside : .never
         self.autoHideTitlePreference = othState
         self.autoHideTitlePreference = nowState
     }
@@ -997,7 +1032,7 @@ class He3PanelController : NSWindowController,NSWindowDelegate,NSFilePromiseProv
     
     func windowDidResize(_ notification: Notification) {
         guard let vindow = notification.object as? NSWindow,
-            let wpc = vindow.windowController as? He3PanelController else { return }
+            let wpc = vindow.windowController as? HeliumController else { return }
         
         wpc.setupTrackingAreas(true)
         wpc.updateTranslucency()
@@ -1006,7 +1041,7 @@ class He3PanelController : NSWindowController,NSWindowDelegate,NSFilePromiseProv
     func windowShouldClose(_ sender: NSWindow) -> Bool {
         guard let vindow = window,
             let wvc = vindow.contentViewController as? WebViewController,
-            let wpc = vindow.windowController as? He3PanelController else { return false }
+            let wpc = vindow.windowController as? HeliumController else { return false }
 
         //  Stop whatever is going on by brute force
         wvc.clear()
@@ -1079,13 +1114,13 @@ class He3PanelController : NSWindowController,NSWindowDelegate,NSFilePromiseProv
 			}
 			else
 			{
-				let hpc = window.windowController as! He3PanelController
+				let hpc = window.windowController as! HeliumController
 				if hpc.settings.translucencyPreference.value != .never {
 					window.alphaValue = 1.00
 				}
 				else
 				{
-					let alpha = CGFloat((window.windowController as! He3PanelController).settings.opacityPercentage.value) / 100.0
+					let alpha = CGFloat((window.windowController as! HeliumController).settings.opacityPercentage.value) / 100.0
 					if url.isFileURL {
 						DispatchQueue.main.async {
 							webView.evaluateJavaScript("window.webview.play()", completionHandler: nil)
@@ -1195,7 +1230,7 @@ class He3PanelController : NSWindowController,NSWindowDelegate,NSFilePromiseProv
     }
 }
 
-class ReleasePanelController : He3PanelController {
+class ReleasePanelController : HeliumController {
 
     override func windowDidLoad() {
         //  Default to not dragging by content
@@ -1207,4 +1242,3 @@ class ReleasePanelController : He3PanelController {
         NSApp.changeWindowsItem(panel, title: window?.title ?? k.ReleaseNotes, filename: false)
     }
 }
-

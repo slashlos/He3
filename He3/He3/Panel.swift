@@ -10,91 +10,16 @@
 import Foundation
 import Cocoa
 
-// Sugar
 extension NSPoint {
     static func - (left: NSPoint, right: NSPoint) -> NSPoint {
         return NSPoint(x: left.x - right.x, y: left.y - right.y)
     }
 }
 
-class He3DocPromise : NSFilePromiseProvider {
-    func pasteboardWriter(forPanel panel: He3Panel) -> NSPasteboardWriting {
-        let provider = NSFilePromiseProvider(fileType: kUTTypeJPEG as String, delegate: panel.heliumPanelController)
-        provider.userInfo = (provider.delegate as! He3PanelController).promiseContents
-        return provider
-    }
-    
-    // MARK: - NSFilePromiseProviderDelegate
-    
-    /// - Tag: ProvideFileName
-    func filePromiseProvider(_ filePromiseProvider: NSFilePromiseProvider, fileNameForType fileType: String) -> String {
-        return (delegate as! He3PanelController).filePromiseProvider(filePromiseProvider, fileNameForType: fileType)
-    }
-    
-    /// - Tag: ProvideOperationQueue
-    func operationQueue(for filePromiseProvider: NSFilePromiseProvider) -> OperationQueue {
-        return (delegate as! He3PanelController).workQueue
-     }
-    
-    /// - Tag: PerformFileWriting
-    func filePromiseProvider(_ filePromiseProvider: NSFilePromiseProvider, writePromiseTo url: URL, completionHandler: @escaping (Error?) -> Void) {
-        (delegate as! He3PanelController).filePromiseProvider(filePromiseProvider, writePromiseTo: url, completionHandler: completionHandler)
-    }
-}
-
-class KeyedArchiver : NSKeyedArchiver {
-    open override class func archivedData(withRootObject rootObject: Any) -> Data {
-        do {
-            let data = try NSKeyedArchiver.archivedData(withRootObject: rootObject, requiringSecureCoding: true)
-            return data
-        }
-        catch let error {
-            Swift.print("KeyedArchiver: \(error.localizedDescription)")
-            return Data.init()
-        }
-    }
-    open override class func archiveRootObject(_ rootObject: Any, toFile path: String) -> Bool {
-        do {
-            let data = try NSKeyedArchiver.archivedData(withRootObject: rootObject, requiringSecureCoding: true)
-            try data.write(to: URL.init(fileURLWithPath: path))
-            return true
-        }
-        catch let error {
-            Swift.print("KeyedArchiver: \(error.localizedDescription)")
-            return false
-        }
-    }
-}
-
-class KeyedUnarchiver : NSKeyedUnarchiver {
-    open override class func unarchiveObject(with data: Data) -> Any? {
-        do {
-			let object = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [PlayList.self,PlayItem.self], from: data)
-            return object
-        }
-        catch let error {
-            Swift.print("unarchiveObject(with:) \(error.localizedDescription)")
-            return nil
-        }
-    }
-
-    open override class func unarchiveObject(withFile path: String) -> Any? {
-        do {
-            let data = try Data(contentsOf: URL.init(fileURLWithPath: path))
-			let object = try unarchiveTopLevelObjectWithData(data)
-            return object
-        }
-        catch let error {
-            Swift.print("unarchiveObject(withFile:) \(error.localizedDescription)")
-            return nil
-        }
-    }
-}
-
-class He3Panel: NSPanel, NSPasteboardWriting, NSDraggingSource {
-    var heliumPanelController : He3PanelController {
+class Panel: NSPanel, NSPasteboardWriting, NSDraggingSource {
+    var heliumPanelController : HeliumController {
         get {
-            return delegate as! He3PanelController
+            return delegate as! HeliumController
         }
     }
     var promiseFilename : String {
@@ -108,7 +33,6 @@ class He3Panel: NSPanel, NSPasteboardWriting, NSDraggingSource {
         }
     }
     
-    // nil when not dragging
     var previousMouseLocation: NSPoint?
     
     override func sendEvent(_ event: NSEvent) {
@@ -154,10 +78,10 @@ class He3Panel: NSPanel, NSPasteboardWriting, NSDraggingSource {
     func pasteboardPropertyList(forType type: NSPasteboard.PasteboardType) -> Any? {
        Swift.print("ppl type: \(type.rawValue)")
        switch type {
-       case .promise:
+       case .rowDragType:
            return promiseURL.absoluteString as NSString
            
-       case .fileURL, .URL:
+       case .fileURL:
            return KeyedArchiver.archivedData(withRootObject: promiseURL)
            
        case .string:
@@ -170,11 +94,10 @@ class He3Panel: NSPanel, NSPasteboardWriting, NSDraggingSource {
     }
 
     func writableTypes(for pasteboard: NSPasteboard) -> [NSPasteboard.PasteboardType] {
-       var types : [NSPasteboard.PasteboardType] = [.fileURL, .URL, .string]
+		let types : [NSPasteboard.PasteboardType] = [.fileURL, .URL, .string]
 
-       types.append((promiseURL.isFileURL ? .files : .promise))
-       Swift.print("wtp \(types)")
-       return types
+		Swift.print("wtp \(types)")
+        return types
     }
     
     func writingOptions(forType type: NSPasteboard.PasteboardType, pasteboard: NSPasteboard) -> NSPasteboard.WritingOptions {
@@ -222,7 +145,7 @@ class PlaylistsPanel : NSPanel {
     
 }
 
-class ReleasePanel : He3Panel {
+class ReleasePanel : Panel {
     
 }
 

@@ -1,6 +1,6 @@
 //
 //  About.swift
-//  He3 (He3 3)
+//  He3 (Helium 3)
 //
 //  Created by Carlos D. Santiago on 6/24/17.
 //  Copyright © 2017-2020 CD M Santiago. All rights reserved.
@@ -148,7 +148,7 @@ class AboutBoxController : NSViewController {
 
     var appName: String {
         get {
-            return (NSApp.delegate as! AppDelegate).appName
+            return (NSApp.delegate as! AppDelegate).AppName
         }
     }
     var versionString: String? = nil

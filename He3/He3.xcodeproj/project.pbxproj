@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F0EEE3F247D3283008F1988 /* LoadThumbnailOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0EEE3E247D3283008F1988 /* LoadThumbnailOperation.swift */; };
 		0F2370D1244E8CEA009F7914 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2370D0244E8CEA009F7914 /* AppDelegate.swift */; };
 		0F2370D3244E8CEA009F7914 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2370D2244E8CEA009F7914 /* WebViewController.swift */; };
 		0F2370D5244E8CEA009F7914 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2370D4244E8CEA009F7914 /* Document.swift */; };
@@ -19,6 +20,9 @@
 		0F2370FD244E95ED009F7914 /* PanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2370FC244E95ED009F7914 /* PanelController.swift */; };
 		0F2370FF244E9601009F7914 /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2370FE244E9601009F7914 /* PlaylistViewController.swift */; };
 		0F237113244E9AA1009F7914 /* Help in Resources */ = {isa = PBXBuildFile; fileRef = 0F237112244E9AA1009F7914 /* Help */; };
+		0F307169246A3D0C00684B84 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F307168246A3D0C00684B84 /* AppDelegate.swift */; };
+		0F30716D246A3D0C00684B84 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F30716C246A3D0C00684B84 /* Assets.xcassets */; };
+		0F30717C246A42E200684B84 /* He3 Launcher.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0F307166246A3D0B00684B84 /* He3 Launcher.app */; };
 		0F529002244F142800A9B9DC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F529001244F142800A9B9DC /* Cocoa.framework */; };
 		0F52900E244F142800A9B9DC /* He3ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0F528FFF244F142800A9B9DC /* He3ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0F529030244F3A5800A9B9DC /* He3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F52902F244F3A5800A9B9DC /* He3Tests.swift */; };
@@ -30,14 +34,27 @@
 		0F5290B2244F6C0D00A9B9DC /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5290AA244F6C0D00A9B9DC /* UserSettings.swift */; };
 		0F5290B3244F6C0D00A9B9DC /* StringHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5290AB244F6C0D00A9B9DC /* StringHelpers.swift */; };
 		0F5290B4244F6C0D00A9B9DC /* PanelButtonBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5290AC244F6C0D00A9B9DC /* PanelButtonBar.swift */; };
-		0F5290B5244F6C0D00A9B9DC /* LoginItemAutoStart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5290AD244F6C0D00A9B9DC /* LoginItemAutoStart.swift */; };
 		0F5290B9244F6C9100A9B9DC /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 0F5290B8244F6C9100A9B9DC /* dsa_pub.pem */; };
 		0F5290BD2451D3C400A9B9DC /* He3.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0F5290BC2451D3C300A9B9DC /* He3.icns */; };
+		0F6FB8CE246C6A3500F5D36B /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = 0F6FB8CD246C6A3500F5D36B /* Down */; };
+		0F6FB8D8246C9D9400F5D36B /* LaunchControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6FB8D7246C9D9400F5D36B /* LaunchControllers.swift */; };
+		0F721888246C54D50070F9E4 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5290AA244F6C0D00A9B9DC /* UserSettings.swift */; };
+		0F9EF954247019E6008DDB93 /* itemIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F9EF953247019E6008DDB93 /* itemIcon.png */; };
+		0F9EF9592471FAF9008DDB93 /* Types+Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD2127E2466D7C800EA5D6D /* Types+Settings.swift */; };
+		0F9EF95B24776468008DDB93 /* listIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F9EF95A24776468008DDB93 /* listIcon.png */; };
+		0FACD4C42467953000A23B1F /* PromiseFileProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FACD4C32467953000A23B1F /* PromiseFileProvider.swift */; };
 		0FBD9BAF2454603200332EEB /* he3_logo.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0FBD9BAE2454603200332EEB /* he3_logo.icns */; };
-		0FBD9BB624546E3900332EEB /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = 0FBD9BB524546E3900332EEB /* Down */; };
 		0FBD9BB8245473C600332EEB /* itemIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0FBD9BB7245473C500332EEB /* itemIcon.icns */; };
 		0FBD9BBA2454746200332EEB /* listIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0FBD9BB92454746200332EEB /* listIcon.icns */; };
 		0FBD9BBC2454767300332EEB /* icntIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0FBD9BBB2454767300332EEB /* icntIcon.icns */; };
+		0FD21271246383E500EA5D6D /* PlaylistViewController+DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD21270246383E500EA5D6D /* PlaylistViewController+DragAndDrop.swift */; };
+		0FD21273246386A500EA5D6D /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD21272246386A500EA5D6D /* Extensions.swift */; };
+		0FD2127524638EB900EA5D6D /* WebViewController+Navigation+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD2127424638EB900EA5D6D /* WebViewController+Navigation+UI.swift */; };
+		0FD2127724638FFC00EA5D6D /* WebViewController+Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD2127624638FFC00EA5D6D /* WebViewController+Session.swift */; };
+		0FD212792466441F00EA5D6D /* PlayList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD212782466441F00EA5D6D /* PlayList.swift */; };
+		0FD2127B2466448500EA5D6D /* PlayItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD2127A2466448500EA5D6D /* PlayItem.swift */; };
+		0FD2127D2466D71200EA5D6D /* DocController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD2127C2466D71200EA5D6D /* DocController.swift */; };
+		0FD212812467052900EA5D6D /* PlayTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD212802467052900EA5D6D /* PlayTableCellView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +64,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 0F2370CC244E8CEA009F7914;
 			remoteInfo = He3;
+		};
+		0F30717A246A429D00684B84 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0F2370C5244E8CEA009F7914 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0F307165246A3D0B00684B84;
+			remoteInfo = "He3 Launcher";
 		};
 		0F52900C244F142800A9B9DC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -85,12 +109,13 @@
 		};
 		0F5290BA2450422E00A9B9DC /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 7;
+			buildActionMask = 8;
+			dstPath = Contents/Library/LoginItems;
+			dstSubfolderSpec = 1;
 			files = (
+				0F30717C246A42E200684B84 /* He3 Launcher.app in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 		};
 		0FBD9BC124566C1C00332EEB /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -104,6 +129,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0F0EEE3E247D3283008F1988 /* LoadThumbnailOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadThumbnailOperation.swift; sourceTree = "<group>"; };
 		0F2370CD244E8CEA009F7914 /* He3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = He3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F2370D0244E8CEA009F7914 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0F2370D2244E8CEA009F7914 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
@@ -122,6 +148,13 @@
 		0F2370FE244E9601009F7914 /* PlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; };
 		0F237112244E9AA1009F7914 /* Help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Help; sourceTree = "<group>"; };
 		0F2DF8C42458644200707628 /* He3.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = He3.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		0F307166246A3D0B00684B84 /* He3 Launcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "He3 Launcher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0F307168246A3D0C00684B84 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		0F30716A246A3D0C00684B84 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		0F30716C246A3D0C00684B84 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		0F307171246A3D0C00684B84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0F307172246A3D0C00684B84 /* He3_Launcher.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = He3_Launcher.entitlements; sourceTree = "<group>"; };
+		0F30717D246AB8CF00684B84 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		0F528FFF244F142800A9B9DC /* He3ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = He3ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F529001244F142800A9B9DC /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		0F529019244F14A400A9B9DC /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
@@ -141,16 +174,28 @@
 		0F5290AA244F6C0D00A9B9DC /* UserSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserSettings.swift; path = He3/Support/UserSettings.swift; sourceTree = SOURCE_ROOT; };
 		0F5290AB244F6C0D00A9B9DC /* StringHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StringHelpers.swift; path = He3/Support/StringHelpers.swift; sourceTree = SOURCE_ROOT; };
 		0F5290AC244F6C0D00A9B9DC /* PanelButtonBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PanelButtonBar.swift; path = He3/Support/PanelButtonBar.swift; sourceTree = SOURCE_ROOT; };
-		0F5290AD244F6C0D00A9B9DC /* LoginItemAutoStart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginItemAutoStart.swift; path = He3/Support/LoginItemAutoStart.swift; sourceTree = SOURCE_ROOT; };
 		0F5290AE244F6C0D00A9B9DC /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = He3/Support/Sparkle.framework; sourceTree = SOURCE_ROOT; };
 		0F5290B8244F6C9100A9B9DC /* dsa_pub.pem */ = {isa = PBXFileReference; lastKnownFileType = text; name = dsa_pub.pem; path = He3/Resources/dsa_pub.pem; sourceTree = SOURCE_ROOT; };
 		0F5290BC2451D3C300A9B9DC /* He3.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = He3.icns; path = "He3/Assets/App Icon/He3.icns"; sourceTree = "<group>"; };
+		0F6FB8D7246C9D9400F5D36B /* LaunchControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchControllers.swift; sourceTree = "<group>"; };
+		0F9EF953247019E6008DDB93 /* itemIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = itemIcon.png; path = "He3/Assets/item Icon/itemIcon.png"; sourceTree = "<group>"; };
+		0F9EF95A24776468008DDB93 /* listIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = listIcon.png; path = "He3/Assets/list Icon/listIcon.png"; sourceTree = "<group>"; };
+		0FACD4C32467953000A23B1F /* PromiseFileProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseFileProvider.swift; sourceTree = "<group>"; };
 		0FBD9BAE2454603200332EEB /* he3_logo.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = he3_logo.icns; path = "He3/Assets/he3 logo/he3_logo.icns"; sourceTree = "<group>"; };
 		0FBD9BB7245473C500332EEB /* itemIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = itemIcon.icns; path = "He3/Assets/item Icon/itemIcon.icns"; sourceTree = "<group>"; };
 		0FBD9BB92454746200332EEB /* listIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = listIcon.icns; path = "He3/Assets/list Icon/listIcon.icns"; sourceTree = "<group>"; };
-		0FBD9BBB2454767300332EEB /* icntIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = icntIcon.icns; path = He3/Assets/icntIcon/icntIcon.icns; sourceTree = "<group>"; };
+		0FBD9BBB2454767300332EEB /* icntIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = icntIcon.icns; path = "He3/Assets/icnt Icon/icntIcon.icns"; sourceTree = "<group>"; };
 		0FBD9BC324566C1C00332EEB /* He3-dmg */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "He3-dmg"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FBD9BC524566C1C00332EEB /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		0FD21270246383E500EA5D6D /* PlaylistViewController+DragAndDrop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PlaylistViewController+DragAndDrop.swift"; sourceTree = "<group>"; };
+		0FD21272246386A500EA5D6D /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		0FD2127424638EB900EA5D6D /* WebViewController+Navigation+UI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WebViewController+Navigation+UI.swift"; sourceTree = "<group>"; };
+		0FD2127624638FFC00EA5D6D /* WebViewController+Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WebViewController+Session.swift"; sourceTree = "<group>"; };
+		0FD212782466441F00EA5D6D /* PlayList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayList.swift; sourceTree = "<group>"; };
+		0FD2127A2466448500EA5D6D /* PlayItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayItem.swift; sourceTree = "<group>"; };
+		0FD2127C2466D71200EA5D6D /* DocController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocController.swift; sourceTree = "<group>"; };
+		0FD2127E2466D7C800EA5D6D /* Types+Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Types+Settings.swift"; sourceTree = "<group>"; };
+		0FD212802467052900EA5D6D /* PlayTableCellView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayTableCellView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,11 +203,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0FBD9BB624546E3900332EEB /* Down in Frameworks */,
+				0F6FB8CE246C6A3500F5D36B /* Down in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		0F2370DE244E8CEC009F7914 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0F307163246A3D0B00684B84 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -201,12 +253,15 @@
 				0FBD9BAE2454603200332EEB /* he3_logo.icns */,
 				0FBD9BBB2454767300332EEB /* icntIcon.icns */,
 				0FBD9BB7245473C500332EEB /* itemIcon.icns */,
+				0F9EF953247019E6008DDB93 /* itemIcon.png */,
 				0FBD9BB92454746200332EEB /* listIcon.icns */,
+				0F9EF95A24776468008DDB93 /* listIcon.png */,
 				0F2370CF244E8CEA009F7914 /* He3 */,
 				0F529018244F14A400A9B9DC /* He3ShareExtension */,
 				0F52902E244F3A5800A9B9DC /* He3Tests */,
 				0F2370E4244E8CEC009F7914 /* He3UITests */,
 				0FBD9BC424566C1C00332EEB /* He3-dmg */,
+				0F307167246A3D0B00684B84 /* He3 Launcher */,
 				0F529000244F142800A9B9DC /* Frameworks */,
 				0F2370CE244E8CEA009F7914 /* Products */,
 			);
@@ -220,6 +275,7 @@
 				0F528FFF244F142800A9B9DC /* He3ShareExtension.appex */,
 				0F52902D244F3A5800A9B9DC /* He3Tests.xctest */,
 				0FBD9BC324566C1C00332EEB /* He3-dmg */,
+				0F307166246A3D0B00684B84 /* He3 Launcher.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -229,12 +285,21 @@
 			children = (
 				0F2370F4244E904E009F7914 /* About.swift */,
 				0F2370D0244E8CEA009F7914 /* AppDelegate.swift */,
+				0F6FB8D7246C9D9400F5D36B /* LaunchControllers.swift */,
 				0F2370D4244E8CEA009F7914 /* Document.swift */,
+				0FD2127C2466D71200EA5D6D /* DocController.swift */,
+				0FD212782466441F00EA5D6D /* PlayList.swift */,
+				0FD2127A2466448500EA5D6D /* PlayItem.swift */,
 				0F2370F8244E95DC009F7914 /* Panel.swift */,
 				0F2370FC244E95ED009F7914 /* PanelController.swift */,
 				0F2370FA244E95E3009F7914 /* PlaylistPanelController.swift */,
 				0F2370FE244E9601009F7914 /* PlaylistViewController.swift */,
+				0FD21270246383E500EA5D6D /* PlaylistViewController+DragAndDrop.swift */,
+				0FACD4C32467953000A23B1F /* PromiseFileProvider.swift */,
+				0FD212802467052900EA5D6D /* PlayTableCellView.swift */,
 				0F2370D2244E8CEA009F7914 /* WebViewController.swift */,
+				0FD2127424638EB900EA5D6D /* WebViewController+Navigation+UI.swift */,
+				0FD2127624638FFC00EA5D6D /* WebViewController+Session.swift */,
 				0F2370D6244E8CEC009F7914 /* Assets.xcassets */,
 				0F2370D8244E8CEC009F7914 /* Main.storyboard */,
 				0F2370DB244E8CEC009F7914 /* Info.plist */,
@@ -252,6 +317,19 @@
 				0F2370E7244E8CEC009F7914 /* Info.plist */,
 			);
 			path = He3UITests;
+			sourceTree = "<group>";
+		};
+		0F307167246A3D0B00684B84 /* He3 Launcher */ = {
+			isa = PBXGroup;
+			children = (
+				0F307168246A3D0C00684B84 /* AppDelegate.swift */,
+				0F30716A246A3D0C00684B84 /* ViewController.swift */,
+				0F30717D246AB8CF00684B84 /* Main.storyboard */,
+				0F30716C246A3D0C00684B84 /* Assets.xcassets */,
+				0F307171246A3D0C00684B84 /* Info.plist */,
+				0F307172246A3D0C00684B84 /* He3_Launcher.entitlements */,
+			);
+			path = "He3 Launcher";
 			sourceTree = "<group>";
 		};
 		0F529000244F142800A9B9DC /* Frameworks */ = {
@@ -295,8 +373,10 @@
 			isa = PBXGroup;
 			children = (
 				0F5290A9244F6C0C00A9B9DC /* Bridging-Header.h */,
-				0F5290AD244F6C0D00A9B9DC /* LoginItemAutoStart.swift */,
+				0FD21272246386A500EA5D6D /* Extensions.swift */,
+				0F0EEE3E247D3283008F1988 /* LoadThumbnailOperation.swift */,
 				0F5290AC244F6C0D00A9B9DC /* PanelButtonBar.swift */,
+				0FD2127E2466D7C800EA5D6D /* Types+Settings.swift */,
 				0F5290AE244F6C0D00A9B9DC /* Sparkle.framework */,
 				0F5290AB244F6C0D00A9B9DC /* StringHelpers.swift */,
 				0F5290A7244F6C0C00A9B9DC /* UrlHelpers.swift */,
@@ -343,11 +423,12 @@
 			buildRules = (
 			);
 			dependencies = (
+				0F30717B246A429D00684B84 /* PBXTargetDependency */,
 				0F52900D244F142800A9B9DC /* PBXTargetDependency */,
 			);
 			name = He3;
 			packageProductDependencies = (
-				0FBD9BB524546E3900332EEB /* Down */,
+				0F6FB8CD246C6A3500F5D36B /* Down */,
 			);
 			productName = He3;
 			productReference = 0F2370CD244E8CEA009F7914 /* He3.app */;
@@ -370,6 +451,23 @@
 			productName = He3UITests;
 			productReference = 0F2370E1244E8CEC009F7914 /* He3UITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		0F307165246A3D0B00684B84 /* He3 Launcher */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0F307173246A3D0C00684B84 /* Build configuration list for PBXNativeTarget "He3 Launcher" */;
+			buildPhases = (
+				0F307162246A3D0B00684B84 /* Sources */,
+				0F307163246A3D0B00684B84 /* Frameworks */,
+				0F307164246A3D0B00684B84 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "He3 Launcher";
+			productName = "He3 Launcher";
+			productReference = 0F307166246A3D0B00684B84 /* He3 Launcher.app */;
+			productType = "com.apple.product-type.application";
 		};
 		0F528FFE244F142800A9B9DC /* He3ShareExtension */ = {
 			isa = PBXNativeTarget;
@@ -443,6 +541,9 @@
 						CreatedOnToolsVersion = 11.3.1;
 						TestTargetID = 0F2370CC244E8CEA009F7914;
 					};
+					0F307165246A3D0B00684B84 = {
+						CreatedOnToolsVersion = 11.3.1;
+					};
 					0F528FFE244F142800A9B9DC = {
 						CreatedOnToolsVersion = 11.3.1;
 					};
@@ -465,7 +566,7 @@
 			);
 			mainGroup = 0F2370C4244E8CEA009F7914;
 			packageReferences = (
-				0FBD9BB424546E3900332EEB /* XCRemoteSwiftPackageReference "Down" */,
+				0F6FB8CC246C6A3500F5D36B /* XCRemoteSwiftPackageReference "Down" */,
 			);
 			productRefGroup = 0F2370CE244E8CEA009F7914 /* Products */;
 			projectDirPath = "";
@@ -476,6 +577,7 @@
 				0F528FFE244F142800A9B9DC /* He3ShareExtension */,
 				0F52902C244F3A5800A9B9DC /* He3Tests */,
 				0FBD9BC224566C1C00332EEB /* He3-dmg */,
+				0F307165246A3D0B00684B84 /* He3 Launcher */,
 			);
 		};
 /* End PBXProject section */
@@ -492,7 +594,9 @@
 				0F237113244E9AA1009F7914 /* Help in Resources */,
 				0FBD9BBC2454767300332EEB /* icntIcon.icns in Resources */,
 				0FBD9BBA2454746200332EEB /* listIcon.icns in Resources */,
+				0F9EF954247019E6008DDB93 /* itemIcon.png in Resources */,
 				0F2370DA244E8CEC009F7914 /* Main.storyboard in Resources */,
+				0F9EF95B24776468008DDB93 /* listIcon.png in Resources */,
 				0FBD9BAF2454603200332EEB /* he3_logo.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -501,6 +605,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0F307164246A3D0B00684B84 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0F30716D246A3D0C00684B84 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -564,19 +676,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F0EEE3F247D3283008F1988 /* LoadThumbnailOperation.swift in Sources */,
 				0F2370FF244E9601009F7914 /* PlaylistViewController.swift in Sources */,
+				0FD2127B2466448500EA5D6D /* PlayItem.swift in Sources */,
 				0F5290B2244F6C0D00A9B9DC /* UserSettings.swift in Sources */,
 				0F5290B4244F6C0D00A9B9DC /* PanelButtonBar.swift in Sources */,
+				0F6FB8D8246C9D9400F5D36B /* LaunchControllers.swift in Sources */,
 				0F5290B3244F6C0D00A9B9DC /* StringHelpers.swift in Sources */,
 				0F5290AF244F6C0D00A9B9DC /* WindowButtonBar.swift in Sources */,
-				0F5290B5244F6C0D00A9B9DC /* LoginItemAutoStart.swift in Sources */,
+				0FD21271246383E500EA5D6D /* PlaylistViewController+DragAndDrop.swift in Sources */,
 				0F2370F5244E904E009F7914 /* About.swift in Sources */,
+				0FACD4C42467953000A23B1F /* PromiseFileProvider.swift in Sources */,
 				0F2370F9244E95DC009F7914 /* Panel.swift in Sources */,
 				0F5290B1244F6C0D00A9B9DC /* ValueTransformers.swift in Sources */,
+				0FD212812467052900EA5D6D /* PlayTableCellView.swift in Sources */,
+				0FD2127724638FFC00EA5D6D /* WebViewController+Session.swift in Sources */,
+				0F9EF9592471FAF9008DDB93 /* Types+Settings.swift in Sources */,
+				0FD212792466441F00EA5D6D /* PlayList.swift in Sources */,
 				0F2370FD244E95ED009F7914 /* PanelController.swift in Sources */,
 				0F2370D3244E8CEA009F7914 /* WebViewController.swift in Sources */,
 				0F2370D1244E8CEA009F7914 /* AppDelegate.swift in Sources */,
+				0FD2127D2466D71200EA5D6D /* DocController.swift in Sources */,
+				0FD2127524638EB900EA5D6D /* WebViewController+Navigation+UI.swift in Sources */,
 				0F5290B0244F6C0D00A9B9DC /* UrlHelpers.swift in Sources */,
+				0FD21273246386A500EA5D6D /* Extensions.swift in Sources */,
 				0F2370FB244E95E3009F7914 /* PlaylistPanelController.swift in Sources */,
 				0F2370D5244E8CEA009F7914 /* Document.swift in Sources */,
 			);
@@ -587,6 +710,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F2370E6244E8CEC009F7914 /* He3UITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0F307162246A3D0B00684B84 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0F721888246C54D50070F9E4 /* UserSettings.swift in Sources */,
+				0F307169246A3D0C00684B84 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -620,6 +752,11 @@
 			isa = PBXTargetDependency;
 			target = 0F2370CC244E8CEA009F7914 /* He3 */;
 			targetProxy = 0F2370E2244E8CEC009F7914 /* PBXContainerItemProxy */;
+		};
+		0F30717B246A429D00684B84 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0F307165246A3D0B00684B84 /* He3 Launcher */;
+			targetProxy = 0F30717A246A429D00684B84 /* PBXContainerItemProxy */;
 		};
 		0F52900D244F142800A9B9DC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -861,6 +998,46 @@
 			};
 			name = Release;
 		};
+		0F307174246A3D0C00684B84 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "He3 Launcher/He3_Launcher.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = VQYGYPHYGE;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = "He3 Launcher/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.slashlos.he3.Launcher;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		0F307175246A3D0C00684B84 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "He3 Launcher/He3_Launcher.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = VQYGYPHYGE;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = "He3 Launcher/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.slashlos.he3.Launcher;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		0F529010244F142800A9B9DC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -999,6 +1176,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		0F307173246A3D0C00684B84 /* Build configuration list for PBXNativeTarget "He3 Launcher" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0F307174246A3D0C00684B84 /* Debug */,
+				0F307175246A3D0C00684B84 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		0F52900F244F142800A9B9DC /* Build configuration list for PBXNativeTarget "He3ShareExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1029,9 +1215,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		0FBD9BB424546E3900332EEB /* XCRemoteSwiftPackageReference "Down" */ = {
+		0F6FB8CC246C6A3500F5D36B /* XCRemoteSwiftPackageReference "Down" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/iwasrobbed/Down.git";
+			repositoryURL = "file:///Users/slashlos/GitHub/Down";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 0.9.2;
@@ -1040,9 +1226,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		0FBD9BB524546E3900332EEB /* Down */ = {
+		0F6FB8CD246C6A3500F5D36B /* Down */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 0FBD9BB424546E3900332EEB /* XCRemoteSwiftPackageReference "Down" */;
+			package = 0F6FB8CC246C6A3500F5D36B /* XCRemoteSwiftPackageReference "Down" */;
 			productName = Down;
 		};
 /* End XCSwiftPackageProductDependency section */

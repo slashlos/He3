@@ -13,10 +13,12 @@ He3 allows you to watch media, browse the web and do much more while
 you stay productive. Your content will never fall behind your other
 windows even as you switch tasks.
 
-He3 supports a number of per window preferences such
+He3 supports a number of per window preferences such as
 - auto-hide titling,
 - customizable translucency mode
 - size and position
+
+######
 
 that allows you to simultaneously see your content and your work, and restore it, without intercepting mouse clicks when it's not active, or translucent.  You have the ability to click, drag, scroll behind your floating content. 
 
@@ -41,12 +43,13 @@ Since collaboration is key sharing your enviroment is provided by exporting them
 Finally, some more sophisticated featutes:
 - float above full-screen apps like Keynote or Powerpoint
 - share web links etc from Safari
-. support authenication cookies
+- support authenication cookies
 - limitless windows, tabs
 - Playlists `.hpl` and PlayItems `.hpi` are He3 export share file types
 - Snapshots provide instant visual window copy as `.png` files to your destination
 - **Hide Away** - press `CNTL+OPTION+CMND` toggle all windows' visibility
-####
+
+######
 
 ### Menus
 
@@ -54,6 +57,8 @@ He3 menus allow you to affect the current window. This includes the usual suspec
 - application menu
 - Finder status icon menu
 - dock icon menu
+
+######
 
 as well as a contextial menu per window.
 

@@ -8,13 +8,47 @@
 //	MARK:- This is an agent app without a UI - just launch He3 and exit
 import Cocoa
 
+extension Notification.Name {
+    static let killHe3Launcher = Notification.Name("killHe3Launcher")
+}
+
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
+class AppDelegate: NSObject {
+	@objc func terminate() {
+		NSApp.terminate(nil)
+	}
+}
+
+extension AppDelegate: NSApplicationDelegate {
 
 	func applicationDidFinishLaunching(_ aNotification: Notification) {
+		
 		// Insert code here to initialize your application
-		NSWorkspace.shared.launchApplication("He3")
-		NSApp.terminate(self)
+		let he3AppIdentifier = "com.slashlos.he3"
+		let runningApps = NSWorkspace.shared.runningApplications
+		let isRunning = !runningApps.filter{ $0.bundleIdentifier == he3AppIdentifier }.isEmpty
+		
+		if !isRunning {
+            DistributedNotificationCenter.default().addObserver(self,
+																selector: #selector(self.terminate),
+																name: .killHe3Launcher,
+																object: he3AppIdentifier)
+			let path = Bundle.main.bundlePath as NSString
+			var components = path.pathComponents
+			components.removeLast()
+			components.removeLast()
+			components.removeLast()
+			components.append("MacOS")
+			components.append("He3") //main app name
+
+			let newPath = NSString.path(withComponents: components)
+
+			NSWorkspace.shared.launchApplication(newPath)
+		}
+		else
+		{
+			self.terminate()
+		}
 	}
 
 	func applicationWillTerminate(_ aNotification: Notification) {
