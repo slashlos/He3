@@ -243,7 +243,7 @@ class PlayItem : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
     
 	var fileURL: URL {
 		get {
-			let path = name + "." + k.hpi
+			let path = name.hasSuffix(k.hpi) ? name : name + "." + k.hpi
 			return URL.init(fileURLWithPath: path)
 		}
 	}

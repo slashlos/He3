@@ -93,7 +93,7 @@ class PlayList : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
     
 	var fileURL: URL {
 		get {
-			let path = name + "." + k.hpl
+			let path = name.hasSuffix(k.hpl) ? name : name + "." + k.hpl
 			return URL.init(fileURLWithPath: path)
 		}
 	}
