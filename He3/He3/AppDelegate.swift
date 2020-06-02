@@ -780,7 +780,6 @@ let sameWindow : ViewOptions = []
                     let pvc = storyboard.instantiateController(withIdentifier: "PlaylistViewController") as! PlaylistViewController
                     pvc.playlists.append(contentsOf: playlists)
                     pvc.webViewController = wvc
-                    pvc.isLocalPlaylist = true
                     wvc.presentAsSheet(pvc)
                 }
                 return
@@ -1225,6 +1224,16 @@ let sameWindow : ViewOptions = []
             _histories = array
         }
     }
+	
+	var _historyCache : PlayList?
+	var  historyCache : PlayList {
+		if  _historyCache == nil {
+			_historyCache = PlayList.init(name: UserSettings.HistoryName.value,
+										  list: histories)
+		}
+		return _historyCache!
+	}
+	
     var defaults = UserDefaults.standard
     var hiddenWindows = Dictionary<String, Any>()
 
@@ -1565,7 +1574,8 @@ let sameWindow : ViewOptions = []
         defaults.set(item.dictionary(), forKey: item.link.absoluteString)
         
         //  tell any playlist controller we have updated history
-        let notif = Notification(name: Notification.Name(rawValue: k.item), object: item)
+		let notif = Notification(name: Notification.Name(rawValue: k.item), object: item,
+								 userInfo: [k.list : historyCache])
         NotificationCenter.default.post(notif)
     }
     

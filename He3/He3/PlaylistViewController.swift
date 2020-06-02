@@ -559,7 +559,17 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         //  Restore hidden columns in tableviews using defaults
         setupHiddenColumns(playlistTableView, hideit: ["date","tally"])
         setupHiddenColumns(playitemTableView, hideit: ["date","link","plays","rect","label","hover","alpha","trans"])
-        
+    }
+	
+	var historyCache: PlayList {
+		get {
+			return appDelegate.historyCache
+		}
+	}
+    
+    override func viewWillAppear() {
+		guard !observing else { return }
+		
         //  Load document's URL content
 		if let doc : Document = self.view.window?.windowController?.document as? Document, let url = doc.fileURL {
             playlistArrayController.add(contentsOf: doc.items)
@@ -582,14 +592,6 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
 			//	Prime global playlists
 			playlistArrayController.add(contentsOf: appDelegate.playlists)
 			
-            //  Prune duplicate history entries
-            while let oldHistory = playlists.name(UserSettings.HistoryName.value)
-            {
-                playlistArrayController.removeObject(oldHistory)
-            }
-            historyCache = PlayList.init(name: UserSettings.HistoryName.value,
-                                         list: appDelegate.histories)
-            
             playlistArrayController.addObject(historyCache)
         }
         
@@ -984,7 +986,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
     @objc func gotNewHistoryItem(_ note: Notification) {
         guard let playlist = playlistArrayController.selectedObjects.first as? PlayList else { return }
 
-        //  If history is current playplist, add to the history
+        //  If history is current playlist, add to the history
         if historyCache.name == playlist.name {
             self.add(item: note.object as! PlayItem, atIndex: -1)
         }
@@ -1205,9 +1207,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
                 names.append(playlist.name)
                 
                 //  propagate history to our delegate
-                if playlist == historyCache {
-                    appDelegate.histories = historyCache.list
-                }
+                if playlist == historyCache { appDelegate.histories = historyCache.list }
             }
 			userAlertMessage("Saved playlist(\(names.count))", info: names.count > 9 ? nil : names.listing)
         }
@@ -1255,9 +1255,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
 		
 		case false:
 			// Restore NON-HISTORY playlist(s) from cache
-			if let historyIndex = playCache.firstIndex(of: historyCache) {
-				playCache.remove(at: historyIndex)
-			}
+			if let historyIndex = playCache.firstIndex(of: historyCache) { playCache.remove(at: historyIndex) }
 			playlists = playCache
         }
     }
@@ -1354,9 +1352,12 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
 			let view : NSTableCellView = tableView.makeView(withIdentifier: column.identifier, owner: self) as! NSTableCellView
 			let item = ([playlistArrayController,playitemArrayController][tag]?.arrangedObjects as! [AnyObject])[row]
 			
+			//	Default font for text field
+			if let field = view.textField { field.font = .systemFont(ofSize: -1) }
+			
 			switch tag {
 			case 0:
-				if !isLocalPlaylist, item.name == UserSettings.HistoryName.value {
+				if !isLocalPlaylist, item as! NSObject == historyCache {
 					if let field = view.textField {
 						field.font = NSFont.init(name: "Helvetica Oblique", size: -1)
 					}
@@ -1378,7 +1379,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
 
 			case 1:
 				let list : AnyObject = (playlistArrayController.arrangedObjects as! [AnyObject])[playlistArrayController.selectionIndex]
-				if !isLocalPlaylist, list.name == UserSettings.HistoryName.value {
+				if !isLocalPlaylist, list as! NSObject == historyCache {
 					if let field = view.textField {
 						field.font = NSFont.init(name: "Helvetica Oblique", size: -1)
 					}
