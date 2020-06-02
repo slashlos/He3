@@ -561,23 +561,23 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         setupHiddenColumns(playitemTableView, hideit: ["date","link","plays","rect","label","hover","alpha","trans"])
         
         //  Load document's URL content
-        if let doc : Document = self.view.window?.windowController?.document as? Document {
+		if let doc : Document = self.view.window?.windowController?.document as? Document, let url = doc.fileURL {
             playlistArrayController.add(contentsOf: doc.items)
-        }
-		
-        //  Leave non-global extractions contents intact
-        if isLocalPlaylist, let doc = self.webViewController?.document, let url = doc.fileURL
-        {
-            //  Set window titleView with url as tooltip like .helium type
-            if let titleView = self.view.window?.standardWindowButton(.closeButton)?.superview {
-                titleView.toolTip = url.absoluteString.removingPercentEncoding
-            }
-            
-            //  Start us of cleanly re: change count
+
+			//  Set window titleView with url as tooltip like .helium type
+			if let titleView = self.view.window?.standardWindowButton(.closeButton)?.superview {
+				titleView.toolTip = url.absoluteString.removingPercentEncoding
+			}
+
+			//  Start us of cleanly re: change count
             doc.updateChangeCount(.changeCleared)
             self.undoManager?.removeAllActions()
+
+			isLocalPlaylist = true
         }
-        else
+		else
+			
+        //  Leave non-global extractions contents intact (RONLY but visible
         {
 			//	Prime global playlists
 			playlistArrayController.add(contentsOf: appDelegate.playlists)
@@ -609,37 +609,10 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         //  Start observing any changes
         self.observing = true
 		
-		//	Set up our playitem cornerView
-		setupCornerViewFor(playitemTableView, with: itemCornerButton)
-    }
-
-	func createCornerViewFor(_ tableView: NSTableView) {
-		if nil == tableView.cornerView {
-			if let scrollView = tableView.enclosingScrollView,
-				let headerView = tableView.headerView {
-				let rect = NSMakeRect(0, 0,
-									  (scrollView.verticalScroller?.frame.size.width)!,
-									  headerView.frame.size.height)
-				tableView.cornerView = PlayCornerView.init(frame: rect)
-			}
-		}
-	}
-	
-	func setupCornerViewFor(_ tableView: NSTableView, with actionView: NSView) {
-		createCornerViewFor(tableView)
-		
-        //  Center the action view within the cornerView
-		if let cornerView = tableView.cornerView, 0 == cornerView.subviews.count {
-			cornerView.addSubview(actionView)
-			actionView.center(cornerView)
-		}
-	}
-	
-    var historyCache: PlayList = PlayList.init(name: UserSettings.HistoryName.value, list: [PlayItem]())
-    
-    override func viewWillAppear() {
-		//	Ensure we're up to date
-		playitemTableView.cornerView?.needsDisplay = true
+        //  Pin the playitem corner view to the header and scroll bar views
+        guard let cornerView = playitemTableView.cornerView else { return }
+		cornerView.addSubview(itemCornerButton)
+        itemCornerButton.center(cornerView)
     }
     
     override func viewDidAppear() {

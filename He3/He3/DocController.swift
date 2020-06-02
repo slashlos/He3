@@ -87,15 +87,7 @@ class DocumentController : NSDocumentController {
         }
         else
         {
-			///super.restoreWindow(withIdentifier: identifier, state: state, completionHandler: completionHandler)/*
-			super.restoreWindow(withIdentifier: identifier, state: state, completionHandler: { (window,error) in
-				if identifier == .playlists, let window = window {
-					let pvc = window.contentViewController as! PlaylistViewController
-					pvc.setupCornerViewFor(pvc.playitemTableView!, with: pvc.itemCornerButton)
-				}
-				Swift.print("restored \(identifier.rawValue)")
-				completionHandler(window,error)
-			})
+			super.restoreWindow(withIdentifier: identifier, state: state, completionHandler: completionHandler)
         }
     }
 }
