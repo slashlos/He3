@@ -65,7 +65,8 @@ class Document : NSDocument {
     var docGroup : DocGroup {
         get {
             if let fileType = self.fileType {
-                return DocGroup(rawValue: docGroups.firstIndex(of: fileType) ?? DocGroup.helium.rawValue)
+				let typeGroup = [k.Playlist,k.Playitem].contains(fileType) ? k.Playlist : k.Helium
+                return DocGroup(rawValue: docGroups.firstIndex(of: typeGroup) ?? DocGroup.helium.rawValue)
             }
             else
             {
@@ -573,8 +574,8 @@ class Document : NSDocument {
     }
     
     override func makeWindowControllers() {
-        let type = [ k.Helium, k.Playlist ][docGroup.rawValue]
-        let identifier = String(format: "%@Controller", type)
+        let group = [ k.Helium, k.Playlist ][docGroup.rawValue]
+        let identifier = String(format: "%@Controller", group)
         let storyboard = NSStoryboard(name: "Main", bundle: nil)
         
         let controller = storyboard.instantiateController(withIdentifier: identifier) as! NSWindowController
