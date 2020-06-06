@@ -35,6 +35,7 @@ public struct k {
     static let Playlist = "Playlist"
     static let Playlists = "Playlists"
     static let playlists = "playlists"
+	static let Playitem = "Playitem"
     static let Playitems = "Playitems"
     static let playitems = "playitems"
     static let Settings = "settings"
