@@ -22,6 +22,43 @@ p.block {
 <h1>He3</h1>
 <h4>A running release summary of commit changes:</h4>
 
+<h2>1.0.8143</h2>
+<p class="block">
+b747e20|20/06/06 revise defaults<br>
+8bf9831|20/06/06 guard constraint setups<br>
+1d4a065|20/06/06 launcher settings update<br>
+042757c|20/06/06 document optiomizations<br>
+c224505|20/06/06 prune excessive attribute restores<br>
+f7e7117|20/06/06 support Helium 3 documents<br>
+11947bf|20/06/06 serialize completion block<br>
+c86b62f|20/06/06 drain duplicate history entries<br>
+fa0f058|20/06/06 support dark mode<br>
+ce6344a|20/06/06 autosave update changes<br>
+c82fc29|20/06/06 accommodate Helium 3 documents<br>
+91941ac|20/06/06 document UTI fixes<br>
+0d7b75e|20/06/06 dark mode support<br>
+b0ffa85|20/06/06 add playitem type<br>
+09196a2|20/06/06 fix component signature<br>
+87939ba|20/06/06 copyright update<br>
+58bc4d9|20/06/03 update app icon sizing<br>
+5250cb0|20/06/02 global history playlist handling<br>
+5baf79d|20/06/02 use "group" naming for aggregation of types<br>
+515450b|20/06/02 move playitem corner setup to viewWillAppear()<br>
+1a5da4c|20/06/01 fix fileURL<br>
+a4a1fd4|20/05/31 tweak corner view background color<br>
+712cb12|20/05/31 He3 factoring from Helium 3<br>
+d86e990|20/05/13 resource updates<br>
+4b475b7|20/05/13 resource updates<br>
+7c220f8|20/05/12 He3 Launcher<br>
+07b5b0e|20/05/09 revert controller naming<br>
+b3b6f00|20/05/02 added delete item actions<br>
+0a2fd9e|20/05/02 sync revert / save UI feedback and actions<br>
+a5881ce|20/05/02 fix secure encoding<br>
+20f4ccf|20/05/02 fix revert signature<br>
+ae39e69|20/05/02 fix delete handling<br>
+424bfc1|20/05/02 app store icon changes<br>
+</p>
+
 <h2>1.0.7267</h2>
 <p class="block">
 2b1896c|20/05/01 yank 10.13 guards<br>
