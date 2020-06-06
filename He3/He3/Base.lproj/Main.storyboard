@@ -2346,7 +2346,6 @@ Gw
                                                         </tableColumn>
                                                     </tableColumns>
                                                     <connections>
-                                                        <outlet property="cornerView" destination="wZh-qQ-2Yv" id="5zj-qZ-HIK"/>
                                                         <outlet property="dataSource" destination="YAy-lX-dae" id="VMJ-La-cmu"/>
                                                         <outlet property="delegate" destination="YAy-lX-dae" id="IZJ-Ly-FFW"/>
                                                         <outlet property="nextKeyView" destination="PML-r0-Bx7" id="vDQ-Zl-vd8"/>
