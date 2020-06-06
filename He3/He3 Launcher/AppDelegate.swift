@@ -35,9 +35,8 @@ extension AppDelegate: NSApplicationDelegate {
 																object: he3AppIdentifier)
 			let path = Bundle.main.bundlePath as NSString
 			var components = path.pathComponents
-			components.removeLast()
-			components.removeLast()
-			components.removeLast()
+			components = (components as NSArray).subarray(with: NSMakeRange(0, components.count-4)) as! [String]
+			components.append("Contents")
 			components.append("MacOS")
 			components.append("He3") //main app name
 
@@ -45,10 +44,7 @@ extension AppDelegate: NSApplicationDelegate {
 
 			NSWorkspace.shared.launchApplication(newPath)
 		}
-		else
-		{
-			self.terminate()
-		}
+		self.terminate()
 	}
 
 	func applicationWillTerminate(_ aNotification: Notification) {
