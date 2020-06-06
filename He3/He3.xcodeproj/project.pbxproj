@@ -109,13 +109,13 @@
 		};
 		0F5290BA2450422E00A9B9DC /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			dstPath = Contents/Library/LoginItems;
 			dstSubfolderSpec = 1;
 			files = (
 				0F30717C246A42E200684B84 /* He3 Launcher.app in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		0FBD9BC124566C1C00332EEB /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -1014,6 +1014,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.slashlos.he3.Launcher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -1034,6 +1035,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.slashlos.he3.Launcher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
