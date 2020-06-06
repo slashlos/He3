@@ -19,8 +19,9 @@ class DocumentController : NSDocumentController {
 
         var doc: Document
         do {
-            if [k.hpi,k.hpl].contains(contentsURL.pathExtension) || k.Playlist == typeName {
-                doc = try super.makeDocument(for: urlOrNil, withContentsOf: contentsURL, ofType: typeName) as! Document
+			if [k.hpi,k.hpl].contains(contentsURL.pathExtension) || [k.Playitem,k.Playlist].contains(typeName) {
+				//	h.pli files are a single playlist item so treat as such, read into settings
+				doc = try super.makeDocument(for: urlOrNil, withContentsOf: contentsURL, ofType: typeName) as! Document
             }
             else
             {
