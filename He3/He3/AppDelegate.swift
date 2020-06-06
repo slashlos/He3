@@ -1424,7 +1424,7 @@ let sameWindow : ViewOptions = []
         UserSettings.DeveloperExtrasEnabled.value = false
         
         //  Restore auto save settings
-        autoSaveDocs = UserSettings.AutoSaveDocs.value
+		self.autoSaveDocs = UserSettings.AutoSaveDocs.value
 
         //  Restore our web (non file://) document windows if any via
         guard !disableDocumentReOpening else { return }

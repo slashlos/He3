@@ -1303,7 +1303,8 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
 			borderView.fit(view)
 		}
         
-        if 0 == loadingIndicator.constraints.count { loadingIndicator.center(view)
+        if 0 == loadingIndicator.constraints.count {
+			loadingIndicator.center(view)
 		}
     }
 

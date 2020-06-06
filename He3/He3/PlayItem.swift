@@ -60,7 +60,7 @@ class PlayItem : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
 		}
 	}
     @objc dynamic var plays: Int = 0
-    @objc dynamic var label: Int = 0
+	@objc dynamic var label: Int = UserSettings.AutoHideTitle.value ? 1 : 0
     @objc dynamic var hover: Int = 0
     @objc dynamic var alpha: Int = 0
 	@objc dynamic var opacity: CGFloat {
