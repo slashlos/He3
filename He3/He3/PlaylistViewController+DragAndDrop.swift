@@ -172,7 +172,7 @@ extension PlaylistViewController: NSTableViewDataSource {
 	}
 	
 	//	Given a URL, return a playitem list for it
-	func playitemsForURL(_ fileOrLink: URL, completion: @escaping ([PlayItem]) -> Void) {
+	func playitemsForURL(_ fileOrLink: URL, completion: ([PlayItem]) -> Void) {
 		let dc = NSDocumentController.shared
 		let isSandboxed = appDelegate.isSandboxed
 		var playitems = [PlayItem]()
@@ -333,7 +333,7 @@ extension PlaylistViewController: NSTableViewDataSource {
 					playlist = playlistArrayController.selectedObjects.first as? PlayList
 				}
 
-				//	see what item(s) we can must from this URL
+				//	see what item(s) we can muster from this URL
 				playitemsForURL(url as URL) { (playitems) in
 					for playitem in playitems {
 						let path = playitem.link.absoluteString
