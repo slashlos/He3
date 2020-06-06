@@ -1293,13 +1293,18 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
         super.viewWillLayout()
 
         //  the autolayout is complete only when the view has appeared.
-        webView.autoresizingMask = [.height,.width]
-        if 0 == webView.constraints.count { webView.fit(view) }
+        if 0 == webView.constraints.count {
+			webView.autoresizingMask = [.height,.width]
+			webView.fit(view)
+		}
         
-        borderView.autoresizingMask = [.height,.width]
-        if 0 == borderView.constraints.count { borderView.fit(view) }
+        if 0 == borderView.constraints.count {
+			borderView.autoresizingMask = [.height,.width]
+			borderView.fit(view)
+		}
         
-        if 0 == loadingIndicator.constraints.count { loadingIndicator.center(view) }
+        if 0 == loadingIndicator.constraints.count { loadingIndicator.center(view)
+		}
     }
 
     override func viewWillAppear() {
