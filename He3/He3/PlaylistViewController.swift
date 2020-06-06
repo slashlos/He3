@@ -567,6 +567,12 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
 			//	Prime global playlists
 			playlistArrayController.add(contentsOf: appDelegate.playlists)
 			
+            //  Prune stale history entries
+			while (playlistArrayController.arrangedObjects as AnyObject).contains(historyCache)
+			{
+				playlistArrayController.removeObject(historyCache)
+			}
+			
             playlistArrayController.addObject(historyCache)
         }
         
