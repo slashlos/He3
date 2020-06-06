@@ -400,8 +400,14 @@ class MyWebView : WKWebView {
                 return false
             }
             let baseURL = url///appDelegate.authenticateBaseURL(url)
-                
-            return self.loadFileURL(url, allowingReadAccessTo: baseURL) != nil
+			
+			if ["hpl",k.hpl,"hpi",k.hpi].contains(url.pathExtension) {
+				return appDelegate.openURLInNewWindow(url, context: self.window)
+			}
+			else
+			{
+				return self.loadFileURL(url, allowingReadAccessTo: baseURL) != nil
+			}
         }
         else
         if self.load(URLRequest(url: url)) != nil {
@@ -460,7 +466,7 @@ override func mouseMoved(with event: NSEvent) {
 
     // MARK: Drag and Drop - Before Release
     func shouldAllowDrag(_ info: NSDraggingInfo) -> Bool {
-        guard let doc = webViewController?.document, doc.docGroup == .helium else { return false }
+        guard let doc = webViewController?.document, doc.docGroup != .playlist else { return false }
         let pboard = info.draggingPasteboard
         let items = pboard.pasteboardItems!
         var canAccept = false
@@ -1302,7 +1308,18 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
 		//	document.fileURL is recent, webView.url is current URL
         if let document = self.document, let url = document.fileURL {
 			if url != webView.url {
-				_ = loadURL(url: url)
+				switch document.fileType {
+				case k.Playitem:
+					if let link = document.items.first?.list.first?.link {
+						_ = loadURL(url: link)
+					}
+					
+				case k.Playlist:
+					break
+					
+				default:
+					_ = loadURL(url: url)
+				}
 			}
 			else
 			{
@@ -1318,7 +1335,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
     override func viewDidAppear() {
         super.viewDidAppear()
         
-        guard let doc = self.document, doc.docGroup == .helium else { return }
+        guard let doc = self.document, doc.docGroup != .playlist else { return }
         
         //  https://stackoverflow.com/questions/32056874/programmatically-wkwebview-inside-an-uiview-with-auto-layout
  
