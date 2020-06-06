@@ -180,9 +180,6 @@ extension WebViewController: WKNavigationDelegate {
 		guard let url = webView.url else { return }
 		
 		Swift.print(String(format: "3NV: %p didFinish: %p", navigation, webView) + " \"\(String(describing: webView.title))\" => \(url.absoluteString)")
-		if let doc = self.document, let dict = defaults.dictionary(forKey: url.absoluteString) {
-			doc.restoreSettings(with: dict)
-		}
 		
 		//  Finish recording of for this url session
 		if UserSettings.HistorySaves.value, let webView = (webView as? MyWebView), !webView.incognito {
