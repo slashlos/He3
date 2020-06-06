@@ -24,11 +24,12 @@ struct DocGroup : OptionSet {
 
     static var helium    = DocGroup(rawValue: 0)
     static let playlist  = DocGroup(rawValue: 1)
+	static let playitem  = DocGroup(rawValue: 2)
 }
 let docHelium : ViewOptions = []
 
-let docGroups = [k.Helium, k.Playlist]
-let docNames = [k.Helium, k.Playlist]
+let docGroups = [k.Helium, k.Playlist, k.Playitem]
+let docNames = [k.Helium, k.Playlist, k.Helium]
 
 extension NSPasteboard.PasteboardType {
     static let docDragType = NSPasteboard.PasteboardType("com.slashlos.docDragDrop")
@@ -37,6 +38,8 @@ extension NSPasteboard.PasteboardType {
 class Document : NSDocument {
     var appDelegate: AppDelegate = NSApp.delegate as! AppDelegate
     override class var autosavesInPlace: Bool {
+		//	Actually we do and want visible dirty dot icon
+		//	centered atop the close button as a red "dot".
         return false
     }
     override func updateChangeCount(_ change: NSDocument.ChangeType) {
@@ -65,8 +68,7 @@ class Document : NSDocument {
     var docGroup : DocGroup {
         get {
             if let fileType = self.fileType {
-				let typeGroup = [k.Playlist,k.Playitem].contains(fileType) ? k.Playlist : k.Helium
-                return DocGroup(rawValue: docGroups.firstIndex(of: typeGroup) ?? DocGroup.helium.rawValue)
+                return DocGroup(rawValue: docGroups.firstIndex(of: fileType) ?? DocGroup.helium.rawValue)
             }
             else
             {
@@ -203,6 +205,10 @@ class Document : NSDocument {
         self.updateChangeCount(.changeDone)
     }
     
+    func restoreSettings(with playitem: PlayItem) {
+		restoreSettings(with: playitem.dictionary())
+	}
+	
     func update(to url: URL) {
         self.fileURL = url
         
@@ -217,7 +223,6 @@ class Document : NSDocument {
         if url.isFileURL { _displayImage = nil }
     }
     func update(with item: PlayItem) {
-        self.restoreSettings(with: item.dictionary())
         self.update(to: item.link)
     }
     
@@ -269,7 +274,7 @@ class Document : NSDocument {
     override var displayName: String! {
         get {
 			guard let fileURL = self.fileURL else {
-				return [k.AppLogo,super.displayName][docGroup.rawValue]
+				return [k.AppLogo,super.displayName,k.AppLogo][docGroup.rawValue]
 			}
             if fileURL.isFileURL
             {
@@ -316,7 +321,10 @@ class Document : NSDocument {
         
     convenience init(contentsOf url: URL) throws {
         do {
-            try self.init(contentsOf: url, ofType: url.pathExtension == k.hpl ? k.Playlist : k.Helium)
+			let typeName = [k.hpi : k.Playitem, k.hpl : k.Playlist][url.pathExtension] ?? k.Helium
+            try self.init(contentsOf: url, ofType: typeName)
+			let type = try docController.typeForContents(of: url)
+			Swift.print("type => \(type)")
         }
     }
     
@@ -334,6 +342,12 @@ class Document : NSDocument {
         var array = [PlayList]()
 
         switch docGroup {
+		case .playitem:
+            // Save as single playlist of our settings
+			let playitem = self.playitem()
+			let playlist = PlayList.init(name: displayName, list: [playitem])
+			array.append(playlist)
+
         case .playlist:
             //  Write playlists, history and searches
               
@@ -356,23 +370,24 @@ class Document : NSDocument {
     override func read(from data: Data, ofType typeName: String) throws {
         
         do {
-			let pdata = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [PlayList.self,PlayItem.self], from: data)
-            guard let plists : [PlayList] = pdata as? [PlayList] else {
-                throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
-            }
-            
-            //  files are [playlist] extractions, presented as a sheet or window
-            items.append(contentsOf: plists)
-
             switch docGroup {
-            case .playlist:
-                 break
+			case .playitem:
+				do {
+					let dict = try PropertyListSerialization.propertyList(from: data, options: PropertyListSerialization.ReadOptions.mutableContainers, format: nil)
+					let item = PlayItem.init(with: dict as! Dictionary<String, Any>)
+					items.append(PlayList.init(name: item.name, list: [item]))
+				}
                 
+			case .playlist:
+				do {
+					let dict = try PropertyListSerialization.propertyList(from: data, options: PropertyListSerialization.ReadOptions.mutableContainers, format: nil)
+					items.append(PlayList.init(with: dict as! Dictionary<String, Any>))
+				}
+
             default:
                 for (i,item) in items.enumerated() {
                     switch i {
                     case 0:
-                        restoreSettings(with: item.dictionary())
                         fileURL = item.list.first?.link
                         
                     default:
@@ -388,19 +403,13 @@ class Document : NSDocument {
 
     override func read(from url: URL, ofType typeName: String) throws {
         
-        if let dict = defaults.dictionary(forKey: url.absoluteString) {
-            restoreSettings(with: dict)
-        }
-        
         switch docGroup {
-        case .playlist:
+		case .playitem, .playlist:
             try super.read(from: url, ofType: typeName)
 
         default:
-            if url.isFileURL, [k.hpi].contains(url.pathExtension) {
-                try super.read(from: url, ofType: typeName)
-            }
-        }
+			break
+		}
     }
     
 	@objc @IBAction override func revertToSaved(_ sender: (Any)?) {
@@ -418,6 +427,7 @@ class Document : NSDocument {
 
         //  non-file revert handling, either defaults or an asset
         switch docGroup {
+			
         case .playlist:
             let pvc : PlaylistViewController = windowControllers.first!.contentViewController as! PlaylistViewController
 
@@ -439,12 +449,11 @@ class Document : NSDocument {
         
         switch docGroup {
 
+		case .playitem:
+            try read(from: url, ofType: typeName)
+
         case .playlist:
             let pvc : PlaylistViewController = windowControllers.first!.contentViewController as! PlaylistViewController
-            
-            if let dict = defaults.dictionary(forKey: url.absoluteString) {
-                restoreSettings(with: dict)
-            }
             
             try super.revert(toContentsOf: url, ofType: typeName)
             pvc.playlistArrayController.content = pvc.playlists
@@ -454,10 +463,42 @@ class Document : NSDocument {
         }
     }
     
+	open override func autosave(withImplicitCancellability autosavingIsImplicitlyCancellable: Bool, completionHandler: @escaping (Error?) -> Void) {
+		guard hasUnautosavedChanges else { return }
+		
+		//	Since we autosave in place, a URL is not really necessary
+		if let url = url, url.isFileURL, [k.hpi,k.hpl].contains(url.pathExtension) {
+			 save(to: url, ofType: k.Playlist, for: .autosaveInPlaceOperation, completionHandler: completionHandler)
+		}
+		else
+		{
+			do {
+				switch docGroup {
+				case .playlist:
+					appDelegate.savePlaylists(self)
+					
+				default:
+					if let url = fileURL, let type = fileType {
+						try self.write(to: url, ofType: type)
+					}
+					else
+					{
+						cacheSettings(fileURL ?? homeURL)
+					}
+				}
+				completionHandler(nil)
+			} catch let error {
+				NSApp.presentError(error)
+			}
+		}
+	}
+
     @objc @IBAction override func save(_ sender: (Any)?) {
         
         if let url = url, url.isFileURL, [k.hpi,k.hpl].contains(url.pathExtension) {
-            super.save(sender)
+             save(to: url, ofType: k.Playlist, for: .saveOperation, completionHandler: {_ in
+                self.updateChangeCount(.changeCleared)
+            })
         }
         else
         {
@@ -506,9 +547,11 @@ class Document : NSDocument {
     }
     
     override func save(to url: URL, ofType typeName: String, for saveOperation: NSDocument.SaveOperationType, completionHandler: @escaping (Error?) -> Void) {
+		cacheSettings(url)
+
         guard url != homeURL else {
-            cacheSettings(url)
-            updateChangeCount(.changeCleared)
+             updateChangeCount(.changeCleared)
+			completionHandler(nil)
             return
         }
 
@@ -538,6 +581,7 @@ class Document : NSDocument {
     }
     
     override func write(to url: URL, ofType typeName: String) throws {
+		
         switch docGroup {
         case .playlist:
             appDelegate.savePlaylists(self)
@@ -574,7 +618,7 @@ class Document : NSDocument {
     }
     
     override func makeWindowControllers() {
-        let group = [ k.Helium, k.Playlist ][docGroup.rawValue]
+		let group = [ k.Helium, k.Playlist, k.Helium ][docGroup.rawValue]
         let identifier = String(format: "%@Controller", group)
         let storyboard = NSStoryboard(name: "Main", bundle: nil)
         
