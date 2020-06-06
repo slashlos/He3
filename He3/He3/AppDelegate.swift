@@ -505,18 +505,52 @@ let sameWindow : ViewOptions = []
             return UserSettings.AutoSaveDocs.value
         }
         set (value) {
+			autoSaveDocumentsSetup(value)
+
             UserSettings.AutoSaveDocs.value = value
-            if value {
-                for doc in docController.documents {
-                    DispatchQueue.main.async {
-                        doc.save(self.autoSaveDocsMenuItem)
-                    }
-                }
-                docController.saveAllDocuments(autoSaveDocsMenuItem)
-            }
         }
     }
-    
+    var autoSaveTimer : Timer?
+
+	func autoSaveDocumentsSetup(_ state: Bool) {
+		switch state {
+		case false:
+			if let timer = autoSaveTimer, timer.isValid {
+				DispatchQueue.main.async {
+					self.docController.saveAllDocuments(self.autoSaveDocsMenuItem)
+				}
+				timer.invalidate()
+				autoSaveTimer = nil
+			}
+			
+		case true:
+			//	Save immediately, manually save at origin
+			guard nil == autoSaveTimer else { return }
+			for doc in docController.documents {
+				DispatchQueue.main.async {
+					doc.save(self.autoSaveDocsMenuItem)
+				}
+			}
+
+			//  Startup our autosaving block; keeps SaveAs options too!
+			let secs = UserSettings.AutoSaveTime.value
+			self.autoSaveTimer = Timer.scheduledTimer(withTimeInterval: secs, repeats: true, block: { (timer) in
+				if timer.isValid, UserSettings.AutoSaveDocs.value {
+					for document in self.docController.documents {
+						if document.isDocumentEdited {
+							DispatchQueue.main.async {
+								document.autosave(withImplicitCancellability: false, completionHandler: {(error) in
+									document.updateChangeCount(.changeCleared)
+								})
+							}
+						}
+					}
+				}
+			})
+			if let timer = self.autoSaveTimer { RunLoop.current.add(timer, forMode: .common) }
+		}
+	}
+	
 	@IBAction func clearHistoryPress(_ sender: Any) {
         
         let message = "Confirm clearing URL and search history"
@@ -1353,7 +1387,6 @@ let sameWindow : ViewOptions = []
         }
     }
     
-    var autoSaveTimer : Timer?
     func applicationDidFinishLaunching(_ aNotification: Notification) {
 		
 		//	Run down our launch if still around
@@ -1405,27 +1438,15 @@ let sameWindow : ViewOptions = []
             }
         }
         
-        //  Startup our autosaving block; keeps SaveAs options too!
-        let secs = UserSettings.AutoSaveTime.value
-        self.autoSaveTimer = Timer.scheduledTimer(withTimeInterval: secs, repeats: true, block: { (timer) in
-            if timer.isValid, UserSettings.AutoSaveDocs.value {
-                for document in self.docController.documents {
-                    if document.isDocumentEdited {
-                        DispatchQueue.main.async {
-                            document.save(self)
-                        }
-                    }
-                }
-            }
-        })
-        if let timer = self.autoSaveTimer { RunLoop.current.add(timer, forMode: .common) }
-		
 		//	Handle Cocoa Auto Layout mechanism exception
 		UserDefaults.standard.set(true, forKey: "NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints")
     }
-
+	
     func applicationWillTerminate(_ aNotification: Notification) {
         
+		//	Do one last autosave
+		self.autoSaveDocs = false
+		
         //  Forget key down monitoring
         NSEvent.removeMonitor(localKeyDownMonitor!)
         NSEvent.removeMonitor(globalKeyDownMonitor!)
