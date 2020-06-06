@@ -110,31 +110,6 @@ class PlayItemCornerButton : NSButton {/*
 	}*/
 }
 
-class PlayCornerView : NSView {
-	override init(frame frameRect: NSRect) {
-		super.init(frame: frameRect)
-		self.wantsLayer = true
-		self.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
-	}
-	
-	required init?(coder: NSCoder) {
-		///fatalError("init(coder:) has not been implemented")
-		super.init(coder: coder)
-		self.wantsLayer = true
-		self.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
-	}
-	override func draw(_ dirtyRect: NSRect) {
-		let mySides : [NSRectEdge] = [.minY, .maxX, .maxY, .minX, .minY, .maxX]
-		let myGrays : [CGFloat]    = [0.80,   0.80,  0.80,  0.75,  0.75,  0.75]
-		let bounds = self.bounds
-		 
-		NSColor.init(calibratedWhite: 0.929256, alpha: 1.0).set()
-		let insetRect = NSDrawTiledRects(bounds, dirtyRect, mySides, myGrays, 3)
-		let path = NSBezierPath.init(rect: insetRect)
-		path.fill()
-	}
-}
-
 class PlayHeaderView : NSTableHeaderView {
     override func menu(for event: NSEvent) -> NSMenu? {
         let action = #selector(PlaylistViewController.toggleColumnVisiblity(_ :))
