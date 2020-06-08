@@ -333,6 +333,8 @@ extension PlaylistViewController: NSTableViewDataSource {
 					playlist = playlistArrayController.selectedObjects.first as? PlayList
 				}
 
+				playlist?.willChangeValue(forKey: k.tally)
+				
 				//	see what item(s) we can muster from this URL
 				playitemsForURL(url as URL) { (playitems) in
 					for playitem in playitems {
@@ -366,6 +368,8 @@ extension PlaylistViewController: NSTableViewDataSource {
 					}
 					handled += 1
 				}
+				
+				playlist?.didChangeValue(forKey: k.tally)
 			}
 		}
 		
