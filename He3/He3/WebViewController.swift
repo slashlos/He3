@@ -1289,23 +1289,21 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
         }
     }*/
     
+	var viewLayoutDone = false
     override func viewWillLayout() {
-        super.viewWillLayout()
-
+		super.viewWillLayout()
+		
+		guard !viewLayoutDone else { return }
+		
         //  the autolayout is complete only when the view has appeared.
-        if 0 == webView.constraints.count {
-			webView.autoresizingMask = [.height,.width]
-			webView.fit(view)
-		}
+		webView.autoresizingMask = [.height,.width]
+		webView.fit(view)
         
-        if 0 == borderView.constraints.count {
-			borderView.autoresizingMask = [.height,.width]
-			borderView.fit(view)
-		}
+        borderView.autoresizingMask = [.height,.width]
+		borderView.fit(view)
         
-        if 0 == loadingIndicator.constraints.count {
-			loadingIndicator.center(view)
-		}
+		loadingIndicator.center(view)
+		viewLayoutDone = true
     }
 
     override func viewWillAppear() {
@@ -1338,25 +1336,28 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
         }
     }
     
+	var viewAppeared = false
     override func viewDidAppear() {
         super.viewDidAppear()
         
         guard let doc = self.document, doc.docGroup != .playlist else { return }
-        
+		guard !viewAppeared else { return }
+		
         //  https://stackoverflow.com/questions/32056874/programmatically-wkwebview-inside-an-uiview-with-auto-layout
  
         //  the autolayout is complete only when the view has appeared.
         webView.autoresizingMask = [.height,.width]
-        if 0 == webView.constraints.count { webView.fit(webView.superview!) }
+        webView.fit(webView.superview!)
         
         borderView.autoresizingMask = [.height,.width]
-        if 0 == borderView.constraints.count { borderView.fit(borderView.superview!) }
+		borderView.fit(borderView.superview!)
         
         loadingIndicator.center(loadingIndicator.superview!)
         loadingIndicator.bind(NSBindingName(rawValue: "animate"), to: webView as Any, withKeyPath: "loading", options: nil)
         
         //  ditch loading indicator background
         loadingIndicator.appearance = NSAppearance.init(named: NSAppearance.Name.aqua)
+		viewAppeared = true
     }
     
     @objc dynamic var observing : Bool = false
