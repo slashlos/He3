@@ -456,7 +456,7 @@ class MyWebView : WKWebView {
         self.addTrackingArea(trackingArea!)
     }
 
-override func mouseMoved(with event: NSEvent) {
+	override func mouseMoved(with event: NSEvent) {
         super.mouseMoved(with: event)
         
         if let hpc = heliumPanelController {
