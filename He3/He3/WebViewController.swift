@@ -538,7 +538,7 @@ class MyWebView : WKWebView {
         let options : [NSPasteboard.ReadingOptionKey: Any] =
             [NSPasteboard.ReadingOptionKey.urlReadingFileURLsOnly : true,
              NSPasteboard.ReadingOptionKey.urlReadingContentsConformToTypes : [
-                kUTTypeImage, kUTTypeVideo, kUTTypeMovie, kUTTypeText],
+                kUTTypeImage, kUTTypeVideo, kUTTypeMovie, kUTTypeText, kUTTypePDF],
              NSPasteboard.ReadingOptionKey(rawValue: PlayList.className()) : true,
              NSPasteboard.ReadingOptionKey(rawValue: PlayItem.className()) : true]
         let pboard = sender.draggingPasteboard
