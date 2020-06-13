@@ -72,7 +72,6 @@ extension WebViewController: WKNavigationDelegate {
 		}
 
 		if let newUrl = UrlHelpers.doMagic(url), newUrl != url {
-			decisionHandler(WKNavigationActionPolicy.cancel)
 			if let selectedURL = (webView as! MyWebView).selectedURL {
 				url = selectedURL
 			}
@@ -90,6 +89,8 @@ extension WebViewController: WKNavigationDelegate {
 			{
 				_ = loadURL(url: newUrl)
 			}
+			decisionHandler(WKNavigationActionPolicy.cancel)
+			return
 		}
 		
 		Swift.print("navType: \(navigationAction.navigationType.name)")
@@ -116,7 +117,7 @@ extension WebViewController: WKNavigationDelegate {
 				return
 		}
 		
-		Swift.print(String(format: "1DP navigationResponse: %p <= %@", webView, url.absoluteString))
+		Swift.print(String(format: "1DP: navigationResponse: %p <= %@", webView, url.absoluteString))
 		
 		//  load cookies
 		if let headerFields = response.allHeaderFields as? [String:String] {
