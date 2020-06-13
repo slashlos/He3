@@ -22,8 +22,9 @@ p.block {
 <h1>He3</h1>
 <h4>A running release summary of commit changes:</h4>
 
-<h2>1.0.8143</h2>
+<h2>1.0.8144</h2>
 <p class="block">
+9fd35fb|20/06/08 expose playlist tally change<br>
 b747e20|20/06/06 revise defaults<br>
 8bf9831|20/06/06 guard constraint setups<br>
 1d4a065|20/06/06 launcher settings update<br>

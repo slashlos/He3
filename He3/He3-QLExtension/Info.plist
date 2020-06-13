@@ -27,7 +27,10 @@
 		<key>NSExtensionAttributes</key>
 		<dict>
 			<key>QLSupportedContentTypes</key>
-			<array/>
+			<array>
+				<string>com.slashlos.he3.h3i</string>
+				<string>com.slashlos.he3.h3i</string>
+			</array>
 			<key>QLThumbnailMinimumDimension</key>
 			<integer>0</integer>
 		</dict>

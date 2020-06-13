@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBuildDate</key>
-	<string>20200606.123601</string>
+	<string>20200613.151850</string>
 	<key>CFBuildIncrement</key>
 	<false/>
 	<key>CFBuildMajor</key>
@@ -11,7 +11,7 @@
 	<key>CFBuildMinor</key>
 	<integer>0</integer>
 	<key>CFBuildNumber</key>
-	<integer>8143</integer>
+	<integer>8144</integer>
 	<key>CFBuildPatch</key>
 	<integer>1</integer>
 	<key>CFBundleDevelopmentRegion</key>
@@ -129,7 +129,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.0.8143</string>
+	<string>1.0.8144</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>
@@ -164,6 +164,7 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string> com.apple.property-list</string>
 				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
@@ -183,6 +184,7 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
+				<string> com.apple.property-list</string>
 				<string>public.data</string>
 			</array>
 			<key>UTTypeDescription</key>
