@@ -15,6 +15,11 @@ fileprivate var defaults : UserDefaults {
         return UserDefaults.standard
     }
 }
+fileprivate var appDelegate : AppDelegate {
+    get {
+        return NSApp.delegate as! AppDelegate
+    }
+}
 
 extension NSPasteboard.PasteboardType {
     static let playitem = NSPasteboard.PasteboardType(PlayItem.className())
@@ -132,12 +137,14 @@ class PlayItem : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
 			let dict = [
 				kQLThumbnailOptionIconModeKey: NSNumber(booleanLiteral: asIcon)
 			] as CFDictionary
-				
-			let ref = QLThumbnailImageCreate(kCFAllocatorDefault, url as CFURL , size, dict)
-			if let cgImage = ref?.takeUnretainedValue() {
-				let thumbnailImage = NSImage(cgImage: cgImage, size: size)
-				ref?.release()
-				return thumbnailImage
+			
+			if appDelegate.isSandboxed == appDelegate.isBookmarked(url) {
+				let ref = QLThumbnailImageCreate(kCFAllocatorDefault, url as CFURL , size, dict)
+				if let cgImage = ref?.takeUnretainedValue() {
+					let thumbnailImage = NSImage(cgImage: cgImage, size: size)
+					ref?.release()
+					return thumbnailImage
+				}
 			}
 		}
 		return ((NSImage.init(named: k.itemIcon)?.resize(w: size.width, h: size.height))!)

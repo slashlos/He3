@@ -246,12 +246,14 @@ class Document : NSDocument {
 					kQLThumbnailOptionIconModeKey: NSNumber(booleanLiteral: asIcon)
 				] as CFDictionary
 				let size = NSSize.init(width: 32.0, height: 32.0)
-                    
-                let ref = QLThumbnailImageCreate(kCFAllocatorDefault, url as CFURL , size, dict)
-                if let cgImage = ref?.takeUnretainedValue() {
-                    _displayImage = NSImage(cgImage: cgImage, size: size)
-					ref?.release()
-                    return _displayImage!
+				
+				if appDelegate.isSandboxed == appDelegate.isBookmarked(url) {
+					let ref = QLThumbnailImageCreate(kCFAllocatorDefault, url as CFURL , size, dict)
+					if let cgImage = ref?.takeUnretainedValue() {
+						_displayImage = NSImage(cgImage: cgImage, size: size)
+						ref?.release()
+						return _displayImage!
+					}
 				}
 				else
 				if let fileURL = self.fileURL
