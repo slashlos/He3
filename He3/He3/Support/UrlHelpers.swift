@@ -404,3 +404,27 @@ extension URL {
         }
     }
 }
+
+extension URL {
+	func isAcceptableType(_ acceptableTypes: [CFString] =
+		[kUTTypeMovie,kUTTypeVideo,kUTTypeImage,kUTTypeText,kUTTypePDF]) -> Bool {
+		
+		// Non-files pay no never mind
+		guard self.isFileURL else { return true }
+		
+		// Make sure the file contents we can handle
+		do {
+			let resourceValues = try self.resourceValues(forKeys: Set([.typeIdentifierKey, URLResourceKey.isRegularFileKey]))
+			guard let isRegularFileResourceValue = resourceValues.isRegularFile else { return false }
+			guard isRegularFileResourceValue else { return false }
+			guard let fileType = resourceValues.typeIdentifier else { return false }
+			
+			for type in acceptableTypes {
+				if UTTypeConformsTo(fileType as CFString, type) { return true }
+			}
+		} catch { }
+		
+		//	Wah
+		return false
+	}
+}

@@ -1,0 +1,99 @@
+//
+//  Types.swift
+//  He3
+//
+//  Created by Carlos D. Santiago on 5/9/20.
+//  Copyright © 2020 Carlos D. Santiago. All rights reserved.
+//
+
+import Foundation
+import Cocoa
+
+//  Global static strings
+
+public struct k {
+	static let kUTHe3PlayList = "com.slashlos.he3.h3l"
+	static let kUTHe3PlayItem = "com.slashlos.he3.h3i"
+
+	static let AppName = "He3"
+	static let AppLogo = "Above all else"
+    static let Helium = "Helium"
+    static let Incognito = "Incognito"
+    static let scheme = "he3"
+    static let caches = "he3-local" /// cache string
+    static let oauth2 = "he3-oauth" /// oauth handler
+    static let he3 = "he3"
+    static let asset = "asset"
+    static let html = "html"
+    static let text = "text"
+    static let mime = "mime"
+    static let type = "type"
+	static let wrap = "wrap"
+	static let asis = "asis"
+    static let utf8 = "UTF-8"
+    static let desktop = "Desktop"
+    static let docIcon = "he3_logo"
+	static let listIcon = "listIcon"
+	static let itemIcon = "itemIcon"
+	static let icntIcon = "icntIcon"
+    static let Playlist = "Playlist"
+    static let Playlists = "Playlists"
+    static let playlists = "playlists"
+	static let Playitem = "Playitem"
+    static let Playitems = "Playitems"
+    static let playitems = "playitems"
+    static let Settings = "settings"
+    static let Custom = "Custom"
+    static let webloc = "webloc"
+    static let hpi = "h3i"
+    static let hpl = "h3l"
+	static let hic = "h3c"
+    static let play = "play"
+    static let item = "item"
+    static let name = "name"
+    static let list = "list"
+	static let tally = "tally"
+    static let tooltip = "tooltip"
+    static let link = "link"
+    static let date = "date"
+    static let time = "time"
+    static let rank = "rank"
+    static let rect = "rect"
+    static let plays = "plays"
+    static let label = "label"
+    static let hover = "hover"
+    static let alpha = "alpha"
+    static let trans = "trans"
+    static let agent = "agent"
+    static let view = "view"
+    static let fini = "finish"
+    static let vers = "vers"
+    static let data = "data"
+    static let turl = "turl"
+    static let TitleUtility: CGFloat = 16.0
+    static let TitleNormal: CGFloat = 22.0
+    static let ToolbarItemHeight: CGFloat = 48.0
+    static let ToolbarItemSpacer: CGFloat = 1.0
+    static let ToolbarTextHeight: CGFloat = 12.0
+    static let Release = "Release"
+    static let ReleaseURL = k.caches + ":///asset/RELEASE"
+    static let ReleaseNotes = "Release Notes"
+    static let bingInfo = "Microsoft Bing Search"
+    static let bingName = "Bing"
+    static let bingLink = "https://search.bing.com/search?Q=%@"
+    static let googleInfo = "Google Search"
+    static let googleName = "Google"
+    static let googleLink = "https://www.google.com/search?q=%@"
+    static let yahooName = "Yahoo"
+    static let yahooInfo = "Yahoo! Search"
+    static let yahooLink = "https://search.yahoo.com/search?q=%@"
+    static let searchInfos = [k.bingInfo, k.googleInfo, k.yahooInfo]
+    static let searchNames = [k.bingName, k.googleName, k.yahooName]
+    static let searchLinks = [k.bingLink, k.googleLink, k.yahooLink]
+}
+
+extension NSUserInterfaceItemIdentifier {
+    static let name = NSUserInterfaceItemIdentifier(rawValue: "name")
+    static let plays = NSUserInterfaceItemIdentifier(rawValue: "plays")
+	static let turl = NSUserInterfaceItemIdentifier(rawValue: "turl")
+}

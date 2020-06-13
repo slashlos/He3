@@ -617,3 +617,62 @@ func toLiteral(_ value: Any) -> String {
     }
 }
 
+// MARK:- Secure Encoding
+
+class KeyedArchiver : NSKeyedArchiver {
+    open override class func archivedData(withRootObject rootObject: Any) -> Data {
+        do {
+            let data = try NSKeyedArchiver.archivedData(withRootObject: rootObject, requiringSecureCoding: true)
+            return data
+        }
+        catch let error {
+            Swift.print("KeyedArchiver: \(error.localizedDescription)")
+            return Data.init()
+        }
+    }
+    open override class func archiveRootObject(_ rootObject: Any, toFile path: String) -> Bool {
+        do {
+            let data = try NSKeyedArchiver.archivedData(withRootObject: rootObject, requiringSecureCoding: true)
+            try data.write(to: URL.init(fileURLWithPath: path))
+            return true
+        }
+        catch let error {
+            Swift.print("KeyedArchiver: \(error.localizedDescription)")
+            return false
+        }
+    }
+}
+
+class KeyedUnarchiver : NSKeyedUnarchiver {
+    open override class func unarchiveObject(with data: Data) -> Any? {
+        do {
+			let unarchiver = try NSKeyedUnarchiver.init(forReadingFrom: data)
+			unarchiver.requiresSecureCoding = false
+			let object = unarchiver.decodeObject(of: [PlayList.self,PlayItem.self], forKey: NSKeyedArchiveRootObjectKey)
+            return object
+        }
+        catch let error {
+            Swift.print("unarchiveObject(with:) \(error.localizedDescription)")
+            return nil
+        }
+    }
+
+    open override class func unarchiveObject(withFile path: String) -> Any? {
+        do {
+            let data = try Data(contentsOf: URL.init(fileURLWithPath: path))
+			let unarchiver = try NSKeyedUnarchiver.init(forReadingFrom: data)
+			unarchiver.requiresSecureCoding = false
+			let object = unarchiver.decodeObject(of: [PlayList.self,PlayItem.self], forKey: NSKeyedArchiveRootObjectKey)
+            return object
+        }
+        catch let error {
+            Swift.print("unarchiveObject(withFile:) \(error.localizedDescription)")
+            return nil
+        }
+    }
+	
+    open class func unarchiveObject(withURL url: URL) -> Any? {
+		return unarchiveObject(withFile: url.path)
+	}
+}
+
