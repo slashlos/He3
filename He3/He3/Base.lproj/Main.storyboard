@@ -1420,13 +1420,13 @@ Gw
                                         </connections>
                                     </button>
                                     <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KRs-AT-9D8">
-                                        <rect key="frame" x="0.0" y="139" width="126" height="133"/>
+                                        <rect key="frame" x="0.0" y="189" width="126" height="83"/>
                                         <clipView key="contentView" drawsBackground="NO" id="Noe-Za-eMO">
-                                            <rect key="frame" x="1" y="0.0" width="124" height="117"/>
+                                            <rect key="frame" x="1" y="0.0" width="124" height="67"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView identifier="playlists" verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" columnSelection="YES" autosaveName="playlistTableView.prefs" rowSizeStyle="automatic" headerView="tha-4C-kVE" viewBased="YES" id="PML-r0-Bx7" userLabel="Playlist Table View" customClass="PlayTableView" customModule="He3" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="253" height="92"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="253" height="42"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -1651,7 +1651,7 @@ Gw
                                             <nil key="backgroundColor"/>
                                         </clipView>
                                         <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="atn-XO-QDu">
-                                            <rect key="frame" x="1" y="117" width="124" height="15"/>
+                                            <rect key="frame" x="1" y="67" width="124" height="15"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="phY-te-dcT">
@@ -1664,10 +1664,10 @@ Gw
                                         </tableHeaderView>
                                     </scrollView>
                                     <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="2" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IJO-dk-87l">
-                                        <rect key="frame" x="8" y="12" width="38" height="118"/>
+                                        <rect key="frame" x="8" y="12" width="38" height="168"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ham-VS-t4a">
-                                                <rect key="frame" x="0.0" y="99" width="18" height="20"/>
+                                                <rect key="frame" x="0.0" y="149" width="18" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="18" id="JTp-ky-mGF"/>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="18" id="XPl-Vx-uH4"/>
@@ -1682,7 +1682,7 @@ Gw
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="o1D-da-uMx">
-                                                <rect key="frame" x="20" y="99" width="18" height="20"/>
+                                                <rect key="frame" x="20" y="149" width="18" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="18" id="EdH-Et-2HW"/>
                                                     <constraint firstAttribute="height" constant="18" id="h38-0O-QiV"/>
@@ -1724,10 +1724,10 @@ Gw
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
                                     <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WiW-pB-vRx">
-                                        <rect key="frame" x="10" y="10" width="134" height="121"/>
+                                        <rect key="frame" x="10" y="10" width="134" height="171"/>
                                         <subviews>
                                             <button toolTip="Restore selected playlists or playitems" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DNq-eF-IsJ">
-                                                <rect key="frame" x="-6" y="68" width="80" height="32"/>
+                                                <rect key="frame" x="-6" y="118" width="80" height="32"/>
                                                 <buttonCell key="cell" type="push" title="Revert" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3XW-t7-vOU">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1738,7 +1738,7 @@ Gw
                                                 </connections>
                                             </button>
                                             <button toolTip="Save selected playlists or playitems" verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="zo4-as-HFj">
-                                                <rect key="frame" x="70" y="68" width="70" height="32"/>
+                                                <rect key="frame" x="70" y="118" width="70" height="32"/>
                                                 <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="x6P-T8-kml">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -1805,13 +1805,13 @@ Gw
                                         </customSpacing>
                                     </stackView>
                                     <scrollView horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lou-k5-Ctb">
-                                        <rect key="frame" x="0.0" y="139" width="314" height="133"/>
+                                        <rect key="frame" x="0.0" y="189" width="314" height="83"/>
                                         <clipView key="contentView" drawsBackground="NO" id="Ix6-nN-7A8">
-                                            <rect key="frame" x="1" y="0.0" width="297" height="117"/>
+                                            <rect key="frame" x="1" y="0.0" width="297" height="67"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView identifier="playitems" verticalHuggingPriority="750" tag="1" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" columnSelection="YES" autosaveName="playitemTableView.prefs" rowSizeStyle="automatic" headerView="YTX-gj-uhH" viewBased="YES" id="IBh-ZH-TR3" customClass="PlayTableView" customModule="He3" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="951" height="92"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="951" height="42"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -2340,11 +2340,11 @@ Gw
                                             <nil key="backgroundColor"/>
                                         </clipView>
                                         <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="1e4-tR-Cc8">
-                                            <rect key="frame" x="1" y="117" width="297" height="15"/>
+                                            <rect key="frame" x="1" y="67" width="297" height="15"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="aSB-Wi-46z">
-                                            <rect key="frame" x="298" y="25" width="15" height="92"/>
+                                            <rect key="frame" x="298" y="25" width="15" height="42"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <tableHeaderView key="headerView" id="YTX-gj-uhH" customClass="PlayHeaderView" customModule="He3">
