@@ -596,6 +596,23 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         guard let cornerView = playitemTableView.cornerView else { return }
 		cornerView.addSubview(itemCornerButton)
         itemCornerButton.center(cornerView)
+		
+		//	load our thumbnails for all our items
+		if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
+			for playlist in playlists {
+				let loadThumbnails = LoadThumbnailssOperationFor(playlist: playlist)
+				
+				loadThumbnails.completionBlock = {
+					OperationQueue.main.addOperation {
+						for playitem in playlist.list {
+							// Set up ourselves to be notified when this item's thumbnail is ready.
+							playitem.thumbnailDelegate = self
+						}
+					}
+				}
+				self.loaderQueue.addOperation( loadThumbnails )
+			}
+		}
     }
     
     override func viewDidAppear() {
@@ -1344,20 +1361,6 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
 					}
 				}
 				
-				//	load our thumbnails for all our items
-				
-				let loadThumbnails = LoadThumbnailssOperationFor(playlist: item as! PlayList)
-				
-				loadThumbnails.completionBlock = {
-					OperationQueue.main.addOperation {
-						for playitem in item.list {
-							// Set up ourselves to be notified when this item's thumbnail is ready.
-							playitem.thumbnailDelegate = self
-						}
-					}
-				}
-				loaderQueue.addOperation( loadThumbnails )
-
 			case 1:
 				let list : AnyObject = (playlistArrayController.arrangedObjects as! [AnyObject])[playlistArrayController.selectionIndex]
 				if !isLocalPlaylist, list as! NSObject == historyCache {
