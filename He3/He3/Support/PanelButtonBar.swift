@@ -37,7 +37,7 @@ class PanelButton : NSButton {
 		
 		self.type = type;
 		self.target = self;
-		self.action = #selector(PanelButton.onClick);
+		self.action = #selector(onClick);
 		self.useTrackingArea = useTrackingArea;
 	}
 	
@@ -45,7 +45,7 @@ class PanelButton : NSButton {
 		super.init(coder: coder);
 		
 		self.target = self;
-		self.action = #selector(PanelButton.onClick);
+		self.action = #selector(onClick);
 	}
 	
 	@objc func onClick () {
@@ -55,11 +55,11 @@ class PanelButton : NSButton {
 		else
 		{
 			if (type == NSWindow.ButtonType.zoomButton) {
-				self.window?.zoom(self);
+				self.window?.performZoom(self);
 			} else if (type == NSWindow.ButtonType.miniaturizeButton) {
-				self.window?.miniaturize(self);
+				self.window?.performMiniaturize(self);
 			} else if (type == NSWindow.ButtonType.closeButton) {
-				self.window?.close();
+				self.window?.performClose(self);
 			}
 		}
 	}

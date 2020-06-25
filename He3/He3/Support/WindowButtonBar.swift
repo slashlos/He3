@@ -57,11 +57,11 @@ class WindowButton: NSButton {
 	
 	@objc func onClick () {
 		if (type == NSWindow.ButtonType.zoomButton) {
-			self.window?.zoom(self);
+			self.window?.performZoom(self);
 		} else if (type == NSWindow.ButtonType.miniaturizeButton) {
-			self.window?.miniaturize(self);
+			self.window?.performMiniaturize(self);
 		} else if (type == NSWindow.ButtonType.closeButton) {
-			self.window?.close();
+			self.window?.performClose(self);
 		}
 	}
 	
