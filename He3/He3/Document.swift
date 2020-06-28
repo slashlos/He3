@@ -572,7 +572,8 @@ class Document : NSDocument {
     }
     
     override func save(withDelegate delegate: Any?, didSave didSaveSelector: Selector?, contextInfo: UnsafeMutableRawPointer?) {
-        save(self)
+		//	So we have a delegate but let super and our save() do what is necessary
+		super.save(withDelegate: delegate, didSave: didSaveSelector, contextInfo: contextInfo)
     }
     
     func cacheSettings(_ url : URL) {
