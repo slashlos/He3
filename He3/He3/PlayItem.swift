@@ -15,11 +15,6 @@ fileprivate var defaults : UserDefaults {
         return UserDefaults.standard
     }
 }
-fileprivate var appDelegate : AppDelegate {
-    get {
-        return NSApp.delegate as! AppDelegate
-    }
-}
 
 extension NSPasteboard.PasteboardType {
     static let playitem = NSPasteboard.PasteboardType(PlayItem.className())
