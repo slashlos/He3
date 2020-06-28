@@ -1044,7 +1044,13 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
             let wpc = vindow.windowController as? HeliumController else { return false }
 
         //  Stop whatever is going on by brute force
-        wvc.clear()
+		DispatchQueue.main.async {
+			if let url = self.doc?.fileURL, url.isFileURL {
+				url.stopAccessingSecurityScopedResource()
+			}
+			wvc.webView.stopLoading(self)
+			wvc.clear()
+		}
 
         vindow.ignoresMouseEvents = true
         wpc.setupTrackingAreas(false)
