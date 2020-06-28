@@ -1044,14 +1044,8 @@ let sameWindow : ViewOptions = []
         let date = Date(timeIntervalSince1970: 0)
         WKWebsiteDataStore.default().removeData(ofTypes: websiteDataTypes as! Set<String>, modifiedSince: date, completionHandler:{ })
         
-        //  Clear any snapshots URL sandbox resources
-        if nil != desktopData {
-            let desktop = URL.init(fileURLWithPath: UserSettings.SnapshotsURL.value)
-            desktop.stopAccessingSecurityScopedResource()
-            bookmarks[desktop] = nil
-            desktopData = nil
-            UserSettings.SnapshotsURL.value = UserSettings.SnapshotsURL.default
-        }
+        //  Clear any snapshots etc URL sandbox resources
+		Swift.print(eraseBookmarks() ? "All bookmark(s) were cleared" : "Yoink erasing bookmarks")
     }
     
     let toHMS = hmsTransformer()
@@ -2048,16 +2042,62 @@ let sameWindow : ViewOptions = []
         }
     }
     
-    func bookmarkPath() -> String?
+    func bookmarkURL() -> URL?
     {
         if var documentsPathURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
             documentsPathURL = documentsPathURL.appendingPathComponent("Bookmarks.dict")
-            return documentsPathURL.path
+            return documentsPathURL
         }
         else
         {
             return nil
         }
+    }
+    
+    func eraseBookmarks() -> Bool
+    {
+        //  Ignore loading unless configured
+        guard isSandboxed else { return false }
+
+        let fm = FileManager.default
+        
+		guard let url = bookmarkURL(), fm.fileExists(atPath: url.path) else {
+            return saveBookmarks()
+        }
+        
+		do {
+			let data = try Data.init(contentsOf: url)
+			bookmarks = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as! [URL : Data]
+		} catch let error {
+			Swift.print("unarchiveObject(withFile:) \(error.localizedDescription)")
+		}
+
+        var iterator = bookmarks.makeIterator()
+		let tally = bookmarks.count
+        var erased = 0
+
+		//	Explicitly call out and clear our desktop access area and reset
+		let desktop = URL.init(fileURLWithPath: UserSettings.SnapshotsURL.value)
+		desktop.stopAccessingSecurityScopedResource()
+		bookmarks[desktop] = nil
+		UserSettings.SnapshotsURL.value = UserSettings.SnapshotsURL.default
+
+        while let bookmark = iterator.next()
+		{
+			bookmark.key.stopAccessingSecurityScopedResource()
+			bookmarks.removeValue(forKey: bookmark.key)
+            Swift.print ("† \(bookmark.key)")
+			erased += 1
+        }
+		
+		do {
+			try fm.removeItem(atPath: url.path)
+		} catch let error {
+			Swift.print(error.localizedDescription)
+			Swift.print(url.path)
+		}
+		
+        return erased == tally
     }
     
     func loadBookmarks() -> Bool
@@ -2067,13 +2107,20 @@ let sameWindow : ViewOptions = []
 
         let fm = FileManager.default
         
-        guard let path = bookmarkPath(), fm.fileExists(atPath: path) else {
+		guard let url = bookmarkURL(), fm.fileExists(atPath: url.path) else {
             return saveBookmarks()
         }
         
         var restored = 0
-        bookmarks = KeyedUnarchiver.unarchiveObject(withFile: path) as! [URL: Data]
-        var iterator = bookmarks.makeIterator()
+		do {
+			let data = try Data.init(contentsOf: url)
+			bookmarks = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as! [URL : Data]
+		} catch let error {
+			Swift.print("unarchiveObject(withFile:) \(error.localizedDescription)")
+			return false
+		}
+				
+		var iterator = bookmarks.makeIterator()
 
         while let bookmark = iterator.next()
         {
@@ -2092,15 +2139,17 @@ let sameWindow : ViewOptions = []
     func saveBookmarks() -> Bool
     {
         //  Ignore saving unless configured
-        guard isSandboxed else { return false }
-
-        if let path = bookmarkPath() {
-            return KeyedArchiver.archiveRootObject(bookmarks, toFile: path)
-        }
-        else
-        {
-            return false
-        }
+        guard isSandboxed, let url = bookmarkURL() else { return false }
+		
+		do {
+			let data = try NSKeyedArchiver.archivedData(withRootObject: bookmarks, requiringSecureCoding: true)
+			try data.write(to: url)
+			return true
+		}
+		catch let error {
+			Swift.print("NSKeyedArchiver: \(error.localizedDescription)")
+			return false
+		}
     }
     
     func storeBookmark(url: URL, options: URL.BookmarkCreationOptions = [.withSecurityScope,.securityScopeAllowOnlyReadAccess]) -> Bool
@@ -2148,6 +2197,16 @@ let sameWindow : ViewOptions = []
         return false
     }
 
+	func ceaseBookarmk(_ url: URL) -> Bool {
+        guard isSandboxed else { return false }
+
+		if nil != bookmarks[url] {
+			url.stopAccessingSecurityScopedResource()
+			return true
+		}
+		return false
+	}
+	
     func fetchBookmark(_ bookmark: (key: URL, value: Data)) -> Bool
     {
         guard isSandboxed else { return false }
