@@ -235,35 +235,21 @@ class Document : NSDocument {
         get {
             switch docGroup {
             case .playlist:
-				return NSImage.init(named: k.docIcon)!
+				return NSImage.init(named: k.listIcon)!
 
             default:
                 guard _displayImage == nil else { return _displayImage! }
                 
-                guard let url = self.fileURL, url.isFileURL else { return NSImage.init(named: k.docIcon)! }
-				let asIcon = true /// we want typical icon decor
-				let dict = [
-					kQLThumbnailOptionIconModeKey: NSNumber(booleanLiteral: asIcon)
-				] as CFDictionary
+				guard let url = self.fileURL, url.isFileURL else { return NSImage.init(named: k.itemIcon)! }
+				
 				let size = NSSize.init(width: 32.0, height: 32.0)
 				
-				if appDelegate.isSandboxed == appDelegate.isBookmarked(url) {
-					let ref = QLThumbnailImageCreate(kCFAllocatorDefault, url as CFURL , size, dict)
-					if let cgImage = ref?.takeUnretainedValue() {
-						_displayImage = NSImage(cgImage: cgImage, size: size)
-						ref?.release()
-						return _displayImage!
-					}
+				let ref = QLThumbnailImageCreate(kCFAllocatorDefault, url as CFURL , size, nil)
+				if let cgImage = ref?.takeUnretainedValue() {
+					_displayImage = NSImage(cgImage: cgImage, size: size)
+					ref?.release()
+					return _displayImage!
 				}
-				else
-				if let fileURL = self.fileURL
-				{
-					// If we couldn't get a Quick Look preview, fall back on the file's Finder icon.
-					let icon = NSWorkspace.shared.icon(forFile: fileURL.path)
-					
-					return icon
-				}
-				
 				return NSImage.init(named: k.docIcon)!
             }
         }
