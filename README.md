@@ -22,7 +22,7 @@ He3 supports a number of per window preferences such as
 
 that allows you to simultaneously see your content and your work, and restore it, without intercepting mouse clicks when it's not active, or translucent.  You have the ability to click, drag, scroll behind your floating content. 
 
-## He3 (Helium 3) In Action
+## He3 In Action
 
 Check out the videos on He3 on YouTube:
 

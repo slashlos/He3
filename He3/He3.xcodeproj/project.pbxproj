@@ -24,7 +24,7 @@
 		0F30716D246A3D0C00684B84 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F30716C246A3D0C00684B84 /* Assets.xcassets */; };
 		0F30717C246A42E200684B84 /* He3 Launcher.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0F307166246A3D0B00684B84 /* He3 Launcher.app */; };
 		0F529002244F142800A9B9DC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F529001244F142800A9B9DC /* Cocoa.framework */; };
-		0F52900E244F142800A9B9DC /* He3ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0F528FFF244F142800A9B9DC /* He3ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		0F52900E244F142800A9B9DC /* He3 ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0F528FFF244F142800A9B9DC /* He3 ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0F529030244F3A5800A9B9DC /* He3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F52902F244F3A5800A9B9DC /* He3Tests.swift */; };
 		0F5290A2244F665900A9B9DC /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F52901B244F14A400A9B9DC /* ShareViewController.swift */; };
 		0F5290A3244F665D00A9B9DC /* ShareViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F52901D244F14A400A9B9DC /* ShareViewController.xib */; };
@@ -36,13 +36,17 @@
 		0F5290B4244F6C0D00A9B9DC /* PanelButtonBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5290AC244F6C0D00A9B9DC /* PanelButtonBar.swift */; };
 		0F5290B9244F6C9100A9B9DC /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 0F5290B8244F6C9100A9B9DC /* dsa_pub.pem */; };
 		0F5290BD2451D3C400A9B9DC /* He3.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0F5290BC2451D3C300A9B9DC /* He3.icns */; };
+		0F55CD6424A6794E00E49C6A /* icntIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F55CD6324A6794E00E49C6A /* icntIcon.png */; };
+		0F55CD6624A6795600E49C6A /* icntIcon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0F55CD6524A6795600E49C6A /* icntIcon.jpg */; };
+		0F55CD6824A67B3D00E49C6A /* listIcon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0F55CD6724A67B3D00E49C6A /* listIcon.jpg */; };
+		0F55CD6A24A67B7100E49C6A /* itemIcon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0F55CD6924A67B7100E49C6A /* itemIcon.jpg */; };
 		0F6FB8CE246C6A3500F5D36B /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = 0F6FB8CD246C6A3500F5D36B /* Down */; };
 		0F6FB8D8246C9D9400F5D36B /* LaunchControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6FB8D7246C9D9400F5D36B /* LaunchControllers.swift */; };
 		0F721888246C54D50070F9E4 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5290AA244F6C0D00A9B9DC /* UserSettings.swift */; };
 		0F8291FF2495172100B5C205 /* QuickLookThumbnailing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F8291FE2495172100B5C205 /* QuickLookThumbnailing.framework */; };
 		0F8292012495172100B5C205 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F8292002495172100B5C205 /* Quartz.framework */; };
 		0F8292042495172100B5C205 /* ThumbnailProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8292032495172100B5C205 /* ThumbnailProvider.swift */; };
-		0F8292092495172100B5C205 /* He3-QLExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0F8291FD2495172000B5C205 /* He3-QLExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		0F8292092495172100B5C205 /* He3 QLExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0F8291FD2495172000B5C205 /* He3 QLExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0F82920D24952ACF00B5C205 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD2127E2466D7C800EA5D6D /* Types.swift */; };
 		0F82920F249539D900B5C205 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F82920E249539D900B5C205 /* Settings.swift */; };
 		0F9EF954247019E6008DDB93 /* itemIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F9EF953247019E6008DDB93 /* itemIcon.png */; };
@@ -115,8 +119,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				0F8292092495172100B5C205 /* He3-QLExtension.appex in Embed App Extensions */,
-				0F52900E244F142800A9B9DC /* He3ShareExtension.appex in Embed App Extensions */,
+				0F8292092495172100B5C205 /* He3 QLExtension.appex in Embed App Extensions */,
+				0F52900E244F142800A9B9DC /* He3 ShareExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -167,15 +171,15 @@
 		0F30716A246A3D0C00684B84 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		0F30716C246A3D0C00684B84 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0F307171246A3D0C00684B84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0F307172246A3D0C00684B84 /* He3_Launcher.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = He3_Launcher.entitlements; sourceTree = "<group>"; };
+		0F307172246A3D0C00684B84 /* He3Launcher.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = He3Launcher.entitlements; sourceTree = "<group>"; };
 		0F30717D246AB8CF00684B84 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		0F528FFF244F142800A9B9DC /* He3ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = He3ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		0F528FFF244F142800A9B9DC /* He3 ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "He3 ShareExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F529001244F142800A9B9DC /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		0F529019244F14A400A9B9DC /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		0F52901B244F14A400A9B9DC /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		0F52901E244F14A400A9B9DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ShareViewController.xib; sourceTree = "<group>"; };
 		0F529020244F14A400A9B9DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0F529021244F14A400A9B9DC /* H3ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = H3ShareExtension.entitlements; path = Support/H3ShareExtension.entitlements; sourceTree = "<group>"; };
+		0F529021244F14A400A9B9DC /* He3ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = He3ShareExtension.entitlements; sourceTree = "<group>"; };
 		0F52902D244F3A5800A9B9DC /* He3Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = He3Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F52902F244F3A5800A9B9DC /* He3Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = He3Tests.swift; sourceTree = "<group>"; };
 		0F529031244F3A5800A9B9DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -191,13 +195,17 @@
 		0F5290AE244F6C0D00A9B9DC /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = He3/Support/Sparkle.framework; sourceTree = SOURCE_ROOT; };
 		0F5290B8244F6C9100A9B9DC /* dsa_pub.pem */ = {isa = PBXFileReference; lastKnownFileType = text; name = dsa_pub.pem; path = He3/Resources/dsa_pub.pem; sourceTree = SOURCE_ROOT; };
 		0F5290BC2451D3C300A9B9DC /* He3.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = He3.icns; path = "He3/Assets/App Icon/He3.icns"; sourceTree = "<group>"; };
+		0F55CD6324A6794E00E49C6A /* icntIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icntIcon.png; path = "He3/Assets/icnt Icon/icntIcon.png"; sourceTree = "<group>"; };
+		0F55CD6524A6795600E49C6A /* icntIcon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = icntIcon.jpg; path = "He3/Assets/icnt Icon/icntIcon.jpg"; sourceTree = "<group>"; };
+		0F55CD6724A67B3D00E49C6A /* listIcon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = listIcon.jpg; path = "He3/Assets/list Icon/listIcon.jpg"; sourceTree = "<group>"; };
+		0F55CD6924A67B7100E49C6A /* itemIcon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = itemIcon.jpg; path = "He3/Assets/item Icon/itemIcon.jpg"; sourceTree = "<group>"; };
 		0F6FB8D7246C9D9400F5D36B /* LaunchControllers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchControllers.swift; sourceTree = "<group>"; };
-		0F8291FD2495172000B5C205 /* He3-QLExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "He3-QLExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		0F8291FD2495172000B5C205 /* He3 QLExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "He3 QLExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F8291FE2495172100B5C205 /* QuickLookThumbnailing.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLookThumbnailing.framework; path = System/Library/Frameworks/QuickLookThumbnailing.framework; sourceTree = SDKROOT; };
 		0F8292002495172100B5C205 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = System/Library/Frameworks/Quartz.framework; sourceTree = SDKROOT; };
 		0F8292032495172100B5C205 /* ThumbnailProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailProvider.swift; sourceTree = "<group>"; };
 		0F8292052495172100B5C205 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0F8292062495172100B5C205 /* He3_QLExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = He3_QLExtension.entitlements; sourceTree = "<group>"; };
+		0F8292062495172100B5C205 /* He3QLExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = He3QLExtension.entitlements; sourceTree = "<group>"; };
 		0F82920E249539D900B5C205 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		0F9EF953247019E6008DDB93 /* itemIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = itemIcon.png; path = "He3/Assets/item Icon/itemIcon.png"; sourceTree = "<group>"; };
 		0F9EF95A24776468008DDB93 /* listIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = listIcon.png; path = "He3/Assets/list Icon/listIcon.png"; sourceTree = "<group>"; };
@@ -282,9 +290,13 @@
 				0F5290BC2451D3C300A9B9DC /* He3.icns */,
 				0FBD9BAE2454603200332EEB /* he3_logo.icns */,
 				0FBD9BBB2454767300332EEB /* icntIcon.icns */,
+				0F55CD6524A6795600E49C6A /* icntIcon.jpg */,
+				0F55CD6324A6794E00E49C6A /* icntIcon.png */,
 				0FBD9BB7245473C500332EEB /* itemIcon.icns */,
+				0F55CD6924A67B7100E49C6A /* itemIcon.jpg */,
 				0F9EF953247019E6008DDB93 /* itemIcon.png */,
 				0FBD9BB92454746200332EEB /* listIcon.icns */,
+				0F55CD6724A67B3D00E49C6A /* listIcon.jpg */,
 				0F9EF95A24776468008DDB93 /* listIcon.png */,
 				0F2370CF244E8CEA009F7914 /* He3 */,
 				0F529018244F14A400A9B9DC /* He3ShareExtension */,
@@ -292,7 +304,7 @@
 				0F2370E4244E8CEC009F7914 /* He3UITests */,
 				0FBD9BC424566C1C00332EEB /* He3-dmg */,
 				0F307167246A3D0B00684B84 /* He3 Launcher */,
-				0F8292022495172100B5C205 /* He3-QLExtension */,
+				0F8292022495172100B5C205 /* He3 QLExtension */,
 				0F529000244F142800A9B9DC /* Frameworks */,
 				0F2370CE244E8CEA009F7914 /* Products */,
 			);
@@ -303,11 +315,11 @@
 			children = (
 				0F2370CD244E8CEA009F7914 /* He3.app */,
 				0F2370E1244E8CEC009F7914 /* He3UITests.xctest */,
-				0F528FFF244F142800A9B9DC /* He3ShareExtension.appex */,
+				0F528FFF244F142800A9B9DC /* He3 ShareExtension.appex */,
 				0F52902D244F3A5800A9B9DC /* He3Tests.xctest */,
 				0FBD9BC324566C1C00332EEB /* He3-dmg */,
 				0F307166246A3D0B00684B84 /* He3 Launcher.app */,
-				0F8291FD2495172000B5C205 /* He3-QLExtension.appex */,
+				0F8291FD2495172000B5C205 /* He3 QLExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -359,9 +371,10 @@
 				0F30717D246AB8CF00684B84 /* Main.storyboard */,
 				0F30716C246A3D0C00684B84 /* Assets.xcassets */,
 				0F307171246A3D0C00684B84 /* Info.plist */,
-				0F307172246A3D0C00684B84 /* He3_Launcher.entitlements */,
+				0F307172246A3D0C00684B84 /* He3Launcher.entitlements */,
 			);
-			path = "He3 Launcher";
+			name = "He3 Launcher";
+			path = He3Launcher;
 			sourceTree = "<group>";
 		};
 		0F529000244F142800A9B9DC /* Frameworks */ = {
@@ -380,7 +393,7 @@
 				0F52901B244F14A400A9B9DC /* ShareViewController.swift */,
 				0F52901D244F14A400A9B9DC /* ShareViewController.xib */,
 				0F529020244F14A400A9B9DC /* Info.plist */,
-				0F529021244F14A400A9B9DC /* H3ShareExtension.entitlements */,
+				0F529021244F14A400A9B9DC /* He3ShareExtension.entitlements */,
 				0F529028244F2B6000A9B9DC /* Support */,
 			);
 			path = He3ShareExtension;
@@ -433,14 +446,15 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		0F8292022495172100B5C205 /* He3-QLExtension */ = {
+		0F8292022495172100B5C205 /* He3 QLExtension */ = {
 			isa = PBXGroup;
 			children = (
 				0F8292032495172100B5C205 /* ThumbnailProvider.swift */,
 				0F8292052495172100B5C205 /* Info.plist */,
-				0F8292062495172100B5C205 /* He3_QLExtension.entitlements */,
+				0F8292062495172100B5C205 /* He3QLExtension.entitlements */,
 			);
-			path = "He3-QLExtension";
+			name = "He3 QLExtension";
+			path = He3QLExtension;
 			sourceTree = "<group>";
 		};
 		0FBD9BC424566C1C00332EEB /* He3-dmg */ = {
@@ -515,9 +529,9 @@
 			productReference = 0F307166246A3D0B00684B84 /* He3 Launcher.app */;
 			productType = "com.apple.product-type.application";
 		};
-		0F528FFE244F142800A9B9DC /* He3ShareExtension */ = {
+		0F528FFE244F142800A9B9DC /* He3 ShareExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0F52900F244F142800A9B9DC /* Build configuration list for PBXNativeTarget "He3ShareExtension" */;
+			buildConfigurationList = 0F52900F244F142800A9B9DC /* Build configuration list for PBXNativeTarget "He3 ShareExtension" */;
 			buildPhases = (
 				0FBD9BCF2457077900332EEB /* ShellScript */,
 				0F528FFB244F142800A9B9DC /* Sources */,
@@ -528,9 +542,9 @@
 			);
 			dependencies = (
 			);
-			name = He3ShareExtension;
+			name = "He3 ShareExtension";
 			productName = He3ShareExtension;
-			productReference = 0F528FFF244F142800A9B9DC /* He3ShareExtension.appex */;
+			productReference = 0F528FFF244F142800A9B9DC /* He3 ShareExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 		0F52902C244F3A5800A9B9DC /* He3Tests */ = {
@@ -551,9 +565,9 @@
 			productReference = 0F52902D244F3A5800A9B9DC /* He3Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		0F8291FC2495172000B5C205 /* He3-QLExtension */ = {
+		0F8291FC2495172000B5C205 /* He3 QLExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0F82920A2495172100B5C205 /* Build configuration list for PBXNativeTarget "He3-QLExtension" */;
+			buildConfigurationList = 0F82920A2495172100B5C205 /* Build configuration list for PBXNativeTarget "He3 QLExtension" */;
 			buildPhases = (
 				0F8291F92495172000B5C205 /* Sources */,
 				0F8291FA2495172000B5C205 /* Frameworks */,
@@ -563,9 +577,9 @@
 			);
 			dependencies = (
 			);
-			name = "He3-QLExtension";
+			name = "He3 QLExtension";
 			productName = "He3-QLExtension";
-			productReference = 0F8291FD2495172000B5C205 /* He3-QLExtension.appex */;
+			productReference = 0F8291FD2495172000B5C205 /* He3 QLExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 		0FBD9BC224566C1C00332EEB /* He3-dmg */ = {
@@ -640,11 +654,11 @@
 			targets = (
 				0F2370CC244E8CEA009F7914 /* He3 */,
 				0F2370E0244E8CEC009F7914 /* He3UITests */,
-				0F528FFE244F142800A9B9DC /* He3ShareExtension */,
+				0F528FFE244F142800A9B9DC /* He3 ShareExtension */,
 				0F52902C244F3A5800A9B9DC /* He3Tests */,
 				0FBD9BC224566C1C00332EEB /* He3-dmg */,
 				0F307165246A3D0B00684B84 /* He3 Launcher */,
-				0F8291FC2495172000B5C205 /* He3-QLExtension */,
+				0F8291FC2495172000B5C205 /* He3 QLExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -656,10 +670,14 @@
 			files = (
 				0FBD9BB8245473C600332EEB /* itemIcon.icns in Resources */,
 				0F2370D7244E8CEC009F7914 /* Assets.xcassets in Resources */,
+				0F55CD6A24A67B7100E49C6A /* itemIcon.jpg in Resources */,
 				0F5290BD2451D3C400A9B9DC /* He3.icns in Resources */,
 				0F5290B9244F6C9100A9B9DC /* dsa_pub.pem in Resources */,
 				0F237113244E9AA1009F7914 /* Help in Resources */,
+				0F55CD6624A6795600E49C6A /* icntIcon.jpg in Resources */,
 				0FBD9BBC2454767300332EEB /* icntIcon.icns in Resources */,
+				0F55CD6424A6794E00E49C6A /* icntIcon.png in Resources */,
+				0F55CD6824A67B3D00E49C6A /* listIcon.jpg in Resources */,
 				0FBD9BBA2454746200332EEB /* listIcon.icns in Resources */,
 				0F9EF954247019E6008DDB93 /* itemIcon.png in Resources */,
 				0F2370DA244E8CEC009F7914 /* Main.storyboard in Resources */,
@@ -741,7 +759,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\nset -x\nbuildPlist=\"He3/Info.plist\"\nsharePlist=\"He3ShareExtension/Info.plist\"\n\nbuildMajor=$(/usr/libexec/PlistBuddy -c \"Print CFBuildMajor\" $sharePlist)\nbuildMinor=$(/usr/libexec/PlistBuddy -c \"Print CFBuildMinor\" $sharePlist)\nbuildPatch=$(/usr/libexec/PlistBuddy -c \"Print CFBuildPatch\" $sharePlist)\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBuildNumber\" $sharePlist)\nbuildDate=$(date \"+%Y%m%d.%H%M%S\")\n\n# Increment the buildNumber if asked\nbuildIncr=$(/usr/libexec/PlistBuddy -c \"Print CFBuildIncrement\" $buildPlist)\nif [ \"$buildIncr\" = \"true\" ];\nthen\n    buildNumber=$(($buildNumber + 1))\nfi\n\n# Formulate the bundle versions\nbundleVersion=$buildMajor.$buildMinor.$buildNumber\nbundleShortVersion=$buildMajor.$buildMinor.$buildPatch\n\n# Set the version numbers in the buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildNumber $buildNumber\" $buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildDate $buildDate\" $buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $bundleVersion\" $buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $bundleShortVersion\" $buildPlist\n\n# Propagate to share\n/usr/libexec/PlistBuddy -c \"Set :CFBuildNumber $buildNumber\" $sharePlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildDate $buildDate\" $sharePlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $bundleVersion\" $sharePlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $bundleShortVersion\" $sharePlist\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\nset -x\nbuildPlist=\"He3/Info.plist\"\nsharePlist=\"He3ShareExtension/Info.plist\"\ntestsPlist=\"He3Tests/Info.plist\"\nloginPlist=\"He3Launcher/Info.plist\"\nqlExtPlist=\"He3QLExtension/Info.plist\"\n\nbuildMajor=$(/usr/libexec/PlistBuddy -c \"Print CFBuildMajor\" $sharePlist)\nbuildMinor=$(/usr/libexec/PlistBuddy -c \"Print CFBuildMinor\" $sharePlist)\nbuildPatch=$(/usr/libexec/PlistBuddy -c \"Print CFBuildPatch\" $sharePlist)\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBuildNumber\" $sharePlist)\nbuildDate=$(date \"+%Y%m%d.%H%M%S\")\n\n# Increment the buildNumber if asked\nbuildIncr=$(/usr/libexec/PlistBuddy -c \"Print CFBuildIncrement\" $buildPlist)\nif [ \"$buildIncr\" = \"true\" ];\nthen\n    buildNumber=$(($buildNumber + 1))\nfi\n\n# Formulate the bundle versions\nbundleVersion=$buildMajor.$buildMinor.$buildNumber\nbundleShortVersion=$buildMajor.$buildMinor.$buildPatch\n\n# Set the version numbers in the buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildNumber $buildNumber\" $buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildDate $buildDate\" $buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $bundleVersion\" $buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $bundleShortVersion\" $buildPlist\n\n# Propagate to share\n/usr/libexec/PlistBuddy -c \"Set :CFBuildNumber $buildNumber\" $sharePlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildDate $buildDate\" $sharePlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $bundleVersion\" $sharePlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $bundleShortVersion\" $sharePlist\n\n# Propagate to tests\n/usr/libexec/PlistBuddy -c \"Set :CFBuildNumber $buildNumber\" $testsPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildDate $buildDate\" $testsPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $bundleVersion\" $testsPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $bundleShortVersion\" $testsPlist\n\n# Propagate to launcher\n/usr/libexec/PlistBuddy -c \"Set :CFBuildNumber $buildNumber\" $loginPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildDate $buildDate\" $loginPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $bundleVersion\" $loginPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $bundleShortVersion\" $loginPlist\n\n# Propagate to QL Extension\n/usr/libexec/PlistBuddy -c \"Set :CFBuildNumber $buildNumber\" $qlExtPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildDate $buildDate\" $qlExtPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $bundleVersion\" $qlExtPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $bundleShortVersion\" $qlExtPlist\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -844,7 +862,7 @@
 		};
 		0F52900D244F142800A9B9DC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0F528FFE244F142800A9B9DC /* He3ShareExtension */;
+			target = 0F528FFE244F142800A9B9DC /* He3 ShareExtension */;
 			targetProxy = 0F52900C244F142800A9B9DC /* PBXContainerItemProxy */;
 		};
 		0F529033244F3A5800A9B9DC /* PBXTargetDependency */ = {
@@ -854,7 +872,7 @@
 		};
 		0F8292082495172100B5C205 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0F8291FC2495172000B5C205 /* He3-QLExtension */;
+			target = 0F8291FC2495172000B5C205 /* He3 QLExtension */;
 			targetProxy = 0F8292072495172100B5C205 /* PBXContainerItemProxy */;
 		};
 		0FBD9BCC24566C5500332EEB /* PBXTargetDependency */ = {
@@ -1095,13 +1113,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "He3 Launcher/He3_Launcher.entitlements";
+				CODE_SIGN_ENTITLEMENTS = He3Launcher/He3Launcher.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = VQYGYPHYGE;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = "He3 Launcher/Info.plist";
+				INFOPLIST_FILE = He3Launcher/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -1117,13 +1135,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "He3 Launcher/He3_Launcher.entitlements";
+				CODE_SIGN_ENTITLEMENTS = He3Launcher/He3Launcher.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = VQYGYPHYGE;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = "He3 Launcher/Info.plist";
+				INFOPLIST_FILE = He3Launcher/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -1224,19 +1242,19 @@
 		0F82920B2495172100B5C205 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "He3-QLExtension/He3_QLExtension.entitlements";
+				CODE_SIGN_ENTITLEMENTS = He3QLExtension/He3QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VQYGYPHYGE;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = "He3-QLExtension/Info.plist";
+				INFOPLIST_FILE = He3QLExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.slashlos.he3.He3-QLExtension";
+				PRODUCT_BUNDLE_IDENTIFIER = com.slashlos.he3.QLExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -1246,19 +1264,19 @@
 		0F82920C2495172100B5C205 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "He3-QLExtension/He3_QLExtension.entitlements";
+				CODE_SIGN_ENTITLEMENTS = He3QLExtension/He3QLExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = VQYGYPHYGE;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = "He3-QLExtension/Info.plist";
+				INFOPLIST_FILE = He3QLExtension/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.slashlos.he3.He3-QLExtension";
+				PRODUCT_BUNDLE_IDENTIFIER = com.slashlos.he3.QLExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -1328,7 +1346,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0F52900F244F142800A9B9DC /* Build configuration list for PBXNativeTarget "He3ShareExtension" */ = {
+		0F52900F244F142800A9B9DC /* Build configuration list for PBXNativeTarget "He3 ShareExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0F529010244F142800A9B9DC /* Debug */,
@@ -1346,7 +1364,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0F82920A2495172100B5C205 /* Build configuration list for PBXNativeTarget "He3-QLExtension" */ = {
+		0F82920A2495172100B5C205 /* Build configuration list for PBXNativeTarget "He3 QLExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0F82920B2495172100B5C205 /* Debug */,

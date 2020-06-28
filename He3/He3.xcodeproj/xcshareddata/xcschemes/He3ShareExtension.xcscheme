@@ -16,8 +16,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "0F528FFE244F142800A9B9DC"
-               BuildableName = "He3ShareExtension.appex"
-               BlueprintName = "He3ShareExtension"
+               BuildableName = "He3 ShareExtension.appex"
+               BlueprintName = "He3 ShareExtension"
                ReferencedContainer = "container:He3.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
