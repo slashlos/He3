@@ -133,13 +133,11 @@ class PlayItem : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
 				kQLThumbnailOptionIconModeKey: NSNumber(booleanLiteral: asIcon)
 			] as CFDictionary
 			
-			if appDelegate.isSandboxed == appDelegate.isBookmarked(url) {
-				let ref = QLThumbnailImageCreate(kCFAllocatorDefault, url as CFURL , size, dict)
-				if let cgImage = ref?.takeUnretainedValue() {
-					let thumbnailImage = NSImage(cgImage: cgImage, size: size)
-					ref?.release()
-					return thumbnailImage
-				}
+			let ref = QLThumbnailImageCreate(kCFAllocatorDefault, url as CFURL, size, dict)
+			if let cgImage = ref?.takeUnretainedValue() {
+				let thumbnailImage = NSImage(cgImage: cgImage, size: size)
+				ref?.release()
+				return thumbnailImage
 			}
 		}
 		return ((NSImage.init(named: k.itemIcon)?.resize(w: size.width, h: size.height))!)
