@@ -1500,7 +1500,7 @@ Gw
                                                             <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="date"/>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
-                                                                <tableCellView id="BO4-ZN-MWG">
+                                                                <tableCellView id="BO4-ZN-MWG" customClass="PlayTableCellView" customModule="He3" customModuleProvider="target">
                                                                     <rect key="frame" x="125" y="1" width="40" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
@@ -1552,7 +1552,7 @@ Gw
                                                             <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="tally"/>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
-                                                                <tableCellView id="owF-ak-44U">
+                                                                <tableCellView id="owF-ak-44U" customClass="PlayTableCellView" customModule="He3" customModuleProvider="target">
                                                                     <rect key="frame" x="168" y="1" width="40" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
@@ -1603,7 +1603,7 @@ Gw
                                                             <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="plays"/>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
-                                                                <tableCellView id="fKK-XD-Pi5">
+                                                                <tableCellView id="fKK-XD-Pi5" customClass="PlayTableCellView" customModule="He3" customModuleProvider="target">
                                                                     <rect key="frame" x="211" y="1" width="40" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
@@ -1879,7 +1879,7 @@ Gw
                                                             </textFieldCell>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
-                                                                <tableCellView id="1vB-Hr-YNe">
+                                                                <tableCellView id="1vB-Hr-YNe" customClass="PlayTableCellView" customModule="He3" customModuleProvider="target">
                                                                     <rect key="frame" x="44" y="1" width="120" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
@@ -1928,7 +1928,7 @@ Gw
                                                             <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="time"/>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
-                                                                <tableCellView id="O3b-vB-0VO">
+                                                                <tableCellView id="O3b-vB-0VO" customClass="PlayTableCellView" customModule="He3" customModuleProvider="target">
                                                                     <rect key="frame" x="167" y="1" width="60" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
@@ -1985,7 +1985,7 @@ Gw
                                                             <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="date"/>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
-                                                                <tableCellView id="6tp-fm-m2V">
+                                                                <tableCellView id="6tp-fm-m2V" customClass="PlayTableCellView" customModule="He3" customModuleProvider="target">
                                                                     <rect key="frame" x="230" y="1" width="60" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
@@ -2032,7 +2032,7 @@ Gw
                                                             <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="turl"/>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
-                                                                <tableCellView id="dzR-Ne-pyu">
+                                                                <tableCellView id="dzR-Ne-pyu" customClass="PlayTableCellView" customModule="He3" customModuleProvider="target">
                                                                     <rect key="frame" x="293" y="1" width="120" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
@@ -2078,7 +2078,7 @@ Gw
                                                             <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="tRect"/>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
-                                                                <tableCellView id="1iX-Sv-UsZ">
+                                                                <tableCellView id="1iX-Sv-UsZ" customClass="PlayTableCellView" customModule="He3" customModuleProvider="target">
                                                                     <rect key="frame" x="416" y="1" width="80" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
@@ -2129,7 +2129,7 @@ Gw
                                                             <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="plays"/>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
-                                                                <tableCellView id="w65-E0-c5w">
+                                                                <tableCellView id="w65-E0-c5w" customClass="PlayTableCellView" customModule="He3" customModuleProvider="target">
                                                                     <rect key="frame" x="499" y="1" width="60" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
@@ -2185,7 +2185,7 @@ Gw
                                                             <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="label"/>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
-                                                                <tableCellView id="zDV-Aw-sHi">
+                                                                <tableCellView id="zDV-Aw-sHi" customClass="PlayTableCellView" customModule="He3" customModuleProvider="target">
                                                                     <rect key="frame" x="562" y="1" width="60" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
@@ -2230,7 +2230,7 @@ Gw
                                                             <sortDescriptor key="sortDescriptorPrototype" selector="compare:" sortKey="alpha"/>
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
-                                                                <tableCellView id="GCM-EX-tcz">
+                                                                <tableCellView id="GCM-EX-tcz" customClass="PlayTableCellView" customModule="He3" customModuleProvider="target">
                                                                     <rect key="frame" x="625" y="1" width="106" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
