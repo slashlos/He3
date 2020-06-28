@@ -333,10 +333,10 @@ extension PlaylistViewController: NSTableViewDataSource {
 					playlist = playlistArrayController.selectedObjects.first as? PlayList
 				}
 
-				playlist?.willChangeValue(forKey: k.tally)
-				
 				//	see what item(s) we can muster from this URL
 				playitemsForURL(url as URL) { (playitems) in
+					playlist?.willChangeValue(forKey: k.tally)
+					
 					for playitem in playitems {
 						let path = playitem.link.absoluteString
 						let list: Array<PlayItem> = playlist!.list.sorted(by: { (lhs, rhs) -> Bool in

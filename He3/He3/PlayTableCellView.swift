@@ -25,14 +25,15 @@ class PlayTableTextField: NSTextField {
 }
 
 class PlayTableCellView : NSTableCellView {
+	var isEditable: Bool = true {
+		didSet (value) {
+			textField?.isEditable = value
+		}
+	}
+	
 	override var draggingImageComponents : [NSDraggingImageComponent] {
 	
 		var imageComponents = super.draggingImageComponents
-		var isEditable: Bool = true {
-			didSet (value) {
-				textField?.isEditable = value
-			}
-		}
 		
         if let item = objectValue {
             // 1) Create the text label component for the drag.

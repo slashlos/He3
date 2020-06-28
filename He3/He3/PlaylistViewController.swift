@@ -22,11 +22,6 @@ fileprivate var defaults : UserDefaults {
         return UserDefaults.standard
     }
 }
-fileprivate var appDelegate : AppDelegate {
-    get {
-        return NSApp.delegate as! AppDelegate
-    }
-}
 fileprivate var docController : DocumentController {
     get {
         return NSDocumentController.shared as! DocumentController
@@ -536,6 +531,12 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         setupHiddenColumns(playitemTableView, hideit: ["date","link","plays","rect","label","hover","alpha","trans"])
     }
 	
+	fileprivate var appDelegate : AppDelegate {
+		get {
+			return NSApp.delegate as! AppDelegate
+		}
+	}
+	
 	var historyCache: PlayList {
 		get {
 			return appDelegate.historyCache
@@ -543,6 +544,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
 	}
     
     override func viewWillAppear() {
+		//	Guard 1-time loading post viewDidLoad()
 		guard !observing else { return }
 		
         //  Load document's URL content
@@ -941,7 +943,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
 				sheetOKCancel(message, info: infoMsg,
 										  acceptHandler: { (button) in
 											if button == NSApplication.ModalResponse.alertFirstButtonReturn {
-												appDelegate.newViewOptions = appDelegate.getViewOptions
+												self.appDelegate.newViewOptions = self.appDelegate.getViewOptions
 												self.play(sender, items:list, maxSize: throttle)
 											}
             })
@@ -1050,7 +1052,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
 					}
 					else
 					{
-						_ = appDelegate.restorePlaylists()
+						_ = self.appDelegate.restorePlaylists()
 					}
 					(whoAmI as! PlayTableView).reloadData()
 					Swift.print("revert to saved")
@@ -1253,7 +1255,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
 		
 		case false:
 			// Restore NON-HISTORY playlist(s) from cache
-			if let historyIndex = playCache.firstIndex(of: historyCache) { playCache.remove(at: historyIndex) }
+			while let historyIndex = playCache.firstIndex(of: historyCache) { playCache.remove(at: historyIndex) }
 			playlists = playCache
         }
     }
@@ -1374,6 +1376,9 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
 				break
 			}
 			
+			if let view : PlayTableCellView = view as? PlayTableCellView {
+				view.isEditable = self.tableView(tableView, shouldEdit: column, row: row)
+			}
 			view.objectValue = item
 			return view
 		}

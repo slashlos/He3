@@ -812,7 +812,6 @@ let sameWindow : ViewOptions = []
             if let wvc: WebViewController = wvc as? WebViewController {
                 if wvc.presentedViewControllers?.count == 0 {
                     let pvc = storyboard.instantiateController(withIdentifier: "PlaylistViewController") as! PlaylistViewController
-                    pvc.playlists.append(contentsOf: playlists)
                     pvc.webViewController = wvc
                     wvc.presentAsSheet(pvc)
                 }
