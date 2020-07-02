@@ -131,7 +131,7 @@ extension WebViewController: WKNavigationDelegate {
 			})
 		}
 		
-		guard !url.hasUserContent(), url.hasDataContent(), let suggestion = response.suggestedFilename else { decisionHandler(.allow); return }
+		guard url.pathExtension != k.html, !url.hasUserContent(), url.hasDataContent(), let suggestion = response.suggestedFilename else { decisionHandler(.allow); return }
 		let downloadDir = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first!
 		let saveURL = downloadDir.appendingPathComponent(suggestion)
 		saveURL.saveAs(responseHandler: { saveAsURL in
@@ -151,7 +151,7 @@ extension WebViewController: WKNavigationDelegate {
 			self.backPress(self)
 		 })
 	}
-
+  
 	func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
 		Swift.print(String(format: "1LD: %p didStartProvisionalNavigation: %p %@", navigation, webView, webView.url!.debugDescription))
 		
@@ -197,17 +197,22 @@ extension WebViewController: WKNavigationDelegate {
 	fileprivate func handleError(_ error: Error) {
 		let message = error.localizedDescription
 		if (error as NSError).code >= 400 {
-			NSApp.presentError(error)
+			Swift.print("\(message)")
+			///NSApp.presentError(error)
 		}
 		else
 		if (error as NSError).code < 0 {
 			if let info = error._userInfo as? [String: Any] {
 				if let url = info["NSErrorFailingURLKey"] as? URL {
-					userAlertMessage(message, info: url.absoluteString)
+					Swift.print("\(message)")
+					Swift.print("\(url.absoluteString)")
+					///userAlertMessage(message, info: url.absoluteString)
 				}
 				else
 				if let urlString = info["NSErrorFailingURLStringKey"] as? String {
-					userAlertMessage(message, info: urlString)
+					Swift.print("\(message)")
+					Swift.print("\(urlString)")
+					///userAlertMessage(message, info: urlString)
 				}
 			}
 		}
@@ -236,7 +241,7 @@ extension WebViewController: WKNavigationDelegate {
 
 //  MARK:- UI Delegate
 
-extension WebViewController: WKUIDelegate {
+extension WebViewController: WKUIDelegate {/*
 	func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration,
 				 for navigationAction: WKNavigationAction,
 				 windowFeatures: WKWindowFeatures) -> WKWebView? {
@@ -267,12 +272,17 @@ extension WebViewController: WKUIDelegate {
 
 		return newWebView
 	}
-
+	*/
+	
 	func webViewDidClose(_ webView: WKWebView) {
 		Swift.print(String(format: "UI: %p webViewDidClose:", webView))
 		webView.stopLoading()
 	}
 
+	func webViewShow(_ webView: WKWebView) {
+		Swift.print(String(format: "UI: %p webViewShow:", webView))
+	}
+	
 	func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: () -> Void) {
 		Swift.print(String(format: "UI: %p runJavaScriptAlertPanelWithMessage: %@", webView, message))
 
