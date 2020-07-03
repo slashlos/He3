@@ -103,6 +103,20 @@
 			remoteGlobalIDString = 0F8291FC2495172000B5C205;
 			remoteInfo = "He3-QLExtension";
 		};
+		0FB276F124AEB2FB00695BB1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0F2370C5244E8CEA009F7914 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0F528FFE244F142800A9B9DC;
+			remoteInfo = "He3 ShareExtension";
+		};
+		0FB276F324AEB30200695BB1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0F2370C5244E8CEA009F7914 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0F528FFE244F142800A9B9DC;
+			remoteInfo = "He3 ShareExtension";
+		};
 		0FBD9BCB24566C5500332EEB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0F2370C5244E8CEA009F7914 /* Project object */;
@@ -483,8 +497,8 @@
 			);
 			dependencies = (
 				0F30717B246A429D00684B84 /* PBXTargetDependency */,
-				0F52900D244F142800A9B9DC /* PBXTargetDependency */,
 				0F8292082495172100B5C205 /* PBXTargetDependency */,
+				0F52900D244F142800A9B9DC /* PBXTargetDependency */,
 			);
 			name = He3;
 			packageProductDependencies = (
@@ -523,6 +537,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				0FB276F424AEB30200695BB1 /* PBXTargetDependency */,
 			);
 			name = "He3 Launcher";
 			productName = "He3 Launcher";
@@ -576,6 +591,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				0FB276F224AEB2FB00695BB1 /* PBXTargetDependency */,
 			);
 			name = "He3 QLExtension";
 			productName = "He3-QLExtension";
@@ -874,6 +890,16 @@
 			isa = PBXTargetDependency;
 			target = 0F8291FC2495172000B5C205 /* He3 QLExtension */;
 			targetProxy = 0F8292072495172100B5C205 /* PBXContainerItemProxy */;
+		};
+		0FB276F224AEB2FB00695BB1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0F528FFE244F142800A9B9DC /* He3 ShareExtension */;
+			targetProxy = 0FB276F124AEB2FB00695BB1 /* PBXContainerItemProxy */;
+		};
+		0FB276F424AEB30200695BB1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0F528FFE244F142800A9B9DC /* He3 ShareExtension */;
+			targetProxy = 0FB276F324AEB30200695BB1 /* PBXContainerItemProxy */;
 		};
 		0FBD9BCC24566C5500332EEB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
