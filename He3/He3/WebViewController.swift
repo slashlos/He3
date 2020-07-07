@@ -1312,6 +1312,11 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
 		//	document.fileURL is recent, webView.url is current URL
         if let document = self.document, let url = document.fileURL {
 			if url != webView.url {
+				//	Initially, but after window restoration, restore saved frame
+				if let window = self.view.window, !NSEqualRects(window.frame, document.settings.rect.value) {
+					window.setFrame(document.settings.rect.value, display: true)
+				}
+				
 				switch document.fileType {
 				case k.Playitem:
 					if let link = document.items.first?.list.first?.link {
