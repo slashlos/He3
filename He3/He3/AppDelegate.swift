@@ -629,6 +629,7 @@ let sameWindow : ViewOptions = []
     
 	@objc @IBOutlet var launchWindow: NSWindow?
 	@IBAction func launchAutoLoginPress(_ sender: NSMenuItem) {
+		guard nil == launchWindow else { launchWindow?.makeKeyAndOrderFront(sender); return }
         let storyboard = NSStoryboard(name: "Main", bundle: nil)
 
 		let autoLogin = storyboard.instantiateController(withIdentifier: "AutoLaunchController") as! LaunchController
