@@ -162,7 +162,7 @@ class Document : NSDocument {
         }
         if let rect = dictionary[k.rect] as? String {
             self.settings.rect.value = NSRectFromString(rect)
-            if let window = self.windowControllers.first?.window {
+			if let window = self.windowControllers.first?.window, !NSEqualRects(NSZeroRect, CGRect(for: rect)) {
                 window.setFrame(from: rect)
             }
         }
@@ -396,7 +396,9 @@ class Document : NSDocument {
             try super.read(from: url, ofType: typeName)
 
         default:
-			break
+			if let dict = defaults.dictionary(forKey: url.absoluteString) {
+				restoreSettings(with: dict)
+			}
 		}
     }
     
@@ -424,7 +426,9 @@ class Document : NSDocument {
             pvc.playlistArrayController.content = pvc.playlists
             
         default:
-            break
+			if let url = fileURL, let dict = defaults.dictionary(forKey: url.absoluteString) {
+				restoreSettings(with: dict)
+			}
         }
     }
     
@@ -538,7 +542,7 @@ class Document : NSDocument {
 		cacheSettings(url)
 
         guard url != homeURL else {
-             updateChangeCount(.changeCleared)
+			updateChangeCount(.changeCleared)
 			completionHandler(nil)
             return
         }

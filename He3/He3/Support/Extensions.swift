@@ -132,6 +132,12 @@ extension Array where Element:PlayItem {
     }
 }
 
+extension CGRect {
+	init(for cgString: String) {
+		let r = NSRectFromString(cgString)
+		self.init(x: r.origin.x, y: r.origin.y, width: r.size.width, height: r.size.height)
+	}
+}
 
 extension Collection {
     subscript(safe index: Index) -> Element? {
