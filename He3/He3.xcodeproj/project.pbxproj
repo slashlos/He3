@@ -53,6 +53,7 @@
 		0F9EF9592471FAF9008DDB93 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD2127E2466D7C800EA5D6D /* Types.swift */; };
 		0F9EF95B24776468008DDB93 /* listIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F9EF95A24776468008DDB93 /* listIcon.png */; };
 		0FACD4C42467953000A23B1F /* PromiseFileProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FACD4C32467953000A23B1F /* PromiseFileProvider.swift */; };
+		0FB276F624B1EDD800695BB1 /* PrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB276F524B1EDD800695BB1 /* PrefsViewController.swift */; };
 		0FBD9BAF2454603200332EEB /* he3_logo.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0FBD9BAE2454603200332EEB /* he3_logo.icns */; };
 		0FBD9BB8245473C600332EEB /* itemIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0FBD9BB7245473C500332EEB /* itemIcon.icns */; };
 		0FBD9BBA2454746200332EEB /* listIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0FBD9BB92454746200332EEB /* listIcon.icns */; };
@@ -224,6 +225,8 @@
 		0F9EF953247019E6008DDB93 /* itemIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = itemIcon.png; path = "He3/Assets/item Icon/itemIcon.png"; sourceTree = "<group>"; };
 		0F9EF95A24776468008DDB93 /* listIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = listIcon.png; path = "He3/Assets/list Icon/listIcon.png"; sourceTree = "<group>"; };
 		0FACD4C32467953000A23B1F /* PromiseFileProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseFileProvider.swift; sourceTree = "<group>"; };
+		0FB276F524B1EDD800695BB1 /* PrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsViewController.swift; sourceTree = "<group>"; };
+		0FB276F924B1F51700695BB1 /* PrefsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PrefsWindowController.swift; path = He3/PrefsWindowController.swift; sourceTree = "<group>"; };
 		0FBD9BAE2454603200332EEB /* he3_logo.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = he3_logo.icns; path = "He3/Assets/he3 logo/he3_logo.icns"; sourceTree = "<group>"; };
 		0FBD9BB7245473C500332EEB /* itemIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = itemIcon.icns; path = "He3/Assets/item Icon/itemIcon.icns"; sourceTree = "<group>"; };
 		0FBD9BB92454746200332EEB /* listIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = listIcon.icns; path = "He3/Assets/list Icon/listIcon.icns"; sourceTree = "<group>"; };
@@ -301,6 +304,7 @@
 		0F2370C4244E8CEA009F7914 = {
 			isa = PBXGroup;
 			children = (
+				0FB276F924B1F51700695BB1 /* PrefsWindowController.swift */,
 				0F5290BC2451D3C300A9B9DC /* He3.icns */,
 				0FBD9BAE2454603200332EEB /* he3_logo.icns */,
 				0FBD9BBB2454767300332EEB /* icntIcon.icns */,
@@ -355,6 +359,7 @@
 				0FD21270246383E500EA5D6D /* PlaylistViewController+DragAndDrop.swift */,
 				0FACD4C32467953000A23B1F /* PromiseFileProvider.swift */,
 				0FD212802467052900EA5D6D /* PlayTableCellView.swift */,
+				0FB276F524B1EDD800695BB1 /* PrefsViewController.swift */,
 				0F2370D2244E8CEA009F7914 /* WebViewController.swift */,
 				0FD2127424638EB900EA5D6D /* WebViewController+Navigation+UI.swift */,
 				0FD2127624638FFC00EA5D6D /* WebViewController+Session.swift */,
@@ -811,6 +816,7 @@
 				0F82920F249539D900B5C205 /* Settings.swift in Sources */,
 				0F2370FB244E95E3009F7914 /* PlaylistPanelController.swift in Sources */,
 				0F2370D5244E8CEA009F7914 /* Document.swift in Sources */,
+				0FB276F624B1EDD800695BB1 /* PrefsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
