@@ -17,7 +17,12 @@ fileprivate var appDelegate : AppDelegate {
 }
 
 class LaunchController: NSWindowController {
-	
+    func windowShouldClose(_ sender: NSWindow) -> Bool {
+		let notif = Notification(name: Notification.Name(rawValue: "autoLaunchChange"), object: nil)
+		NotificationCenter.default.post(notif)
+		
+		return true
+	}
 }
 
 class LaunchViewController: NSViewController {
@@ -27,6 +32,9 @@ class LaunchViewController: NSViewController {
 		if let window = sender.window {
 			window.orderOut(sender)
 		}
+		
+		let notif = Notification(name: Notification.Name(rawValue: "autoLaunchChange"), object: nil)
+		NotificationCenter.default.post(notif)
 	}
 	
 	@objc @IBAction func launchSetPress(_ sender: NSButton) {
@@ -52,6 +60,9 @@ class LaunchViewController: NSViewController {
 									autoLaunch ? "Yes" : "No"),
 							 info: appBundleIdentifier)
 		}
+		
+		let notif = Notification(name: Notification.Name(rawValue: "autoLaunchChange"), object: nil)
+		NotificationCenter.default.post(notif)
 	}
 	
 	override func viewDidLoad() {

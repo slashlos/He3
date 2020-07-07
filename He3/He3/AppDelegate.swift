@@ -420,15 +420,19 @@ let sameWindow : ViewOptions = []
     
     var title : String {
         get {
-            let infoDictionary = (Bundle.main.infoDictionary)!
-            
             //    Setup the version to one we constrict
-            let title = String(format:"%@ %@", AppName,
-                               infoDictionary["CFBundleVersion"] as! CVarArg)
+            let title = String(format:"%@ %@", AppName, Version)
 
             return title
         }
     }
+	
+	var Version : String {
+		let infoDictionary = (Bundle.main.infoDictionary)!
+		
+		return infoDictionary["CFBundleVersion"] as! CVarArg as! String
+	}
+	
     @objc internal func menuClicked(_ sender: AnyObject) {
         if let menuItem = sender as? NSMenuItem {
             Swift.print("Menu '\(menuItem.title)' clicked")
@@ -483,7 +487,7 @@ let sameWindow : ViewOptions = []
 	@IBAction func acceptCookiePress(_ sender: NSMenuItem) {
 		UserSettings.AcceptWebCookie.value = (sender.state == .off)
 	}
-	@IBAction func clearCookliesPress(_ sender: NSMenuItem) {
+	@IBAction func clearCookliesPress(_ sender: Any) {
 		if userConfirmMessage("Confirm clearing *all* cookies", info: "This cannot be undone!") {
 			HTTPCookieStorage.shared.cookies?.forEach(HTTPCookieStorage.shared.deleteCookie)
 		}
@@ -782,6 +786,18 @@ let sameWindow : ViewOptions = []
 
 		defaults.set(index as Any, forKey: key)
 //        Swift.print("\(key) -> \(index)")
+	}
+	
+	@objc @IBOutlet var prefsWindow: NSWindow?
+	@IBAction func prefsPanelPress(_ sender: NSMenuItem) {
+		guard nil == prefsWindow else { prefsWindow?.makeKeyAndOrderFront(sender); return }
+        let storyboard = NSStoryboard(name: "Main", bundle: nil)
+
+		let prefsController = storyboard.instantiateController(withIdentifier: "PrefsPanelController") as! PrefsPanelController
+		if let window = prefsController.window {
+			prefsWindow = window
+			window.makeKeyAndOrderFront(sender)
+		}
 	}
 	
     @objc @IBAction func presentPlaylistSheet(_ sender: Any) {
@@ -1483,6 +1499,13 @@ let sameWindow : ViewOptions = []
                     continue
                 }
                 Swift.print("keep \(String(describing: document.fileURL?.absoluteString))")
+				
+				//	take a final reading on window and save
+				if let url = document.fileURL, let window = document.windowControllers.first?.window {
+					let doc = document as! Document
+					doc.settings.rect.value = window.frame
+					doc.cacheSettings(url)
+				}
                 temp.append(webURL.absoluteString)
             }
             defaults.set(temp, forKey: UserSettings.KeepListName.value)
