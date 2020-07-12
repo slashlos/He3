@@ -300,10 +300,10 @@ extension NSView {
 extension NSView {
 	var snapshot : NSImage? {
 		get {
-			guard let window = self.window, let view = self.window!.contentView else { return nil }
+			guard let window = self.window, let content = window.contentView else { return nil }
 
-			var rect = view.bounds
-			rect = view.convert(rect, to: nil)
+			var rect = content.bounds
+			rect = content.convert(rect, to: nil)
 			rect = window.convertToScreen(rect)
 
 			//  Adjust for titlebar; kTitleUtility = 16, kTitleNormal = 22
@@ -311,9 +311,8 @@ extension NSView {
 			rect.origin.y += delta
 			rect.size.height += delta*2
 
-			let cgImage = CGWindowListCreateImage(rect, .optionIncludingWindow,
-												  CGWindowID(window.windowNumber), .bestResolution)
-			let image = NSImage(cgImage: cgImage!, size: rect.size)
+			guard let cgImage = CGWindowListCreateImage(rect, .optionIncludingWindow, CGWindowID(window.windowNumber), .bestResolution) else { return nil }
+			let image = NSImage(cgImage: cgImage, size: rect.size)
 
 			return image
 		}
