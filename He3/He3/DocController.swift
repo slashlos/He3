@@ -22,20 +22,16 @@ class DocumentController : NSDocumentController {
 			if [k.hpi,k.hpl].contains(contentsURL.pathExtension) || [k.Playitem,k.Playlist].contains(typeName) {
 				//	h.pli files are a single playlist item so treat as such, read into settings
 				doc = try super.makeDocument(for: urlOrNil, withContentsOf: contentsURL, ofType: typeName) as! Document
-            }
-            else
-            {
-                doc = try Document.init(contentsOf: contentsURL, ofType: typeName)
-                doc.makeWindowControllers()
-                doc.revertToSaved(self)
+				return doc
             }
         } catch let error {
-            NSApp.presentError(error)
-            doc = try Document.init(contentsOf: contentsURL)
-            doc.makeWindowControllers()
-            doc.revertToSaved(self)
+			Swift.print("\(error.localizedDescription)")
         }
-        
+		
+		doc = try Document.init(contentsOf: contentsURL, ofType: typeName)
+		doc.makeWindowControllers()
+		doc.revertToSaved(self)
+
         return doc
     }
 
@@ -74,9 +70,7 @@ class DocumentController : NSDocumentController {
         do {
             doc = try makeUntitledDocument(ofType: k.Incognito) as! Document
             if 0 == doc.windowControllers.count { doc.makeWindowControllers() }
-            if let window = doc.windowControllers.first?.window {
-                DispatchQueue.main.async { window.makeKeyAndOrderFront(self) }
-            }
+			doc.showWindows()
         } catch let error {
             NSApp.presentError(error)
         }

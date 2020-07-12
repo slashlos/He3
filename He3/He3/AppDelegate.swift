@@ -617,9 +617,7 @@ let sameWindow : ViewOptions = []
             let typeName = fileURL.isFileURL && fileURL.pathExtension == k.hpl ? k.Playlist : k.Helium
             let doc = try docController.makeDocument(withContentsOf: fileURL, ofType: typeName)
             docController.noteNewRecentDocumentURL(fileURL)
-            if let window = doc.windowControllers.first?.window {
-                DispatchQueue.main.async { window.makeKeyAndOrderFront(self) }
-            }
+			doc.showWindows()
             return true
         } catch let error {
             print("*** Error open file: \(error.localizedDescription)")
@@ -690,11 +688,7 @@ let sameWindow : ViewOptions = []
     }
     
     internal func openFileInNewWindow(_ url: URL, context parentWindow: NSWindow? = nil) -> Bool {
-        return openURLInNewWindow(url, context: parentWindow)
-    }
-    
-    func openURLInNewWindow(_ url: URL, context otherWindow : NSWindow? = nil) -> Bool {
-        os_signpost(.begin, log: MyWebView.poi, name: "openURLInNewWindow")
+        os_signpost(.begin, log: MyWebView.poi, name: "openFileInNewWindow")
         defer { os_signpost(.end, log: AppDelegate.poi, name: "openURLInNewWindow") }
 
         if url.isFileURL, isSandboxed != storeBookmark(url: url) {
@@ -702,6 +696,13 @@ let sameWindow : ViewOptions = []
             return false
         }
         
+        return openURLInNewWindow(url, context: parentWindow)
+    }
+    
+    func openURLInNewWindow(_ url: URL, context otherWindow : NSWindow? = nil) -> Bool {
+        os_signpost(.begin, log: MyWebView.poi, name: "openURLInNewWindow")
+        defer { os_signpost(.end, log: AppDelegate.poi, name: "openURLInNewWindow") }
+
         do {
             let typeName = url.pathExtension == k.hpl ? k.Playlist : k.Helium
             let doc = try docController.makeDocument(withContentsOf: url, ofType: typeName)
@@ -713,9 +714,7 @@ let sameWindow : ViewOptions = []
             if let other = otherWindow {
                 other.addTabbedWindow(window, ordered: .above)
             }
-            
-            DispatchQueue.main.async { window.makeKeyAndOrderFront(self) }
-            
+			doc.showWindows()
             return true
             
         } catch let error {
@@ -810,9 +809,7 @@ let sameWindow : ViewOptions = []
             do {
                 let doc = try docController.makeUntitledDocument(ofType: k.Playlist)
                 if 0 == doc.windowControllers.count { doc.makeWindowControllers() }
-                if let window = doc.windowControllers.first?.window {
-                    DispatchQueue.main.async { window.makeKeyAndOrderFront(self) }
-                }
+				doc.showWindows()
             }
             catch let error {
                 NSApp.presentError(error)
@@ -855,9 +852,7 @@ let sameWindow : ViewOptions = []
         {
             let url = URL.init(string: k.ReleaseURL)!
             let doc = try docController.makeDocument(withContentsOf: url, ofType: k.Helium)
-            if let window = doc.windowControllers.first?.window {
-                DispatchQueue.main.async { window.makeKeyAndOrderFront(self) }
-            }
+			doc.showWindows()
         }
         catch let error {
             NSApp.presentError(error)
@@ -1905,9 +1900,7 @@ let sameWindow : ViewOptions = []
     
     // Called when the App opened via URL.
     @objc func handleURLEvent(_ event: NSAppleEventDescriptor, withReply reply: NSAppleEventDescriptor) {
-        let viewOptions = getViewOptions
-
-        guard let keyDirectObject = event.paramDescriptor(forKeyword: AEKeyword(keyDirectObject)),
+		guard let keyDirectObject = event.paramDescriptor(forKeyword: AEKeyword(keyDirectObject)),
             let rawString = keyDirectObject.stringValue else {
                 return print("No valid URL to handle")
         }
@@ -1915,16 +1908,19 @@ let sameWindow : ViewOptions = []
         //  strip <scheme>://
 		let length = String(k.scheme + "://").count
         let index = rawString.index(rawString.startIndex, offsetBy: length)
-		let urlString = UrlHelpers.ensureScheme(String(rawString.suffix(from: index)))
-        
-        //  Handle new window here to narrow cast to new or current panel controller
-        if (viewOptions == sameWindow || !openForBusiness), let wc = NSApp.keyWindow?.windowController {
-            if let hpc : HeliumController = wc as? HeliumController {
-                _ = (hpc.contentViewController as! WebViewController).loadURL(text: String(urlString))
-                return
-            }
-        }
-        _ = openURLInNewWindow(URL.init(string: String(urlString))!)
+		let path = String(rawString.suffix(from: index))
+
+		if openFileInNewWindow(URL.init(fileURLWithPath: path)) {
+			return
+		}
+		
+		let scheme = UserSettings.PromoteHTTPS.value ? k.https : k.http
+		if let url = URL.init(string: scheme + "//:" + path), !openURLInNewWindow(url) {
+			Swift.print("unable to handle web URL path \(url.absoluteString)")
+			return
+		}
+		
+		userAlertMessage("Unable to handleURLEvent", info: rawString)
     }
 
     @objc func handleURLPboard(_ pboard: NSPasteboard, userData: NSString, error: NSErrorPointer) {
@@ -1940,56 +1936,46 @@ let sameWindow : ViewOptions = []
     // MARK: Application Events
     dynamic var disableDocumentReOpening = false
 
-    func application(_ sender: NSApplication, openFile: String) -> Bool {
-        let urlString = (openFile.hasPrefix("file://") ? openFile : "file" + openFile)
-        let fileURL = URL(string: urlString.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!)!
-        disableDocumentReOpening = openFileInNewWindow(fileURL)
-        return disableDocumentReOpening
-    }
-    
-    func application(_ sender: NSApplication, openFiles: [String]) {
+    func application(_ sender: NSApplication, openFile path: String) -> Bool {
         // Create a FileManager instance
         let fileManager = FileManager.default
-        
-        for path in openFiles {
 
-            do {
-                if var url = URL.init(string: path.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!) {
-                    if nil == url.scheme { url = url.settingScheme("file") }
-                    if !url.hasDirectory() { url = url.settingDirectoryPath(fileManager.currentDirectoryPath) }
-                    if isSandboxed != storeBookmark(url: url) { continue }
-                    if !self.application(sender, openURL: url) {
-                        Swift.print("Yoink url? \(url.absoluteString)")
-                    }
-                    continue
-                }
-                
-                if fileManager.fileExists(atPath: path) {
-                    if !self.application(sender, openFile: path) {
-                        Swift.print("Yoink path \(path)")
-                    }
-                    continue
-                }
+		do {
+			let files = try fileManager.contentsOfDirectory(atPath: path)
+			for file in files {
+				guard self.application(sender, openFile: file) else { return false }
+			}
+			return true
+		} catch { }
 
-                let files = try fileManager.contentsOfDirectory(atPath: path)
-                for file in files {
-                    _ = self.application(sender, openFile: file)
-                }
-            }
-            catch let error as NSError {
-                print("Yoink \(error.localizedDescription)")
-            }
+		guard fileManager.fileExists(atPath: path) else {
+			Swift.print("Yoink exists? \(path)")
+			return false
+		}
+
+		guard let url = URL(string: path.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!) else {
+			Swift.print("Yoink encoding URL\(path)")
+			return false
+		}
+
+		if isSandboxed != storeBookmark(url: url) { return false }
+		
+		return openFileInNewWindow(url)
+	}
+    
+    func application(_ sender: NSApplication, openFiles paths: [String]) {
+        for path in paths {
+			_ = self.application(sender, openFile: path) ? 1 : 0
         }
     }
     
-    func application(_ application: NSApplication, openURL: URL) -> Bool {
-        guard openURL.scheme == k.oauth2 else {
-            disableDocumentReOpening = openURLInNewWindow(openURL)
-            return disableDocumentReOpening
+    func application(_ application: NSApplication, openURL url: URL) -> Bool {
+        guard url.scheme == k.oauth2 else {
+			return url.scheme == k.file ? openFileInNewWindow(url) : openURLInNewWindow(url)
         }
         
         //  Catch OAuth2 authentications
-        let bits = openURL.pathComponents
+        let bits = url.pathComponents
         Swift.print("bits\n\(bits)")
         return true
     }
@@ -1997,7 +1983,6 @@ let sameWindow : ViewOptions = []
     func application(_ application: NSApplication, open urls: [URL]) {
         
         for url in urls {
-            
             if !self.application(application, openURL: url) {
                 print("Yoink unable to open \(url)")
             }
@@ -2182,7 +2167,7 @@ let sameWindow : ViewOptions = []
         //  Peek to see if we've seen this key before
         if let data = bookmarks[url] {
             if self.fetchBookmark((key: url, value: data)) {
-//                Swift.print ("= \(url.absoluteString)")
+                Swift.print ("= \(url.absoluteString)")
                 return true
             }
         }
@@ -2235,7 +2220,8 @@ let sameWindow : ViewOptions = []
         guard isSandboxed else { return false }
 
         let restoredUrl: URL?
-        var isStale = true
+
+		var isStale = true
         
         do
         {
@@ -2267,7 +2253,7 @@ let sameWindow : ViewOptions = []
 
 		if let data = bookmarks[url] {
 			if self.fetchBookmark((key: url, value: data)) {
-//                Swift.print ("ß \(url.absoluteString)")
+                Swift.print ("ß \(url.absoluteString)")
 				return true
 			}
 		}

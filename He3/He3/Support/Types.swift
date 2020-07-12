@@ -24,7 +24,10 @@ public struct k {
     static let oauth2 = "he3-oauth" /// oauth handler
     static let he3 = "he3"
     static let asset = "asset"
+	static let file = "file"
     static let html = "html"
+	static let https = "https"
+	static let http = "http"
     static let text = "text"
     static let mime = "mime"
     static let type = "type"

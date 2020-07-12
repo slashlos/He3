@@ -323,38 +323,38 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
     func windowWillClose(_ notification: Notification) {
         self.webViewController.webView.stopLoading()
         
-        if let hvc: WebViewController = window?.contentViewController as? WebViewController {
-            hvc.setupTrackingAreas(false)
+        if let wvc: WebViewController = window?.contentViewController as? WebViewController {
+            wvc.setupTrackingAreas(false)
         }
         setupTrackingAreas(false)
     }
 	
-	// MARK:- TOOO dock tile updating when minimized
+	// MARK:- TOOO dock tile updating when minimized?
 	var dockTileImageView = NSImageView.init()
 	var dockTileUpdateTimer: Timer?
 	func windowWillMiniaturize(_ notification: Notification) {
-		guard self.window == notification.object as? NSWindow else { return }
+		guard let window = notification.object as? NSWindow else { return }
 		
 		if let timer = dockTileUpdateTimer, timer.isValid { timer.invalidate() }
 		self.dockTileUpdateTimer = Timer.scheduledTimer(withTimeInterval: 6.49, repeats: true, block: { (timer) in
-			if timer.isValid, let webView = self.webView {
-				if let window = self.window, let image = window.contentView?.snapshot {
-					self.dockTileImageView.image = image
-					Swift.print("rect: \(image.alignmentRect)")
-					
-					DispatchQueue.main.async {
-						self.window?.dockTile.contentView = self.dockTileImageView
-						Swift.print("miniUpdate")
+			if timer.isValid, let webView = self.webView, window.isMiniaturized, let tile = self.window?.dockTile.contentView  {
+				DispatchQueue.main.async {
+					if let image = window.contentView?.snapshot {
+						self.dockTileImageView.image = image.resize(size: tile.bounds.size)
+						window.dockTile.contentView = self.dockTileImageView
+						Swift.print("miniUpdate: \(image.alignmentRect)")
 					}
-				}
-				else
-				{
-					webView.takeSnapshot(with: nil) { image, error in
-						if let image = image {
-							self.dockTileImageView.image = image
-							DispatchQueue.main.async {
-								self.window?.dockTile.contentView = self.dockTileImageView
-								Swift.print("webvUpdate")
+					else
+					{
+						webView.takeSnapshot(with: nil) { image, error in
+							guard nil == error else {
+								Swift.print("webvUpdate: \(String(describing: error?.localizedDescription))")
+								return
+							}
+							if let image = image {
+								self.dockTileImageView.image = image.resize(size: tile.bounds.size)
+								window.dockTile.contentView = self.dockTileImageView
+								Swift.print("webvUpdate: \(image.alignmentRect)")
 							}
 						}
 					}

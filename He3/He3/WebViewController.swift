@@ -398,15 +398,9 @@ class MyWebView : WKWebView {
                 Swift.print("Yoink, unable to sandbox \(url)")
                 return false
             }
-            let baseURL = url///appDelegate.authenticateBaseURL(url)
+            let baseURL = appDelegate.authenticateBaseURL(url)
 			
-			if ["hpl",k.hpl,"hpi",k.hpi].contains(url.pathExtension) {
-				return appDelegate.openURLInNewWindow(url, context: self.window)
-			}
-			else
-			{
-				return self.loadFileURL(url, allowingReadAccessTo: baseURL) != nil
-			}
+			return self.loadFileURL(url, allowingReadAccessTo: baseURL) != nil
         }
         else
         if self.load(URLRequest(url: url)) != nil {
@@ -1260,6 +1254,8 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
             injectionTime: .atDocumentStart, forMainFrameOnly: false)
         controller.addUserScript(cookieChangeScript)
         controller.add(self, name: "updateCookies")
+		
+		clear()
     }
     /*
     @objc func avPlayerView(_ note: NSNotification) {
@@ -1304,7 +1300,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
 		loadingIndicator.center(view)
 		viewLayoutDone = true
     }
-
+/*
     override func viewWillAppear() {
         super.viewWillAppear()
 
@@ -1338,7 +1334,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
         {
             clear()
         }
-    }
+    }*/
     
 	var viewAppeared = false
     override func viewDidAppear() {
@@ -1392,7 +1388,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
 
         setupTrackingAreas(true)
     }
-    
+
     override func viewWillDisappear() {
         super .viewWillDisappear()
         

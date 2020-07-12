@@ -395,7 +395,14 @@ class Document : NSDocument {
 		case .playitem, .playlist:
             try super.read(from: url, ofType: typeName)
 
-        default:
+		default:
+			let wvc = windowControllers.first?.contentViewController as! WebViewController
+            let baseURL = appDelegate.authenticateBaseURL(url)
+			
+			if nil == wvc.webView.loadFileURL(url, allowingReadAccessTo: baseURL) {
+				Swift.print("read? \(url.absoluteString)")
+			}
+						
 			if let dict = defaults.dictionary(forKey: url.absoluteString) {
 				restoreSettings(with: dict)
 			}
