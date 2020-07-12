@@ -362,14 +362,13 @@ class MyWebView : WKWebView {
         guard let url = original.url else { return super.load(original) }
         Swift.print("load(_:Request) <= \(request)")
         
-        let urlDomain = url.host
         let requestIsSecure = url.scheme == "https"
         var cookies = [HTTPCookie]()
 
         //  Fetch legal, relevant, authorized cookies
         for cookie in HTTPCookieStorage.shared.cookies(for: url) ?? [] {
             if cookie.name.contains("'") { continue } // contains a "'"
-            if !cookie.domain.hasSuffix(urlDomain!) { continue }
+			if let urlDomain = url.host, !cookie.domain.hasSuffix(urlDomain) { continue }
             if cookie.isSecure && !requestIsSecure { continue }
             cookies.append(cookie)
         }
