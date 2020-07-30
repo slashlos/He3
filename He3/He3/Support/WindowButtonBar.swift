@@ -1,6 +1,6 @@
 //
 //  WindowButtonBar.swift
-//  He3
+//  He3 (Helium 3)
 //
 //  Created by Carlos D. Santiago on 12/13/18
 //  Copyright © 2018 CD M Santiaog. All rights reserved.
