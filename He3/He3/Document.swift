@@ -396,13 +396,15 @@ class Document : NSDocument {
             try super.read(from: url, ofType: typeName)
 
 		default:
-			let wvc = windowControllers.first?.contentViewController as! WebViewController
-            let baseURL = appDelegate.authenticateBaseURL(url)
-			
-			if nil == wvc.webView.loadFileURL(url, allowingReadAccessTo: baseURL) {
-				Swift.print("read? \(url.absoluteString)")
+			if k.file == url.scheme {
+				let wvc = windowControllers.first?.contentViewController as! WebViewController
+				let baseURL = appDelegate.authenticateBaseURL(url)
+				
+				if nil == wvc.webView.loadFileURL(url, allowingReadAccessTo: baseURL) {
+					Swift.print("read? \(url.absoluteString)")
+				}
 			}
-						
+			
 			if let dict = defaults.dictionary(forKey: url.absoluteString) {
 				restoreSettings(with: dict)
 			}
