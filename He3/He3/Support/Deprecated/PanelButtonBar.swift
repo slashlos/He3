@@ -49,18 +49,12 @@ class PanelButton : NSButton {
 	}
 	
 	@objc func onClick () {
-		if (type == NSWindow.ButtonType.closeButton), let target = self.target, let action = self.action {
-			_ = target.perform(action, with: self)
-		}
-		else
-		{
-			if (type == NSWindow.ButtonType.zoomButton) {
-				self.window?.performZoom(self);
-			} else if (type == NSWindow.ButtonType.miniaturizeButton) {
-				self.window?.performMiniaturize(self);
-			} else if (type == NSWindow.ButtonType.closeButton) {
-				self.window?.performClose(self);
-			}
+		if (type == NSWindow.ButtonType.zoomButton) {
+			self.window?.zoom(self);
+		} else if (type == NSWindow.ButtonType.miniaturizeButton) {
+			self.window?.miniaturize(self);
+		} else if (type == NSWindow.ButtonType.closeButton) {
+			self.window?.orderOut(self);
 		}
 	}
 	
