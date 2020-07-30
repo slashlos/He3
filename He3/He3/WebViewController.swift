@@ -1300,7 +1300,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
 		loadingIndicator.center(view)
 		viewLayoutDone = true
     }
-/*
+
     override func viewWillAppear() {
         super.viewWillAppear()
 
@@ -1334,7 +1334,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
         {
             clear()
         }
-    }*/
+    }
     
 	var viewAppeared = false
     override func viewDidAppear() {
