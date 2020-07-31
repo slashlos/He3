@@ -1108,10 +1108,10 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
 
     var trackingTag: NSView.TrackingRectTag? {
         get {
-            return (self.webView.window?.windowController as? HeliumController)?.viewTrackingTag
+            return (self.webView.window?.windowController as? HeliumController)?.wholeTrackingTag
         }
         set (value) {
-            (self.webView.window?.windowController as? HeliumController)?.viewTrackingTag = value
+            (self.webView.window?.windowController as? HeliumController)?.wholeTrackingTag = value
         }
     }
 
@@ -1891,7 +1891,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
                         {
                             title = appDelegate.AppName
                         }
-                        self.heliumPanelController?.hoverBar?.superview?.toolTip = toolTip.removingPercentEncoding
+						self.heliumPanelController?.titleView?.toolTip = toolTip.removingPercentEncoding
 
                         if let track = AVURLAsset(url: url, options: nil).tracks.first {
 

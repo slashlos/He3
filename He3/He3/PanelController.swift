@@ -187,44 +187,7 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
     }
 
     // MARK: Window lifecycle
-    var hoverBar : PanelButtonBar?
-    var titleDragButton : TitleDragButton?
-    
-    fileprivate func configureTitleDrag() {
-        panel.standardWindowButton(.closeButton)?.image = NSImage.init()
-        
-        //  Overlay title with our drag title button if needed
-        var dragFrame = titleView?.frame
-        dragFrame?.size.height += 2
-        dragFrame?.size.width += 2
-        titleDragButton = TitleDragButton.init(frame: dragFrame!)
-        self.contentViewController?.view.addSubview(titleDragButton!)
-        titleDragButton?.top((titleDragButton?.superview)!)
-        titleDragButton?.addSubview(titleView!)
-        titleView?.fit(titleDragButton!)
-        titleDragButton?.title = ""
- 
-        NSAnimationContext.runAnimationGroup({ (context) in
-            context.duration = mouseIdle ? 1.0 : 0.2
-
-            panel.animator().titleVisibility = (autoHideTitlePreference != .never) ? mouseOver ? .visible : .hidden : .visible
-            titleDragButton?.animator().layer?.backgroundColor = mouseOver ? homeColor.cgColor : NSColor.clear.cgColor
-            titleDragButton?.isTransparent = mouseOver
-            titleDragButton?.animator().isHidden = !mouseOver
-            titleDragButton?.animator().isBordered = mouseOver
-        })
- 
-        // place the hover bar
-        hoverBar = PanelButtonBar.init(frame: NSMakeRect(5, -3, 80, 19))
-        self.titleView?.superview?.addSubview(hoverBar!)
-        
-        //  we want our own hover bar of buttons (no mini or zoom was visible)
-        if let panelButton = hoverBar!.closeButton, let windowButton = window?.standardWindowButton(.closeButton) {
-            panelButton.target = windowButton.target
-            panelButton.action = windowButton.action
-        }
-    }
-    
+   
     override func windowDidLoad() {
         super.windowDidLoad()
         
@@ -234,10 +197,16 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
         
         //  We want to allow miniaturizations
         self.panel.styleMask.formUnion(.miniaturizable)
-        configureTitleDrag()
-                
+		
+		//	Make title text stand out?
+		///self.panel.appearance = NSAppearance(named: .vibrantDark)
+		///self.panel.titlebarAppearsTransparent = true
+		///self.panel.backgroundColor = .white
+		
+		//	Monitor title, content inter/intra movements
         setupTrackingAreas(true)
-        
+		installTitleFader(true)
+
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(HeliumController.didBecomeActive),
@@ -370,47 +339,150 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 	}
 	
     // MARK:- Mouse events
-    var closeButton : PanelButton? {
-        get {
-            return self.hoverBar?.closeButton
+	var closeButton : NSButton? {
+		get {
+			return self.window?.standardWindowButton(.closeButton)
+		}
+	}
+	var miniaturizeButton : NSButton? {
+		get {
+			return self.window?.standardWindowButton(.miniaturizeButton)
+		}
+	}
+	var zoomButton : NSButton? {
+		get {
+			return self.window?.standardWindowButton(.zoomButton)
+		}
+	}
+	
+	var titleView : NSView? {
+		get {
+			return self.window?.standardWindowButton(.closeButton)?.superview
+		}
+	}
+	var contentView : NSView? {
+		get {
+			return self.window?.contentView
+		}
+	}
+
+	var wholeTrackingTag: NSView.TrackingRectTag?
+	var titleTrackingTag: NSView.TrackingRectTag?
+	var fadeTimer : Timer? = nil
+	
+	dynamic var priorIdle: Bool = true
+	dynamic var mouseIdle: Bool = false {
+		willSet {
+			priorIdle = mouseIdle
+		}
+	}
+	dynamic var priorOver: Bool = false
+	dynamic var mouseOver: Bool = false {
+		willSet {
+			priorOver = mouseOver
+		}
+		didSet {
+			mouseIdle = false
+		}
+	}
+	
+	func setupTrackingAreas(_ establish : Bool) {
+		guard let window = self.window, let content = contentView  else { return }
+		
+		if let tag = wholeTrackingTag {
+			content.removeTrackingRect(tag)
+			wholeTrackingTag = nil
+		}
+		if let tag = titleTrackingTag {
+			content.removeTrackingRect(tag)
+			titleTrackingTag = nil
+		}
+		
+		if establish {
+			let size = window.frame.size
+			let whole = NSRect(x:0,y:0,width:size.width,height:size.height)
+			wholeTrackingTag = content.addTrackingRect(whole, owner: self, userData: nil, assumeInside: false)
+		}
+	}
+	
+	fileprivate func monitoringMouseEvents() -> Bool {
+		return autoHideTitlePreference != .never || translucencyPreference != .never
+	}
+	
+	fileprivate func installTitleFader(_ fadeNow: Bool = false) {
+		guard autoHideTitlePreference != .never else {
+			NSAnimationContext.runAnimationGroup({ (context) in
+				context.duration = 0.01
+				
+				self.titleView?.animator().isHidden = false
+				self.window?.animator().titleVisibility = .visible
+			})
+			return
+		}
+
+		if fadeNow {
+			NSAnimationContext.runAnimationGroup({ (context) in
+				context.duration = 0.01
+				
+				self.titleView?.animator().isHidden = !self.mouseOver || self.mouseIdle
+				self.window?.animator().titleVisibility = !self.mouseOver || self.mouseIdle ? .hidden : .visible
+			})
+		}
+		//FIXME: do this less often
+        docIconVisibility(autoHideTitlePreference == .never || translucencyPreference == .never)
+		
+		if let timer = fadeTimer, timer.isValid { timer.invalidate(); Swift.print("±timer") }
+		self.fadeTimer = Timer.scheduledTimer(withTimeInterval: 6.49, repeats: false, block: { (timer) in
+			if fadeNow || timer.isValid {
+				self.mouseIdle = true
+				timer.invalidate()
+
+				NSAnimationContext.runAnimationGroup({ (context) in
+					context.duration = fadeNow ? 0.02 : 2.0
+					Swift.print(String(format: "-timer over:%@ idle:%@",
+									   (self.mouseOver ? "Yes" : "No"),
+									   (self.mouseIdle ? "Yes" : "No")))
+					self.titleView?.animator().isHidden = !self.mouseOver || self.mouseIdle
+					self.window?.animator().titleVisibility = !self.mouseOver || self.mouseIdle ? .hidden : .visible
+				})
+			}
+		})
+		if let timer = self.fadeTimer { RunLoop.current.add(timer, forMode: .common); Swift.print("+timer") }
+	}
+	
+	override func mouseEntered(with event: NSEvent) {
+        if event.modifierFlags.contains(NSEvent.ModifierFlags.shift) {
+            NSApp.activate(ignoringOtherApps: true)
         }
-    }
-    var miniaturizeButton : PanelButton? {
-        get {
-            return self.hoverBar?.miniaturizeButton
-        }
-    }
-    var zoomButton : PanelButton? {
-        get {
-            return self.hoverBar?.zoomButton
-        }
-    }
-    var closeTrackingTag: NSView.TrackingRectTag?
-    var miniTrackingTag:  NSView.TrackingRectTag?
-    var zoomTrackingTag:  NSView.TrackingRectTag?
-    var viewTrackingTag:  NSView.TrackingRectTag?
-    var titleTrackingTag: NSView.TrackingRectTag?
-    var titleView : NSView? {
-        get {
-            return self.window?.standardWindowButton(.closeButton)?.superview
-        }
-    }
-    func setupTrackingAreas(_ establish : Bool) {
-        if let tag = closeTrackingTag {
-            closeButton?.removeTrackingRect(tag)
-            closeTrackingTag = nil
-        }
-        if let tag = titleTrackingTag {
-            titleView?.removeTrackingRect(tag)
-            titleTrackingTag = nil
-        }
-        if establish {
-            closeTrackingTag = closeButton?.addTrackingRect((closeButton?.bounds)!, owner: self, userData: nil, assumeInside: false)
-            miniTrackingTag = miniaturizeButton?.addTrackingRect((miniaturizeButton?.bounds)!, owner: self, userData: nil, assumeInside: false)
-            zoomTrackingTag = zoomButton?.addTrackingRect((zoomButton?.bounds)!, owner: self, userData: nil, assumeInside: false)
-            titleTrackingTag = titleView?.addTrackingRect((titleView?.bounds)!, owner: self, userData: nil, assumeInside: false)
-        }
-    }
+
+		guard monitoringMouseEvents() else { return }
+
+		Swift.print("+Over")
+		self.mouseOver = true
+		
+		installTitleFader(true)
+	}
+	
+	override func mouseExited(with event: NSEvent) {
+		guard monitoringMouseEvents() else { return }
+
+		Swift.print("-Over")
+		self.mouseOver = false
+		
+		installTitleFader(true)
+	}
+	
+	override func mouseMoved(with event: NSEvent) {
+		guard monitoringMouseEvents() && mouseIdle else { return }
+
+		Swift.print(String(format: "+Moved over:%@ idle:%@",
+						   (self.mouseOver ? "Yes" : "No"),
+						   (self.mouseIdle ? "Yes" : "No")))
+		guard mouseIdle else { return }
+		self.mouseIdle = false
+		
+		installTitleFader(true)
+	}
 
     // MARK:- Dragging
     func draggingSession(_ session: NSDraggingSession, sourceOperationMaskFor context: NSDraggingContext) -> NSDragOperation {
@@ -604,74 +676,6 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
         return self.workQueue
     }
     
-    var fadeTimer : Timer? = nil
-    override func mouseEntered(with theEvent: NSEvent) {
-        if theEvent.modifierFlags.contains(NSEvent.ModifierFlags.shift) {
-            NSApp.activate(ignoringOtherApps: true)
-        }
-        let tag = theEvent.trackingNumber
-        
-        if let closeTag = self.closeTrackingTag, let miniTag = self.miniTrackingTag, let zoomTag = zoomTrackingTag/*, let viewTag = self.viewTrackingTag*/ {
-            
-            ///Swift.print(String(format: "%@ entered", (viewTag == tag ? "view" : "button")))
-
-            switch tag {
-            case closeTag:
-                closeButton?.isMouseOver = true
-                return
-            case miniTag:
-                miniaturizeButton?.isMouseOver = true
-                return
-            case zoomTag:
-                zoomButton?.isMouseOver = true
-                
-            default:
-                if let hb = self.hoverBar, hb.individualized {
-                    closeButton?.isMouseOver = false
-                    miniaturizeButton?.isMouseOver = false
-                    zoomButton?.isMouseOver = false
-                }
-            }
-        }
-        
-        DispatchQueue.main.async {
-            self.mouseOver = true
-        }
-    }
-    
-    override func mouseExited(with theEvent: NSEvent) {
-        let location : NSPoint = theEvent.locationInWindow
-        let tag = theEvent.trackingNumber
-
-        if let closeTag = self.closeTrackingTag, let miniTag = self.miniTrackingTag, let zoomTag = zoomTrackingTag/*, let viewTag = self.viewTrackingTag*/ {
-
-            ///Swift.print(String(format: "%@ exited", (viewTag == tag ? "view" : "button")))
-
-            switch tag {
-            case closeTag, miniTag, zoomTag:
-                let indy = self.hoverBar?.individualized ?? false
-                if !indy || tag == closeTag { closeButton?.isMouseOver = false }
-                if !indy || tag == miniTag { miniaturizeButton?.isMouseOver = false }
-                if !indy || tag == zoomTag { zoomButton?.isMouseOver = false }
- 
-            default:
-                if let vSize = self.window?.contentView?.bounds.size {
-                
-                    //  If we exit to the title bar area we're still in side
-                    if theEvent.trackingNumber == titleTrackingTag, let tSize = titleView?.bounds.size {
-                        if location.x >= 0.0 && location.x <= (vSize.width) && location.y < ((vSize.height) + tSize.height) {
-                            return
-                        }
-                    }
-                }
-            }
-        }
-        
-        DispatchQueue.main.async {
-            self.mouseOver = false
-        }
-    }
-    
     // MARK:- Floating
     var floatAboveAllPreference: FloatAboveAllPreference {
         get {
@@ -707,49 +711,6 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
         case outside = 1
     }
 
-    // MARK:- Translucency, AutoHideTitle Bar
-    dynamic var priorIdle: Bool = false
-    dynamic var mouseIdle: Bool = false {
-        didSet {
-            mouseStateChanged()
-        }
-    }
-    dynamic var priorOver: Bool = false
-    dynamic var mouseOver: Bool = false {
-        willSet {
-            priorOver = mouseOver
-        }
-        didSet {
-            mouseStateChanged()
-        }
-    }
-    
-    fileprivate func installTitleFader() {
-        let mouseSeen = mouseOver && !mouseIdle
-
-        if let timer = fadeTimer, timer.isValid { timer.invalidate() }
-        self.fadeTimer = Timer.scheduledTimer(withTimeInterval: 3.97, repeats: false, block: { (timer) in
-            if mouseSeen, timer.isValid {
-                timer.invalidate()
-                self.mouseIdle = true
-            }
-        })
-        if let timer = self.fadeTimer { RunLoop.current.add(timer, forMode: .common) }
-    }
-    
-    fileprivate func mouseStateChanged() {
-        let stateChange = priorOver != mouseOver || priorIdle != mouseIdle
-        
-        updateTranslucency()
-        
-        //  view or title entered
-        updateTitleBar(didChange: stateChange)
-        
-        if mouseOver && self.autoHideTitlePreference == .outside {
-            installTitleFader()
-        }
-    }
-    
     fileprivate var alpha: CGFloat = 0.6 { //default
         didSet {
             updateTranslucency()
@@ -1156,9 +1117,6 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
              NSAnimationContext.runAnimationGroup({ (context) in
                  context.duration = 0.1
                  panel.animator().titleVisibility = mouseOver ? .visible : .hidden
-                 titleDragButton?.animator().isBordered = mouseOver
-                 titleDragButton?.animator().layer?.backgroundColor = mouseOver ? homeColor.cgColor : NSColor.clear.cgColor
-                 titleDragButton?.animator().isTransparent = mouseOver
              })
              return
          }
@@ -1169,26 +1127,10 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 
                 if autoHideTitlePreference == .outside {
                     panel.animator().titleVisibility = mouseSeen ? .visible : .hidden
-                    titleDragButton?.animator().isHidden = !mouseSeen
-                    if let url = panel.representedURL, !url.isFileURL, url != homeURL {
-                        titleDragButton?.animator().layer?.backgroundColor = mouseSeen ? homeColor.cgColor : NSColor.clear.cgColor
-                    } else {
-                        titleDragButton?.animator().layer?.backgroundColor = NSColor.clear.cgColor
-                    }
-                    titleDragButton?.animator().isBordered = mouseSeen
-                    titleDragButton?.animator().isTransparent = !mouseSeen
                 }
                 else
                 {
                     panel.animator().titleVisibility = .visible
-                    titleDragButton?.animator().isHidden = false
-                    if let url = panel.representedURL, !url.isFileURL, url != homeURL {
-                        titleDragButton?.animator().layer?.backgroundColor = mouseSeen ? homeColor.cgColor : NSColor.clear.cgColor
-                    } else {
-                        titleDragButton?.animator().layer?.backgroundColor = NSColor.clear.cgColor
-                    }
-                    titleDragButton?.animator().isBordered = true
-                    titleDragButton?.animator().isTransparent = false
                 }
 
             })

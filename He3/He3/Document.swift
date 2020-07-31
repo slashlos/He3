@@ -42,14 +42,6 @@ class Document : NSDocument {
 		//	centered atop the close button as a red "dot".
         return false
     }
-    override func updateChangeCount(_ change: NSDocument.ChangeType) {
-        super.updateChangeCount(change)
-        
-        //  Update UI (red dot in close button) immediately
-        if let hpc = he3PanelController, let hoverBar = hpc.hoverBar {
-            hoverBar.closeButton?.needsDisplay = true
-        }
-    }
     var docController : DocumentController {
         get {
             return NSDocumentController.shared as! DocumentController
