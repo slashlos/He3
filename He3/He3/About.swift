@@ -103,6 +103,7 @@ class AboutBoxController : NSViewController {
 		default:
 			let creditsString = NSAttributedString.string(fromAsset: credits[AboutBoxController.creditState])
 			self.creditsField.textStorage?.setAttributedString(creditsString)
+			self.creditsField.textColor = .textColor
 			///creditTabView.selectTabViewItem(at: 1)
 		}
     }
