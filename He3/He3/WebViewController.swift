@@ -1308,7 +1308,9 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
         if let document = self.document, let url = document.fileURL {
 			if url != webView.url {
 				//	Initially, but after window restoration, restore saved frame
-				if let window = self.view.window, !NSEqualRects(window.frame, document.settings.rect.value) {
+				if let window = self.view.window,
+					!NSEqualRects(window.frame, document.settings.rect.value),
+					!NSEqualSizes(NSZeroSize, document.settings.rect.value.size) {
 					window.setFrame(document.settings.rect.value, display: true)
 				}
 				
