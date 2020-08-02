@@ -248,13 +248,13 @@ let sameWindow : ViewOptions = []
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         switch CLLocationManager.authorizationStatus() {
         case .notDetermined:
-            Swift.print("location notDetermined")
+            print("location notDetermined")
             
         case .restricted:
-            Swift.print("location restricted")
+            print("location restricted")
             
         case .denied:
-            Swift.print("location denied")
+            print("location denied")
             
         case .authorizedWhenInUse:
             print("location authorizedWhenInUse")
@@ -388,10 +388,10 @@ let sameWindow : ViewOptions = []
                         }
                         else
                         {
-                            Swift.print("unknown search \(playitem)")
+                            print("unknown search \(playitem)")
                         }
                     }
-                    Swift.print("\(self._webSearches!.count) search(es) restored")
+                    print("\(self._webSearches!.count) search(es) restored")
                 }
             }
             return _webSearches!
@@ -435,7 +435,7 @@ let sameWindow : ViewOptions = []
 	
     @objc internal func menuClicked(_ sender: AnyObject) {
         if let menuItem = sender as? NSMenuItem {
-            Swift.print("Menu '\(menuItem.title)' clicked")
+            print("Menu '\(menuItem.title)' clicked")
         }
     }
     internal func syncAppMenuVisibility() {
@@ -596,7 +596,7 @@ let sameWindow : ViewOptions = []
     
 	func doOpenFile(fileURL: URL, fromWindow: NSWindow? = nil) -> Bool {
         if isSandboxed != storeBookmark(url: fileURL) {
-            Swift.print("Yoink, unable to sandbox \(fileURL)")
+            print("Yoink, unable to sandbox \(fileURL)")
             return false
         }
         
@@ -692,7 +692,7 @@ let sameWindow : ViewOptions = []
         defer { os_signpost(.end, log: AppDelegate.poi, name: "openURLInNewWindow") }
 
         if url.isFileURL, isSandboxed != storeBookmark(url: url) {
-            Swift.print("Yoink, unable to sandbox \(url)")
+            print("Yoink, unable to sandbox \(url)")
             return false
         }
         
@@ -785,7 +785,7 @@ let sameWindow : ViewOptions = []
 		let key = String(format: "search%d", group)
 
 		defaults.set(index as Any, forKey: key)
-//        Swift.print("\(key) -> \(index)")
+//        print("\(key) -> \(index)")
 	}
 	
 	@objc @IBOutlet var prefsWindow: NSWindow?
@@ -831,7 +831,7 @@ let sameWindow : ViewOptions = []
                 }
                 return
             }
-            Swift.print("who are we? \(String(describing: window.contentViewController))")
+            print("who are we? \(String(describing: window.contentViewController))")
         }
     }
 	
@@ -875,7 +875,7 @@ let sameWindow : ViewOptions = []
     }
     @objc @IBAction func redo(_ sender: Any) {
 		if let window = NSApp.keyWindow, let undo = window.undoManager, undo.canRedo {
-            Swift.print("redo:");
+            print("redo:");
 		}
 	}
     
@@ -891,7 +891,7 @@ let sameWindow : ViewOptions = []
 
     @objc @IBAction func undo(_ sender: Any) {
         if let window = NSApp.keyWindow, let undo = window.undoManager, undo.canUndo {
-            Swift.print("undo:");
+            print("undo:");
         }
 	}
     
@@ -1056,7 +1056,7 @@ let sameWindow : ViewOptions = []
         WKWebsiteDataStore.default().removeData(ofTypes: websiteDataTypes as! Set<String>, modifiedSince: date, completionHandler:{ })
         
         //  Clear any snapshots etc URL sandbox resources
-		Swift.print(eraseBookmarks() ? "All bookmark(s) were cleared" : "Yoink erasing bookmarks")
+		print(eraseBookmarks() ? "All bookmark(s) were cleared" : "Yoink erasing bookmarks")
     }
     
     let toHMS = hmsTransformer()
@@ -1078,14 +1078,14 @@ let sameWindow : ViewOptions = []
         
         //  Wipe out defaults when OPTION+SHIFT is held down at startup
         if flags.contains([NSEvent.ModifierFlags.shift,NSEvent.ModifierFlags.option]) {
-            Swift.print("shift+option at start")
+            print("shift+option at start")
             resetDefaults()
             NSSound(named: "Purr")?.play()
         }
         
         //  Don't reopen docs when OPTION is held down at startup
         if flags.contains(NSEvent.ModifierFlags.option) {
-            Swift.print("option at start")
+            print("option at start")
             disableDocumentReOpening = true
         }
         
@@ -1120,14 +1120,14 @@ let sameWindow : ViewOptions = []
         //  Load sandbox bookmark url when necessary
         if self.isSandboxed {
             if !self.loadBookmarks() {
-                Swift.print("Yoink, unable to load bookmarks")
+                print("Yoink, unable to load bookmarks")
             }
             else
             {
                 //  1st time gain access to the ~/Deskop
                 let url = URL.init(fileURLWithPath: UserSettings.SnapshotsURL.value, isDirectory: true)
                 if let data = bookmarks[url], fetchBookmark((key: url, value: data)) {
-                    Swift.print ("snapshotURL \(url.absoluteString)")
+                    print ("snapshotURL \(url.absoluteString)")
                     desktopData = data
                 }
                 else
@@ -1251,10 +1251,10 @@ let sameWindow : ViewOptions = []
                         }
                         else
                         {
-                            Swift.print("unknown history \(playitem)")
+                            print("unknown history \(playitem)")
                         }
                     }
-                    Swift.print("\(self._histories!.count) history(s) restored")
+                    print("\(self._histories!.count) history(s) restored")
                 }
             }
             return _histories!
@@ -1284,7 +1284,7 @@ let sameWindow : ViewOptions = []
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
         let reopenMessage = disableDocumentReOpening ? "do not reopen doc(s)" : "reopen doc(s)"
         let hasVisibleDocs = flag ? "has doc(s)" : "no doc(s)"
-        Swift.print("applicationShouldHandleReopen: \(reopenMessage) docs:\(hasVisibleDocs)")
+        print("applicationShouldHandleReopen: \(reopenMessage) docs:\(hasVisibleDocs)")
 		if !flag && nil == NSApp.keyWindow { return !applicationOpenUntitledFile(sender) }
         return !disableDocumentReOpening || flag
     }
@@ -1324,22 +1324,22 @@ let sameWindow : ViewOptions = []
 /*
             print("control-option-command keys are pressed")
             if self.hiddenWindows.count > 0 {
-//                Swift.print("show all windows")
+//                print("show all windows")
                 for frame in self.hiddenWindows.keys {
                     let dict = self.hiddenWindows[frame] as! Dictionary<String,Any>
                     let alpha = dict["alpha"]
                     let win = dict["window"] as! NSWindow
-//                    Swift.print("show \(frame) to \(String(describing: alpha))")
+//                    print("show \(frame) to \(String(describing: alpha))")
                     win.alphaValue = alpha as! CGFloat
                     if let path = dict["name"], let actions = itemActions[path as! String]
                     {
                         if let action = (actions as! Dictionary<String,Any>)["mute"] {
                             let item = (action as! Dictionary<String,Any>)["item"] as! NSMenuItem
-                            Swift.print("action \(item)")
+                            print("action \(item)")
                         }
                         if let action = (actions as! Dictionary<String,Any>)["play"] {
                             let item = (action as! Dictionary<String,Any>)["item"] as! NSMenuItem
-                            Swift.print("action \(item)")
+                            print("action \(item)")
                         }
                     }
                 }
@@ -1347,7 +1347,7 @@ let sameWindow : ViewOptions = []
             }
             else
             {
-//                Swift.print("hide all windows")
+//                print("hide all windows")
                 for win in NSApp.windows {
                     let frame = NSStringFromRect(win.frame)
                     let alpha = win.alphaValue
@@ -1358,7 +1358,7 @@ let sameWindow : ViewOptions = []
                         dict["name"] = url.absoluteString
                     }
                     self.hiddenWindows[frame] = dict
-//                    Swift.print("hide \(frame) to \(String(describing: alpha))")
+//                    print("hide \(frame) to \(String(describing: alpha))")
                     win.alphaValue = 0.01
                 }
             }
@@ -1422,7 +1422,7 @@ let sameWindow : ViewOptions = []
         
         //  If started via login item, launch the login items playlist
         if launchedAsLogInItem {
-            Swift.print("We were launched as a startup item")
+            print("We were launched as a startup item")
         }
         
         //  Developer extras off by default
@@ -1439,7 +1439,7 @@ let sameWindow : ViewOptions = []
                 if urlString == UserSettings.HomePageURL.value { continue }
                 guard let url = URL.init(string: urlString ) else { continue }
                 _ = self.openURLInNewWindow(url)
-                Swift.print("restore \(item)")
+                print("restore \(item)")
             }
         }
         
@@ -1465,7 +1465,7 @@ let sameWindow : ViewOptions = []
         
         //  Save sandbox bookmark urls when necessary
         if isSandboxed != saveBookmarks() {
-            Swift.print("Yoink, unable to save booksmarks")
+            print("Yoink, unable to save booksmarks")
         }
 
         // Save play;sits to defaults - no maximum
@@ -1491,10 +1491,10 @@ let sameWindow : ViewOptions = []
             temp = Array<String>()
             for document in NSApp.orderedDocuments {
                 guard let webURL = document.fileURL, !webURL.isFileURL else {
-                    Swift.print("skip \(String(describing: document.fileURL?.absoluteString))")
+                    print("skip \(String(describing: document.fileURL?.absoluteString))")
                     continue
                 }
-                Swift.print("keep \(String(describing: document.fileURL?.absoluteString))")
+                print("keep \(String(describing: document.fileURL?.absoluteString))")
 				
 				//	take a final reading on window and save
 				if let url = document.fileURL, let window = document.windowControllers.first?.window {
@@ -1592,7 +1592,7 @@ let sameWindow : ViewOptions = []
         //  if not finished bump plays for this item
         if fini {
             //  move to next item in playlist
-            Swift.print("move to next item in playlist")
+            print("move to next item in playlist")
         }
         else
         {
@@ -1764,13 +1764,13 @@ let sameWindow : ViewOptions = []
                     
                     urlString = UrlHelpers.ensureScheme(urlString)
                     guard UrlHelpers.isValidURL(urlString: urlString), let searchURL = URL.init(string: urlString) else {
-                        Swift.print("invalid: \(urlString)")
+                        print("invalid: \(urlString)")
                         return
                     }
 
                     self.addWebSearcheURL(newUrlString!, searchURL: searchURL)
                     acceptHandler(newWindow,searchURL)
-                    Swift.print("search \(rawString)")
+                    print("search \(rawString)")
 
                 default:
                     return
@@ -1790,13 +1790,13 @@ let sameWindow : ViewOptions = []
 
                 urlString = UrlHelpers.ensureScheme(urlString)
                 guard UrlHelpers.isValidURL(urlString: urlString), let searchURL = URL.init(string: urlString) else {
-                    Swift.print("invalid: \(urlString)")
+                    print("invalid: \(urlString)")
                     return
                 }
                 
                 self.addWebSearcheURL(newUrlString!, searchURL: searchURL)
                 acceptHandler(newWindow,searchURL)
-                Swift.print("search \(rawString)")
+                print("search \(rawString)")
 
             default:// NSAlertSecondButtonReturn:
                 return
@@ -1901,23 +1901,26 @@ let sameWindow : ViewOptions = []
     // Called when the App opened via URL.
     @objc func handleURLEvent(_ event: NSAppleEventDescriptor, withReply reply: NSAppleEventDescriptor) {
 		guard let keyDirectObject = event.paramDescriptor(forKeyword: AEKeyword(keyDirectObject)),
-            let rawString = keyDirectObject.stringValue else {
+            let rawString = keyDirectObject.stringValue,
+			let rawURL = URL.init(string: rawString) else {
                 return print("No valid URL to handle")
         }
 
-        //  strip <scheme>://
-		let length = String(k.scheme + "://").count
-        let index = rawString.index(rawString.startIndex, offsetBy: length)
-		let path = String(rawString.suffix(from: index))
-
-		if openFileInNewWindow(URL.init(fileURLWithPath: path)) {
-			return
+        //  try for a local file first
+		let fileURL = URL.init(fileURLWithPath: rawURL.path)
+		if FileManager.default.fileExists(atPath: fileURL.path) {
+			if openFileInNewWindow(fileURL) {
+				return
+			}
 		}
 		
-		let scheme = UserSettings.PromoteHTTPS.value ? k.https : k.http
-		if let url = URL.init(string: scheme + "//:" + path), !openURLInNewWindow(url) {
-			Swift.print("unable to handle web URL path \(url.absoluteString)")
-			return
+		let components = NSURLComponents.init(string: rawString)
+		components?.scheme = UserSettings.PromoteHTTPS.value ? k.https : k.http
+
+		if let url = components?.url {
+			if openURLInNewWindow(url) {
+				return
+			}
 		}
 		
 		userAlertMessage("Unable to handleURLEvent", info: rawString)
@@ -1949,12 +1952,12 @@ let sameWindow : ViewOptions = []
 		} catch { }
 
 		guard fileManager.fileExists(atPath: path) else {
-			Swift.print("Yoink exists? \(path)")
+			print("Yoink exists? \(path)")
 			return false
 		}
 
 		guard let url = URL(string: path.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!) else {
-			Swift.print("Yoink encoding URL\(path)")
+			print("Yoink encoding URL\(path)")
 			return false
 		}
 
@@ -1976,7 +1979,7 @@ let sameWindow : ViewOptions = []
         
         //  Catch OAuth2 authentications
         let bits = url.pathComponents
-        Swift.print("bits\n\(bits)")
+        print("bits\n\(bits)")
         return true
     }
 
@@ -2014,7 +2017,7 @@ let sameWindow : ViewOptions = []
                     }
                     else
                     {
-                        Swift.print("Yoink, unable to sandbox base \(authURL)")
+                        print("Yoink, unable to sandbox base \(authURL)")
                     }
                 }
             }
@@ -2077,7 +2080,7 @@ let sameWindow : ViewOptions = []
 			let data = try Data.init(contentsOf: url)
 			bookmarks = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as! [URL : Data]
 		} catch let error {
-			Swift.print("unarchiveObject(withFile:) \(error.localizedDescription)")
+			print("unarchiveObject(withFile:) \(error.localizedDescription)")
 		}
 
         var iterator = bookmarks.makeIterator()
@@ -2094,15 +2097,15 @@ let sameWindow : ViewOptions = []
 		{
 			bookmark.key.stopAccessingSecurityScopedResource()
 			bookmarks.removeValue(forKey: bookmark.key)
-            Swift.print ("† \(bookmark.key)")
+            print ("† \(bookmark.key)")
 			erased += 1
         }
 		
 		do {
 			try fm.removeItem(atPath: url.path)
 		} catch let error {
-			Swift.print(error.localizedDescription)
-			Swift.print(url.path)
+			print(error.localizedDescription)
+			print(url.path)
 		}
 		
         return erased == tally
@@ -2124,7 +2127,7 @@ let sameWindow : ViewOptions = []
 			let data = try Data.init(contentsOf: url)
 			bookmarks = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as! [URL : Data]
 		} catch let error {
-			Swift.print("unarchiveObject(withFile:) \(error.localizedDescription)")
+			print("unarchiveObject(withFile:) \(error.localizedDescription)")
 			return false
 		}
 				
@@ -2155,7 +2158,7 @@ let sameWindow : ViewOptions = []
 			return true
 		}
 		catch let error {
-			Swift.print("NSKeyedArchiver: \(error.localizedDescription)")
+			print("NSKeyedArchiver: \(error.localizedDescription)")
 			return false
 		}
     }
@@ -2167,7 +2170,7 @@ let sameWindow : ViewOptions = []
         //  Peek to see if we've seen this key before
         if let data = bookmarks[url] {
             if self.fetchBookmark((key: url, value: data)) {
-                Swift.print ("= \(url.absoluteString)")
+                print ("= \(url.absoluteString)")
                 return true
             }
         }
@@ -2189,7 +2192,7 @@ let sameWindow : ViewOptions = []
 													   url.absoluteString.removingPercentEncoding!))
 				}
 			}
-            Swift.print ("Error storing bookmark: \(url)")
+            print ("Error storing bookmark: \(url)")
             return false
         }
     }
@@ -2229,22 +2232,22 @@ let sameWindow : ViewOptions = []
         }
         catch let error
         {
-            Swift.print("! \(bookmark.key) \n\(error.localizedDescription)")
+            print("! \(bookmark.key) \n\(error.localizedDescription)")
             return false
         }
         
         guard let url = restoredUrl else {
-            Swift.print ("? \(bookmark.key)")
+            print ("? \(bookmark.key)")
             return false
         }
         
         if isStale {
-            Swift.print ("≠ \(bookmark.key)")
+            print ("≠ \(bookmark.key)")
             return false
         }
         
         let fetch = url.startAccessingSecurityScopedResource()
-        Swift.print ("\(fetch ? "•" : "º") \(bookmark.key)")
+        print ("\(fetch ? "•" : "º") \(bookmark.key)")
         return fetch
     }
 	
@@ -2253,7 +2256,7 @@ let sameWindow : ViewOptions = []
 
 		if let data = bookmarks[url] {
 			if self.fetchBookmark((key: url, value: data)) {
-                Swift.print ("ß \(url.absoluteString)")
+                print ("ß \(url.absoluteString)")
 				return true
 			}
 		}

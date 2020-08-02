@@ -340,7 +340,7 @@ extension URL {
             
             defaults.set(dict, forKey: name)
         } catch let error as NSError {
-            Swift.print("attributedString -> data: \(error.code):\(error.localizedDescription): \(text)")
+            print("attributedString -> data: \(error.code):\(error.localizedDescription): \(text)")
         }
     }
 }

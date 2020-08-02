@@ -95,12 +95,12 @@ class He3Tests: XCTestCase {
 		let playlistFileURL = URL.init(fileURLWithPath: "/Users/slashlos/GitHub/He3/He3/He3Tests/PlayList.h3l")
 		do {
 			try (playlistFileURL as NSURL).getResourceValue(&playlistTypeUTI, forKey: URLResourceKey.typeIdentifierKey)
-			Swift.print("playlistTypeUTI \(String(describing: playlistTypeUTI))")
+			print("playlistTypeUTI \(String(describing: playlistTypeUTI))")
 			let playlistUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, playlistFileURL.pathExtension as CFString, nil)
-			Swift.print("testUTI \(String(describing: playlistUTI))")
+			print("testUTI \(String(describing: playlistUTI))")
 		}
 		catch let error {
-			Swift.print("\(error.localizedDescription)")
+			print("\(error.localizedDescription)")
 		}
 	
     }
@@ -112,12 +112,12 @@ class He3Tests: XCTestCase {
 		let playitemFileURL = URL.init(fileURLWithPath: "/Users/slashlos/GitHub/He3/He3/He3Tests/PlayItem.h3i")
 		do {
 			try (playitemFileURL as NSURL).getResourceValue(&playitemTypeUTI, forKey: URLResourceKey.typeIdentifierKey)
-			Swift.print("playitemTypeUTI \(String(describing: playitemTypeUTI))")
+			print("playitemTypeUTI \(String(describing: playitemTypeUTI))")
 			let playitemUTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, playitemFileURL.pathExtension as CFString, nil)
-			Swift.print("testUTI \(String(describing: playitemUTI))")
+			print("testUTI \(String(describing: playitemUTI))")
 		}
 		catch let error {
-			Swift.print("\(error.localizedDescription)")
+			print("\(error.localizedDescription)")
 		}
 	
     }
@@ -135,7 +135,7 @@ class He3Tests: XCTestCase {
 
 		//	show read back our 5; code from restorePlaylists()
 		let rewind = appDelegate.restorePlaylists(t_playlist)
-		Swift.print("\(rewind) returned")
+		print("\(rewind) returned")
 	}
 	
 	func testDescriber(text: String, value: Any) {

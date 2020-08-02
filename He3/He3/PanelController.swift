@@ -311,19 +311,19 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 					if let image = window.contentView?.snapshot {
 						self.dockTileImageView.image = image.resize(size: tile.bounds.size)
 						window.dockTile.contentView = self.dockTileImageView
-						Swift.print("miniUpdate: \(image.alignmentRect)")
+						print("miniUpdate: \(image.alignmentRect)")
 					}
 					else
 					{
 						webView.takeSnapshot(with: nil) { image, error in
 							guard nil == error else {
-								Swift.print("webvUpdate: \(String(describing: error?.localizedDescription))")
+								print("webvUpdate: \(String(describing: error?.localizedDescription))")
 								return
 							}
 							if let image = image {
 								self.dockTileImageView.image = image.resize(size: tile.bounds.size)
 								window.dockTile.contentView = self.dockTileImageView
-								Swift.print("webvUpdate: \(image.alignmentRect)")
+								print("webvUpdate: \(image.alignmentRect)")
 							}
 						}
 					}
@@ -447,7 +447,7 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 				})
 			}
 		})
-		if let timer = self.fadeTimer { RunLoop.current.add(timer, forMode: .common); Swift.print("+timer") }
+		if let timer = self.fadeTimer { RunLoop.current.add(timer, forMode: .common); print("+timer") }
 	}
 	
 	override func mouseEntered(with event: NSEvent) {
@@ -615,7 +615,7 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
     }
     /*
     func writingOptions(forType type: NSPasteboard.PasteboardType, pasteboard: NSPasteboard) -> NSPasteboard.WritingOptions {
-        Swift.print("he3WO type: \(type.rawValue)")
+        print("he3WO type: \(type.rawValue)")
         switch type {
         default:
             return .promised
@@ -628,7 +628,7 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
     }
 
     func pasteboardPropertyList(forType type: NSPasteboard.PasteboardType) -> Any? {
-        Swift.print("ppl type: \(type.rawValue)")
+        print("ppl type: \(type.rawValue)")
         switch type {
         case .rowDragType:
             return KeyedArchiver.archivedData(withRootObject: promiseURL.absoluteString as NSString)
@@ -640,7 +640,7 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
             return self.promiseURL.absoluteString
             
         default:
-            Swift.print("unknown \(type)")
+            print("unknown \(type)")
             return nil
         }
     }
@@ -662,7 +662,7 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
                                     writePromiseTo url: URL,
                                     completionHandler: @escaping (Error?) -> Void) {
         let urlString = promiseContents
-        Swift.print("WindowDelegate -filePromiseProvider\n \(urlString)")
+        print("WindowDelegate -filePromiseProvider\n \(urlString)")
 
         do {
             try urlString.write(to: url, atomically: true, encoding: .utf8)

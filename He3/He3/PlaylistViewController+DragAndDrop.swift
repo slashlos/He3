@@ -46,7 +46,7 @@ extension PlaylistViewController: NSTableViewDataSource {
             let pboard: NSPasteboard = info.draggingPasteboard
             let items = pboard.pasteboardItems!
 
-            Swift.print("\(String(describing: sourceTableView?.identifier)) draggingUpdate \(items.count) item(s)")
+            print("\(String(describing: sourceTableView?.identifier)) draggingUpdate \(items.count) item(s)")
 
             appDelegate.newViewOptions = appDelegate.getViewOptions
             dragSequenceNo = info.draggingSequenceNumber
@@ -62,7 +62,7 @@ extension PlaylistViewController: NSTableViewDataSource {
 		var dragOperation: NSDragOperation = []
 		let pboard = info.draggingPasteboard
 
-        Swift.print("source \(String(describing: sourceTableView?.identifier))")
+        print("source \(String(describing: sourceTableView?.identifier))")
 		
 		if sourceTableView == tableView {
 			dragOperation = [.move]
@@ -158,8 +158,8 @@ extension PlaylistViewController: NSTableViewDataSource {
 			
 		default:
 			if let view = sourceTableView {
-				Swift.print(String(format: "unknown source view: %p", view))
-				Swift.print(view)
+				print(String(format: "unknown source view: %p", view))
+				print(view)
 				return
 			}
 			else
@@ -190,7 +190,7 @@ extension PlaylistViewController: NSTableViewDataSource {
 
 				//  Unknown files have to be sandboxed, and skip on errors
 				guard isSandboxed == appDelegate.storeBookmark(url: url) else {
-					Swift.print("Yoink, unable to sandbox \(String(describing: url)))")
+					print("Yoink, unable to sandbox \(String(describing: url)))")
 					continue
 				}
 				
@@ -592,7 +592,7 @@ extension PlaylistViewController: NSFilePromiseProviderDelegate {
 			}
 			try (dict as NSDictionary).write(to: url)
 			if url.hideFileExtensionInPath() {
-				Swift.print("provide => \(String(describing: url.absoluteString.removingPercentEncoding))")
+				print("provide => \(String(describing: url.absoluteString.removingPercentEncoding))")
 			}
 			completionHandler(nil)
 		} catch let error {

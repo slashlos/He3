@@ -25,7 +25,7 @@ class DocumentController : NSDocumentController {
 				return doc
             }
         } catch let error {
-			Swift.print("\(error.localizedDescription)")
+			print("\(error.localizedDescription)")
         }
 		
 		doc = try Document.init(contentsOf: contentsURL, ofType: typeName)

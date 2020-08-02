@@ -10,6 +10,16 @@ import Foundation
 import Cocoa
 ///import CommonCrypto
 
+public func print(_ items: Any..., separator: String = " ", terminator: String = "\n") {
+    #if DEBUG
+    var i = items.startIndex
+    repeat {
+        Swift.print(items[i], separator: separator, terminator: i == (items.endIndex - 1) ? terminator : separator)
+        i += 1
+    } while i < items.endIndex
+    #endif
+}
+
 // From https://stackoverflow.com/questions/12837965/converting-nsdictionary-to-xml
 /*
 extension Any {
@@ -70,7 +80,7 @@ extension Array {
                 {
                     xml.append(String(format: "<%@>", value as! CVarArg))
                 }*/
-                Swift.print("value: \(value)")
+                print("value: \(value)")
                 xml.append(toLiteral(value))
             }
         }
@@ -631,7 +641,7 @@ class KeyedArchiver : NSKeyedArchiver {
             return data
         }
         catch let error {
-            Swift.print("KeyedArchiver: \(error.localizedDescription)")
+            print("KeyedArchiver: \(error.localizedDescription)")
             return Data.init()
         }
     }
@@ -642,7 +652,7 @@ class KeyedArchiver : NSKeyedArchiver {
             return true
         }
         catch let error {
-            Swift.print("KeyedArchiver: \(error.localizedDescription)")
+            print("KeyedArchiver: \(error.localizedDescription)")
             return false
         }
     }
@@ -657,7 +667,7 @@ class KeyedUnarchiver : NSKeyedUnarchiver {
             return object
         }
         catch let error {
-            Swift.print("unarchiveObject(with:) \(error.localizedDescription)")
+            print("unarchiveObject(with:) \(error.localizedDescription)")
             return nil
         }
     }
@@ -671,7 +681,7 @@ class KeyedUnarchiver : NSKeyedUnarchiver {
             return object
         }
         catch let error {
-            Swift.print("unarchiveObject(withFile:) \(error.localizedDescription)")
+            print("unarchiveObject(withFile:) \(error.localizedDescription)")
             return nil
         }
     }

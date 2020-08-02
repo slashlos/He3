@@ -49,7 +49,7 @@ class WebBorderView : NSView {
         super.draw(dirtyRect)
 
         self.isHidden = !isReceivingDrag
-//        Swift.print("web borderView drawing \(isHidden ? "NO" : "YES")....")
+//        print("web borderView drawing \(isHidden ? "NO" : "YES")....")
 
         if isReceivingDrag {
             NSColor.selectedKnobColor.set()
@@ -76,7 +76,7 @@ class ProgressIndicator : NSProgressIndicator {
     /*
     override func mouseDown(with event: NSEvent) {
         guard !isHidden else { return }
-        Swift.print("we want to stop something...")
+        print("we want to stop something...")
         
         if let webView : MyWebView = self.superview as? MyWebView, webView.isLoading {
             webView.stopLoading()
@@ -139,7 +139,7 @@ class CacheSchemeHandler : NSObject,WKURLSchemeHandler {
                 text = String(format: "<html><body><pre>%@</pre></body></html>", atrs)
 
             } catch let error as NSError {
-                Swift.print("attributedString <- data: \(error.code):\(error.localizedDescription): \(text)")
+                print("attributedString <- data: \(error.code):\(error.localizedDescription): \(text)")
             }
             
         default:
@@ -174,7 +174,7 @@ class MyWebView : WKWebView {
     }
 
     override class func handlesURLScheme(_ urlScheme: String) -> Bool {
-        Swift.print("handleURLScheme: \(urlScheme)")
+        print("handleURLScheme: \(urlScheme)")
         return [k.scheme,k.caches].contains(urlScheme)
     }
     var selectedText : String?
@@ -215,7 +215,7 @@ class MyWebView : WKWebView {
     
     @objc internal func menuClicked(_ sender: AnyObject) {
         if let menuItem = sender as? NSMenuItem {
-            Swift.print("Menu \(menuItem.title) clicked")
+            print("Menu \(menuItem.title) clicked")
         }
     }
     override func encodeRestorableState(with coder: NSCoder) {
@@ -230,7 +230,7 @@ class MyWebView : WKWebView {
     }
     /*
     override func evaluateJavaScript(_ javaScriptString: String, completionHandler: ((Any?, Error?) -> Void)? = nil) {
-        Swift.print("evaluateJavaScript \(javaScriptString)")
+        print("evaluateJavaScript \(javaScriptString)")
         super.evaluateJavaScript(javaScriptString, completionHandler: completionHandler)
     }
     */
@@ -357,10 +357,10 @@ class MyWebView : WKWebView {
     
     override func load(_ original: URLRequest) -> WKNavigation? {
         guard let request = (original as NSURLRequest).mutableCopy() as? NSMutableURLRequest else {
-            Swift.print("Unable to create mutable request \(String(describing: original.url))")
+            print("Unable to create mutable request \(String(describing: original.url))")
             return super.load(original) }
         guard let url = original.url else { return super.load(original) }
-        Swift.print("load(_:Request) <= \(request)")
+        print("load(_:Request) <= \(request)")
         
         let requestIsSecure = url.scheme == "https"
         var cookies = [HTTPCookie]()
@@ -395,7 +395,7 @@ class MyWebView : WKWebView {
         if url.isFileURL
         {
             if appDelegate.isSandboxed != appDelegate.storeBookmark(url: url) {
-                Swift.print("Yoink, unable to sandbox \(url)")
+                print("Yoink, unable to sandbox \(url)")
                 return false
             }
             let baseURL = appDelegate.authenticateBaseURL(url)
@@ -472,10 +472,10 @@ class MyWebView : WKWebView {
         else
         {
             for item in items {
-                Swift.print("item: \(item)")
+                print("item: \(item)")
             }
         }
-        Swift.print("web shouldAllowDrag -> \(canAccept) \(items.count) item(s)")
+        print("web shouldAllowDrag -> \(canAccept) \(items.count) item(s)")
         return canAccept
     }
     
@@ -495,19 +495,19 @@ class MyWebView : WKWebView {
         if uiDelegate != nil { isReceivingDrag = allow }
         
         let dragOperation = allow ? .copy : NSDragOperation()
-        Swift.print("web draggingEntered -> \(dragOperation) \(items.count) item(s)")
+        print("web draggingEntered -> \(dragOperation) \(items.count) item(s)")
         return dragOperation
     }
     
     override func prepareForDragOperation(_ sender: NSDraggingInfo) -> Bool {
         let allow = shouldAllowDrag(sender)
         sender.animatesToDestination = true
-        Swift.print("web prepareForDragOperation -> \(allow)")
+        print("web prepareForDragOperation -> \(allow)")
         return allow
     }
     
     override func draggingExited(_ sender: NSDraggingInfo?) {
-        Swift.print("web draggingExited")
+        print("web draggingExited")
         if uiDelegate != nil { isReceivingDrag = false }
     }
     
@@ -516,7 +516,7 @@ class MyWebView : WKWebView {
         appDelegate.newViewOptions = appDelegate.getViewOptions
         let sequence = info.draggingSequenceNumber
         if sequence != lastDragSequence {
-            Swift.print("web draggingUpdated -> .copy")
+            print("web draggingUpdated -> .copy")
             lastDragSequence = sequence
         }
         return .copy
@@ -551,7 +551,7 @@ class MyWebView : WKWebView {
             }
 
             for type in pboard.types! {
-                Swift.print("web type: \(type)")
+                print("web type: \(type)")
 
                 switch type {
                 case .URL, .fileURL:
@@ -627,7 +627,7 @@ class MyWebView : WKWebView {
                     }
                     else
                     if let text = item.string(forType: type) {
-                        Swift.print("\(type) text \(String(describing: text))")
+                        print("\(type) text \(String(describing: text))")
                         handled += self.text(text) ? 1 : 0
                     }
                     else
@@ -637,7 +637,7 @@ class MyWebView : WKWebView {
                         }
                         else
                         {
-                            Swift.print("\(type) prop \(String(describing: prop))")
+                            print("\(type) prop \(String(describing: prop))")
                         }
                     }
  
@@ -649,7 +649,7 @@ class MyWebView : WKWebView {
                         }
                     }
                     if let text = item.string(forType: type) {
-                        Swift.print("\(type) text \(String(describing: text))")
+                        print("\(type) text \(String(describing: text))")
                         if text.count > 0 {
                             handled += self.text(text) ? 1 : 0
                         }
@@ -660,20 +660,20 @@ class MyWebView : WKWebView {
                         }
                         else
                         {
-                            Swift.print("\(type) prop \(String(describing: prop))")
+                            print("\(type) prop \(String(describing: prop))")
                         }
                     }
 /*
                 case .filePromise:
-                    Swift.print(".filePromise")
+                    print(".filePromise")
                     break
 
                 case .promise:
-                    Swift.print(".promise")
+                    print(".promise")
                     break
 */
                 default:
-                    Swift.print("unkn: \(type)")
+                    print("unkn: \(type)")
 
 ///                    if let data = item.data(forType: type) {
 ///                        handled += self.data(data) ? 1 : 0
@@ -686,7 +686,7 @@ class MyWebView : WKWebView {
         //  Either way signal we're done
         isReceivingDrag = false
         
-        Swift.print("web performDragOperation -> \(handled == items?.count ? "true" : "false")")
+        print("web performDragOperation -> \(handled == items?.count ? "true" : "false")")
         return handled == items?.count
     }
     
@@ -716,12 +716,12 @@ class MyWebView : WKWebView {
             if let item = menu.item(withTitle: title) {
                 if item.title == "Mute" {
 					mutePressMenuItem = item.copy() as? NSMenuItem
-					Swift.print("capture \(item.title) state: \(item.state) -> target:\(String(describing: item.target)) action:\(String(describing: item.action))")
+					print("capture \(item.title) state: \(item.state) -> target:\(String(describing: item.target)) action:\(String(describing: item.action))")
                 }
                 else
                 {
 					pausePlayPressMenuItem = item.copy() as? NSMenuItem
-					Swift.print("capture \(item.title) state: \(item.state) -> target:\(String(describing: item.target)) action:\(String(describing: item.action))")
+					print("capture \(item.title) state: \(item.state) -> target:\(String(describing: item.target)) action:\(String(describing: item.action))")
 				}
             }
         }
@@ -747,7 +747,7 @@ class MyWebView : WKWebView {
         //  Alter item(s) we want to support
         for title in ["Download Video", "Enter Full Screen", "Open Video in New Window"] {
             if let item = menu.item(withTitle: title) {
-                Swift.print("old: \(title) -> target:\(String(describing: item.target)) action:\(String(describing: item.action)) tag:\(item.tag)")
+                print("old: \(title) -> target:\(String(describing: item.target)) action:\(String(describing: item.action)) tag:\(item.tag)")
                 if item.title.hasPrefix("Download") {
                     item.isHidden = true
                 }
@@ -767,7 +767,7 @@ class MyWebView : WKWebView {
                 {
                     item.isEnabled = false
                 }
-//                Swift.print("new: \(title) -> target:\(String(describing: item.target)) action:\(String(describing: item.action)) tag:\(item.tag)")
+//                print("new: \(title) -> target:\(String(describing: item.target)) action:\(String(describing: item.action)) tag:\(item.tag)")
             }
         }
         
@@ -1188,7 +1188,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
         
         let newDidAddSubviewImplementationBlock: @convention(block) (AnyObject?, NSView) -> Void = { (view: AnyObject!, subview: NSView) -> Void in
             castedOriginalDidAddSubviewImplementation(view, Selector(("didAddsubview:")), subview)
-//            Swift.print("view: \(subview.className)")
+//            print("view: \(subview.className)")
             if subview.className == "AVPlayerView" {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "AVPlayerView"), object: subview)
             }
@@ -1262,7 +1262,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
         print("AV Player \(String(describing: note.object)) will be opened now")
         guard let view = note.object as? NSView else { return }
         
-        Swift.print("player is \(view.className)")
+        print("player is \(view.className)")
     }
     
     @objc func wkFlippedView(_ note: NSNotification) {
@@ -1447,12 +1447,12 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
         let commandKeyDown : NSNumber = notification.object as! NSNumber
         if let window = self.view.window {
             window.isMovableByWindowBackground = commandKeyDown.boolValue
-///            Swift.print(String(format: "CMND %@", commandKeyDown.boolValue ? "v" : "^"))
+///            print(String(format: "CMND %@", commandKeyDown.boolValue ? "v" : "^"))
         }
     }
     /*
     @objc internal func optionAndCommandKeysDown(_ notification : Notification) {
-        Swift.print("optionAndCommandKeysDown")
+        print("optionAndCommandKeysDown")
         snapshot(self)
     }
     */
@@ -1630,7 +1630,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
                     appDelegate.desktopData = appDelegate.bookmarks[desktop]
                     UserSettings.SnapshotsURL.value = desktop.absoluteString
                     if !appDelegate.saveBookmarks() {
-                        Swift.print("Yoink, unable to save desktop booksmark(s)")
+                        print("Yoink, unable to save desktop booksmark(s)")
                     }
                 }
             }
@@ -1657,11 +1657,11 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
                     // Play the above sound file.
                     player.play()
                 } catch {
-                    Swift.print("no sound for you")
+                    print("no sound for you")
                 }
             }
             if path.hideFileExtensionInPath(), let name = path.lastPathComponent.removingPercentEncoding {
-                Swift.print("Snaphot => \(name)")
+                print("Snaphot => \(name)")
             }
         } catch let error {
             NSApp.presentError(error)
@@ -1694,7 +1694,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
     override var representedObject: Any? {
         didSet {
         // Update the view, if already loaded.
-            Swift.print("represented object \(String(describing: representedObject))")
+            print("represented object \(String(describing: representedObject))")
         }
     }
     
@@ -1744,7 +1744,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
     }
     
     func loadAttributes(dict: Dictionary<String,Any>) {
-        Swift.print("loadAttributes: dict \(dict)")
+        print("loadAttributes: dict \(dict)")
     }
     
     func loadAttributes(item: PlayItem) {
@@ -1764,36 +1764,36 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
     // MARK: Javascript
     
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        ///Swift.print("UCC \(message.name) => \"\(message.body)\"")
+        ///print("UCC \(message.name) => \"\(message.body)\"")
         
         switch message.name {
         case "newWindowWithUrlDetected":
             if let url = URL.init(string: message.body as! String) {
                 webView.selectedURL = url
-                ///Swift.print("new win -> \(url.absoluteString)")
+                ///print("new win -> \(url.absoluteString)")
             }
             
         case "newSelectionDetected":
             if let urlString : String = message.body as? String
             {
                 webView.selectedText = urlString
-                ///Swift.print("new str -> \(urlString)")
+                ///print("new str -> \(urlString)")
             }
             
         case "newUrlDetected":
             if let url = URL.init(string: message.body as! String) {
                 webView.selectedURL = url
-                ///Swift.print("new url -> \(url.absoluteString)")
+                ///print("new url -> \(url.absoluteString)")
             }
             
         case "clickMe":
-            ///Swift.print("message: \(message.body)")
+            ///print("message: \(message.body)")
             break
             
         case "updateCookies":
             guard appDelegate.shareWebCookies,appDelegate.storeWebCookies else { return }
             let updates = (message.body as! String).components(separatedBy: "; ")
-            ///Swift.print("cookie(\(updates.count)) \(message.body)")
+            ///print("cookie(\(updates.count)) \(message.body)")
 
             for update in updates {
                 let keyval = update.components(separatedBy: "=")
@@ -1812,7 +1812,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
                         properties[HTTPCookiePropertyKey("HTTPCookieValue")] = keyval.last!
                         if let updated = HTTPCookie.init(properties: properties) {
                             cookieStorage.setCookie(updated)
-                            ///Swift.print("+ cookie \(update)")
+                            ///print("+ cookie \(update)")
                         }
                     }
                 }
@@ -1908,10 +1908,10 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
                                 case (10, 10, _), (10, 11, _), (10, 12, _):
                                     if let oldSize = mwv.window?.contentView?.bounds.size, oldSize != webSize, var origin = mwv.window?.frame.origin, let theme = self.view.window?.contentView?.superview {
                                         var iterator = theme.constraints.makeIterator()
-                                        ///Swift.print(String(format:"view:%p webView:%p", mwv.superview!, mwv))
+                                        ///print(String(format:"view:%p webView:%p", mwv.superview!, mwv))
                                         while let constraint = iterator.next()
                                         {
-                                            Swift.print("\(constraint.priority) \(constraint)")
+                                            print("\(constraint.priority) \(constraint)")
                                         }
                                         
                                         origin.y += (oldSize.height - webSize.height)
@@ -1922,7 +1922,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
                                     
                                 default:
                                     //  Issue still to be resolved so leave as-is for now
-                                    Swift.print("os \(os)")
+                                    print("os \(os)")
                                     if webSize != webView.fittingSize {
                                         webView.bounds.size = webView.fittingSize
                                         webSize = webView.bounds.size
@@ -1938,7 +1938,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
 
                             NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: item, queue: .main, using: { (_) in
                                 DispatchQueue.main.async {
-                                    Swift.print("restarting #1")
+                                    print("restarting #1")
                                     videoPlayer.seek(to: CMTime.zero)
                                     videoPlayer.play()
                                 }
@@ -1946,7 +1946,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
                             
                             NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: item, queue: .main, using: { (_) in
                                 DispatchQueue.main.async {
-                                    Swift.print("restarting #2")
+                                    print("restarting #2")
                                     videoPlayer.seek(to: CMTime.zero)
                                     videoPlayer.play()
                                 }
@@ -1966,7 +1966,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
             
         case "loading":
             guard let loading = change?[NSKeyValueChangeKey(rawValue: "new")] as? Bool, loading == loadingIndicator.isHidden else { return }
-            Swift.print("loading: \(loading ? "YES" : "NO")")
+            print("loading: \(loading ? "YES" : "NO")")
             
         case "title":
             if let newTitle = change?[NSKeyValueChangeKey(rawValue: "new")] as? String {
@@ -1986,7 +1986,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
             }
 
         default:
-            Swift.print("Unknown observing keyPath \(String(describing: keyPath))")
+            print("Unknown observing keyPath \(String(describing: keyPath))")
         }
     }
     
@@ -2045,13 +2045,13 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
     
     func tabView(_ tabView: NSTabView, willSelect tabViewItem: NSTabViewItem?) {
         if let item = tabViewItem {
-            Swift.print("tab willSelect: label: \(item.label) ident: \(String(describing: item.identifier))")
+            print("tab willSelect: label: \(item.label) ident: \(String(describing: item.identifier))")
         }
     }
     
     func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
         if let item = tabViewItem {
-            Swift.print("tab didSelect: label: \(item.label) ident: \(String(describing: item.identifier))")
+            print("tab didSelect: label: \(item.label) ident: \(String(describing: item.identifier))")
         }
     }
 

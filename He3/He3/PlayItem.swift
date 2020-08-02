@@ -324,7 +324,7 @@ class PlayItem : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
     // MARK:- Pasteboard Reading
     
     required convenience init(pasteboardPropertyList propertyList: Any, ofType type: NSPasteboard.PasteboardType) {
-        Swift.print("itemR type: \(type.rawValue)")
+        print("itemR type: \(type.rawValue)")
         switch type {
         case .rowDragType:
             self.init(with: propertyList as! Dictionary)
@@ -338,7 +338,7 @@ class PlayItem : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
 		case .string:
             self.init()
             if let xmlString = propertyList as? String {
-                Swift.print("convert \(xmlString) to playitem")
+                print("convert \(xmlString) to playitem")
             }
             
         default:
@@ -353,7 +353,7 @@ class PlayItem : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
     // MARK:- Pasteboard Writing
 
     func pasteboardPropertyList(forType type: NSPasteboard.PasteboardType) -> Any? {
-        Swift.print("itemW type: \(type.rawValue)")
+        print("itemW type: \(type.rawValue)")
         switch type {
         case .rowDragType:
             return self.dictionary()
@@ -375,7 +375,7 @@ class PlayItem : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
 			}
 
         default:
-            Swift.print("unknown \(type)")
+            print("unknown \(type)")
         }
 		
 		return nil
@@ -417,7 +417,7 @@ class PlayItem : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
 			let item = try PlayItem.init(itemProviderData: data, typeIdentifier: typeIdentifier)
 			return item as! Self
 		} catch let error {
-			Swift.print("object: \(error.localizedDescription)")
+			print("object: \(error.localizedDescription)")
 			throw PlayItemError.unknownTypeIdentifer
 		}
 	}
@@ -450,7 +450,7 @@ class PlayItem : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
 				//	convert dictionary to data to json
 				let data = try JSONSerialization.data(withJSONObject: self.dictionary(), options: .prettyPrinted)
 				let json = try JSONSerialization.jsonObject(with: data, options: [])
-				Swift.print("\(String(describing: json))")
+				print("\(String(describing: json))")
 				progress.completedUnitCount = 100
 				completionHandler(data, nil)
 			} catch let error {

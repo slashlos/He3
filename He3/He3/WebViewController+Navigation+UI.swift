@@ -32,13 +32,13 @@ extension WebViewController: WKNavigationDelegate {
 	func webView(_ webView: WKWebView,
 				 decidePolicyFor navigationAction: WKNavigationAction,
 				 decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-		Swift.print(String(format: "0DP: navigationAction: %p", webView))
+		print(String(format: "0DP: navigationAction: %p", webView))
 
 		let viewOptions = appDelegate.getViewOptions
 		var url = navigationAction.request.url!
 		
 		guard navigationAction.buttonNumber < 2 else {
-			Swift.print("newWindow with url:\(String(describing: url))")
+			print("newWindow with url:\(String(describing: url))")
 			if viewOptions.contains(.t_view) {
 				_ = appDelegate.openURLInNewWindow(url, context: webView.window )
 			}
@@ -93,7 +93,7 @@ extension WebViewController: WKNavigationDelegate {
 			return
 		}
 		
-		Swift.print("navType: \(navigationAction.navigationType.name)")
+		print("navType: \(navigationAction.navigationType.name)")
 		
 		decisionHandler(WKNavigationActionPolicy.allow)
 	}
@@ -117,11 +117,11 @@ extension WebViewController: WKNavigationDelegate {
 				return
 		}
 		
-		Swift.print(String(format: "1DP: navigationResponse: %p <= %@", webView, url.absoluteString))
+		print(String(format: "1DP: navigationResponse: %p <= %@", webView, url.absoluteString))
 		
 		//  load cookies
 		if let headerFields = response.allHeaderFields as? [String:String] {
-			Swift.print("\(url.absoluteString) allHeaderFields:\n\(headerFields)")
+			print("\(url.absoluteString) allHeaderFields:\n\(headerFields)")
 			let waitGroup = DispatchGroup()
 
 			let cookies = HTTPCookie.cookies(withResponseHeaderFields: headerFields, for: url)
@@ -153,7 +153,7 @@ extension WebViewController: WKNavigationDelegate {
 	}
   
 	func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-		Swift.print(String(format: "1LD: %p didStartProvisionalNavigation: %p %@", navigation, webView, webView.url!.debugDescription))
+		print(String(format: "1LD: %p didStartProvisionalNavigation: %p %@", navigation, webView, webView.url!.debugDescription))
 		
 		//  Restore setting not done by document controller
 		if let hpc = heliumPanelController { hpc.documentDidLoad() }
@@ -165,22 +165,22 @@ extension WebViewController: WKNavigationDelegate {
 	}
 
 	func webView(_ webView: WKWebView, didReceiveServerRedirectForProvisionalNavigation navigation: WKNavigation!) {
-		Swift.print(String(format: "2SR: %p didReceiveServerRedirectForProvisionalNavigation: %p", navigation, webView))
+		print(String(format: "2SR: %p didReceiveServerRedirectForProvisionalNavigation: %p", navigation, webView))
 	}
 
 	func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-		Swift.print(String(format: "?LD: %p didFailProvisionalNavigation: %p", navigation, webView) + " \((error as NSError).code): \(error.localizedDescription)")
+		print(String(format: "?LD: %p didFailProvisionalNavigation: %p", navigation, webView) + " \((error as NSError).code): \(error.localizedDescription)")
 		handleError(error)
 	}
 
 	func webView(_ webView: WKWebView, didCommit navigation: WKNavigation!) {
-		Swift.print(String(format: "2NV: %p - didCommit: %p", navigation, webView))
+		print(String(format: "2NV: %p - didCommit: %p", navigation, webView))
 	}
 
 	func webView(_ webView: WKWebView, didFinish navigation: WKNavigation) {
 		guard let url = webView.url else { return }
 		
-		Swift.print(String(format: "3NV: %p didFinish: %p", navigation, webView) + " \"\(String(describing: webView.title))\" => \(url.absoluteString)")
+		print(String(format: "3NV: %p didFinish: %p", navigation, webView) + " \"\(String(describing: webView.title))\" => \(url.absoluteString)")
 		
 		//  Finish recording of for this url session
 		if UserSettings.HistorySaves.value, let webView = (webView as? MyWebView), !webView.incognito {
@@ -190,28 +190,28 @@ extension WebViewController: WKNavigationDelegate {
 	}
 
 	func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
-		Swift.print(String(format: "?NV: %p didFail: %p", navigation, webView) + " \((error as NSError).code): \(error.localizedDescription)")
+		print(String(format: "?NV: %p didFail: %p", navigation, webView) + " \((error as NSError).code): \(error.localizedDescription)")
 		handleError(error)
 	}
 
 	fileprivate func handleError(_ error: Error) {
 		let message = error.localizedDescription
 		if (error as NSError).code >= 400 {
-			Swift.print("\(message)")
+			print("\(message)")
 			///NSApp.presentError(error)
 		}
 		else
 		if (error as NSError).code < 0 {
 			if let info = error._userInfo as? [String: Any] {
 				if let url = info["NSErrorFailingURLKey"] as? URL {
-					Swift.print("\(message)")
-					Swift.print("\(url.absoluteString)")
+					print("\(message)")
+					print("\(url.absoluteString)")
 					///userAlertMessage(message, info: url.absoluteString)
 				}
 				else
 				if let urlString = info["NSErrorFailingURLStringKey"] as? String {
-					Swift.print("\(message)")
-					Swift.print("\(urlString)")
+					print("\(message)")
+					print("\(urlString)")
 					///userAlertMessage(message, info: urlString)
 				}
 			}
@@ -220,7 +220,7 @@ extension WebViewController: WKNavigationDelegate {
 
 	func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
 		let authMethod = challenge.protectionSpace.authenticationMethod
-		Swift.print(String(format: "2AC: didReceive: %p \(authMethod)", webView))
+		print(String(format: "2AC: didReceive: %p \(authMethod)", webView))
 
 		guard let serverTrust = challenge.protectionSpace.serverTrust else { return completionHandler(.useCredential, nil) }
 		let exceptions = SecTrustCopyExceptions(serverTrust)
@@ -229,11 +229,11 @@ extension WebViewController: WKNavigationDelegate {
 	}
 
 	func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
-		Swift.print(String(format: "3DT: webViewWebContentProcessDidTerminate: %p", webView))
+		print(String(format: "3DT: webViewWebContentProcessDidTerminate: %p", webView))
 		
 		//  If incognito tear down...
 		if let webView = (webView as? MyWebView), webView.incognito {
-			Swift.print("webView specific tear down for incognito...")
+			print("webView specific tear down for incognito...")
 		}
 	}
 
@@ -245,7 +245,7 @@ extension WebViewController: WKUIDelegate {/*
 	func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration,
 				 for navigationAction: WKNavigationAction,
 				 windowFeatures: WKWindowFeatures) -> WKWebView? {
-		Swift.print(String(format: "UI: %p createWebViewWith:", webView))
+		print(String(format: "UI: %p createWebViewWith:", webView))
 
 		if navigationAction.targetFrame == nil {
 			_ = appDelegate.openURLInNewWindow(navigationAction.request.url!)
@@ -275,42 +275,42 @@ extension WebViewController: WKUIDelegate {/*
 	*/
 	
 	func webViewDidClose(_ webView: WKWebView) {
-		Swift.print(String(format: "UI: %p webViewDidClose:", webView))
+		print(String(format: "UI: %p webViewDidClose:", webView))
 		webView.stopLoading()
 	}
 
 	func webViewShow(_ webView: WKWebView) {
-		Swift.print(String(format: "UI: %p webViewShow:", webView))
+		print(String(format: "UI: %p webViewShow:", webView))
 	}
 	
 	func webView(_ webView: WKWebView, runJavaScriptAlertPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: () -> Void) {
-		Swift.print(String(format: "UI: %p runJavaScriptAlertPanelWithMessage: %@", webView, message))
+		print(String(format: "UI: %p runJavaScriptAlertPanelWithMessage: %@", webView, message))
 
 		userAlertMessage(message, info: nil)
 		completionHandler()
 	}
 
 	func webView(_ webView: WKWebView, runJavaScriptConfirmPanelWithMessage message: String, initiatedByFrame frame: WKFrameInfo, completionHandler: (Bool) -> Void) {
-		Swift.print(String(format: "UI: %p runJavaScriptConfirmPanelWithMessage: %@", webView, message))
+		print(String(format: "UI: %p runJavaScriptConfirmPanelWithMessage: %@", webView, message))
 
 		completionHandler( userConfirmMessage(message, info: nil) )
 	}
 
 	func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: (String?) -> Void) {
-		Swift.print(String(format: "UI: %p runJavaScriptTextInputPanelWithPrompt: %@", webView, prompt))
+		print(String(format: "UI: %p runJavaScriptTextInputPanelWithPrompt: %@", webView, prompt))
 
 		completionHandler( userTextInput(prompt, defaultText: defaultText) )
 	}
 
 	func webView(_ webView: WKWebView, didFinishLoad navigation: WKNavigation) {
-		Swift.print(String(format: "3LD: %p didFinishLoad: %p", navigation, webView))
+		print(String(format: "3LD: %p didFinishLoad: %p", navigation, webView))
 		//  deprecated
 	}
 
 	func webView(_ webView: WKWebView, runOpenPanelWith parameters: WKOpenPanelParameters,
 				 initiatedByFrame frame: WKFrameInfo,
 				 completionHandler: @escaping ([URL]?) -> Void) {
-		Swift.print(String(format: "UI: %p runOpenPanelWith:", webView))
+		print(String(format: "UI: %p runOpenPanelWith:", webView))
 		
 		let openPanel = NSOpenPanel()
 				

@@ -217,7 +217,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
             
             //  publish seen plays across playlists
             for  (name,hist) in seen {
-                Swift.print("update '\(name)' -> \(hist)");
+                print("update '\(name)' -> \(hist)");
                 for play in playlists {
                     if let item = play.list.link(hist.link.absoluteString), item.plays != hist.plays {
                         item.plays = hist.plays
@@ -287,7 +287,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
                 item.removeObserver(self, forKeyPath: keyPath)
             }
         }
-        //Swift.print(item, (state ? "YES" : "NO"))
+        //print(item, (state ? "YES" : "NO"))
     }
     
     //  Start or forget observing any changes
@@ -374,15 +374,15 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
             //  arrays handled by [add,remove]<List,Play> callback closure block
 
             if (newValue != nil) {
-                Swift.print(String.init(format: "%p:%@ new %@", object! as! CVarArg, keyPath!, newValue as! CVarArg))
+                print(String.init(format: "%p:%@ new %@", object! as! CVarArg, keyPath!, newValue as! CVarArg))
             }
             else
             if (oldValue != nil) {
-                Swift.print(String.init(format: "%p:%@ old %@", object! as! CVarArg, keyPath!, oldValue as! CVarArg))
+                print(String.init(format: "%p:%@ old %@", object! as! CVarArg, keyPath!, oldValue as! CVarArg))
             }
             else
             {
-                Swift.print(String.init(format: "%p:%@ unk %@", object! as! CVarArg, keyPath!, "*no* values?"))
+                print(String.init(format: "%p:%@ unk %@", object! as! CVarArg, keyPath!, "*no* values?"))
             }
             
         default:
@@ -396,12 +396,12 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
                         undo.setActionName(String.init(format: "Edit %@", keyPath!))
                     }
                 })
-				Swift.print(String.init(format: "%@.%@ %@ -> %@", (object as AnyObject).name, keyPath!, oldValue as! CVarArg, newValue as! CVarArg))
+				print(String.init(format: "%@.%@ %@ -> %@", (object as AnyObject).name, keyPath!, oldValue as! CVarArg, newValue as! CVarArg))
             }
             
             // playlist names must be unique
             if let play = (object as? PlayList), keyPath == k.name,  playlists.list(newValue as! String).count > 1 {
-                Swift.print("duplicate playlist.name \(newValue as! String)")
+                print("duplicate playlist.name \(newValue as! String)")
                 play.name = oldValue as! String
                 NSSound(named: "Sosumi")?.play()
             }
@@ -415,7 +415,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         }
         
         if let doc = self.view.window?.windowController?.document {
-			Swift.print("doc changed")
+			print("doc changed")
 			doc.updateChangeCount(.changeDone) }
     }
     
@@ -442,7 +442,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
             
             if let doc = self.view.window?.windowController?.document { doc.updateChangeCount(.changeRedone) }
             
-            Swift.print("redo:");
+            print("redo:");
         }
     }
     
@@ -462,7 +462,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
             
             if let doc = self.view.window?.windowController?.document { doc.updateChangeCount(.changeUndone) }
 
-            Swift.print("undo:");
+            print("undo:");
         }
     }
     
@@ -618,7 +618,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
     }
     
     override func viewDidAppear() {
-        Swift.print(String(format: "sheet? %@", sheetPresent ? "YEA" : "NEA"))
+        print(String(format: "sheet? %@", sheetPresent ? "YEA" : "NEA"))
         let window = self.view.window!
         
         // Remember for later restoration
@@ -763,7 +763,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         }
         else
         {
-            Swift.print("firstResponder: \(String(describing: whoAmI))")
+            print("firstResponder: \(String(describing: whoAmI))")
         }
     }
     @objc @IBOutlet weak var addButtonTooltip : NSString! {
@@ -817,7 +817,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         }
         else
         {
-            Swift.print("firstResponder: \(String(describing: whoAmI))")
+            print("firstResponder: \(String(describing: whoAmI))")
             NSSound(named: "Sosumi")?.play()
         }
     }
@@ -915,19 +915,19 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         var list = Array<PlayItem>()
 
         if playitemTableView == whoAmI {
-            Swift.print("We are in playitemTableView")
+            print("We are in playitemTableView")
             list.append(contentsOf: playitemArrayController.selectedObjects as! Array<PlayItem>)
         }
         else
         if playlistTableView == whoAmI {
-            Swift.print("We are in playlistTableView")
+            print("We are in playlistTableView")
             for selectedPlaylist in (playlistArrayController.selectedObjects as? [PlayList])! {
                 list.append(contentsOf: selectedPlaylist.list )
             }
         }
         else
         {
-            Swift.print("firstResponder: \(String(describing: whoAmI))")
+            print("firstResponder: \(String(describing: whoAmI))")
             NSSound(named: "Sosumi")?.play()
             return
         }
@@ -993,7 +993,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
     }
 
 	@IBAction func labelMenuPress(_ sender: NSMenuItem) {
-		Swift.print("labelMenuPress: \(sender.tag)")
+		print("labelMenuPress: \(sender.tag)")
 	}
 	
 	@objc @IBOutlet weak var restoreButton: NSButton!
@@ -1055,7 +1055,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
 						_ = self.appDelegate.restorePlaylists()
 					}
 					(whoAmI as! PlayTableView).reloadData()
-					Swift.print("revert to saved")
+					print("revert to saved")
 				}
             })
         }
@@ -1071,7 +1071,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
 					_ = appDelegate.restorePlaylists()
 				}
 				(whoAmI as! PlayTableView).reloadData()
-				Swift.print("revert to saved")
+				print("revert to saved")
 			}
 		}
 	}
@@ -1300,7 +1300,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
 				break
 				
             default:
-				Swift.print("pl \(menuItem.title)")
+				print("pl \(menuItem.title)")
                 menuItem.state = UserSettings.DisabledMagicURLs.value ? .off : .on
             }
         }
@@ -1493,7 +1493,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         let buttons = [ "add", "remove", "play", "restore", "save"]
         let tableView : NSTableView = notification.object as! NSTableView
         let hpc = tableView.delegate as! PlaylistViewController
-//        Swift.print("change tooltips \(buttons)")
+//        print("change tooltips \(buttons)")
         for button in buttons {
             hpc.willChangeValue(forKey: String(format: "%@ButtonTooltip", button))
         }

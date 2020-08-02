@@ -45,7 +45,7 @@ class AboutBoxController : NSViewController {
         let pasteboard = NSPasteboard.general
         pasteboard.declareTypes([NSPasteboard.PasteboardType.string], owner: nil)
         if pasteboard.setString(jsonString!, forType: NSPasteboard.PasteboardType.string) {
-            Swift.print("app info copied to pasteboard")
+            print("app info copied to pasteboard")
         }
 	}
 	
@@ -226,13 +226,13 @@ class AboutBoxController : NSViewController {
     
     func tabView(_ tabView: NSTabView, willSelect tabViewItem: NSTabViewItem?) {
         if let item = tabViewItem {
-            Swift.print("tab willSelect: label: \(item.label) ident: \(String(describing: item.identifier))")
+            print("tab willSelect: label: \(item.label) ident: \(String(describing: item.identifier))")
         }
     }
     
     func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
         if let item = tabViewItem {
-            Swift.print("tab didSelect: label: \(item.label) ident: \(String(describing: item.identifier))")
+            print("tab didSelect: label: \(item.label) ident: \(String(describing: item.identifier))")
         }
     }
 }

@@ -304,7 +304,7 @@ class Document : NSDocument {
 			let typeName = [k.hpi : k.Playitem, k.hpl : k.Playlist][url.pathExtension] ?? k.Helium
             try self.init(contentsOf: url, ofType: typeName)
 			let type = try docController.typeForContents(of: url)
-			Swift.print("type => \(type)")
+			print("type => \(type)")
         }
     }
     
@@ -371,13 +371,13 @@ class Document : NSDocument {
                         fileURL = item.list.first?.link
                         
                     default:
-                        Swift.print("\(i) -> \(item.description)")
+                        print("\(i) -> \(item.description)")
                     }
                 }
             }
         }
         catch let error {
-            Swift.print("\(error.localizedDescription)")
+            print("\(error.localizedDescription)")
         }
     }
 
@@ -393,7 +393,7 @@ class Document : NSDocument {
 				let baseURL = appDelegate.authenticateBaseURL(url)
 				
 				if nil == wvc.webView.loadFileURL(url, allowingReadAccessTo: baseURL) {
-					Swift.print("read? \(url.absoluteString)")
+					print("read? \(url.absoluteString)")
 				}
 			}
 			

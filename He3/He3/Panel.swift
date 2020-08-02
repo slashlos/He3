@@ -71,12 +71,12 @@ class Panel: NSPanel, NSPasteboardWriting, NSDraggingSource {
     }
     
     required convenience init(pasteboardPropertyList propertyList: Any, ofType type: NSPasteboard.PasteboardType) {
-        Swift.print("ppl type: \(type.rawValue)")
+        print("ppl type: \(type.rawValue)")
         self.init()
     }
 
     func pasteboardPropertyList(forType type: NSPasteboard.PasteboardType) -> Any? {
-       Swift.print("ppl type: \(type.rawValue)")
+       print("ppl type: \(type.rawValue)")
        switch type {
        case .rowDragType:
            return promiseURL.absoluteString as NSString
@@ -88,7 +88,7 @@ class Panel: NSPanel, NSPasteboardWriting, NSDraggingSource {
            return promiseURL.absoluteString
            
        default:
-           Swift.print("unknown \(type)")
+           print("unknown \(type)")
            return nil
        }
     }
@@ -96,12 +96,12 @@ class Panel: NSPanel, NSPasteboardWriting, NSDraggingSource {
     func writableTypes(for pasteboard: NSPasteboard) -> [NSPasteboard.PasteboardType] {
 		let types : [NSPasteboard.PasteboardType] = [.fileURL, .URL, .string]
 
-		Swift.print("wtp \(types)")
+		print("wtp \(types)")
         return types
     }
     
     func writingOptions(forType type: NSPasteboard.PasteboardType, pasteboard: NSPasteboard) -> NSPasteboard.WritingOptions {
-        Swift.print("wtp type: \(type.rawValue)")
+        print("wtp type: \(type.rawValue)")
         switch type {
         default:
             return .promised
@@ -118,7 +118,7 @@ class Panel: NSPanel, NSPasteboardWriting, NSDraggingSource {
     
     func selectTabItem(_ sender: Any?) {
         if let item = (sender as? NSMenuItem), let window : NSWindow = item.representedObject as? NSWindow, let group = window.tabGroup {
-            Swift.print("set selected window within group: \(String(describing: window.identifier))")
+            print("set selected window within group: \(String(describing: window.identifier))")
             group.selectedWindow = window
             windowController?.synchronizeWindowTitleWithDocumentName()
         }
