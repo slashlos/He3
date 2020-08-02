@@ -203,10 +203,6 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 		///self.panel.titlebarAppearsTransparent = true
 		///self.panel.backgroundColor = .white
 		
-		//	Monitor title, content inter/intra movements
-        setupTrackingAreas(true)
-		installTitleFader(true)
-
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(HeliumController.didBecomeActive),
@@ -259,6 +255,8 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
         willUpdateTranslucency()
         
         willUpdateAlpha()
+		
+		installTitleFader(true)
     }
     
     func windowDidMove(_ notification: Notification) {
@@ -291,12 +289,7 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
     
     func windowWillClose(_ notification: Notification) {
         self.webViewController.webView.stopLoading()
-        
-        if let wvc: WebViewController = window?.contentViewController as? WebViewController {
-            wvc.setupTrackingAreas(false)
-        }
-        setupTrackingAreas(false)
-    }
+     }
 	
 	// MARK:- TOOO dock tile updating when minimized?
 	var dockTileImageView = NSImageView.init()
@@ -386,25 +379,6 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 		}
 	}
 	
-	func setupTrackingAreas(_ establish : Bool) {
-		guard let window = self.window, let content = contentView  else { return }
-		
-		if let tag = wholeTrackingTag {
-			content.removeTrackingRect(tag)
-			wholeTrackingTag = nil
-		}
-		if let tag = titleTrackingTag {
-			content.removeTrackingRect(tag)
-			titleTrackingTag = nil
-		}
-		
-		if establish {
-			let size = window.frame.size
-			let whole = NSRect(x:0,y:0,width:size.width,height:size.height)
-			wholeTrackingTag = content.addTrackingRect(whole, owner: self, userData: nil, assumeInside: false)
-		}
-	}
-	
 	fileprivate func monitoringMouseEvents() -> Bool {
 		return autoHideTitlePreference != .never || translucencyPreference != .never
 	}
@@ -415,35 +389,39 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 				context.duration = 0.01
 				
 				self.titleView?.animator().isHidden = false
+				self.window?.animator().titlebarAppearsTransparent = false
 				self.window?.animator().titleVisibility = .visible
 			})
 			return
 		}
+		let hideMe = !self.mouseOver || self.mouseIdle
 
 		if fadeNow {
 			NSAnimationContext.runAnimationGroup({ (context) in
 				context.duration = 0.01
 				
-				self.titleView?.animator().isHidden = !self.mouseOver || self.mouseIdle
+				self.titleView?.animator().isHidden = hideMe
+				self.window?.animator().titlebarAppearsTransparent = hideMe
 				self.window?.animator().titleVisibility = !self.mouseOver || self.mouseIdle ? .hidden : .visible
 			})
 		}
 		//FIXME: do this less often
         docIconVisibility(autoHideTitlePreference == .never || translucencyPreference == .never)
 		
-		if let timer = fadeTimer, timer.isValid { timer.invalidate(); Swift.print("±timer") }
-		self.fadeTimer = Timer.scheduledTimer(withTimeInterval: 6.49, repeats: false, block: { (timer) in
+		if let timer = fadeTimer, timer.isValid { timer.invalidate(); print("±timer") }
+		self.fadeTimer = Timer.scheduledTimer(withTimeInterval: 3.97, repeats: false, block: { (timer) in
 			if fadeNow || timer.isValid {
 				self.mouseIdle = true
 				timer.invalidate()
 
 				NSAnimationContext.runAnimationGroup({ (context) in
-					context.duration = fadeNow ? 0.02 : 2.0
-					Swift.print(String(format: "-timer over:%@ idle:%@",
+					context.duration = fadeNow ? 0.02 : 1.0
+					print(String(format: "-timer over:%@ idle:%@",
 									   (self.mouseOver ? "Yes" : "No"),
 									   (self.mouseIdle ? "Yes" : "No")))
-					self.titleView?.animator().isHidden = !self.mouseOver || self.mouseIdle
-					self.window?.animator().titleVisibility = !self.mouseOver || self.mouseIdle ? .hidden : .visible
+					self.titleView?.animator().isHidden = true
+					self.window?.animator().titlebarAppearsTransparent = true
+					self.window?.animator().titleVisibility = .hidden
 				})
 			}
 		})
@@ -457,7 +435,6 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 
 		guard monitoringMouseEvents() else { return }
 
-		Swift.print("+Over")
 		self.mouseOver = true
 		
 		installTitleFader(true)
@@ -466,7 +443,6 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 	override func mouseExited(with event: NSEvent) {
 		guard monitoringMouseEvents() else { return }
 
-		Swift.print("-Over")
 		self.mouseOver = false
 		
 		installTitleFader(true)
@@ -475,9 +451,6 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 	override func mouseMoved(with event: NSEvent) {
 		guard monitoringMouseEvents() && mouseIdle else { return }
 
-		Swift.print(String(format: "+Moved over:%@ idle:%@",
-						   (self.mouseOver ? "Yes" : "No"),
-						   (self.mouseIdle ? "Yes" : "No")))
 		guard mouseIdle else { return }
 		self.mouseIdle = false
 		
@@ -1004,14 +977,12 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
         guard let vindow = notification.object as? NSWindow,
             let wpc = vindow.windowController as? HeliumController else { return }
         
-        wpc.setupTrackingAreas(true)
         wpc.updateTranslucency()
     }
     
     func windowShouldClose(_ sender: NSWindow) -> Bool {
         guard let vindow = window,
-            let wvc = vindow.contentViewController as? WebViewController,
-            let wpc = vindow.windowController as? HeliumController else { return false }
+            let wvc = vindow.contentViewController as? WebViewController else { return false }
 
         //  Stop whatever is going on by brute force
 		DispatchQueue.main.async {
@@ -1023,7 +994,6 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 		}
 
         vindow.ignoresMouseEvents = true
-        wpc.setupTrackingAreas(false)
         
         // Wind down all observations
         NotificationCenter.default.removeObserver(self)
@@ -1117,6 +1087,7 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
              NSAnimationContext.runAnimationGroup({ (context) in
                  context.duration = 0.1
                  panel.animator().titleVisibility = mouseOver ? .visible : .hidden
+				 panel.animator().titlebarAppearsTransparent = !mouseOver
              })
              return
          }
@@ -1127,10 +1098,13 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 
                 if autoHideTitlePreference == .outside {
                     panel.animator().titleVisibility = mouseSeen ? .visible : .hidden
+					panel.animator().titlebarAppearsTransparent = !mouseSeen
+
                 }
                 else
                 {
                     panel.animator().titleVisibility = .visible
+					panel.animator().titlebarAppearsTransparent = false
                 }
 
             })
@@ -1194,6 +1168,10 @@ class ReleasePanelController : HeliumController {
         panel.isMovableByWindowBackground = false
         panel.isFloatingPanel = true
         panel.windowController?.shouldCascadeWindows = true///.offsetFromKeyWindow()
+
+		panel.appearance = NSAppearance(named: .vibrantDark)
+		self.panel.titlebarAppearsTransparent = true
+		self.panel.backgroundColor = .white
 
         // Remember for later restoration
         NSApp.changeWindowsItem(panel, title: window?.title ?? k.ReleaseNotes, filename: false)

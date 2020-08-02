@@ -329,6 +329,36 @@ extension NSView {
 	}
 }
 
+class View : NSView {
+    //  MARK: Mouse tracking idle
+    var trackingArea : NSTrackingArea?
+
+    override func updateTrackingAreas() {
+        super.updateTrackingAreas()
+        
+        if let area = trackingArea {
+            self.removeTrackingArea(area)
+        }
+		
+		let options : NSTrackingArea.Options = [.activeAlways,.mouseEnteredAndExited, .mouseMoved]
+        trackingArea = NSTrackingArea(rect: self.bounds, options: options, owner: self, userInfo: nil)
+        self.addTrackingArea(trackingArea!)
+    }
+	
+	override func mouseEntered(with event: NSEvent) {
+		print("+over")
+		self.window?.windowController?.mouseEntered(with: event)
+	}
+	override func mouseExited(with event: NSEvent) {
+		print("-over")
+		self.window?.windowController?.mouseExited(with: event)
+	}
+	override func mouseMoved(with event: NSEvent) {
+		print("±move")
+		self.window?.windowController?.mouseMoved(with: event)
+	}
+}
+
 // From https://stackoverflow.com/questions/31093678/how-to-get-rid-of-array-brackets-while-printing/31093744#31093744
 extension Sequence {
     var list: String {

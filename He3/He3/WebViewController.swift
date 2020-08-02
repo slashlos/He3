@@ -444,18 +444,22 @@ class MyWebView : WKWebView {
         if trackingArea != nil {
             self.removeTrackingArea(trackingArea!)
         }
-        let options : NSTrackingArea.Options = [.mouseEnteredAndExited, .mouseMoved, .activeInKeyWindow]
+		let options : NSTrackingArea.Options = [.activeAlways,.mouseEnteredAndExited, .mouseMoved]
         trackingArea = NSTrackingArea(rect: self.bounds, options: options, owner: self, userInfo: nil)
         self.addTrackingArea(trackingArea!)
     }
 
+	override func mouseEntered(with event: NSEvent) {
+		print("+over")
+		self.window?.windowController?.mouseEntered(with: event)
+	}
+	override func mouseExited(with event: NSEvent) {
+		print("-over")
+		self.window?.windowController?.mouseExited(with: event)
+	}
 	override func mouseMoved(with event: NSEvent) {
-        super.mouseMoved(with: event)
-        
-        if let hpc = heliumPanelController {
-            hpc.mouseIdle = false
-        }
-    }
+		self.window?.windowController?.mouseMoved(with: event)
+	}
 
     // MARK: Drag and Drop - Before Release
     func shouldAllowDrag(_ info: NSDraggingInfo) -> Bool {
@@ -1363,18 +1367,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
     }
     
     @objc dynamic var observing : Bool = false
-    
-    func setupTrackingAreas(_ establish: Bool) {
-        if let tag = trackingTag {
-            view.removeTrackingRect(tag)
-            trackingTag = nil
-        }
-        if establish {
-            trackingTag = view.addTrackingRect(view.bounds, owner: self, userData: nil, assumeInside: false)
-        }
-        webView.updateTrackingAreas()
-    }
-    
+	
     override func viewDidLayout() {
         super.viewDidLayout()
 
@@ -1387,8 +1380,6 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
                 scrollView.verticalScroller?.isHidden = true
             }
         }
-
-        setupTrackingAreas(true)
     }
 
     override func viewWillDisappear() {
