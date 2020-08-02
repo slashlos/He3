@@ -195,13 +195,13 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
         panel.isMovableByWindowBackground = false
         panel.isFloatingPanel = true
         
-        //  We want to allow miniaturizations
+        //  We want to allow miniaturizations, at least
         self.panel.styleMask.formUnion(.miniaturizable)
 		
 		//	Make title text stand out?
 		///self.panel.appearance = NSAppearance(named: .vibrantDark)
-		///self.panel.titlebarAppearsTransparent = true
-		///self.panel.backgroundColor = .white
+		self.panel.titlebarAppearsTransparent = true
+		self.panel.backgroundColor = homeColor
 		
         NotificationCenter.default.addObserver(
             self,
