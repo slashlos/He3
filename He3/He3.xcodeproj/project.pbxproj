@@ -28,12 +28,10 @@
 		0F529030244F3A5800A9B9DC /* He3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F52902F244F3A5800A9B9DC /* He3Tests.swift */; };
 		0F5290A2244F665900A9B9DC /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F52901B244F14A400A9B9DC /* ShareViewController.swift */; };
 		0F5290A3244F665D00A9B9DC /* ShareViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F52901D244F14A400A9B9DC /* ShareViewController.xib */; };
-		0F5290AF244F6C0D00A9B9DC /* WindowButtonBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5290A6244F6C0C00A9B9DC /* WindowButtonBar.swift */; };
 		0F5290B0244F6C0D00A9B9DC /* UrlHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5290A7244F6C0C00A9B9DC /* UrlHelpers.swift */; };
 		0F5290B1244F6C0D00A9B9DC /* ValueTransformers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5290A8244F6C0C00A9B9DC /* ValueTransformers.swift */; };
 		0F5290B2244F6C0D00A9B9DC /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5290AA244F6C0D00A9B9DC /* UserSettings.swift */; };
 		0F5290B3244F6C0D00A9B9DC /* StringHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5290AB244F6C0D00A9B9DC /* StringHelpers.swift */; };
-		0F5290B4244F6C0D00A9B9DC /* PanelButtonBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5290AC244F6C0D00A9B9DC /* PanelButtonBar.swift */; };
 		0F5290B9244F6C9100A9B9DC /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 0F5290B8244F6C9100A9B9DC /* dsa_pub.pem */; };
 		0F5290BD2451D3C400A9B9DC /* He3.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0F5290BC2451D3C300A9B9DC /* He3.icns */; };
 		0F55CD6424A6794E00E49C6A /* icntIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F55CD6324A6794E00E49C6A /* icntIcon.png */; };
@@ -200,13 +198,13 @@
 		0F529031244F3A5800A9B9DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0F52909E244F44DA00A9B9DC /* build-dmg.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "build-dmg.sh"; sourceTree = "<group>"; };
 		0F5290A5244F6C0C00A9B9DC /* WKWebViewPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WKWebViewPrivate.h; path = He3/Support/WKWebViewPrivate.h; sourceTree = SOURCE_ROOT; };
-		0F5290A6244F6C0C00A9B9DC /* WindowButtonBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WindowButtonBar.swift; path = He3/Support/WindowButtonBar.swift; sourceTree = SOURCE_ROOT; };
+		0F5290A6244F6C0C00A9B9DC /* WindowButtonBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WindowButtonBar.swift; path = He3/Support/Deprecated/WindowButtonBar.swift; sourceTree = SOURCE_ROOT; };
 		0F5290A7244F6C0C00A9B9DC /* UrlHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UrlHelpers.swift; path = He3/Support/UrlHelpers.swift; sourceTree = SOURCE_ROOT; };
 		0F5290A8244F6C0C00A9B9DC /* ValueTransformers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValueTransformers.swift; path = He3/Support/ValueTransformers.swift; sourceTree = SOURCE_ROOT; };
 		0F5290A9244F6C0C00A9B9DC /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Bridging-Header.h"; path = "He3/Support/Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		0F5290AA244F6C0D00A9B9DC /* UserSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserSettings.swift; path = He3/Support/UserSettings.swift; sourceTree = SOURCE_ROOT; };
 		0F5290AB244F6C0D00A9B9DC /* StringHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StringHelpers.swift; path = He3/Support/StringHelpers.swift; sourceTree = SOURCE_ROOT; };
-		0F5290AC244F6C0D00A9B9DC /* PanelButtonBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PanelButtonBar.swift; path = He3/Support/PanelButtonBar.swift; sourceTree = SOURCE_ROOT; };
+		0F5290AC244F6C0D00A9B9DC /* PanelButtonBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PanelButtonBar.swift; path = He3/Support/Deprecated/PanelButtonBar.swift; sourceTree = SOURCE_ROOT; };
 		0F5290AE244F6C0D00A9B9DC /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = He3/Support/Sparkle.framework; sourceTree = SOURCE_ROOT; };
 		0F5290B8244F6C9100A9B9DC /* dsa_pub.pem */ = {isa = PBXFileReference; lastKnownFileType = text; name = dsa_pub.pem; path = He3/Resources/dsa_pub.pem; sourceTree = SOURCE_ROOT; };
 		0F5290BC2451D3C300A9B9DC /* He3.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = He3.icns; path = "He3/Assets/App Icon/He3.icns"; sourceTree = "<group>"; };
@@ -301,6 +299,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0F18D4EE24D342130036FB7F /* Deprecated */ = {
+			isa = PBXGroup;
+			children = (
+				0F5290AC244F6C0D00A9B9DC /* PanelButtonBar.swift */,
+				0F5290A6244F6C0C00A9B9DC /* WindowButtonBar.swift */,
+			);
+			path = Deprecated;
+			sourceTree = "<group>";
+		};
 		0F2370C4244E8CEA009F7914 = {
 			isa = PBXGroup;
 			children = (
@@ -348,8 +355,8 @@
 				0F2370F4244E904E009F7914 /* About.swift */,
 				0F2370D0244E8CEA009F7914 /* AppDelegate.swift */,
 				0F6FB8D7246C9D9400F5D36B /* LaunchControllers.swift */,
-				0F2370D4244E8CEA009F7914 /* Document.swift */,
 				0FD2127C2466D71200EA5D6D /* DocController.swift */,
+				0F2370D4244E8CEA009F7914 /* Document.swift */,
 				0FD212782466441F00EA5D6D /* PlayList.swift */,
 				0FD2127A2466448500EA5D6D /* PlayItem.swift */,
 				0F2370F8244E95DC009F7914 /* Panel.swift */,
@@ -438,10 +445,10 @@
 		0F5290A4244F6BDA00A9B9DC /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				0F18D4EE24D342130036FB7F /* Deprecated */,
 				0F5290A9244F6C0C00A9B9DC /* Bridging-Header.h */,
 				0FD21272246386A500EA5D6D /* Extensions.swift */,
 				0F0EEE3E247D3283008F1988 /* LoadThumbnailOperation.swift */,
-				0F5290AC244F6C0D00A9B9DC /* PanelButtonBar.swift */,
 				0FD2127E2466D7C800EA5D6D /* Types.swift */,
 				0F82920E249539D900B5C205 /* Settings.swift */,
 				0F5290AE244F6C0D00A9B9DC /* Sparkle.framework */,
@@ -449,7 +456,6 @@
 				0F5290A7244F6C0C00A9B9DC /* UrlHelpers.swift */,
 				0F5290AA244F6C0D00A9B9DC /* UserSettings.swift */,
 				0F5290A8244F6C0C00A9B9DC /* ValueTransformers.swift */,
-				0F5290A6244F6C0C00A9B9DC /* WindowButtonBar.swift */,
 				0F5290A5244F6C0C00A9B9DC /* WKWebViewPrivate.h */,
 			);
 			path = Support;
@@ -793,10 +799,8 @@
 				0F2370FF244E9601009F7914 /* PlaylistViewController.swift in Sources */,
 				0FD2127B2466448500EA5D6D /* PlayItem.swift in Sources */,
 				0F5290B2244F6C0D00A9B9DC /* UserSettings.swift in Sources */,
-				0F5290B4244F6C0D00A9B9DC /* PanelButtonBar.swift in Sources */,
 				0F6FB8D8246C9D9400F5D36B /* LaunchControllers.swift in Sources */,
 				0F5290B3244F6C0D00A9B9DC /* StringHelpers.swift in Sources */,
-				0F5290AF244F6C0D00A9B9DC /* WindowButtonBar.swift in Sources */,
 				0FD21271246383E500EA5D6D /* PlaylistViewController+DragAndDrop.swift in Sources */,
 				0F2370F5244E904E009F7914 /* About.swift in Sources */,
 				0FACD4C42467953000A23B1F /* PromiseFileProvider.swift in Sources */,
