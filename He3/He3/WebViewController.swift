@@ -450,11 +450,9 @@ class MyWebView : WKWebView {
     }
 
 	override func mouseEntered(with event: NSEvent) {
-		print("+over")
 		self.window?.windowController?.mouseEntered(with: event)
 	}
 	override func mouseExited(with event: NSEvent) {
-		print("-over")
 		self.window?.windowController?.mouseExited(with: event)
 	}
 	override func mouseMoved(with event: NSEvent) {
@@ -1479,8 +1477,8 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
         open.worksWhenModal = true
         open.beginSheetModal(for: window!, completionHandler: { (response: NSApplication.ModalResponse) in
             if response == .OK {
-                // MARK: TODO: load new files in distinct windows
-                if self.webView.dirty { viewOptions.insert(.t_view) }
+                // FIXME: load new files in distinct windows
+				if self.webView.dirty || appDelegate.isSandboxed { viewOptions.insert(.t_view) }
 
                 let urls = open.urls
                 var handled = 0
