@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBuildDate</key>
-	<string>20200702.202818</string>
+	<string>20200804.064500</string>
 	<key>CFBuildIncrement</key>
 	<false/>
 	<key>CFBuildMajor</key>
@@ -11,7 +11,7 @@
 	<key>CFBuildMinor</key>
 	<integer>0</integer>
 	<key>CFBuildNumber</key>
-	<integer>8158</integer>
+	<integer>8360</integer>
 	<key>CFBuildPatch</key>
 	<integer>1</integer>
 	<key>CFBundleDevelopmentRegion</key>
@@ -54,9 +54,7 @@
 		</dict>
 		<dict>
 			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string></string>
-			</array>
+			<array/>
 			<key>CFBundleTypeIconFile</key>
 			<string>icntIcon</string>
 			<key>CFBundleTypeName</key>
@@ -129,7 +127,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.0.8158</string>
+	<string>1.0.8360</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>
