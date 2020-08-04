@@ -7,12 +7,6 @@
 //
 //  Document instance read/save/write are to default; use super for files
 
-fileprivate var appDelegate : AppDelegate {
-    get {
-        return NSApp.delegate as! AppDelegate
-    }
-}
-
 import Cocoa
 import Foundation
 import QuickLook
@@ -303,8 +297,8 @@ class Document : NSDocument {
         do {
 			let typeName = [k.hpi : k.Playitem, k.hpl : k.Playlist][url.pathExtension] ?? k.Helium
             try self.init(contentsOf: url, ofType: typeName)
-			let type = try docController.typeForContents(of: url)
-			print("type => \(type)")
+			///let type = try docController.typeForContents(of: url)
+			///Swift.print("type => \(type)")
         }
     }
     
@@ -371,13 +365,14 @@ class Document : NSDocument {
                         fileURL = item.list.first?.link
                         
                     default:
-                        print("\(i) -> \(item.description)")
+                        ///Swift.print("\(i) -> \(item.description)")
+						break
                     }
                 }
             }
         }
         catch let error {
-            print("\(error.localizedDescription)")
+            Swift.print("\(error.localizedDescription)")
         }
     }
 
@@ -393,7 +388,7 @@ class Document : NSDocument {
 				let baseURL = appDelegate.authenticateBaseURL(url)
 				
 				if nil == wvc.webView.loadFileURL(url, allowingReadAccessTo: baseURL) {
-					print("read? \(url.absoluteString)")
+					Swift.print("read? \(url.absoluteString)")
 				}
 			}
 			
