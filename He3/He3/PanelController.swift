@@ -20,139 +20,6 @@ extension NSColor {
     }
 }
 
-class TitleDragButton : NSButton {
-/* https://developer.apple.com/library/archive/samplecode/PhotoEditor/Listings/
- *  Photo_Editor_WindowDraggableButton_swift.html#//
- *  apple_ref/doc/uid/TP40017384-Photo_Editor_WindowDraggableButton_swift-DontLinkElementID_22
- */
-    //  once our controller appear, update
-    var hpc : HeliumController? {
-        get {
-            return self.window?.windowController as? HeliumController
-        }
-    }
-    var homeURL : URL {
-        get {
-            if let hpc = self.hpc {
-                return hpc.homeURL
-            }
-            return URL.init(string: UserSettings.HomePageURL.value)!
-        }
-    }
-    var homeColor : NSColor {
-        get {
-            if let hpc = self.hpc {
-                return hpc.homeColor
-            }
-            return  NSColor(hex: 0x3399FF)
-        }
-    }
-    var borderColor : NSColor {
-        get {
-            guard let window = self.window else { return NSColor.clear }
-            if let url = window.representedURL, url != homeURL {
-                return url.isFileURL ? NSColor.controlDarkShadowColor : homeColor
-            }
-            else
-            {
-                return homeColor
-            }
-        }
-    }
-    
-    required override init(frame frameRect: NSRect) {
-        super.init(frame: frameRect)
-        self.cell?.controlView?.wantsLayer = true
-        self.layer?.borderWidth = 2
-        self.layer?.borderColor = borderColor.cgColor
-    }
-      
-    required init?(coder: NSCoder) {
-        ///super.init(coder: coder)
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func draw(_ dirtyRect: NSRect) {
-        let path = NSBezierPath(rect: NSRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height))
-
-        if let window = self.window, let url = window.representedURL, url.isFileURL {
-            if !url.hasVideoContent() {
-                self.layer?.backgroundColor = NSColor.controlDarkShadowColor.cgColor
-            } else {
-                self.layer?.backgroundColor = NSColor.clear.cgColor
-            }
-        }
-        else
-        {
-            self.layer?.backgroundColor = homeColor.cgColor
-        }
-        
-        super.draw(dirtyRect)
-        
-        guard let hpc = self.hpc else { return }
-        
-        if hpc.autoHideTitlePreference == .never || hpc.mouseOver {
-            let color = self.borderColor
-            self.layer?.borderColor = color.cgColor
-            color.setStroke(); color.setFill()
-            path.stroke(); path.fill()
-        }
-    }
-    
-    override func mouseDown(with mouseDownEvent: NSEvent) {
-        let window = self.window!
-        let startingPoint = mouseDownEvent.locationInWindow
-        
-        highlight(true)
-        
-        // Track events until the mouse is up (in which we interpret as a click), or a drag starts (in which we pass off to the Window Server to perform the drag)
-        var shouldCallSuper = false
-
-        // trackEvents won't return until after the tracking all ends
-        window.trackEvents(matching: [.leftMouseDragged, .leftMouseUp], timeout: NSEvent.foreverDuration, mode: RunLoop.Mode.default) { event, stop in
-            switch event?.type {
-                case .leftMouseUp:
-                    // Stop on a mouse up; post it back into the queue and call super so it can handle it
-                    shouldCallSuper = true
-                    NSApp.postEvent(event!, atStart: false)
-                    stop.pointee = true
-                
-                case .leftMouseDragged:
-                    // track mouse drags, and if more than a few points are moved we start a drag
-                    let currentPoint = event!.locationInWindow
-                    if let window = self.window,
-                        let docIconButton = window.standardWindowButton(.documentIconButton),
-                        let iconBasePoint = docIconButton.superview?.superview?.frame.origin {
-                        let docIconFrame = docIconButton.frame
-                        let iconFrame = NSMakeRect(iconBasePoint.x + docIconFrame.origin.x,
-                                                   iconBasePoint.y + docIconFrame.origin.y,
-                                                   docIconFrame.size.width, docIconFrame.size.height)
-                        //  If we're over the docIconButton send event to it
-                        if iconFrame.contains(startingPoint), let hpc = hpc {
-                            let dragItem = NSDraggingItem.init(pasteboardWriter: hpc)
-                            dragItem.draggingFrame.size = NSMakeSize(32.0,32.0)
-                            docIconButton.beginDraggingSession(with: [dragItem], event: event!, source: hpc)
-                            break
-                        }
-                    }
-                    
-                    if (abs(currentPoint.x - startingPoint.x) >= 5 || abs(currentPoint.y - startingPoint.y) >= 5) {
-                        self.highlight(false)
-                        stop.pointee = true
-                        window.performDrag(with: event!)
-                    }
-                
-                default:
-                    break
-            }
-        }
-                
-        if (shouldCallSuper) {
-            super.mouseDown(with: mouseDownEvent)
-        }
-    }
-}
-
 class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProviderDelegate,NSDraggingSource,NSPasteboardWriting {
     var webViewController: WebViewController {
         get {
@@ -199,9 +66,10 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
         self.panel.styleMask.formUnion(.miniaturizable)
 		
 		//	Make title text stand out?
-		///self.panel.appearance = NSAppearance(named: .vibrantDark)
+		self.panel.appearance = NSAppearance(named: .vibrantDark)
 		self.panel.titlebarAppearsTransparent = true
-		self.panel.backgroundColor = homeColor
+		self.panel.titleVisibility = .visible
+		self.panel.backgroundColor = .white
 		
         NotificationCenter.default.addObserver(
             self,
@@ -386,10 +254,10 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 	fileprivate func installTitleFader(_ fadeNow: Bool = false) {
 		guard autoHideTitlePreference != .never else {
 			NSAnimationContext.runAnimationGroup({ (context) in
-				context.duration = 0.01
+				context.duration = 0.5
 				
 				self.titleView?.animator().isHidden = false
-				self.window?.animator().titlebarAppearsTransparent = false
+				///self.window?.animator().titlebarAppearsTransparent = false
 				self.window?.animator().titleVisibility = .visible
 			})
 			return
@@ -398,10 +266,10 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 
 		if fadeNow {
 			NSAnimationContext.runAnimationGroup({ (context) in
-				context.duration = 0.01
+				context.duration = 0.5
 				
 				self.titleView?.animator().isHidden = hideMe
-				self.window?.animator().titlebarAppearsTransparent = hideMe
+				///self.window?.animator().titlebarAppearsTransparent = hideMe
 				self.window?.animator().titleVisibility = !self.mouseOver || self.mouseIdle ? .hidden : .visible
 			})
 		}
@@ -415,12 +283,12 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 				timer.invalidate()
 
 				NSAnimationContext.runAnimationGroup({ (context) in
-					context.duration = fadeNow ? 0.02 : 1.0
+					context.duration = fadeNow ? 0.5 : 1.0
 					print(String(format: "-timer over:%@ idle:%@",
 									   (self.mouseOver ? "Yes" : "No"),
 									   (self.mouseIdle ? "Yes" : "No")))
 					self.titleView?.animator().isHidden = true
-					self.window?.animator().titlebarAppearsTransparent = true
+					///self.window?.animator().titlebarAppearsTransparent = true
 					self.window?.animator().titleVisibility = .hidden
 				})
 			}
@@ -1086,8 +954,8 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
         if nil == document?.fileURL {
              NSAnimationContext.runAnimationGroup({ (context) in
                  context.duration = 0.1
+				 ///panel.animator().titlebarAppearsTransparent = !mouseOver
                  panel.animator().titleVisibility = mouseOver ? .visible : .hidden
-				 panel.animator().titlebarAppearsTransparent = !mouseOver
              })
              return
          }
@@ -1097,14 +965,13 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
                 context.duration = mouseIdle ? 1.0 : 0.2
 
                 if autoHideTitlePreference == .outside {
+					///panel.animator().titlebarAppearsTransparent = !mouseSeen
                     panel.animator().titleVisibility = mouseSeen ? .visible : .hidden
-					panel.animator().titlebarAppearsTransparent = !mouseSeen
-
                 }
                 else
                 {
+					///panel.animator().titlebarAppearsTransparent = false
                     panel.animator().titleVisibility = .visible
-					panel.animator().titlebarAppearsTransparent = false
                 }
 
             })
@@ -1170,7 +1037,8 @@ class ReleasePanelController : HeliumController {
         panel.windowController?.shouldCascadeWindows = true///.offsetFromKeyWindow()
 
 		panel.appearance = NSAppearance(named: .vibrantDark)
-		self.panel.titlebarAppearsTransparent = true
+		///panel.titlebarAppearsTransparent = true
+		panel.animator().titleVisibility = .visible
 		self.panel.backgroundColor = .white
 
         // Remember for later restoration
