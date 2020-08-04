@@ -248,7 +248,8 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 	}
 	
 	fileprivate func monitoringMouseEvents() -> Bool {
-		return autoHideTitlePreference != .never || translucencyPreference != .never
+		return UserSettings.AutoHideTitle.value ||
+			autoHideTitlePreference != .never || translucencyPreference != .never
 	}
 	
 	fileprivate func installTitleFader(_ fadeNow: Bool = false) {
