@@ -137,7 +137,7 @@
                             <constraint firstItem="rKn-5s-fYK" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ApO-5O-qon" secondAttribute="trailing" id="97U-V3-PhZ"/>
                             <constraint firstItem="ISs-R1-bl3" firstAttribute="centerX" secondItem="kg1-aS-nIq" secondAttribute="centerX" id="BAF-pp-sSy"/>
                             <constraint firstItem="0NX-wg-Xfe" firstAttribute="leading" secondItem="ApO-5O-qon" secondAttribute="leading" id="DTR-SJ-l6U"/>
-                            <constraint firstItem="b0R-I6-wV0" firstAttribute="leading" secondItem="kg1-aS-nIq" secondAttribute="leading" constant="62" id="DuB-PV-4lj"/>
+                            <constraint firstItem="b0R-I6-wV0" firstAttribute="leading" relation="lessThanOrEqual" secondItem="kg1-aS-nIq" secondAttribute="leading" constant="62" id="DuB-PV-4lj"/>
                             <constraint firstItem="rKn-5s-fYK" firstAttribute="top" secondItem="IV0-Ql-nbs" secondAttribute="bottom" constant="10" id="IjD-Om-Lsc"/>
                             <constraint firstItem="rKn-5s-fYK" firstAttribute="leading" secondItem="kg1-aS-nIq" secondAttribute="leading" constant="12" id="J0e-NW-kyF"/>
                             <constraint firstItem="0C4-5f-uW8" firstAttribute="top" secondItem="kg1-aS-nIq" secondAttribute="top" constant="-1" id="KCm-hN-11F"/>
@@ -1793,7 +1793,7 @@ CA
                                                                         <rect key="frame" x="187" y="-6" width="54" height="23"/>
                                                                         <buttonCell key="cell" type="push" title="Clear" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="nDf-7y-DwP">
                                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                                            <font key="font" metaFont="message" size="11"/>
+                                                                            <font key="font" metaFont="menu" size="11"/>
                                                                         </buttonCell>
                                                                         <connections>
                                                                             <action selector="clearCookiesPress:" target="6fb-0C-bsO" id="x8S-Px-I0r"/>
@@ -1864,7 +1864,7 @@ CA
                                                                         <rect key="frame" x="121" y="-6" width="54" height="23"/>
                                                                         <buttonCell key="cell" type="push" title="Clear" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="oyl-gZ-NQk">
                                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                                            <font key="font" metaFont="message" size="11"/>
+                                                                            <font key="font" metaFont="menu" size="11"/>
                                                                         </buttonCell>
                                                                         <connections>
                                                                             <action selector="historyClearPress:" target="6fb-0C-bsO" id="vo1-tg-8bz"/>
