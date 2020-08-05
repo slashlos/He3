@@ -94,13 +94,22 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
             name: NSNotification.Name(rawValue: "quickQuiet"),
             object: nil)
 
-        //  We allow drag from title's document icon to self or Finder
+        //  Monitor AutoHideTitle preference
+        NotificationCenter.default.addObserver(
+            self,
+			selector: #selector(HeliumController.autoHideTitleBar(_:)),
+            name: NSNotification.Name(rawValue: "autoHideTitleBar"),
+            object: nil)
+		
+		//  We allow drag from title's document icon to self or Finder
         panel.registerForDraggedTypes(NSFilePromiseReceiver.readableDraggedTypes.map { NSPasteboard.PasteboardType($0)})
 		panel.registerForDraggedTypes([.rowDragType, .fileURL, .string])
         panel.windowController?.shouldCascadeWindows = true///offsetFromKeyWindow()
 
         // Remember for later restoration
         NSApp.changeWindowsItem(panel, title: panel.title, filename: false)
+		
+		installTitleHider(true)
     }
 
     override var document: AnyObject? {
@@ -230,6 +239,7 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 	var wholeTrackingTag: NSView.TrackingRectTag?
 	var titleTrackingTag: NSView.TrackingRectTag?
 	var fadeTimer : Timer? = nil
+	var hideTimer : Timer? = nil
 	
 	dynamic var priorIdle: Bool = true
 	dynamic var mouseIdle: Bool = false {
@@ -263,21 +273,20 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 			})
 			return
 		}
-		let hideMe = !self.mouseOver || self.mouseIdle
+		let fadeMe = !self.mouseOver || self.mouseIdle
 
 		if fadeNow {
 			NSAnimationContext.runAnimationGroup({ (context) in
 				context.duration = 0.5
 				
-				self.titleView?.animator().isHidden = hideMe
+				self.titleView?.animator().isHidden = fadeMe
 				///self.window?.animator().titlebarAppearsTransparent = hideMe
 				self.window?.animator().titleVisibility = !self.mouseOver || self.mouseIdle ? .hidden : .visible
 			})
 		}
-		//FIXME: do this less often
         docIconVisibility(autoHideTitlePreference == .never || translucencyPreference == .never)
 		
-		if let timer = fadeTimer, timer.isValid { timer.invalidate(); print("±timer") }
+		if let timer = fadeTimer, timer.isValid { timer.invalidate(); print("±fader") }
 		self.fadeTimer = Timer.scheduledTimer(withTimeInterval: 3.97, repeats: false, block: { (timer) in
 			if fadeNow || timer.isValid {
 				self.mouseIdle = true
@@ -285,7 +294,7 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 
 				NSAnimationContext.runAnimationGroup({ (context) in
 					context.duration = fadeNow ? 0.5 : 1.0
-					print(String(format: "-timer over:%@ idle:%@",
+					print(String(format: "-fader over:%@ idle:%@",
 									   (self.mouseOver ? "Yes" : "No"),
 									   (self.mouseIdle ? "Yes" : "No")))
 					self.titleView?.animator().isHidden = true
@@ -294,7 +303,45 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 				})
 			}
 		})
-		if let timer = self.fadeTimer { RunLoop.current.add(timer, forMode: .common); print("+timer") }
+		if let timer = self.fadeTimer { RunLoop.current.add(timer, forMode: .common); print("+fader") }
+	}
+	
+	fileprivate func installTitleHider(_ hideNow: Bool = false) {
+		guard UserSettings.AutoHideTitle.value != (hideTimer != nil) else { return }
+		guard let titleView = self.titleView else { return }
+		let hideMe = !self.mouseOver || self.mouseIdle
+
+		if hideNow {
+			NSAnimationContext.runAnimationGroup({ (context) in
+				context.duration = 0.5
+				
+				self.titleView?.animator().isHidden = hideMe
+				///self.window?.animator().titlebarAppearsTransparent = hideMe
+				self.window?.animator().titleVisibility = !self.mouseOver || self.mouseIdle ? .hidden : .visible
+			})
+		}
+        docIconVisibility(autoHideTitlePreference == .never || translucencyPreference == .never)
+		
+		if let timer = hideTimer, timer.isValid { timer.invalidate(); hideTimer = nil; print("±hider") }
+		guard UserSettings.AutoHideTitle.value else { return }
+		
+		self.hideTimer = Timer.scheduledTimer(withTimeInterval: 3.97, repeats: true, block: { (timer) in
+			if hideNow || timer.isValid, !titleView.isHidden {
+				self.mouseIdle = true
+				timer.invalidate()
+
+				NSAnimationContext.runAnimationGroup({ (context) in
+					context.duration = hideNow ? 0.5 : 1.0
+					print(String(format: "-hider over:%@ idle:%@",
+									   (self.mouseOver ? "Yes" : "No"),
+									   (self.mouseIdle ? "Yes" : "No")))
+					self.titleView?.animator().isHidden = true
+					///self.window?.animator().titlebarAppearsTransparent = true
+					self.window?.animator().titleVisibility = .hidden
+				})
+			}
+		})
+		if let timer = self.hideTimer { RunLoop.current.add(timer, forMode: .common); print("+hider") }
 	}
 	
 	override func mouseEntered(with event: NSEvent) {
@@ -827,6 +874,10 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
     }
 
     //MARK:- Notifications
+	@objc func autoHideTitleBar(_ notification: Notification) {
+        installTitleHider(true)
+    }
+
     @objc func willUpdateAlpha() {
         didUpdateAlpha(settings.opacityPercentage.value)
     }

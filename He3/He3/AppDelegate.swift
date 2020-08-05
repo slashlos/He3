@@ -481,6 +481,9 @@ let sameWindow : ViewOptions = []
     //  By defaut we show document title bar
     @objc @IBAction func autoHideTitlePress(_ sender: NSMenuItem) {
         UserSettings.AutoHideTitle.value = (sender.state == .off)
+		
+		let notif = Notification(name: Notification.Name(rawValue: "autoHideTitleBar"), object: sender)
+		 NotificationCenter.default.post(notif)
      }
 
 	//	Cookies...
