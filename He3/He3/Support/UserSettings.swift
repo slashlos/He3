@@ -104,7 +104,7 @@ internal struct UserSettings {
     static let KeepListName = Setting<String>("keepList", defaultValue: "Keep")
     
     //  Search provider - must match k struct, menu item tags
-    static let Search = Setting<Int>("search", defaultValue: 1) // Google
+    static let Search = Setting<Int>("search", defaultValue: 1) // DuckDuckGo
     static let SearchNames = Setting<String>("webSearches", defaultValue: "WebSearches")
     static let SearchKeep  = Setting<Int>("searchKeep", defaultValue:255)
 

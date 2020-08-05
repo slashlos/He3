@@ -84,15 +84,18 @@ public struct k {
     static let bingInfo = "Microsoft Bing Search"
     static let bingName = "Bing"
     static let bingLink = "https://search.bing.com/search?Q=%@"
+	static let ddgoInfo = "Duck Duck Go"
+	static let ddgoName = "DuckDuckGo"
+	static let ddgoLink = "https://duckduckgo.com/?q=%@"
     static let googleInfo = "Google Search"
     static let googleName = "Google"
     static let googleLink = "https://www.google.com/search?q=%@"
     static let yahooName = "Yahoo"
     static let yahooInfo = "Yahoo! Search"
     static let yahooLink = "https://search.yahoo.com/search?q=%@"
-    static let searchInfos = [k.bingInfo, k.googleInfo, k.yahooInfo]
-    static let searchNames = [k.bingName, k.googleName, k.yahooName]
-    static let searchLinks = [k.bingLink, k.googleLink, k.yahooLink]
+	static let searchInfos = [k.bingInfo, k.ddgoInfo, k.googleInfo, k.yahooInfo]
+	static let searchNames = [k.bingName, k.ddgoName, k.googleName, k.yahooName]
+	static let searchLinks = [k.bingLink, k.ddgoLink, k.googleLink, k.yahooLink]
 }
 
 extension NSUserInterfaceItemIdentifier {
