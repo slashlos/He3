@@ -22,7 +22,69 @@ p.block {
 <h1>He3</h1>
 <h4>A running release summary of commit changes:</h4>
 
-<h2>1.0.8144</h2>
+<h2>1.0.8362/h2>
+<p class="block">
+adbf382|20/08/05 global hide titlebar support<br>
+59205e5|20/08/05 address about version autolayout issue<br>
+a5f6876|20/08/05 added default DuckDuckGo search engine<br>
+74937c9|20/08/04 app store 8360 build<br>
+bb2c913|20/08/04 global oversight of auto hide title<br>
+507d9bb|20/08/03 minimize log output<br>
+a0a4faa|20/08/03 auto hide title tweaks<br>
+4e95c83|20/08/03 reduce log noise<br>
+208725b|20/08/03 auto hide UI tweaks<br>
+7cd0be2|20/08/03 reduce log noise; install sandbox hack<br>
+7df4b4f|20/08/02 deprecate window, panel button bar<br>
+f7fd7ba|20/08/02 address title visibility<br>
+6f86f6b|20/08/02 expose panel title view<br>
+cb28106|20/08/02 streamline tracking setups<br>
+eb7b1ea|20/08/02 drop ESCAPE window close text<br>
+6c89113|20/08/02 adopt conditional print output<br>
+e3fc576|20/08/01 do not use zero size rect<br>
+aa2451e|20/08/01 dark mode fix<br>
+3071b8e|20/07/30 revert to default window buttons<br>
+6c30764|20/07/30 deprecated custom hover bar<br>
+c9fed2f|20/07/30 address custom url document handling<br>
+2db000c|20/07/30 restore view will appear handler<br>
+d1682cc|20/07/30 header, lineage update<br>
+5fce8a2|20/07/12 finder share fixes<br>
+4b91ba2|20/07/12 fix domain assert<br>
+b17205d|20/07/11 snapshot fix<br>
+689258a|20/07/07 added Prefs controllers<br>
+3add8b2|20/07/07 fix document attributes restore<br>
+26cbcdd|20/07/07 singleton launch window<br>
+15cfc88|20/07/07 preferences panel<br>
+8aa59a4|20/07/07 restore frame setting after restoration<br>
+b7b52d9|20/07/02 build 8158; app submission<br>
+16a0ec1|20/07/02 don't present errors<br>
+16a0ec1|20/07/02 default createWebView handling<br>
+0d22cd7|20/06/28 reorganizations and movements<br>
+7f9c00d|20/06/28 pull deprecated var<br>
+3159492|20/06/28 IP updates<br>
+26ba50c|20/06/28 stop accessing at close<br>
+8394eeb|20/06/28 playtime workflow changes<br>
+35bd927|20/06/28 sandbox updates re: secure encoding<br>
+d6ee0f0|20/06/28 adopt custom cell view<br>
+1c7ea45|20/06/28 auto layout updates<br>
+b111cf6|20/06/28 list, item IP updates<br>
+f0dc7a0|20/06/28 use distinct display images<br>
+03e1371|20/06/28 fix delegate save handling<br>
+429be93|20/06/24 moved thumbnail loading<br>
+9bbe8e3|20/06/24 button action updates<br>
+ebaa24b|20/06/13 storyboard updates for 10.15<br>
+563d6e5|20/06/13 osx 10.15 updates<br>
+e48a44e|20/06/13 type, settings modules; add QL provider<br>
+8fe10e3|20/06/13 osx 10.15 updates<br>
+623c132|20/06/13 10.15 updates<br>
+bec741a|20/06/13 fix asset name<br>
+c2e8f44|20/06/13 adjust 0DP policy decider<br>
+4fc34d0|20/06/13 add PDF UTI<br>
+7dac3cc|20/06/13 sandbox updates re: quicklook<br>
+90aa479|20/06/12 whitespace edit<br>
+9789399|20/06/12 guard layout across window restores<br>
+</p>
+
+<h2>Build 8144</h2>
 <p class="block">
 9fd35fb|20/06/08 expose playlist tally change<br>
 b747e20|20/06/06 revise defaults<br>
@@ -60,7 +122,7 @@ ae39e69|20/05/02 fix delete handling<br>
 424bfc1|20/05/02 app store icon changes<br>
 </p>
 
-<h2>1.0.7267</h2>
+<h2>Build 7267</h2>
 <p class="block">
 2b1896c|20/05/01 yank 10.13 guards<br>
 e11cbf6|20/05/01 modernize unique string creations<br>
