@@ -56,6 +56,12 @@
 		0FBD9BB8245473C600332EEB /* itemIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0FBD9BB7245473C500332EEB /* itemIcon.icns */; };
 		0FBD9BBA2454746200332EEB /* listIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0FBD9BB92454746200332EEB /* listIcon.icns */; };
 		0FBD9BBC2454767300332EEB /* icntIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0FBD9BBB2454767300332EEB /* icntIcon.icns */; };
+		0FC4891C24DDDB220028032C /* icntIcon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0F55CD6524A6795600E49C6A /* icntIcon.jpg */; };
+		0FC4891D24DDDB290028032C /* icntIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F55CD6324A6794E00E49C6A /* icntIcon.png */; };
+		0FC4891E24DDDB2F0028032C /* listIcon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0F55CD6724A67B3D00E49C6A /* listIcon.jpg */; };
+		0FC4891F24DDDB340028032C /* listIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F9EF95A24776468008DDB93 /* listIcon.png */; };
+		0FC4892024DDDB3B0028032C /* itemIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F9EF953247019E6008DDB93 /* itemIcon.png */; };
+		0FC4892124DDDB3F0028032C /* itemIcon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0F55CD6924A67B7100E49C6A /* itemIcon.jpg */; };
 		0FD21271246383E500EA5D6D /* PlaylistViewController+DragAndDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD21270246383E500EA5D6D /* PlaylistViewController+DragAndDrop.swift */; };
 		0FD21273246386A500EA5D6D /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD21272246386A500EA5D6D /* Extensions.swift */; };
 		0FD2127524638EB900EA5D6D /* WebViewController+Navigation+UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD2127424638EB900EA5D6D /* WebViewController+Navigation+UI.swift */; };
@@ -64,6 +70,7 @@
 		0FD2127B2466448500EA5D6D /* PlayItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD2127A2466448500EA5D6D /* PlayItem.swift */; };
 		0FD2127D2466D71200EA5D6D /* DocController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD2127C2466D71200EA5D6D /* DocController.swift */; };
 		0FD212812467052900EA5D6D /* PlayTableCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD212802467052900EA5D6D /* PlayTableCellView.swift */; };
+		0FDBA00D24DD7F7E00F4B58E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0F30717D246AB8CF00684B84 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -722,6 +729,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0FDBA00D24DD7F7E00F4B58E /* Main.storyboard in Resources */,
 				0F30716D246A3D0C00684B84 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -745,6 +753,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0FC4891F24DDDB340028032C /* listIcon.png in Resources */,
+				0FC4891D24DDDB290028032C /* icntIcon.png in Resources */,
+				0FC4892024DDDB3B0028032C /* itemIcon.png in Resources */,
+				0FC4891E24DDDB2F0028032C /* listIcon.jpg in Resources */,
+				0FC4891C24DDDB220028032C /* icntIcon.jpg in Resources */,
+				0FC4892124DDDB3F0028032C /* itemIcon.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1158,6 +1172,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = com.slashlos.he3.Launcher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1180,6 +1195,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = com.slashlos.he3.Launcher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
