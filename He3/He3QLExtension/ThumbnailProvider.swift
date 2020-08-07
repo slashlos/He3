@@ -42,8 +42,12 @@ class ThumbnailProvider: QLThumbnailProvider {
 			
 			if [k.kUTHe3PlayList, k.kUTHe3PlayItem].contains(fileType) {
 				let resource = fileType == k.kUTHe3PlayList ? k.listIcon : k.itemIcon
-				handler(QLThumbnailReply(imageFileURL: Bundle.main.url(forResource: resource, withExtension: "png")!), nil)
-				return
+				for type in (["png","jpg"]) {
+					if let url = Bundle.main.url(forResource: resource, withExtension: type) {
+						handler(QLThumbnailReply(imageFileURL: url), nil)
+						return
+					}
+				}
 			}
 		} catch { }
 
