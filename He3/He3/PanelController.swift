@@ -952,17 +952,7 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
                 }
                 if !docIconButton.isHidden
                 {
-                    if let doc = self.doc {
-                        docIconButton.image = doc.displayImage.resize(w: 12, h: 12)
-                    }
-                    else
-                    {
-                         docIconButton.image = NSApp.applicationIconImage.resize(w: 12, h: 12)
-                    }
-
-                    if let url = self.webView?.url, url.isFileURL {
-                        self.synchronizeWindowTitleWithDocumentName()
-                    }
+					docIconButton.image = webView?.icon
                 }
             }
         }

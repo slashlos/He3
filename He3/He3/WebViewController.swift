@@ -193,6 +193,9 @@ class MyWebView : WKWebView {
             return URL.init(string: incognito ? UserSettings.HomeStrkURL.value : UserSettings.HomePageURL.default)!
         }
     }
+	
+	var icon : NSImage?
+	
     init() {
         super.init(frame: .zero, configuration: appDelegate.webConfiguration)
         
@@ -1205,11 +1208,12 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
         let newDidAddSubviewImplementation = imp_implementationWithBlock(unsafeBitCast(newDidAddSubviewImplementationBlock, to: AnyObject.self))
         method_setImplementation(originalDidAddSubviewMethod!, newDidAddSubviewImplementation)*/
         
-        // WebView KVO - load progress, title
+        // WebView KVO - load progress, title, url
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.loading), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.title), options: .new, context: nil)
-    
+		webView.addObserver(self, forKeyPath: #keyPath(WKWebView.url), options: .new, context: nil)
+
         //  Intercept drags
         webView.registerForDraggedTypes(NSFilePromiseReceiver.readableDraggedTypes.map { NSPasteboard.PasteboardType($0)})
         webView.registerForDraggedTypes([NSPasteboard.PasteboardType.fileURL])
@@ -1392,9 +1396,14 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
 
             // Wind down all observations
             if observing {
-                webView.removeObserver(navDelegate, forKeyPath: "estimatedProgress")
+				webView.removeObserver(navDelegate, forKeyPath: #keyPath(WKWebView.estimatedProgress))
+				webView.removeObserver(navDelegate, forKeyPath: #keyPath(WKWebView.loading))
+				webView.removeObserver(navDelegate, forKeyPath: #keyPath(WKWebView.title))
+				webView.removeObserver(navDelegate, forKeyPath: #keyPath(WKWebView.url))/*
+				webView.removeObserver(navDelegate, forKeyPath: "estimatedProgress")
                 webView.removeObserver(navDelegate, forKeyPath: "loading")
                 webView.removeObserver(navDelegate, forKeyPath: "title")
+				webView.removeObserver(navDelegate, forKeyPath: "url")*/
                 observing = false
             }
         }
@@ -1965,7 +1974,9 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
                 }
             }
              
-        case "url":///currently *not* KVO ?
+        case "url":
+			DispatchQueue.main.async { self.webView.icon = self.iconForURL() }
+			
             if let urlString = change?[NSKeyValueChangeKey(rawValue: "new")] as? String {
                 guard let dict = defaults.dictionary(forKey: urlString) else { return }
                 
@@ -1978,7 +1989,43 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
             print("Unknown observing keyPath \(String(describing: keyPath))")
         }
     }
-    
+	
+	func iconForURL() -> NSImage {
+		let webView = self.webView
+		
+		guard let url = webView.url, url.absoluteString != UserSettings.HomePageURL.value else {
+			return NSApp.applicationIconImage }
+
+		if [k.http,k.https].contains(url.scheme), let host = url.host {
+			let urlString = String(format: "http://www.google.com/s2/favicons?%@", host)
+			if let imageURL = URL(string: urlString) {
+				do {
+					let imageData = try Data(contentsOf: imageURL)
+					if  let image = NSImage(data: imageData) {
+						return image
+					}
+				} catch { }
+			}
+		}
+		
+		if k.file == url.scheme {
+			return iconForFileURL(url)
+		}
+		
+		return NSApp.applicationIconImage
+	}
+	
+	func iconForFileURL(_ url : URL) -> NSImage {
+		let size = NSSize(width: 12, height: 12)
+		let ref = QLThumbnailImageCreate(kCFAllocatorDefault, url as CFURL, size, nil)
+		if let cgImage = ref?.takeUnretainedValue() {
+			let thumbnailImage = NSImage(cgImage: cgImage, size: size)
+			ref?.release()
+			return thumbnailImage
+		}
+		return NSImage(named: k.docIcon)!
+	}
+	
     //Convert a YouTube video url that starts at a certian point to popup/embedded design
     // (i.e. ...?t=1m2s --> ?start=62)
     func makeCustomStartTimeURL(_ url: String) -> String {
