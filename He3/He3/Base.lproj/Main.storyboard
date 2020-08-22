@@ -176,8 +176,8 @@
         <!--Window Controller-->
         <scene sceneID="3Vy-ae-Byb">
             <objects>
-                <windowController storyboardIdentifier="ReleaseController" id="Mba-6M-yew" customClass="ReleasePanelController" customModule="He3" customModuleProvider="target" sceneMemberID="viewController">
-                    <window key="window" identifier="Release" title="Release" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" appearanceType="aqua" frameAutosaveName="" animationBehavior="default" tabbingMode="disallowed" id="Ufa-aB-AvU" customClass="NSPanel">
+                <windowController storyboardIdentifier="ReleaseController" id="Mba-6M-yew" customClass="ReleaseController" customModule="He3" sceneMemberID="viewController">
+                    <window key="window" identifier="Release" title="Release" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" appearanceType="aqua" frameAutosaveName="" animationBehavior="default" tabbingIdentifier="release" tabbingMode="disallowed" id="Ufa-aB-AvU" customClass="Panel" customModule="He3" customModuleProvider="target">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="-2135" y="500" width="480" height="270"/>
@@ -563,6 +563,11 @@ CA
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="zTb-jP-kZR"/>
+                                        <menuItem title="Playlists" keyEquivalent="p" id="nTq-9d-Cuj" userLabel="Playlists">
+                                            <connections>
+                                                <action selector="presentPlaylistSheet:" target="Ady-hI-5gd" id="Zpc-yL-af3"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Snapshot" keyEquivalent="y" id="XZA-7w-cCC">
                                             <connections>
                                                 <action selector="snapshot:" target="Ady-hI-5gd" id="gtn-Ys-r0W"/>
@@ -2352,7 +2357,7 @@ Gw
                                         <rect key="frame" x="10" y="10" width="134" height="221"/>
                                         <subviews>
                                             <button toolTip="Restore selected playlists or playitems" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DNq-eF-IsJ">
-                                                <rect key="frame" x="-6" y="176" width="80" height="32"/>
+                                                <rect key="frame" x="-6" y="68" width="80" height="32"/>
                                                 <buttonCell key="cell" type="push" title="Revert" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3XW-t7-vOU">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -2969,7 +2974,7 @@ Gw
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="aSB-Wi-46z">
-                                            <rect key="frame" x="298" y="25" width="15" height="-8"/>
+                                            <rect key="frame" x="298" y="25" width="15" height="92"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <tableHeaderView key="headerView" id="YTX-gj-uhH" customClass="PlayHeaderView" customModule="He3">
