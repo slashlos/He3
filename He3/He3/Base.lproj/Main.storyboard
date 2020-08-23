@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097.2"/>
+        <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -14,7 +15,7 @@
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" resizable="YES" utility="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="425" y="461" width="285" height="165"/>
-                        <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
                         <connections>
                             <outlet property="delegate" destination="1dx-1f-JSH" id="6UP-2R-iBZ"/>
                         </connections>
@@ -654,6 +655,18 @@ CA
                                                 <action selector="toggleTabOverview:" target="Ady-hI-5gd" id="IPS-Zu-K9B"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="Show Tab Bar" id="TBF-W3-Or9">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="toggleTabBar:" target="Ady-hI-5gd" id="cEt-i1-5Rr"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Show Tool Bar" keyEquivalent="t" id="uZV-ek-M1Y">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="togglePreferencesPress:" target="Ady-hI-5gd" id="nCr-kx-aRu"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Stop Web Loading" hidden="YES" keyEquivalent="." id="Zx7-Nq-NAs">
                                             <connections>
                                                 <action selector="cancel:" target="Ady-hI-5gd" id="Ge6-i8-3Qp"/>
@@ -1063,6 +1076,12 @@ CA
                                             <action selector="homePagePress:" target="Voe-Tx-rLC" id="dEt-II-VJQ"/>
                                         </connections>
                                     </menuItem>
+                                    <menuItem title="Location services" id="c6i-FM-X9q">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                        <connections>
+                                            <action selector="locationServicesPress:" target="Voe-Tx-rLC" id="LWH-3g-sIE"/>
+                                        </connections>
+                                    </menuItem>
                                     <menuItem title="Magic URL Redirects" id="iyu-Wn-umk">
                                         <modifierMask key="keyEquivalentModifierMask"/>
                                         <connections>
@@ -1431,7 +1450,7 @@ CA
                                     <constraint firstAttribute="width" constant="450" id="Ows-3y-pCH"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="90" id="hAP-tu-Ee1"/>
                                 </constraints>
-                                <font key="font" metaFont="label" size="9"/>
+                                <font key="font" metaFont="menu" size="9"/>
                                 <tabViewItems>
                                     <tabViewItem label="History" identifier="0" id="zgs-k6-1dG">
                                         <view key="view" id="1MQ-3y-3o1">
@@ -1582,6 +1601,64 @@ CA
                                             </constraints>
                                         </view>
                                     </tabViewItem>
+                                    <tabViewItem label="Location Svcs" identifier="" id="hMm-rq-lRD">
+                                        <view key="view" toolTip="enable or disable location sharing" id="bJj-8H-evg">
+                                            <rect key="frame" x="10" y="19" width="444" height="79"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fmS-GF-CZp">
+                                                    <rect key="frame" x="15" y="52" width="414" height="16"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="blo-Vb-Kx8">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                    <connections>
+                                                        <binding destination="6fb-0C-bsO" name="value" keyPath="self.locationStatusState" id="Ele-U3-8OM"/>
+                                                    </connections>
+                                                </textField>
+                                                <segmentedControl verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="89X-oA-lO1">
+                                                    <rect key="frame" x="15" y="26" width="191" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <segmentedCell key="cell" controlSize="small" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="sX1-Rs-hGz">
+                                                        <font key="font" metaFont="message" size="11"/>
+                                                        <segments>
+                                                            <segment label="Stop" image="NSStatusAvailable"/>
+                                                            <segment label="Start" image="NSStatusPartiallyAvailable" selected="YES" tag="1"/>
+                                                            <segment label="Deny" image="NSStatusUnavailable" tag="2"/>
+                                                        </segments>
+                                                    </segmentedCell>
+                                                    <connections>
+                                                        <action selector="changeLocationService:" target="6fb-0C-bsO" id="qNW-W6-46v"/>
+                                                    </connections>
+                                                </segmentedControl>
+                                                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NXZ-RL-dcP">
+                                                    <rect key="frame" x="239" y="2" width="188" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="bevel" title="Launch Privacy &amp; Security Settings" bezelStyle="rounded" alignment="right" controlSize="small" imageScaling="proportionallyDown" inset="2" id="Of2-a5-qrw">
+                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                        <font key="font" metaFont="message" size="11"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="launchPrivacyLocationServiceSettings:" target="6fb-0C-bsO" id="92N-pc-z6m"/>
+                                                    </connections>
+                                                </button>
+                                                <button toolTip="remember location enabled state" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SIp-GK-Veu">
+                                                    <rect key="frame" x="281" y="30" width="148" height="18"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                    <buttonCell key="cell" type="check" title="Remember Selection" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Mc3-V4-Jzf">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="system"/>
+                                                    </buttonCell>
+                                                    <connections>
+                                                        <action selector="rememberLocationService:" target="6fb-0C-bsO" id="CfM-cQ-gKx"/>
+                                                        <binding destination="dNw-Ab-Axl" name="value" keyPath="values.restoreLocationSvcs" id="nb9-sn-nB9"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                        </view>
+                                    </tabViewItem>
                                     <tabViewItem label="Search" identifier="2" id="xKG-P4-LHP">
                                         <view key="view" id="Qz0-p1-jb9">
                                             <rect key="frame" x="10" y="19" width="444" height="79"/>
@@ -1601,17 +1678,20 @@ CA
                                                         <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="5" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mqh-91-QuP">
                                                             <rect key="frame" x="46" y="18" width="64" height="22"/>
                                                             <subviews>
-                                                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BVq-jJ-TRy">
-                                                                    <rect key="frame" x="0.0" y="1" width="50" height="21"/>
+                                                                <textField toolTip="maximum seaches remembered" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="BVq-jJ-TRy">
+                                                                    <rect key="frame" x="0.0" y="1" width="46" height="21"/>
                                                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="tz6-Zl-Hkk">
                                                                         <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="Wye-mG-aZF"/>
                                                                         <font key="font" metaFont="system"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                     </textFieldCell>
+                                                                    <connections>
+                                                                        <binding destination="dNw-Ab-Axl" name="value" keyPath="values.searchKeep" id="kIJ-KC-C9b"/>
+                                                                    </connections>
                                                                 </textField>
                                                                 <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IVr-gI-1hQ">
-                                                                    <rect key="frame" x="52" y="-3" width="15" height="28"/>
+                                                                    <rect key="frame" x="48" y="-3" width="19" height="28"/>
                                                                     <stepperCell key="cell" continuous="YES" alignment="left" minValue="1" maxValue="255" doubleValue="255" id="dhC-m0-TOV"/>
                                                                     <connections>
                                                                         <binding destination="dWd-n6-sDx" name="value" keyPath="values.searchKeep" id="oaH-ps-G7a"/>
@@ -1673,14 +1753,27 @@ CA
                                                         <real value="3.4028234663852886e+38"/>
                                                     </customSpacing>
                                                 </stackView>
+                                                <textField toolTip="current web searches" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2PN-GF-SkZ">
+                                                    <rect key="frame" x="389" y="14" width="33" height="14"/>
+                                                    <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="Label" id="eiI-qd-4ce">
+                                                        <font key="font" metaFont="message" size="11"/>
+                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                    <connections>
+                                                        <binding destination="6fb-0C-bsO" name="value" keyPath="self.webSearchesCount" id="Zaa-UO-vlg"/>
+                                                    </connections>
+                                                </textField>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="Nk0-i5-GgF" firstAttribute="centerY" secondItem="Qz0-p1-jb9" secondAttribute="centerY" id="1fB-eR-uXb"/>
                                                 <constraint firstItem="Nk0-i5-GgF" firstAttribute="top" secondItem="Qz0-p1-jb9" secondAttribute="top" constant="11" id="1jd-Yh-nd6"/>
                                                 <constraint firstItem="Nk0-i5-GgF" firstAttribute="centerY" secondItem="3WL-Tm-NjE" secondAttribute="centerY" id="6Fk-fK-gtD"/>
+                                                <constraint firstItem="2PN-GF-SkZ" firstAttribute="trailing" secondItem="BVq-jJ-TRy" secondAttribute="trailing" id="IMe-II-sVb"/>
                                                 <constraint firstItem="3WL-Tm-NjE" firstAttribute="top" secondItem="Qz0-p1-jb9" secondAttribute="top" constant="12" id="SAN-5x-sAU"/>
                                                 <constraint firstAttribute="trailing" secondItem="Nk0-i5-GgF" secondAttribute="trailing" constant="6" id="Wmb-sT-kcm"/>
                                                 <constraint firstItem="Nk0-i5-GgF" firstAttribute="leading" secondItem="3WL-Tm-NjE" secondAttribute="trailing" constant="26" id="Yd8-4B-Vk7"/>
+                                                <constraint firstItem="2PN-GF-SkZ" firstAttribute="baseline" secondItem="Nk0-i5-GgF" secondAttribute="baseline" id="c4H-f4-Jio"/>
                                                 <constraint firstItem="3WL-Tm-NjE" firstAttribute="centerY" secondItem="Qz0-p1-jb9" secondAttribute="centerY" id="jEs-2z-GjB"/>
                                                 <constraint firstItem="3WL-Tm-NjE" firstAttribute="leading" secondItem="Qz0-p1-jb9" secondAttribute="leading" constant="17" id="k9s-mb-yyP"/>
                                             </constraints>
@@ -1738,7 +1831,7 @@ CA
                                 <subviews>
                                     <tabView controlSize="mini" initialItem="1H6-Li-Gba" translatesAutoresizingMaskIntoConstraints="NO" id="8ga-ki-MKn">
                                         <rect key="frame" x="-7" y="-10" width="265" height="71"/>
-                                        <font key="font" metaFont="label" size="9"/>
+                                        <font key="font" metaFont="menu" size="9"/>
                                         <tabViewItems>
                                             <tabViewItem label="Cookies" identifier="" id="1H6-Li-Gba">
                                                 <view key="view" id="MR4-UI-CPo">
@@ -1798,7 +1891,7 @@ CA
                                                                         <rect key="frame" x="187" y="-6" width="54" height="23"/>
                                                                         <buttonCell key="cell" type="push" title="Clear" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="nDf-7y-DwP">
                                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                                            <font key="font" metaFont="menu" size="11"/>
+                                                                            <font key="font" metaFont="message" size="11"/>
                                                                         </buttonCell>
                                                                         <connections>
                                                                             <action selector="clearCookiesPress:" target="6fb-0C-bsO" id="x8S-Px-I0r"/>
@@ -1820,7 +1913,7 @@ CA
                                     </tabView>
                                     <tabView controlSize="mini" initialItem="fbw-ta-Z9i" translatesAutoresizingMaskIntoConstraints="NO" id="URB-RX-0w3">
                                         <rect key="frame" x="254" y="-10" width="203" height="71"/>
-                                        <font key="font" metaFont="label" size="9"/>
+                                        <font key="font" metaFont="menu" size="9"/>
                                         <tabViewItems>
                                             <tabViewItem label="History" identifier="" id="fbw-ta-Z9i">
                                                 <view key="view" id="55J-Bu-6FY">
@@ -1869,7 +1962,7 @@ CA
                                                                         <rect key="frame" x="121" y="-6" width="54" height="23"/>
                                                                         <buttonCell key="cell" type="push" title="Clear" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="oyl-gZ-NQk">
                                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                                            <font key="font" metaFont="menu" size="11"/>
+                                                                            <font key="font" metaFont="message" size="11"/>
                                                                         </buttonCell>
                                                                         <connections>
                                                                             <action selector="historyClearPress:" target="6fb-0C-bsO" id="vo1-tg-8bz"/>
@@ -1947,6 +2040,8 @@ CA
                 <userDefaultsController id="W3B-TW-cZo"/>
                 <userDefaultsController id="wIe-rN-AP7"/>
                 <userDefaultsController id="dWd-n6-sDx"/>
+                <userDefaultsController id="dNw-Ab-Axl"/>
+                <userDefaultsController id="iHn-Me-6iv"/>
             </objects>
             <point key="canvasLocation" x="749" y="-1294"/>
         </scene>
@@ -2050,13 +2145,13 @@ Gw
                                         </connections>
                                     </button>
                                     <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KRs-AT-9D8">
-                                        <rect key="frame" x="0.0" y="139" width="126" height="133"/>
+                                        <rect key="frame" x="0.0" y="189" width="126" height="83"/>
                                         <clipView key="contentView" drawsBackground="NO" id="Noe-Za-eMO">
-                                            <rect key="frame" x="1" y="0.0" width="124" height="117"/>
+                                            <rect key="frame" x="1" y="0.0" width="124" height="67"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView identifier="playlists" verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" columnSelection="YES" autosaveName="playlistTableView.prefs" rowSizeStyle="automatic" headerView="tha-4C-kVE" viewBased="YES" id="PML-r0-Bx7" userLabel="Playlist Table View" customClass="PlayTableView" customModule="He3" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="253" height="92"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="253" height="42"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -2281,7 +2376,7 @@ Gw
                                             <nil key="backgroundColor"/>
                                         </clipView>
                                         <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="atn-XO-QDu">
-                                            <rect key="frame" x="1" y="117" width="124" height="15"/>
+                                            <rect key="frame" x="1" y="67" width="124" height="15"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="phY-te-dcT">
@@ -2294,10 +2389,10 @@ Gw
                                         </tableHeaderView>
                                     </scrollView>
                                     <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="2" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IJO-dk-87l">
-                                        <rect key="frame" x="8" y="12" width="38" height="118"/>
+                                        <rect key="frame" x="8" y="12" width="38" height="168"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ham-VS-t4a">
-                                                <rect key="frame" x="0.0" y="99" width="18" height="20"/>
+                                                <rect key="frame" x="0.0" y="149" width="18" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="18" id="JTp-ky-mGF"/>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="18" id="XPl-Vx-uH4"/>
@@ -2312,7 +2407,7 @@ Gw
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="o1D-da-uMx">
-                                                <rect key="frame" x="20" y="99" width="18" height="20"/>
+                                                <rect key="frame" x="20" y="149" width="18" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="18" id="EdH-Et-2HW"/>
                                                     <constraint firstAttribute="height" constant="18" id="h38-0O-QiV"/>
@@ -2357,7 +2452,7 @@ Gw
                                         <rect key="frame" x="10" y="10" width="134" height="221"/>
                                         <subviews>
                                             <button toolTip="Restore selected playlists or playitems" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DNq-eF-IsJ">
-                                                <rect key="frame" x="-6" y="68" width="80" height="32"/>
+                                                <rect key="frame" x="-6" y="176" width="80" height="32"/>
                                                 <buttonCell key="cell" type="push" title="Revert" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3XW-t7-vOU">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -2906,7 +3001,7 @@ Gw
                                                                     <rect key="frame" x="734" y="1" width="80" height="16"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                     <segmentedCell key="cell" controlSize="mini" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="QHE-KZ-Y2v">
-                                                                        <font key="font" metaFont="label" size="9"/>
+                                                                        <font key="font" metaFont="menu" size="9"/>
                                                                         <segments>
                                                                             <segment label="All" width="24"/>
                                                                             <segment label="Dis" width="24" selected="YES" tag="1"/>
@@ -2945,7 +3040,7 @@ Gw
                                                                     <rect key="frame" x="817" y="1" width="132" height="22"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                                     <segmentedCell key="cell" controlSize="mini" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="uOP-xR-z5Z">
-                                                                        <font key="font" metaFont="label" size="9"/>
+                                                                        <font key="font" metaFont="menu" size="9"/>
                                                                         <segments>
                                                                             <segment label="Nvr" width="32"/>
                                                                             <segment label="Alw" width="32" selected="YES" tag="1"/>
@@ -2974,7 +3069,7 @@ Gw
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="aSB-Wi-46z">
-                                            <rect key="frame" x="298" y="25" width="15" height="92"/>
+                                            <rect key="frame" x="298" y="25" width="15" height="-8"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <tableHeaderView key="headerView" id="YTX-gj-uhH" customClass="PlayHeaderView" customModule="He3">
@@ -3032,7 +3127,7 @@ Gw
                     </constraints>
                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSRefreshTemplate" imagePosition="only" alignment="center" alternateImage="NSActionTemplate" controlSize="mini" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyUpOrDown" inset="2" id="xGp-AG-fk9">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="label" size="9"/>
+                        <font key="font" metaFont="menu" size="9"/>
                     </buttonCell>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="wantsLayer" value="YES"/>
@@ -3049,6 +3144,35 @@ Gw
             </objects>
             <point key="canvasLocation" x="658" y="520"/>
         </scene>
+        <!--Titlebar Accessory View Controller-->
+        <scene sceneID="hZq-LY-s76">
+            <objects>
+                <viewController storyboardIdentifier="RightSideAccesoryViewController" id="m11-6x-Rpg" customClass="NSTitlebarAccessoryViewController" sceneMemberID="viewController">
+                    <view key="view" id="JIb-m2-Qst">
+                        <rect key="frame" x="0.0" y="0.0" width="26" height="13"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <button toolTip="toggle preferences toolbar" verticalHuggingPriority="750" id="pjp-3R-HYe">
+                                <rect key="frame" x="7" y="0.0" width="13" height="13"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <buttonCell key="cell" type="square" title=" " bezelStyle="shadowlessSquare" image="NSActionTemplate" imagePosition="overlaps" alignment="right" controlSize="small" imageScaling="proportionallyDown" inset="2" id="GH5-k2-F6I">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="message" size="11"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="togglePreferencesPress:" target="QYb-hL-iI7" id="X5f-f6-xOL"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                    </view>
+                    <connections>
+                        <outlet property="view" destination="JIb-m2-Qst" id="ei6-I1-vxu"/>
+                    </connections>
+                </viewController>
+                <customObject id="QYb-hL-iI7" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-262" y="-486"/>
+        </scene>
         <!--Window Controller-->
         <scene sceneID="R2V-B0-nI4">
             <objects>
@@ -3059,17 +3183,195 @@ Gw
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+                        <toolbar key="toolbar" implicitIdentifier="1D3CCDBC-E75D-4E12-BBC2-B1B8639DD253" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconAndLabel" sizeMode="small" id="cZj-vP-H6e">
+                            <allowedToolbarItems>
+                                <toolbarItem implicitItemIdentifier="EB23D248-0E52-4E8D-B863-3C758FF94750" label="Auto Hide Title" paletteLabel="AutoHide" toolTip="auto hide title bar" sizingBehavior="auto" id="FwO-iD-ty3">
+                                    <popUpButton key="view" verticalHuggingPriority="750" id="vtP-Pj-U4Y">
+                                        <rect key="frame" x="0.0" y="14" width="100" height="24"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <popUpButtonCell key="cell" type="roundTextured" title="Never" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="sAL-RQ-Lba" id="gJZ-rv-2vH">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                            <menu key="menu" title="Auto-hide Title Bar" id="6Pz-s0-PiJ">
+                                                <items>
+                                                    <menuItem title="Never" state="on" id="sAL-RQ-Lba">
+                                                        <connections>
+                                                            <action selector="autoHideTitlePress:" target="Oky-zY-oP4" id="dSf-ga-IXf"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Outside" tag="1" id="h7B-rs-H5s">
+                                                        <connections>
+                                                            <action selector="autoHideTitlePress:" target="Oky-zY-oP4" id="9Qf-Kf-toa"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                                <connections>
+                                                    <outlet property="delegate" destination="B8D-0N-5wS" id="JjX-mn-RRZ"/>
+                                                </connections>
+                                            </menu>
+                                        </popUpButtonCell>
+                                        <connections>
+                                            <binding destination="B8D-0N-5wS" name="selectedTag" keyPath="self.autoHideValue" id="y2D-mI-ZKl"/>
+                                        </connections>
+                                    </popUpButton>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="3A1A60F0-2DDF-4975-9770-E065D3B92BBE" label="Float" paletteLabel="Float Above" sizingBehavior="auto" id="faz-Y8-DQM">
+                                    <nil key="toolTip"/>
+                                    <popUpButton key="view" verticalHuggingPriority="750" id="dyA-ty-CHL">
+                                        <rect key="frame" x="0.0" y="14" width="100" height="24"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <popUpButtonCell key="cell" type="roundTextured" title="All Spaces" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="iu1-bS-9hP" id="iXR-Wz-Xwk">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                            <menu key="menu" id="iNn-1N-XDs">
+                                                <items>
+                                                    <menuItem title="All Spaces" state="on" id="iu1-bS-9hP">
+                                                        <connections>
+                                                            <action selector="floatOverAllSpacesPress:" target="B8D-0N-5wS" id="Gh6-O3-csk"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Single Space" tag="1" id="zZd-ra-QKA">
+                                                        <connections>
+                                                            <action selector="floatOverAllSpacesPress:" target="B8D-0N-5wS" id="DBf-fb-Ee5"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Full Screen" tag="2" id="wmD-hE-iTh">
+                                                        <connections>
+                                                            <action selector="floatOverFullScreenAppsPress:" target="B8D-0N-5wS" id="L1L-5t-mgB"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                                <connections>
+                                                    <outlet property="delegate" destination="B8D-0N-5wS" id="CSX-PJ-9AP"/>
+                                                </connections>
+                                            </menu>
+                                        </popUpButtonCell>
+                                        <connections>
+                                            <binding destination="B8D-0N-5wS" name="selectedTag" keyPath="self.floatAboveValue" id="Bb4-kh-m2w"/>
+                                        </connections>
+                                    </popUpButton>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="20B13993-855E-4E06-8FFE-30575F2AE5E9" label="Translucent" paletteLabel="Translucent" sizingBehavior="auto" id="fJy-ou-YnS">
+                                    <nil key="toolTip"/>
+                                    <popUpButton key="view" verticalHuggingPriority="750" id="9tS-bB-NGO">
+                                        <rect key="frame" x="0.0" y="14" width="100" height="24"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <popUpButtonCell key="cell" type="roundTextured" title="Never" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="TDR-8g-lQU" id="SZb-sS-Ujd">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                            <menu key="menu" id="otX-8J-YZS">
+                                                <items>
+                                                    <menuItem title="Never" state="on" id="TDR-8g-lQU">
+                                                        <connections>
+                                                            <action selector="translucencyPress:" target="Oky-zY-oP4" id="Li9-nI-XGJ"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Always" tag="1" id="Zdh-Sh-Dsv">
+                                                        <connections>
+                                                            <action selector="translucencyPress:" target="Oky-zY-oP4" id="U1t-ab-ht6"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Over" tag="2" id="uQA-ak-q1K">
+                                                        <connections>
+                                                            <action selector="translucencyPress:" target="Oky-zY-oP4" id="2PV-ym-xgi"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                    <menuItem title="Outside" tag="3" id="gSJ-9Y-ZGz">
+                                                        <connections>
+                                                            <action selector="translucencyPress:" target="Oky-zY-oP4" id="axV-u1-zVQ"/>
+                                                        </connections>
+                                                    </menuItem>
+                                                </items>
+                                                <connections>
+                                                    <outlet property="delegate" destination="B8D-0N-5wS" id="54S-9f-uyp"/>
+                                                </connections>
+                                            </menu>
+                                        </popUpButtonCell>
+                                        <connections>
+                                            <binding destination="B8D-0N-5wS" name="selectedTag" keyPath="self.transValue" id="4Aw-qO-POH"/>
+                                        </connections>
+                                    </popUpButton>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="46487EE0-A051-466D-9F55-6B1ED0D2EE85" label="Translucency" paletteLabel="Translucency" sizingBehavior="auto" id="5xX-aY-d3F">
+                                    <nil key="toolTip"/>
+                                    <levelIndicator key="view" verticalHuggingPriority="750" id="68T-wZ-ueB">
+                                        <rect key="frame" x="0.0" y="14" width="120" height="18"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <levelIndicatorCell key="cell" editable="YES" continuous="YES" alignment="left" doubleValue="10" maxValue="10" warningValue="4" criticalValue="7" id="aFY-Ae-hVm"/>
+                                        <color key="fillColor" red="1" green="0.49327188729999999" blue="0.47399842739999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="warningFillColor" red="0.45009386540000001" green="0.98132258650000004" blue="0.4743030667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="criticalFillColor" name="controlAccentColor" catalog="System" colorSpace="catalog"/>
+                                        <connections>
+                                            <action selector="percentageLevelPress:" target="Oky-zY-oP4" id="GUK-BU-3FU"/>
+                                            <binding destination="B8D-0N-5wS" name="value" keyPath="self.alphaLevel" id="5Do-m5-hOL"/>
+                                        </connections>
+                                    </levelIndicator>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="Gs2-HS-MJB"/>
+                                <toolbarItem implicitItemIdentifier="7CAA784E-EAC0-4561-B84E-2524ACF58BBD" label="HideMe" paletteLabel="HideMe" image="NSActionTemplate" sizingBehavior="auto" id="b3i-qz-pXN">
+                                    <nil key="toolTip"/>
+                                    <button key="view" toolTip="toggle preferences toolbar" verticalHuggingPriority="750" id="KZh-RK-kK3">
+                                        <rect key="frame" x="16" y="14" width="16" height="16"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <buttonCell key="cell" type="square" title=" " bezelStyle="shadowlessSquare" image="NSActionTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="Pkj-YZ-h8Q">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="togglePreferencesPress:" target="Oky-zY-oP4" id="ZS5-X5-ACe"/>
+                                        </connections>
+                                    </button>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="8jF-0S-hf1"/>
+                            </allowedToolbarItems>
+                            <defaultToolbarItems>
+                                <toolbarItem reference="FwO-iD-ty3"/>
+                                <toolbarItem reference="Gs2-HS-MJB"/>
+                                <toolbarItem reference="faz-Y8-DQM"/>
+                                <toolbarItem reference="Gs2-HS-MJB"/>
+                                <toolbarItem reference="fJy-ou-YnS"/>
+                                <toolbarItem reference="Gs2-HS-MJB"/>
+                                <toolbarItem reference="5xX-aY-d3F"/>
+                                <toolbarItem reference="Gs2-HS-MJB"/>
+                                <toolbarItem reference="b3i-qz-pXN"/>
+                            </defaultToolbarItems>
+                        </toolbar>
                         <connections>
                             <outlet property="delegate" destination="B8D-0N-5wS" id="Vd4-Ss-b88"/>
                         </connections>
                     </window>
                     <connections>
+                        <outlet property="autoHidePopup" destination="vtP-Pj-U4Y" id="GWg-3A-wAt"/>
+                        <outlet property="floatPopup" destination="dyA-ty-CHL" id="kcI-W4-Tbp"/>
+                        <outlet property="opacityLevel" destination="68T-wZ-ueB" id="U4H-8r-wkB"/>
+                        <outlet property="preferencesButtonView" destination="Uxp-hW-jpm" id="eoI-GB-IWT"/>
+                        <outlet property="preferencesToolbar" destination="cZj-vP-H6e" id="wXQ-MM-rkc"/>
+                        <outlet property="transPopup" destination="9tS-bB-NGO" id="cwQ-6L-EMY"/>
                         <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="cq2-FE-JQM"/>
                     </connections>
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <view id="Uxp-hW-jpm">
+                    <rect key="frame" x="0.0" y="0.0" width="39" height="26"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <subviews>
+                        <button toolTip="show window preferences" verticalHuggingPriority="750" id="tQJ-Ym-H8G">
+                            <rect key="frame" x="-205" y="-137" width="450" height="300"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            <buttonCell key="cell" type="square" title=" " bezelStyle="shadowlessSquare" image="NSActionTemplate" imagePosition="overlaps" alignment="right" controlSize="small" imageScaling="proportionallyDown" inset="2" id="Q1v-Fm-Tjv">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="message" size="11"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="togglepreferencesPress:" target="Oky-zY-oP4" id="JD0-TJ-LKu"/>
+                                <binding destination="B8D-0N-5wS" name="hidden" keyPath="self.showToolbar" id="Km3-U6-sZg"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                </view>
+                <userDefaultsController id="ZI3-DI-Uui"/>
             </objects>
-            <point key="canvasLocation" x="75" y="-32"/>
+            <point key="canvasLocation" x="-110" y="-66"/>
         </scene>
         <!--Web View Controller-->
         <scene sceneID="hIz-AP-VOD">
@@ -3091,6 +3393,9 @@ Gw
         <image name="NSAddTemplate" width="11" height="11"/>
         <image name="NSRefreshTemplate" width="11" height="15"/>
         <image name="NSRemoveTemplate" width="11" height="11"/>
+        <image name="NSStatusAvailable" width="16" height="16"/>
+        <image name="NSStatusPartiallyAvailable" width="16" height="16"/>
+        <image name="NSStatusUnavailable" width="16" height="16"/>
         <image name="he3_logo" width="512" height="512"/>
     </resources>
 </document>

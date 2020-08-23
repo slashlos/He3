@@ -238,35 +238,29 @@ let sameWindow : ViewOptions = []
     }
     //  For those site that require your location while we're active
     var locationManager : CLLocationManager?
+	var locationStatus : CLAuthorizationStatus {
+		return CLLocationManager.authorizationStatus()
+	}
     var isLocationEnabled : Bool {
         get {
-            guard CLLocationManager.locationServicesEnabled() else { return false }
-            return [.authorizedAlways, .authorized].contains(CLLocationManager.authorizationStatus())
+			guard nil != locationManager else { return false }
+            return [.authorized].contains(locationStatus)
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        switch CLLocationManager.authorizationStatus() {
-        case .notDetermined:
-            print("location notDetermined")
-            
-        case .restricted:
-            print("location restricted")
-            
-        case .denied:
-            print("location denied")
-            
-        case .authorizedWhenInUse:
-            print("location authorizedWhenInUse")
-            
-        case .authorizedAlways:
-            print("location authorizedWhenInUse")
-            
-        default:
-            fatalError()
-        }
+		let status = CLLocationManager.authorizationStatus()
+		
+		let notif = Notification(name: Notification.Name(rawValue: "locationServiceChange"), object: status)
+		NotificationCenter.default.post(notif)
+		
+		self.didChangeValue(forKey: "isLocationEnabled")
     }
-
+	
+	func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+		Swift.print(error.localizedDescription)
+	}
+	
     var docController : DocumentController {
         get {
             return NSDocumentController.shared as! DocumentController
@@ -483,7 +477,7 @@ let sameWindow : ViewOptions = []
         UserSettings.AutoHideTitle.value = (sender.state == .off)
 		
 		let notif = Notification(name: Notification.Name(rawValue: "autoHideTitleBar"), object: sender)
-		 NotificationCenter.default.post(notif)
+		NotificationCenter.default.post(notif)
      }
 
 	//	Cookies...
@@ -491,9 +485,16 @@ let sameWindow : ViewOptions = []
 		UserSettings.AcceptWebCookie.value = (sender.state == .off)
 	}
 	@IBAction func clearCookliesPress(_ sender: Any) {
-		if userConfirmMessage("Confirm clearing *all* cookies", info: "This cannot be undone!") {
-			HTTPCookieStorage.shared.cookies?.forEach(HTTPCookieStorage.shared.deleteCookie)
-		}
+		sheetOKCancel("Confirm clearing *all* cookies",
+					  info: "This cannot be undone!",
+					  acceptHandler:
+			{ (button) in
+				//  Make them confirm first, then clear lazily
+				if button == NSApplication.ModalResponse.alertFirstButtonReturn {
+					HTTPCookieStorage.shared.cookies?.forEach(HTTPCookieStorage.shared.deleteCookie)
+				}
+			}
+		)
 	}
 	@IBAction func shareCookiesPress(_ sender: NSMenuItem) {
 		UserSettings.ShareWebCookies.value = (sender.state == .off)
@@ -640,7 +641,7 @@ let sameWindow : ViewOptions = []
 		}
 	}
 	
-	@objc @IBAction func locationServicesPress(_ sender: NSMenuItem) {
+	@objc @IBAction func locationServicesPress(_ sender: Any) {
         if isLocationEnabled {
             locationManager?.stopMonitoringSignificantLocationChanges()
             locationManager?.stopUpdatingLocation()
@@ -652,8 +653,6 @@ let sameWindow : ViewOptions = []
             locationManager?.delegate = self
             locationManager?.startUpdatingLocation()
         }
-        //  Lazily store preference setting to what it is now
-        UserSettings.RestoreLocationSvcs.value = isLocationEnabled
     }
     
 	@objc @IBAction func openFilePress(_ sender: AnyObject) {
@@ -854,7 +853,7 @@ let sameWindow : ViewOptions = []
         do
         {
             let url = URL.init(string: k.ReleaseURL)!
-            let doc = try docController.makeDocument(withContentsOf: url, ofType: k.Helium)
+            let doc = try docController.makeDocument(withContentsOf: url, ofType: k.Release)
 			doc.showWindows()
         }
         catch let error {
@@ -953,27 +952,7 @@ let sameWindow : ViewOptions = []
             return
         }
     }
-    func userConfirmMessage(_ message: String, info: String?) -> Bool {
-        let alert = NSAlert()
-        var ok = false
-        alert.messageText = message
-        alert.addButton(withTitle: "OK")
-        alert.addButton(withTitle: "Cancel")
-        if info != nil {
-            alert.informativeText = info!
-        }
-        if let window = NSApp.keyWindow {
-            alert.beginSheetModal(for: window, completionHandler: { response in
-                ok = response == NSApplication.ModalResponse.alertFirstButtonReturn
-            })
-        }
-        else
-        {
-            ok = alert.runModal() == NSApplication.ModalResponse.alertFirstButtonReturn
-        }
-        return ok
-    }
-
+	
     @objc func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         if menuItem.title.hasPrefix("Redo") {
             menuItem.isEnabled = self.canRedo
@@ -1013,6 +992,7 @@ let sameWindow : ViewOptions = []
             case "Home Page":
                 break
             case "Location services":
+				menuItem.isEnabled = ![.restricted,.denied].contains(locationStatus)
                 menuItem.state = isLocationEnabled ? .on : .off
 			case "Auto Launch At Login":
 				menuItem.state = UserSettings.LoginAutoStartAtLaunch.value ? .on : .off
@@ -1484,7 +1464,7 @@ let sameWindow : ViewOptions = []
 
         //  Save searches to defaults up to their maximum
         temp = Array<Any>()
-        for item in webSearches.suffix(254) {
+		for item in webSearches.suffix(UserSettings.SearchKeep.value) {
             temp.append(item.dictionary())
         }
         defaults.set(temp, forKey: UserSettings.SearchNames.keyPath)

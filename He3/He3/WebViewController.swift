@@ -946,7 +946,12 @@ class MyWebView : WKWebView {
         let subFloat = NSMenu()
         item.submenu = subFloat
         
-        item = NSMenuItem(title: "All Spaces Disabled", action: #selector(hpc.floatOverAllSpacesPress), keyEquivalent: "")
+        item = NSMenuItem(title: "All Spaces", action: #selector(hpc.floatOverAllSpacesPress), keyEquivalent: "")
+        item.state = settings.floatAboveAllPreference.value.contains(.disabled) ? .off : .on
+        item.target = hpc
+        subFloat.addItem(item)
+
+        item = NSMenuItem(title: "Single Space", action: #selector(hpc.floatOverAllSpacesPress), keyEquivalent: "")
         item.state = settings.floatAboveAllPreference.value.contains(.disabled) ? .on : .off
         item.target = hpc
         subFloat.addItem(item)
@@ -1387,7 +1392,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
     override func viewWillDisappear() {
         super .viewWillDisappear()
         
-        guard let wc = self.view.window?.windowController, !wc.isKind(of: ReleasePanelController.self) else { return }
+        guard let wc = self.view.window?.windowController, !wc.isKind(of: ReleaseController.self) else { return }
         if let navDelegate : NSObject = webView.navigationDelegate as? NSObject {
         
             webView.stopLoading()
@@ -1974,8 +1979,8 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
                 }
             }
              
-        case "url":
-			DispatchQueue.main.async { self.webView.icon = self.iconForURL() }
+        case "url","URL":/// #keyPath(WKWebView.url)
+			///DispatchQueue.main.async { self.webView.icon = self.iconForURL() }
 			
             if let urlString = change?[NSKeyValueChangeKey(rawValue: "new")] as? String {
                 guard let dict = defaults.dictionary(forKey: urlString) else { return }

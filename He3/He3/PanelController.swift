@@ -54,7 +54,7 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
     }
 
     // MARK: Window lifecycle
-   
+	
     override func windowDidLoad() {
         super.windowDidLoad()
         
@@ -71,6 +71,17 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 		self.panel.titleVisibility = .visible
 		self.panel.backgroundColor = .white
 		
+		//	Setup our preferences accessory view and toolbar
+
+		let rvc = storyboard!.instantiateController(withIdentifier: "RightSideAccesoryViewController") as! NSTitlebarAccessoryViewController
+		rvc.layoutAttribute = .trailing
+		rvc.isHidden = false
+		self.panel.addTitlebarAccessoryViewController(rvc)
+		preferencesViewController = rvc
+		
+		//	Initially do not show toolbar
+		if let toolbar = self.panel.toolbar { toolbar.isVisible = showToolbar }
+
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(HeliumController.didBecomeActive),
@@ -258,22 +269,27 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 	}
 	
 	fileprivate func monitoringMouseEvents() -> Bool {
+		guard !self.isKind(of: ReleaseController.self) else { return false }
+
 		return UserSettings.AutoHideTitle.value ||
 			autoHideTitlePreference != .never || translucencyPreference != .never
 	}
 	
 	fileprivate func installTitleFader(_ fadeNow: Bool = false) {
-		guard autoHideTitlePreference != .never else {
+		guard !self.isKind(of: ReleaseController.self),
+			autoHideTitlePreference != .never else {
 			NSAnimationContext.runAnimationGroup({ (context) in
 				context.duration = 0.5
 				
 				self.titleView?.animator().isHidden = false
 				///self.window?.animator().titlebarAppearsTransparent = false
 				self.window?.animator().titleVisibility = .visible
+				self.window?.animator().toolbar?.isVisible = showToolbar
 			})
 			return
 		}
 		let fadeMe = !self.mouseOver || self.mouseIdle
+		let fadeSecs = self.window?.toolbar?.isVisible ?? false ? 9.49 : 3.97
 
 		if fadeNow {
 			NSAnimationContext.runAnimationGroup({ (context) in
@@ -282,12 +298,13 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 				self.titleView?.animator().isHidden = fadeMe
 				///self.window?.animator().titlebarAppearsTransparent = hideMe
 				self.window?.animator().titleVisibility = !self.mouseOver || self.mouseIdle ? .hidden : .visible
+				self.window?.animator().toolbar?.isVisible = !self.mouseOver || self.mouseIdle ? false : self.showToolbar
 			})
 		}
         docIconVisibility(autoHideTitlePreference == .never || translucencyPreference == .never)
 		
 		if let timer = fadeTimer, timer.isValid { timer.invalidate(); print("±fader") }
-		self.fadeTimer = Timer.scheduledTimer(withTimeInterval: 3.97, repeats: false, block: { (timer) in
+		self.fadeTimer = Timer.scheduledTimer(withTimeInterval: fadeSecs, repeats: false, block: { (timer) in
 			if fadeNow || timer.isValid {
 				self.mouseIdle = true
 				timer.invalidate()
@@ -300,6 +317,7 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 					self.titleView?.animator().isHidden = true
 					///self.window?.animator().titlebarAppearsTransparent = true
 					self.window?.animator().titleVisibility = .hidden
+					self.window?.animator().toolbar?.isVisible = self.showToolbar
 				})
 			}
 		})
@@ -318,6 +336,7 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 				self.titleView?.animator().isHidden = hideMe
 				///self.window?.animator().titlebarAppearsTransparent = hideMe
 				self.window?.animator().titleVisibility = !self.mouseOver || self.mouseIdle ? .hidden : .visible
+				self.window?.animator().toolbar?.isVisible = !self.mouseOver || self.mouseIdle ? false : showToolbar
 			})
 		}
         docIconVisibility(autoHideTitlePreference == .never || translucencyPreference == .never)
@@ -338,6 +357,7 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 					self.titleView?.animator().isHidden = true
 					///self.window?.animator().titlebarAppearsTransparent = true
 					self.window?.animator().titleVisibility = .hidden
+					self.window?.animator().toolbar?.isVisible = self.showToolbar
 				})
 			}
 		})
@@ -566,13 +586,20 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
     }
     
     // MARK:- Floating
+	@objc var floatAboveValue: Int {
+		get {
+			return floatAboveAllPreference.rawValue
+		}
+	}
     var floatAboveAllPreference: FloatAboveAllPreference {
         get {
             guard let doc : Document = self.doc else { return .spaces }
             return doc.settings.floatAboveAllPreference.value
         }
         set (value) {
+			self.willChangeValue(forKey: "floatAboveValue")
             doc?.settings.floatAboveAllPreference.value = value
+			self.willChangeValue(forKey: "floatAboveValue")
         }
     }
     struct FloatAboveAllPreference: OptionSet {
@@ -585,14 +612,21 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
     let floatAboveAllSpaces : FloatAboveAllPreference = []
 
     // MARK:- Titling
+	@objc var autoHideValue: Int {
+		get {
+			return autoHideTitlePreference.rawValue
+		}
+	}
     var autoHideTitlePreference: AutoHideTitlePreference {
         get {
             guard let doc : Document = self.doc else { return .never }
             return doc.settings.autoHideTitlePreference.value
         }
         set (value) {
+			self.willChangeValue(forKey: "autoHideValue")
             doc?.settings.autoHideTitlePreference.value = value
             updateTitleBar(didChange: true)
+			self.didChangeValue(forKey: "autoHideValue")
         }
     }
     enum AutoHideTitlePreference: Int {
@@ -605,21 +639,28 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
             updateTranslucency()
         }
     }
-    
+	@objc var alphaLevel: Int = 6
     enum NewViewLocation : Int {
         case same = 0
         case window = 1
         case tab = 2
     }
     
+	@objc var transValue: Int {
+		get {
+			return translucencyPreference.rawValue
+		}
+	}
     var translucencyPreference: TranslucencyPreference {
         get {
             guard let doc : Document = self.doc else { return .never }
             return doc.settings.translucencyPreference.value
         }
         set (value) {
+			self.willChangeValue(forKey: "transValue")
             doc?.settings.translucencyPreference.value = value
             updateTitleBar(didChange: true)
+			self.didChangeValue(forKey: "transValue")
         }
     }
     
@@ -726,7 +767,12 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
         
         if let doc = panel.windowController?.document { doc.updateChangeCount(.changeDone) }
     }
-    
+    fileprivate func floatOverHandler()
+	{
+        setFloatOverFullScreenApps()
+        
+        if let doc = panel.windowController?.document { doc.updateChangeCount(.changeDone) }
+	}
     @objc @IBAction func floatOverAllSpacesPress(_ sender: NSMenuItem) {
         if sender.state == .on {
             settings.floatAboveAllPreference.value.remove(.disabled)
@@ -735,11 +781,9 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
         {
             settings.floatAboveAllPreference.value.insert(.disabled)
         }
-        setFloatOverFullScreenApps()
-        
-        if let doc = panel.windowController?.document { doc.updateChangeCount(.changeDone) }
+		floatOverHandler()
     }
-    @objc @IBAction func floatOverFullScreenAppsPress(_ sender: NSMenuItem) {
+	@objc @IBAction func floatOverFullScreenAppsPress(_ sender: NSMenuItem) {
         if sender.state == .on {
             settings.floatAboveAllPreference.value.remove(.screen)
         }
@@ -747,11 +791,9 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
         {
             settings.floatAboveAllPreference.value.insert(.screen)
         }
-        setFloatOverFullScreenApps()
-        
-        if let doc = panel.windowController?.document { doc.updateChangeCount(.changeDone) }
+		floatOverHandler()
     }
-    
+	
     @objc @IBAction func percentagePress(_ sender: NSMenuItem) {
         settings.opacityPercentage.value = sender.tag
         
@@ -759,7 +801,15 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
         
         willUpdateAlpha()
     }
-    
+	@objc @IBAction func percentageLevelPress(_ sender: NSLevelIndicator) {
+		settings.opacityPercentage.value = Int(sender.intValue) * 10
+		
+        if let doc = panel.windowController?.document { doc.updateChangeCount(.changeDone) }
+        
+        willUpdateAlpha()
+        print("alphaLevel \(alphaLevel) alpha\(alpha)")
+    }
+
     @IBAction func snapshot(_ sender: Any) {
         guard let wvc = panel.contentViewController as? WebViewController else { return }
         wvc.snapshot(sender)
@@ -803,12 +853,14 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 
         willUpdateTranslucency()
     }
-
+	@objc var opacityPressEnabled : Bool = false
     @objc @IBAction func translucencyPress(_ sender: NSMenuItem) {
         translucencyPreference = HeliumController.TranslucencyPreference(rawValue: sender.tag)!
         
         if let doc = panel.windowController?.document { doc.updateChangeCount(.changeDone) }
 
+		opacityPressEnabled = sender.tag != 0
+		
         willUpdateTranslucency()
     }
 
@@ -849,7 +901,9 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
             menuItem.state = translucencyPreference == .offOutside
                 ? .mixed
                 : translucencyPreference == .mouseOutside ? .on : .off
-        case "All Spaces Disabled":
+        case "All Spaces":
+            menuItem.state = settings.floatAboveAllPreference.value.contains(.disabled) ? .off : .on
+        case "All Spaces Disabled","Single Space":
             menuItem.state = settings.floatAboveAllPreference.value.contains(.disabled) ? .on : .off
         case "Full Screen":
             menuItem.state = settings.floatAboveAllPreference.value.contains(.screen) ? .on : .off
@@ -994,10 +1048,11 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 
         //  treat home URL specially
         if nil == document?.fileURL {
-             NSAnimationContext.runAnimationGroup({ (context) in
-                 context.duration = 0.1
-				 ///panel.animator().titlebarAppearsTransparent = !mouseOver
-                 panel.animator().titleVisibility = mouseOver ? .visible : .hidden
+            NSAnimationContext.runAnimationGroup({ (context) in
+				context.duration = 0.1
+				///panel.animator().titlebarAppearsTransparent = !mouseOver
+				panel.animator().titleVisibility = mouseOver ? .visible : .hidden
+				panel.animator().toolbar?.isVisible = mouseOver ? showToolbar : false
              })
              return
          }
@@ -1009,11 +1064,13 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
                 if autoHideTitlePreference == .outside {
 					///panel.animator().titlebarAppearsTransparent = !mouseSeen
                     panel.animator().titleVisibility = mouseSeen ? .visible : .hidden
+					panel.animator().toolbar?.isVisible = mouseSeen ? showToolbar : false
                 }
                 else
                 {
 					///panel.animator().titlebarAppearsTransparent = false
                     panel.animator().titleVisibility = .visible
+					panel.animator().toolbar?.isVisible = showToolbar
                 }
 
             })
@@ -1066,11 +1123,36 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
     }
     
     func didUpdateAlpha(_ intAlpha: Int) {
+		self.willChangeValue(forKey: "alphaLevel")
+
         alpha = CGFloat(intAlpha) / 100.0
+		alphaLevel = intAlpha / 10
+		
+		self.didChangeValue(forKey: "alphaLevel")
     }
+	
+	@objc var showToolbar : Bool = false
+	var preferencesViewController : NSTitlebarAccessoryViewController?
+	@IBAction func togglePreferencesPress(_ sender: AnyObject) {
+		print("show me preferences")
+		if let toolbar = panel.toolbar, let rvc = preferencesViewController {
+			NSAnimationContext.runAnimationGroup({ (context) in
+				context.duration = 0.5
+				
+				panel.animator().toolbar!.isVisible = !toolbar.isVisible
+				showToolbar = toolbar.isVisible
+				rvc.view.animator().isHidden = showToolbar
+			})
+		}
+	}
+		
+	@IBOutlet var autoHidePopup: NSPopUpButton!
+	@IBOutlet var floatPopup: NSPopUpButton!
+	@IBOutlet var transPopup: NSPopUpButton!
+	@IBOutlet var opacityLevel: NSLevelIndicator!
 }
 
-class ReleasePanelController : HeliumController {
+class ReleaseController : HeliumController {
 
     override func windowDidLoad() {
         //  Default to not dragging by content
@@ -1078,10 +1160,10 @@ class ReleasePanelController : HeliumController {
         panel.isFloatingPanel = true
         panel.windowController?.shouldCascadeWindows = true///.offsetFromKeyWindow()
 
-		panel.appearance = NSAppearance(named: .vibrantDark)
+		///panel.appearance = NSAppearance(named: .vibrantDark)
 		///panel.titlebarAppearsTransparent = true
 		panel.animator().titleVisibility = .visible
-		self.panel.backgroundColor = .white
+		panel.backgroundColor = .white
 
         // Remember for later restoration
         NSApp.changeWindowsItem(panel, title: window?.title ?? k.ReleaseNotes, filename: false)

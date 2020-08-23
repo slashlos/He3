@@ -8,6 +8,7 @@
 
 import Foundation
 import AppKit
+import CoreLocation
 
 class PrefsPanelController : NSWindowController {
     fileprivate var panel: NSPanel! {
@@ -97,6 +98,11 @@ class PrefsViewController : NSViewController {
 		
 	@IBOutlet var historyKeepField: NSTextField!
 	@IBOutlet var searchKeepField: NSTextField!
+	@objc var webSearchesCount : Int {
+		get {
+			return appDelegate.webSearches.count
+		}
+	}
 	@IBOutlet var tabView: NSTabView!
 
 	@IBAction func resetDefaults(_ sender: Any) {
@@ -134,6 +140,12 @@ class PrefsViewController : NSViewController {
 			 name: NSNotification.Name(rawValue: "autoLaunchChange"),
 			 object: nil)
 
+		NotificationCenter.default.addObserver(
+			 self,
+			 selector: #selector(locationServiceChange),
+			 name: NSNotification.Name(rawValue: "locationServiceChange"),
+			 object: nil)
+
 		tabView.selectTabViewItem(at: 0)
 	}
 	
@@ -144,8 +156,147 @@ class PrefsViewController : NSViewController {
 	}
 	
 	//	MARK: Notifications
+	var keys = ["canChangeLocationStatus","isLocationEnabled","locationStatus"]
 	
 	@objc func autoLaunchChange(_ note: Notification?) {
 		autoLaunchCheckbox.state = UserSettings.LoginAutoStartAtLaunch.value ? .on : .off
+	}
+	
+	@objc var locationState : Int {
+		let status = locationStatus
+
+		switch status {
+		case .notDetermined:
+			return 0
+		case .authorized:
+			return 1
+		case .restricted,.denied:
+			return 2
+		default:
+			return 0
+		}
+	}
+	@objc var locationStatusState : String {
+		get {
+			let status = locationStatus
+			var state : String?
+			
+			switch status {
+			case .notDetermined:
+				state = "location not determined"
+				
+			case .restricted:
+				state = "location restricted"
+				
+			case .denied:
+				state = "location denied"
+				
+			case .authorizedWhenInUse:
+				state = "location authorized when in use"
+				
+			case .authorizedAlways:
+				state = "location authorized always"
+				
+			default:
+				state = "unknown"
+			}
+			return state!
+		}
+	}
+	@objc func locationServiceChange(_ note: Notification?) {
+		for key in keys { self.willChangeValue(forKey: key ) }
+
+		let message = String(format: "Confirmed: %@", locationStatusState)
+		appDelegate.userAlertMessage(message, info: nil)
+		
+		for key in keys { self.didChangeValue(forKey: key ) }
+	}
+
+	@IBAction func rememberLocationService(_ sender: NSButton) {
+		let message = UserSettings.RestoreLocationSvcs.value
+			? "Remember location enabled state"
+			: "Forget location enabled state"
+		
+		sheetOKCancel(message, info: nil,
+			acceptHandler:
+			{
+				(button) in
+
+				//  Make them confirm first, then clear lazily
+				if button == NSApplication.ModalResponse.alertFirstButtonReturn {
+					UserSettings.RestoreLocationSvcs.value = sender.state == .on
+				}
+				else
+				{
+					UserSettings.RestoreLocationSvcs.value = sender.state == .off
+				}
+			}
+		)
+	}
+	
+	var locationStatus : CLAuthorizationStatus {
+		get {
+			return appDelegate.locationStatus
+		}
+	}
+	var oldlocationStatus : CLAuthorizationStatus = CLLocationManager.authorizationStatus()
+	@objc var canChangeLocationStatus : Bool {
+		get {
+			let status = self.locationStatus
+			return ![.restricted,.denied].contains(status)
+		}
+	}
+
+	@objc @IBAction func changeLocationService(_ sender: NSSegmentedControl) {
+		guard ![.restricted,.denied].contains(self.locationStatus) else {
+			sheetOKCancel("Services are restricted or denied; reset?",
+						  info: "Launch Security & Privacy settings app.",
+						  acceptHandler:
+				{ (button) in
+					//  Make them confirm first
+					if button == NSApplication.ModalResponse.alertFirstButtonReturn {
+						
+						for key in self.keys { self.willChangeValue(forKey: key ) }
+						self.launchPrivacyLocationServiceSettings(sender);
+						for key in self.keys { self.didChangeValue(forKey: key ) }
+					}
+				}
+			)
+			return
+		}
+
+		switch sender.selectedSegment {
+		case 0,1: // stop,start
+			for key in keys { self.willChangeValue(forKey: key ) }
+			appDelegate.locationServicesPress(sender)
+			for key in keys { self.didChangeValue(forKey: key ) }
+
+		default: // deny
+			sheetOKCancel("Authorization required to access Privacy & Settings.",
+						  info: nil,
+						  acceptHandler:
+				{ (button) in
+					if button == NSApplication.ModalResponse.alertFirstButtonReturn {
+						self.launchPrivacyLocationServiceSettings(sender)
+					}
+				}
+			)
+		}
+	}
+	
+	@objc var isLocationEnabled : Bool {
+		get {
+			return appDelegate.isLocationEnabled
+		}
+		set {
+			appDelegate.locationServicesPress(self)
+		}
+	}
+
+	//	KUDOS: https://stackoverflow.com/a/59120311/564870
+	@IBAction func launchPrivacyLocationServiceSettings(_ sender: Any) {
+		if let PrivacyLocationServices = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_LocationServices") {
+			NSWorkspace.shared.open(PrivacyLocationServices)
+		}
 	}
 }
