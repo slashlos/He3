@@ -22,8 +22,8 @@ struct DocGroup : OptionSet {
 }
 let docHelium : ViewOptions = []
 
-let docGroups = [k.Helium, k.Playlist, k.Playitem]
-let docNames = [k.Helium, k.Playlist, k.Helium]
+let docGroups = [k.Helium, k.Playlist, k.Playitem, k.Release]
+let docNames = [k.Helium, k.Playlist, k.Helium, k.Release]
 
 extension NSPasteboard.PasteboardType {
     static let docDragType = NSPasteboard.PasteboardType("com.slashlos.docDragDrop")
@@ -607,7 +607,7 @@ class Document : NSDocument {
     }
     
     override func makeWindowControllers() {
-		let group = [ k.Helium, k.Playlist, k.Helium ][docGroup.rawValue]
+		let group = [ k.Helium, k.Playlist, k.Helium, k.Release ][docGroup.rawValue]
         let identifier = String(format: "%@Controller", group)
         let storyboard = NSStoryboard(name: "Main", bundle: nil)
         
