@@ -774,6 +774,7 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
         if let doc = panel.windowController?.document { doc.updateChangeCount(.changeDone) }
 	}
     @objc @IBAction func floatOverAllSpacesPress(_ sender: NSMenuItem) {
+		self.willChangeValue(forKey: "floatAboveValue")
         if sender.state == .on {
             settings.floatAboveAllPreference.value.remove(.disabled)
         }
@@ -781,9 +782,12 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
         {
             settings.floatAboveAllPreference.value.insert(.disabled)
         }
+		self.didChangeValue(forKey: "floatAboveValue")
+		
 		floatOverHandler()
     }
 	@objc @IBAction func floatOverFullScreenAppsPress(_ sender: NSMenuItem) {
+		self.willChangeValue(forKey: "floatAboveValue")
         if sender.state == .on {
             settings.floatAboveAllPreference.value.remove(.screen)
         }
@@ -791,6 +795,8 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
         {
             settings.floatAboveAllPreference.value.insert(.screen)
         }
+		self.didChangeValue(forKey: "floatAboveValue")
+		
 		floatOverHandler()
     }
 	
@@ -903,7 +909,7 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
                 : translucencyPreference == .mouseOutside ? .on : .off
         case "All Spaces":
             menuItem.state = settings.floatAboveAllPreference.value.contains(.disabled) ? .off : .on
-        case "All Spaces Disabled","Single Space":
+		case "Single Space":
             menuItem.state = settings.floatAboveAllPreference.value.contains(.disabled) ? .on : .off
         case "Full Screen":
             menuItem.state = settings.floatAboveAllPreference.value.contains(.screen) ? .on : .off
