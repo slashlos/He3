@@ -257,6 +257,9 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 		willSet {
 			priorIdle = mouseIdle
 		}
+		didSet {
+			mouseStateChanged()
+		}
 	}
 	dynamic var priorOver: Bool = false
 	dynamic var mouseOver: Bool = false {
@@ -265,6 +268,7 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 		}
 		didSet {
 			mouseIdle = false
+			mouseStateChanged()
 		}
 	}
 	
@@ -363,6 +367,19 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 		})
 		if let timer = self.hideTimer { RunLoop.current.add(timer, forMode: .common); print("+hider") }
 	}
+	
+    fileprivate func mouseStateChanged() {
+        let stateChange = priorOver != mouseOver || priorIdle != mouseIdle
+        
+        updateTranslucency()
+        
+        //  view or title entered
+        updateTitleBar(didChange: stateChange)
+        
+        if mouseOver && self.autoHideTitlePreference == .outside {
+            installTitleFader()
+        }
+    }
 	
 	override func mouseEntered(with event: NSEvent) {
         if event.modifierFlags.contains(NSEvent.ModifierFlags.shift) {
