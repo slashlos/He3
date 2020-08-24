@@ -103,6 +103,11 @@ class PrefsViewController : NSViewController {
 			return appDelegate.webSearches.count
 		}
 	}
+	@objc var historiesCount : Int {
+		get {
+			return appDelegate.histories.count
+		}
+	}
 	@IBOutlet var tabView: NSTabView!
 
 	@IBAction func resetDefaults(_ sender: Any) {
@@ -212,28 +217,6 @@ class PrefsViewController : NSViewController {
 		for key in keys { self.didChangeValue(forKey: key ) }
 	}
 
-	@IBAction func rememberLocationService(_ sender: NSButton) {
-		let message = UserSettings.RestoreLocationSvcs.value
-			? "Remember location enabled state"
-			: "Forget location enabled state"
-		
-		sheetOKCancel(message, info: nil,
-			acceptHandler:
-			{
-				(button) in
-
-				//  Make them confirm first, then clear lazily
-				if button == NSApplication.ModalResponse.alertFirstButtonReturn {
-					UserSettings.RestoreLocationSvcs.value = sender.state == .on
-				}
-				else
-				{
-					UserSettings.RestoreLocationSvcs.value = sender.state == .off
-				}
-			}
-		)
-	}
-	
 	var locationStatus : CLAuthorizationStatus {
 		get {
 			return appDelegate.locationStatus
@@ -247,8 +230,8 @@ class PrefsViewController : NSViewController {
 		}
 	}
 
-	@objc @IBAction func changeLocationService(_ sender: NSSegmentedControl) {
-		guard ![.restricted,.denied].contains(self.locationStatus) else {
+	@objc @IBAction func changeLocationService(_ sender: NSButton) {
+		guard [.restricted,.denied].contains(self.locationStatus) else {
 			sheetOKCancel("Services are restricted or denied; reset?",
 						  info: "Launch Security & Privacy settings app.",
 						  acceptHandler:
@@ -265,7 +248,7 @@ class PrefsViewController : NSViewController {
 			return
 		}
 
-		switch sender.selectedSegment {
+		switch sender.tag {
 		case 0,1: // stop,start
 			for key in keys { self.willChangeValue(forKey: key ) }
 			appDelegate.locationServicesPress(sender)
