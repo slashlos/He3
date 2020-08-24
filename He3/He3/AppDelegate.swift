@@ -237,13 +237,12 @@ let sameWindow : ViewOptions = []
         }
     }
     //  For those site that require your location while we're active
-    var locationManager : CLLocationManager?
+    var locationManager = CLLocationManager()
 	var locationStatus : CLAuthorizationStatus {
 		return CLLocationManager.authorizationStatus()
 	}
     var isLocationEnabled : Bool {
         get {
-			guard nil != locationManager else { return false }
             return [.authorized].contains(locationStatus)
         }
     }
@@ -258,7 +257,18 @@ let sameWindow : ViewOptions = []
     }
 	
 	func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-		Swift.print(error.localizedDescription)
+		sheetOKCancel(error.localizedDescription,
+					  info: "Launch Security & Privacy settings app?",
+					  acceptHandler:
+			{ (button) in
+				//  Make them confirm first
+				if button == NSApplication.ModalResponse.alertFirstButtonReturn {
+					if let PrivacyLocationServices = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_LocationServices") {
+						NSWorkspace.shared.open(PrivacyLocationServices)
+					}
+				}
+			}
+		)
 	}
 	
     var docController : DocumentController {
@@ -643,15 +653,11 @@ let sameWindow : ViewOptions = []
 	
 	@objc @IBAction func locationServicesPress(_ sender: Any) {
         if isLocationEnabled {
-            locationManager?.stopMonitoringSignificantLocationChanges()
-            locationManager?.stopUpdatingLocation()
-            locationManager = nil
+            locationManager.stopUpdatingLocation()
         }
         else
         {
-            locationManager = CLLocationManager()
-            locationManager?.delegate = self
-            locationManager?.startUpdatingLocation()
+            locationManager.startUpdatingLocation()
         }
     }
     
@@ -1120,12 +1126,9 @@ let sameWindow : ViewOptions = []
                 }
             }
         }
-        
-        //  For site that require location services
-        if UserSettings.RestoreLocationSvcs.value {
-            locationManager = CLLocationManager()
-            locationManager?.delegate = self
-        }
+		
+		//	We are the location services delegate
+		locationManager.delegate = self
     }
 
     var itemActions = Dictionary<String, Any>()
@@ -1440,10 +1443,9 @@ let sameWindow : ViewOptions = []
         NSEvent.removeMonitor(globalKeyDownMonitor!)
         
         //  Forget location services
-        if !UserSettings.RestoreLocationSvcs.value && isLocationEnabled {
-            locationManager?.stopMonitoringSignificantLocationChanges()
-            locationManager?.stopUpdatingLocation()
-            locationManager = nil
+        if isLocationEnabled {
+            locationManager.stopMonitoringSignificantLocationChanges()
+            locationManager.stopUpdatingLocation()
         }
         
         //  Save sandbox bookmark urls when necessary
