@@ -1392,7 +1392,6 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
     override func viewWillDisappear() {
         super .viewWillDisappear()
         
-        guard let wc = self.view.window?.windowController, !wc.isKind(of: ReleaseController.self) else { return }
         if let navDelegate : NSObject = webView.navigationDelegate as? NSObject {
         
             webView.stopLoading()
