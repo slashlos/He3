@@ -12,15 +12,18 @@ p.big {
     line-height: 1.8;
 }
 p.block {
-    color:blue;font-size:12px;font-family: monospace, monospace;
+    color: #0000dd; font-size:12px;font-family: monospace, monospace;
+}
+:root {
+    color-scheme: light dark;
 }
 </style>
 
 <title>He3 Release Notes</title>
 </head>
-<body style="color:black;font-size:12px">
+<body style="color: #0000dd; font-size:12px">
 <h1>He3</h1>
-<h4>A running release summary of commit changes:</h4>
+<h4>A running release summary of commit changes</h4>
 
 <h2>1.0.8373</h2>
 <p class="block">
