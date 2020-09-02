@@ -307,7 +307,7 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 		}
         docIconVisibility(autoHideTitlePreference == .never || translucencyPreference == .never)
 		
-		if let timer = fadeTimer, timer.isValid { timer.invalidate(); print("±fader") }
+		if let timer = fadeTimer, timer.isValid { timer.invalidate() }
 		self.fadeTimer = Timer.scheduledTimer(withTimeInterval: fadeSecs, repeats: false, block: { (timer) in
 			if fadeNow || timer.isValid {
 				self.mouseIdle = true
@@ -315,9 +315,6 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 
 				NSAnimationContext.runAnimationGroup({ (context) in
 					context.duration = fadeNow ? 0.5 : 1.0
-					print(String(format: "-fader over:%@ idle:%@",
-									   (self.mouseOver ? "Yes" : "No"),
-									   (self.mouseIdle ? "Yes" : "No")))
 					self.titleView?.animator().isHidden = true
 					///self.window?.animator().titlebarAppearsTransparent = true
 					self.window?.animator().titleVisibility = .hidden
@@ -325,7 +322,7 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 				})
 			}
 		})
-		if let timer = self.fadeTimer { RunLoop.current.add(timer, forMode: .common); print("+fader") }
+		if let timer = self.fadeTimer { RunLoop.current.add(timer, forMode: .common) }
 	}
 	
 	fileprivate func installTitleHider(_ hideNow: Bool = false) {
