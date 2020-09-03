@@ -450,8 +450,8 @@
 			children = (
 				0F18D4EE24D342130036FB7F /* Deprecated */,
 				0F5290A9244F6C0C00A9B9DC /* Bridging-Header.h */,
-				0FD21272246386A500EA5D6D /* Extensions.swift */,
 				0F0EEE3E247D3283008F1988 /* LoadThumbnailOperation.swift */,
+				0FD21272246386A500EA5D6D /* Extensions.swift */,
 				0FD2127E2466D7C800EA5D6D /* Types.swift */,
 				0F82920E249539D900B5C205 /* Settings.swift */,
 				0F5290AB244F6C0D00A9B9DC /* StringHelpers.swift */,
