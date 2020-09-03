@@ -1233,10 +1233,14 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
         controller.add(self, name: "newSelectionDetected")
         controller.add(self, name: "newUrlDetected")
 
-        let js = NSString.string(fromAsset: "He3-js")
-        let script = WKUserScript.init(source: js, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
-        controller.addUserScript(script)
-        
+		//	Our main injections
+		for type in (["css","js"]) {
+			let name = k.AppName + "-" + type
+			let asset = NSString.string(fromAsset: name)
+			let script = WKUserScript.init(source: asset, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
+			controller.addUserScript(script)
+		}
+		
         //  make http: -> https: guarded by preference
         if UserSettings.PromoteHTTPS.value {
             //  https://developer.apple.com/videos/play/wwdc2017/220/ 14:05, 21:04
