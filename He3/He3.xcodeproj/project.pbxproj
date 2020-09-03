@@ -32,7 +32,6 @@
 		0F5290B1244F6C0D00A9B9DC /* ValueTransformers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5290A8244F6C0C00A9B9DC /* ValueTransformers.swift */; };
 		0F5290B2244F6C0D00A9B9DC /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5290AA244F6C0D00A9B9DC /* UserSettings.swift */; };
 		0F5290B3244F6C0D00A9B9DC /* StringHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5290AB244F6C0D00A9B9DC /* StringHelpers.swift */; };
-		0F5290B9244F6C9100A9B9DC /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 0F5290B8244F6C9100A9B9DC /* dsa_pub.pem */; };
 		0F5290BD2451D3C400A9B9DC /* He3.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0F5290BC2451D3C300A9B9DC /* He3.icns */; };
 		0F55CD6424A6794E00E49C6A /* icntIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F55CD6324A6794E00E49C6A /* icntIcon.png */; };
 		0F55CD6624A6795600E49C6A /* icntIcon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0F55CD6524A6795600E49C6A /* icntIcon.jpg */; };
@@ -212,7 +211,6 @@
 		0F5290AA244F6C0D00A9B9DC /* UserSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserSettings.swift; path = He3/Support/UserSettings.swift; sourceTree = SOURCE_ROOT; };
 		0F5290AB244F6C0D00A9B9DC /* StringHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StringHelpers.swift; path = He3/Support/StringHelpers.swift; sourceTree = SOURCE_ROOT; };
 		0F5290AC244F6C0D00A9B9DC /* PanelButtonBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PanelButtonBar.swift; path = He3/Support/Deprecated/PanelButtonBar.swift; sourceTree = SOURCE_ROOT; };
-		0F5290AE244F6C0D00A9B9DC /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = He3/Support/Sparkle.framework; sourceTree = SOURCE_ROOT; };
 		0F5290B8244F6C9100A9B9DC /* dsa_pub.pem */ = {isa = PBXFileReference; lastKnownFileType = text; name = dsa_pub.pem; path = He3/Resources/dsa_pub.pem; sourceTree = SOURCE_ROOT; };
 		0F5290BC2451D3C300A9B9DC /* He3.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = He3.icns; path = "He3/Assets/App Icon/He3.icns"; sourceTree = "<group>"; };
 		0F55CD6324A6794E00E49C6A /* icntIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icntIcon.png; path = "He3/Assets/icnt Icon/icntIcon.png"; sourceTree = "<group>"; };
@@ -456,7 +454,6 @@
 				0F0EEE3E247D3283008F1988 /* LoadThumbnailOperation.swift */,
 				0FD2127E2466D7C800EA5D6D /* Types.swift */,
 				0F82920E249539D900B5C205 /* Settings.swift */,
-				0F5290AE244F6C0D00A9B9DC /* Sparkle.framework */,
 				0F5290AB244F6C0D00A9B9DC /* StringHelpers.swift */,
 				0F5290A7244F6C0C00A9B9DC /* UrlHelpers.swift */,
 				0F5290AA244F6C0D00A9B9DC /* UserSettings.swift */,
@@ -704,7 +701,6 @@
 				0F2370D7244E8CEC009F7914 /* Assets.xcassets in Resources */,
 				0F55CD6A24A67B7100E49C6A /* itemIcon.jpg in Resources */,
 				0F5290BD2451D3C400A9B9DC /* He3.icns in Resources */,
-				0F5290B9244F6C9100A9B9DC /* dsa_pub.pem in Resources */,
 				0F237113244E9AA1009F7914 /* Help in Resources */,
 				0F55CD6624A6795600E49C6A /* icntIcon.jpg in Resources */,
 				0FBD9BBC2454767300332EEB /* icntIcon.icns in Resources */,
