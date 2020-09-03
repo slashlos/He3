@@ -567,6 +567,11 @@ extension String {
     func asJSONToDictionary(using encoding: String.Encoding = .utf8) throws -> [String: Any] {
         return try asJSON(to: [String: Any].self, using: encoding)
     }
+	
+    func base64() -> String? {
+        let plainData = self.data(using: .utf8)
+        return plainData?.base64EncodedString(options: [])
+    }
 }
 
 // MARK: - Dictionary cast extensions
