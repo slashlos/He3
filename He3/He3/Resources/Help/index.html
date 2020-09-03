@@ -95,16 +95,10 @@ can be local to the current space.&ebsp; Note that windows cannot be moved acros
 </PRE>
 <p>It is <b>not</b> advised to choose a value too large.</p>
 
-<h4>Zoom Icon</h4>
-<p>He3 window support full screen - aka "zoom" but does not display a zoom button by default it its title bar.  The preferecce be altered by using the <b>Terminal</b> app; for example:</p>
-<PRE>
-    1% defaults read -app He3 hideZoomIcon
-    true
-    1% defaults write -app He3 hideZoomIcon false
-    1% defaults read -app He3 hideZoomIcon
-    true
-</PRE>
-<p>This value is only read at startup.</p>
+<h4>Location Services</h4>
+<p>He3 does not use or require location services, but some web sites, such as those featuring streaming content might.  To support this, He3 features the ability to toggle location services and or disable or deny location for the app.  Note that this denial can only be reset via the Security & Privacy Panel of the MacOS Settings app.  He3 provides a quick link to this app via the Location Services tab of its Preferences panel.</p>
+<p>To further simply the process of toggling location services, there's also a menu item to do so, whose state can also be viewed witin the He3 Preferences panel.</p>
+<p>Finally, He3 can be told to remember your location preference and restore it between app executions.</p>
 
 <h4>Playlist Throttle</h4>
 <p>He3 will limit the size of a playlist "play" to reduce runaway sessions.</p>
