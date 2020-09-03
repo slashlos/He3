@@ -157,11 +157,13 @@ class PrefsViewController : NSViewController {
 	override func viewWillAppear() {
 		autoLaunchChange(nil)
 		
+		changeLocationServiceButton.state = isLocationEnabled ? .on : .off
+		
 		self.view.window?.title = appDelegate.AppName + " Preferences"
 	}
 	
 	//	MARK: Notifications
-	var keys = ["canChangeLocationStatus","isLocationEnabled","locationStatus"]
+	var keys = ["canChangeLocationStatus","isLocationEnabled","locationStatus","locationStatusState"]
 	
 	@objc func autoLaunchChange(_ note: Notification?) {
 		autoLaunchCheckbox.state = UserSettings.LoginAutoStartAtLaunch.value ? .on : .off
@@ -205,15 +207,15 @@ class PrefsViewController : NSViewController {
 			default:
 				state = "unknown"
 			}
-			return state!
+			return "State: " + state!
 		}
 	}
 	@objc func locationServiceChange(_ note: Notification?) {
 		for key in keys { self.willChangeValue(forKey: key ) }
 
-		let message = String(format: "Confirmed: %@", locationStatusState)
-		appDelegate.userAlertMessage(message, info: nil)
-		
+		appDelegate.userAlertMessage("Location Status Change", info: locationStatusState)
+		changeLocationServiceButton.state = isLocationEnabled ? .on : .off
+
 		for key in keys { self.didChangeValue(forKey: key ) }
 	}
 
@@ -230,8 +232,9 @@ class PrefsViewController : NSViewController {
 		}
 	}
 
+	@IBOutlet var changeLocationServiceButton: NSButton!
 	@objc @IBAction func changeLocationService(_ sender: NSButton) {
-		guard [.restricted,.denied].contains(self.locationStatus) else {
+		guard ![.restricted,.denied].contains(self.locationStatus) else {
 			sheetOKCancel("Services are restricted or denied; reset?",
 						  info: "Launch Security & Privacy settings app.",
 						  acceptHandler:
@@ -249,7 +252,7 @@ class PrefsViewController : NSViewController {
 		}
 
 		switch sender.tag {
-		case 0,1: // stop,start
+		case 0: // stop,start
 			for key in keys { self.willChangeValue(forKey: key ) }
 			appDelegate.locationServicesPress(sender)
 			for key in keys { self.didChangeValue(forKey: key ) }

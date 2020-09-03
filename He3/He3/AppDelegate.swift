@@ -237,12 +237,13 @@ let sameWindow : ViewOptions = []
         }
     }
     //  For those site that require your location while we're active
-    var locationManager = CLLocationManager()
+    var locationManager : CLLocationManager?
 	var locationStatus : CLAuthorizationStatus {
 		return CLLocationManager.authorizationStatus()
 	}
     var isLocationEnabled : Bool {
         get {
+			guard nil != locationManager else { return false }
             return [.authorized].contains(locationStatus)
         }
     }
@@ -653,12 +654,19 @@ let sameWindow : ViewOptions = []
 	
 	@objc @IBAction func locationServicesPress(_ sender: Any) {
         if isLocationEnabled {
-            locationManager.stopUpdatingLocation()
+            locationManager?.stopMonitoringSignificantLocationChanges()
+            locationManager?.stopUpdatingLocation()
+            locationManager = nil
         }
         else
         {
-            locationManager.startUpdatingLocation()
+            locationManager = CLLocationManager()
+            locationManager?.delegate = self
+            locationManager?.startUpdatingLocation()
         }
+		
+		let notif = Notification(name: Notification.Name(rawValue: "locationServiceChange"), object: self.locationStatus)
+		NotificationCenter.default.post(notif)
     }
     
 	@objc @IBAction func openFilePress(_ sender: AnyObject) {
@@ -1126,9 +1134,12 @@ let sameWindow : ViewOptions = []
                 }
             }
         }
-		
-		//	We are the location services delegate
-		locationManager.delegate = self
+        
+        //  For site that require location services
+        if UserSettings.RestoreLocationSvcs.value {
+            locationManager = CLLocationManager()
+            locationManager?.delegate = self
+        }
     }
 
     var itemActions = Dictionary<String, Any>()
@@ -1443,9 +1454,10 @@ let sameWindow : ViewOptions = []
         NSEvent.removeMonitor(globalKeyDownMonitor!)
         
         //  Forget location services
-        if isLocationEnabled {
-            locationManager.stopMonitoringSignificantLocationChanges()
-            locationManager.stopUpdatingLocation()
+        if !UserSettings.RestoreLocationSvcs.value && isLocationEnabled {
+            locationManager?.stopMonitoringSignificantLocationChanges()
+            locationManager?.stopUpdatingLocation()
+            locationManager = nil
         }
         
         //  Save sandbox bookmark urls when necessary
