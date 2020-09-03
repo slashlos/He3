@@ -2,6 +2,15 @@
 <head>
 <meta name="AppleTitle" content="He3 Release Notes">
 <style>
+:root {
+    color-scheme: light dark;
+	--body-color: #3399DD;
+}
+@media (prefers-color-scheme: light) {
+	:root {
+		--body-color: #0000CD;
+	}
+}
 p.small {
     line-height: 0.7;
 }
@@ -12,16 +21,13 @@ p.big {
     line-height: 1.8;
 }
 p.block {
-    color: #0000dd; font-size:12px;font-family: monospace, monospace;
-}
-:root {
-    color-scheme: light dark;
+    color: var(--body-color); font-size:12px;font-family: monospace, monospace;
 }
 </style>
 
 <title>He3 Release Notes</title>
 </head>
-<body style="color: #0000dd; font-size:12px">
+<body style="color: markText; font-size:12px">
 <h1>He3</h1>
 <h4>A running release summary of commit changes</h4>
 

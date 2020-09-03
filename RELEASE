@@ -2,6 +2,15 @@
 <head>
 <meta name="AppleTitle" content="He3 Release Notes">
 <style>
+:root {
+    color-scheme: light dark;
+	--body-color: #3399DD;
+}
+@media (prefers-color-scheme: light) {
+	:root {
+		--body-color: #0000CD;
+	}
+}
 p.small {
     line-height: 0.7;
 }
@@ -12,17 +21,17 @@ p.big {
     line-height: 1.8;
 }
 p.block {
-    color:blue;font-size:12px;font-family: monospace, monospace;
+    color: var(--body-color); font-size:12px;font-family: monospace, monospace;
 }
 </style>
 
 <title>He3 Release Notes</title>
 </head>
-<body style="color:black;font-size:12px">
+<body style="color: markText; font-size:12px">
 <h1>He3</h1>
-<h4>A running release summary of commit changes:</h4>
+<h4>A running release summary of commit changes</h4>
 
-<h2>1.0.8362/h2>
+<h2>1.0.8373</h2>
 <p class="block">
 adbf382|20/08/05 global hide titlebar support<br>
 59205e5|20/08/05 address about version autolayout issue<br>
