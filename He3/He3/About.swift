@@ -83,10 +83,10 @@ class AboutBoxController : NSViewController {
     }
     
     internal func showCredits() {
-		//	Names *must* match up to assets inventory; "-md" are markdown
+		//	Names *must* match up to assets inventory; ".md" are markdown
 		//	requiring processing to html, others are already there as
 		//	attributed strings, else plain text.
-        let credits = ["README-md", "HISTORY-md", "LICENSE", "he3_privacy"];
+        let credits = ["README.md", "HISTORY.md", "LICENSE", "he3_privacy.html"];
         
         if AboutBoxController.creditState >= AboutBoxController.creditStates
         {
