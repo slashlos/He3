@@ -126,7 +126,7 @@ extension NSString {
         let data = NSData.init(data: (asset?.data)!)
         let text = String.init(data: data as Data, encoding: String.Encoding.utf8)
         
-		if fromAsset.hasSuffix("-md"), let html = try? Down(markdownString: text!).toHTML()
+		if fromAsset.hasSuffix(".md"), let html = try? Down(markdownString: text!).toHTML()
 		{
 			let htmlDoc = String(format: "<html><body>%@</body></html>", html)
 			let data = Data(htmlDoc.utf8)
@@ -148,7 +148,7 @@ extension NSAttributedString {
             return text
         } catch {
             let chars = String.init(data: data as Data, encoding: String.Encoding.utf8)!
-			if fromAsset.hasSuffix("-md"), let html = try? Down(markdownString: chars).toHTML()
+			if fromAsset.hasSuffix(".md"), let html = try? Down(markdownString: chars).toHTML()
 			{
 				let htmlDoc = String(format: "<html><body>%@</body></html>", html)
 				let data = Data(htmlDoc.utf8)

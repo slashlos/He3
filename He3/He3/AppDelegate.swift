@@ -296,8 +296,12 @@ let sameWindow : ViewOptions = []
     var  sessionConfiguration : URLSessionConfiguration {
         get {
             if  _sessionConfiguration == nil {
-                _sessionConfiguration = URLSessionConfiguration()
-                
+				if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
+					_sessionConfiguration = URLSessionConfiguration.default
+				} else {
+					_sessionConfiguration = URLSessionConfiguration()
+				}
+				
                 _sessionConfiguration!.httpCookieAcceptPolicy = UserSettings.AcceptWebCookie.value ?.onlyFromMainDocumentDomain : .never
                 _sessionConfiguration!.httpShouldSetCookies = UserSettings.StoreWebCookies.value
             }
@@ -350,12 +354,18 @@ let sameWindow : ViewOptions = []
                 _webPreferences = WKPreferences()
                 
                 // Allow plug-ins such as silverlight
-                _webPreferences!.plugInsEnabled = true
-                
+				if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
+				} else {
+					_webPreferences!.plugInsEnabled = true
+				}
+				
                 ///_webPreferences!.minimumFontSize = 14
                 _webPreferences!.javaScriptCanOpenWindowsAutomatically = true;
                 _webPreferences!.javaScriptEnabled = true
-                _webPreferences!.javaEnabled = true
+				if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
+				} else {
+					_webPreferences!.javaEnabled = true
+				}
 				
 				//	Always enable inspector but guard its showing
 				_webPreferences?.setValue(true, forKey: "developerExtrasEnabled")
@@ -601,7 +611,7 @@ let sameWindow : ViewOptions = []
     var fullScreen : NSRect? = nil
     @objc @IBAction func toggleFullScreen(_ sender: NSMenuItem) {
         if let keyWindow : Panel = NSApp.keyWindow as? Panel {
-            keyWindow.heliumPanelController.floatOverFullScreenAppsPress(sender)
+            keyWindow.heliumPanelController.floatOverSpacesPress(sender)
         }
     }
 
@@ -1079,7 +1089,7 @@ let sameWindow : ViewOptions = []
             resetDefaults()
             NSSound(named: "Purr")?.play()
         }
-        
+        else
         //  Don't reopen docs when OPTION is held down at startup
         if flags.contains(NSEvent.ModifierFlags.option) {
             print("option at start")
@@ -1460,7 +1470,10 @@ let sameWindow : ViewOptions = []
             locationManager = nil
         }
         
-        //  Save sandbox bookmark urls when necessary
+        //  Cease and Save sandbox bookmark urls when necessary
+		if isSandboxed != ceaseBookmarks() {
+			print("Yoink, unable to cease booksmarks")
+		}
         if isSandboxed != saveBookmarks() {
             print("Yoink, unable to save booksmarks")
         }
@@ -1895,6 +1908,7 @@ let sameWindow : ViewOptions = []
         alert.accessoryView!.becomeFirstResponder()
     }
     
+	// MARK:- Application Events
     // Called when the App opened via URL.
     @objc func handleURLEvent(_ event: NSAppleEventDescriptor, withReply reply: NSAppleEventDescriptor) {
 		guard let keyDirectObject = event.paramDescriptor(forKeyword: AEKeyword(keyDirectObject)),
@@ -1933,7 +1947,6 @@ let sameWindow : ViewOptions = []
         }
     }
     
-    // MARK: Application Events
     dynamic var disableDocumentReOpening = false
 
     func application(_ sender: NSApplication, openFile path: String) -> Bool {
@@ -2062,6 +2075,21 @@ let sameWindow : ViewOptions = []
         }
     }
     
+	func ceaseBookmarks() -> Bool
+	{
+		var iterator = bookmarks.makeIterator()
+		let tally = bookmarks.count
+		var ceased = 0
+
+		while let bookmark = iterator.next()
+		{
+			bookmark.key.stopAccessingSecurityScopedResource()
+			print ("© \(bookmark.key)")
+			ceased += 1
+		}
+		return ceased == tally
+	}
+	
     func eraseBookmarks() -> Bool
     {
         //  Ignore loading unless configured
@@ -2173,7 +2201,9 @@ let sameWindow : ViewOptions = []
         }
         do
         {
-            let data = try url.bookmarkData(options: options, includingResourceValuesForKeys: nil, relativeTo: nil)
+			let data = url.isFinderAlias() ?? false
+				? try NSURL.bookmarkData(withContentsOf: url)
+				: try url.bookmarkData(options: options, includingResourceValuesForKeys: nil, relativeTo: nil)
             bookmarks[url] = data
             return self.fetchBookmark((key: url, value: data))
         }

@@ -28,6 +28,16 @@ struct UrlHelpers {
     
     // https://mathiasbynens.be/demo/url-regex
     static func isValidURL(urlString: String) -> Bool {
+		// built-in cache scheme url
+		if urlString.lowercased().hasPrefix(k.caches+":"), let url = URL.init(string: urlString) {
+			let paths = url.pathComponents
+			let ident = paths[2]
+			guard let asset = NSDataAsset.init(name: ident) else { return false }
+			let data = NSData.init(data: (asset.data))
+			guard let string = String.init(data: data as Data, encoding: String.Encoding.utf8) else { return false }
+			return string.count > 0
+		}
+		
         // swiftlint:disable:next force_try
         if urlString.lowercased().hasPrefix("file:"), let url = URL.init(string: urlString) {
             return FileManager.default.fileExists(atPath:url.path)
@@ -350,35 +360,18 @@ extension NSURL {
     func compare(_ other: URL ) -> ComparisonResult {
         return (self.absoluteString?.compare(other.absoluteString))!
     }
-//  https://stackoverflow.com/a/44908669/564870
-    func resolvedFinderAlias() -> NSURL? {
-        if (self.fileReferenceURL() != nil) { // item exists
-            do {
-                // Get information about the file alias.
-                // If the file is not an alias files, an exception is thrown
-                // and execution continues in the catch clause.
-                let data = try NSURL.bookmarkData(withContentsOf: self as URL)
-                // NSURLPathKey contains the target path.
-                let rv = NSURL.resourceValues(forKeys: [ URLResourceKey.pathKey ], fromBookmarkData: data)
-                var urlString = rv![URLResourceKey.pathKey] as! String
-                if !urlString.hasPrefix("file://") {
-                    urlString = "file://" + urlString
-                }
-				return URL(string: urlString.addingPercentEncoding(
-					withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!)! as NSURL
-            } catch {
-                // We know that the input path exists, but treating it as an alias
-                // file failed, so we assume it's not an alias file so return nil.
-                return nil
-            }
-        }
-        return nil
-    }
 }
 
 extension URL {
-	func resolvedFinderAlias() -> URL? {
-		return (self as NSURL).resolvedFinderAlias() as URL?
+	/// https://stackoverflow.com/a/44945279/564870
+	func isFinderAlias() -> Bool? {
+		let values = try? self.resourceValues(forKeys: [.isSymbolicLinkKey,.isAliasFileKey])
+		let alias = values?.isAliasFile
+		let symbolic = values?.isSymbolicLink
+		
+		guard alias != nil, symbolic != nil else { return nil }
+		
+		return (alias! && !symbolic!)
 	}
 }
 
