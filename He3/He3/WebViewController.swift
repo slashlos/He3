@@ -393,7 +393,6 @@ class MyWebView : WKWebView {
 
         //  Resolve alias before sandbox bookmarking
         if let webloc = url.webloc { return next(url: webloc) }
-        if let original = url.resolvedFinderAlias() { return next(url: original) }
 
         if url.isFileURL
         {
@@ -761,6 +760,7 @@ class MyWebView : WKWebView {
                     item.target = appDelegate
                     item.action = #selector(appDelegate.toggleFullScreen(_:))
                     item.state = appDelegate.fullScreen != nil ? .on : .off
+					item.tag = 2	/// .screen.rawVa;ue
                 }
                 else
                 if self.url != nil {
@@ -946,19 +946,22 @@ class MyWebView : WKWebView {
         let subFloat = NSMenu()
         item.submenu = subFloat
         
-        item = NSMenuItem(title: "All Spaces", action: #selector(hpc.floatOverAllSpacesPress), keyEquivalent: "")
-        item.state = settings.floatAboveAllPreference.value.contains(.disabled) ? .off : .on
+        item = NSMenuItem(title: "All Spaces", action: #selector(hpc.floatOverSpacesPress), keyEquivalent: "")
+        item.state = hpc.floatAboveAllPreference.contains(.oneSpace) ? .off : .on
         item.target = hpc
+		item.tag = 0 /// .allSpace
         subFloat.addItem(item)
 
-        item = NSMenuItem(title: "Single Space", action: #selector(hpc.floatOverAllSpacesPress), keyEquivalent: "")
-        item.state = settings.floatAboveAllPreference.value.contains(.disabled) ? .on : .off
+        item = NSMenuItem(title: "Single Space", action: #selector(hpc.floatOverSpacesPress), keyEquivalent: "")
+        item.state = hpc.floatAboveAllPreference.contains(.oneSpace) ? .on : .off
         item.target = hpc
+		item.tag = 1 /// .oneSpace
         subFloat.addItem(item)
 
-        item = NSMenuItem(title: "Full Screen", action: #selector(hpc.floatOverFullScreenAppsPress(_:)), keyEquivalent: "")
-        item.state = settings.floatAboveAllPreference.value.contains(.screen) ? .on : .off
+        item = NSMenuItem(title: "Full Screen", action: #selector(hpc.floatOverSpacesPress(_:)), keyEquivalent: "")
+        item.state = hpc.floatAboveAllPreference.contains(.screen) ? .on : .off
         item.target = hpc
+		item.tag = 2 /// .screen
         subFloat.addItem(item)
 
         item = NSMenuItem(title: "User Agent", action: #selector(wvc.userAgentPress(_:)), keyEquivalent: "")
@@ -1233,9 +1236,9 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
         controller.add(self, name: "newSelectionDetected")
         controller.add(self, name: "newUrlDetected")
 
-		//	Our main injections
+		//	Our main / app wide injections
 		for type in (["css","js"]) {
-			let name = k.AppName + "-" + type
+			let name = k.AppName + "." + type
 			let asset = NSString.string(fromAsset: name)
 			let script = WKUserScript.init(source: asset, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
 			controller.addUserScript(script)

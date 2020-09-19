@@ -607,23 +607,24 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 	}
     var floatAboveAllPreference: FloatAboveAllPreference {
         get {
-            guard let doc : Document = self.doc else { return .spaces }
+            guard let doc : Document = self.doc else { return .allSpace }
             return doc.settings.floatAboveAllPreference.value
         }
         set (value) {
 			self.willChangeValue(forKey: "floatAboveValue")
-            doc?.settings.floatAboveAllPreference.value = value
+			if let doc = self.doc {
+				doc.settings.floatAboveAllPreference.value = value
+			}
 			self.willChangeValue(forKey: "floatAboveValue")
         }
     }
     struct FloatAboveAllPreference: OptionSet {
         let rawValue: Int
         
-        static var spaces   = FloatAboveAllPreference(rawValue: 0)
-        static let disabled = FloatAboveAllPreference(rawValue: 1)
+        static var allSpace = FloatAboveAllPreference(rawValue: 0)
+        static let oneSpace = FloatAboveAllPreference(rawValue: 1)
         static let screen   = FloatAboveAllPreference(rawValue: 2)
     }
-    let floatAboveAllSpaces : FloatAboveAllPreference = []
 
     // MARK:- Titling
 	@objc var autoHideValue: Int {
@@ -780,38 +781,39 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
         updateTitleBar(didChange: true)
         
         if let doc = panel.windowController?.document { doc.updateChangeCount(.changeDone) }
-    }
-    fileprivate func floatOverHandler()
-	{
+	}
+	
+    @objc @IBAction func floatOverSpacesPress(_ sender: NSMenuItem) {
+		self.willChangeValue(forKey: "floatAboveValue")
+		let now = FloatAboveAllPreference(rawValue: sender.tag)
+		let was = floatAboveAllPreference
+		
+		guard now != was else { return }
+		
+		if was.contains(.screen) || now == .screen {
+			if was .contains(.screen) {
+				settings.floatAboveAllPreference.value.remove(.screen)
+			}
+			else
+			{
+				settings.floatAboveAllPreference.value.insert(.screen)
+			}
+		}
+		else
+		{
+			if was == .oneSpace {
+				settings.floatAboveAllPreference.value.remove(.oneSpace)
+			}
+			else
+			{
+				settings.floatAboveAllPreference.value.insert(.oneSpace)
+			}
+		}
+		self.didChangeValue(forKey: "floatAboveValue")
+		
         setFloatOverFullScreenApps()
         
         if let doc = panel.windowController?.document { doc.updateChangeCount(.changeDone) }
-	}
-    @objc @IBAction func floatOverAllSpacesPress(_ sender: NSMenuItem) {
-		self.willChangeValue(forKey: "floatAboveValue")
-        if sender.state == .on {
-            settings.floatAboveAllPreference.value.remove(.disabled)
-        }
-        else
-        {
-            settings.floatAboveAllPreference.value.insert(.disabled)
-        }
-		self.didChangeValue(forKey: "floatAboveValue")
-		
-		floatOverHandler()
-    }
-	@objc @IBAction func floatOverFullScreenAppsPress(_ sender: NSMenuItem) {
-		self.willChangeValue(forKey: "floatAboveValue")
-        if sender.state == .on {
-            settings.floatAboveAllPreference.value.remove(.screen)
-        }
-        else
-        {
-            settings.floatAboveAllPreference.value.insert(.screen)
-        }
-		self.didChangeValue(forKey: "floatAboveValue")
-		
-		floatOverHandler()
     }
 	
     @objc @IBAction func percentagePress(_ sender: NSMenuItem) {
@@ -922,11 +924,11 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
                 ? .mixed
                 : translucencyPreference == .mouseOutside ? .on : .off
         case "All Spaces":
-            menuItem.state = settings.floatAboveAllPreference.value.contains(.disabled) ? .off : .on
+			menuItem.state = floatAboveAllPreference.contains(.oneSpace) ? .off : .on
 		case "Single Space":
-            menuItem.state = settings.floatAboveAllPreference.value.contains(.disabled) ? .on : .off
+            menuItem.state = floatAboveAllPreference.contains(.oneSpace) ? .on : .off
         case "Full Screen":
-            menuItem.state = settings.floatAboveAllPreference.value.contains(.screen) ? .on : .off
+            menuItem.state = floatAboveAllPreference.contains(.screen) ? .on : .off
         case "Hide He3 in menu bar":
             menuItem.state = UserSettings.HideAppMenu.value ? .on : .off
         case "Home Page":
@@ -1012,23 +1014,9 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
                 docIconButton.vCenter(titleView)
             }
             
-            if let url = self.webView?.url, !url.isFileURL {
-                docIconButton.isHidden = true
-            }
-            else
-            {
-                if autoHideTitlePreference == .outside {
-                    docIconButton.isHidden = !mouseWasOver
-                }
-                else
-                {
-                    docIconButton.isHidden = false
-                }
-                if !docIconButton.isHidden
-                {
-					docIconButton.image = webView?.icon
-                }
-            }
+			docIconButton.isHidden = autoHideTitlePreference == .outside ? !mouseWasOver : false
+			
+			docIconButton.image = webView?.icon
         }
     }
 	@objc func quickQuiet(_ note: Notification) {
@@ -1113,12 +1101,12 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
         }
     }
     @objc func setFloatOverFullScreenApps() {
-        if settings.floatAboveAllPreference.value.contains(.disabled) {
+        if floatAboveAllPreference.contains(.oneSpace) {
             panel.collectionBehavior = [NSWindow.CollectionBehavior.moveToActiveSpace, NSWindow.CollectionBehavior.fullScreenAuxiliary]
         } else {
             panel.collectionBehavior = [NSWindow.CollectionBehavior.canJoinAllSpaces, NSWindow.CollectionBehavior.fullScreenAuxiliary]
         }
-        if settings.floatAboveAllPreference.value.contains(.screen) {
+        if floatAboveAllPreference.contains(.screen) {
             panel.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.maximumWindow)))
         } else {
             panel.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.floatingWindow)))

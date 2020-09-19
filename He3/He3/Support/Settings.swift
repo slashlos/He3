@@ -47,7 +47,7 @@ public struct Settings {
     }
     
     let autoHideTitlePreference = Setup<HeliumController.AutoHideTitlePreference>("rawAutoHideTitle", value: .outside)
-    let floatAboveAllPreference = Setup<HeliumController.FloatAboveAllPreference>("rawFloatAboveAll", value: .spaces)
+    let floatAboveAllPreference = Setup<HeliumController.FloatAboveAllPreference>("rawFloatAboveAll", value: .allSpace)
     let opacityPercentage = Setup<Int>("opacityPercentage", value: 60)
     let rank = Setup<Int>(k.rank, value: 0)
     let date = Setup<TimeInterval>(k.date, value: Date().timeIntervalSinceReferenceDate)
