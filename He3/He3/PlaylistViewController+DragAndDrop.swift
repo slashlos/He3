@@ -181,11 +181,10 @@ extension PlaylistViewController: NSTableViewDataSource {
 		
 		//  Resolve alias before storing bookmark and store a bookmark
 		while urls.count > 0 {
-			var url = urls.removeFirst()
+			let url = urls.removeFirst()
 			var playitem : PlayItem
 
 			if url.isFileURL {
-				if let original = url.resolvedFinderAlias() { url = original }
 				var isDirectory : ObjCBool = false
 
 				//  Unknown files have to be sandboxed, and skip on errors
