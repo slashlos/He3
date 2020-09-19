@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097.3"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -36,7 +35,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="283" height="240"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <button toolTip="version information" translatesAutoresizingMaskIntoConstraints="NO" id="rKn-5s-fYK">
+                            <button toolTip="cycle through version, build, link date" translatesAutoresizingMaskIntoConstraints="NO" id="rKn-5s-fYK">
                                 <rect key="frame" x="12" y="118" width="259" height="13"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="12" id="baR-Xp-agq"/>
@@ -85,7 +84,7 @@
                                     <action selector="toggleContent:" target="umu-a0-Tfe" id="4Sd-95-PKJ"/>
                                 </connections>
                             </button>
-                            <button toolTip="cycle thru read me, history, liicense, privacy information" translatesAutoresizingMaskIntoConstraints="NO" id="0NX-wg-Xfe">
+                            <button toolTip="cycle through read me, history, liicense, privacy information" translatesAutoresizingMaskIntoConstraints="NO" id="0NX-wg-Xfe">
                                 <rect key="frame" x="12" y="97" width="257" height="12"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="12" id="Tzv-hz-N36"/>
@@ -1211,7 +1210,7 @@ CA
                                                 <textField toolTip="current histiory URLs" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wR3-bh-jHn">
                                                     <rect key="frame" x="379" y="2" width="33" height="14"/>
                                                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="Label" id="wv0-UB-7Bv">
-                                                        <font key="font" metaFont="message" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
@@ -1298,7 +1297,7 @@ CA
                                                     <rect key="frame" x="327" y="2" width="100" height="14"/>
                                                     <buttonCell key="cell" type="bevel" title="Privacy &amp; Security" bezelStyle="rounded" alignment="right" controlSize="small" imageScaling="proportionallyDown" inset="2" id="Of2-a5-qrw">
                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                        <font key="font" metaFont="message" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                     </buttonCell>
                                                     <connections>
                                                         <action selector="launchPrivacyLocationServiceSettings:" target="6fb-0C-bsO" id="92N-pc-z6m"/>
@@ -1321,7 +1320,7 @@ CA
                                                             <rect key="frame" x="-5" y="-6" width="123" height="27"/>
                                                             <buttonCell key="cell" type="push" title="Share Location" alternateTitle="Stop Sharing" bezelStyle="rounded" image="NSStatusAvailable" imagePosition="left" alignment="center" alternateImage="NSStatusUnavailable" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rOR-7w-83m">
                                                                 <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
-                                                                <font key="font" metaFont="message" size="11"/>
+                                                                <font key="font" metaFont="controlContent" size="11"/>
                                                             </buttonCell>
                                                             <connections>
                                                                 <action selector="changeLocationService:" target="NbJ-8w-0o8" id="Ltf-ed-g8p"/>
@@ -1331,7 +1330,7 @@ CA
                                                             <rect key="frame" x="116" y="-6" width="129" height="27"/>
                                                             <buttonCell key="cell" type="push" title="Deny Updating" alternateTitle="Denied Updating" bezelStyle="rounded" image="NSLockUnlockedTemplate" imagePosition="left" alignment="center" alternateImage="NSLockLockedTemplate" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="5lR-lZ-2DU">
                                                                 <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
-                                                                <font key="font" metaFont="message" size="11"/>
+                                                                <font key="font" metaFont="controlContent" size="11"/>
                                                             </buttonCell>
                                                             <connections>
                                                                 <action selector="changeLocationService:" target="NbJ-8w-0o8" id="QGN-UT-Cs3"/>
@@ -1461,7 +1460,7 @@ CA
                                                 <textField toolTip="current web searches" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2PN-GF-SkZ">
                                                     <rect key="frame" x="389" y="14" width="33" height="14"/>
                                                     <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="Label" id="eiI-qd-4ce">
-                                                        <font key="font" metaFont="message" size="11"/>
+                                                        <font key="font" metaFont="controlContent" size="11"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
@@ -1597,7 +1596,7 @@ CA
                                                                         <rect key="frame" x="187" y="-6" width="54" height="23"/>
                                                                         <buttonCell key="cell" type="push" title="Clear" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="nDf-7y-DwP">
                                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                                            <font key="font" metaFont="message" size="11"/>
+                                                                            <font key="font" metaFont="controlContent" size="11"/>
                                                                         </buttonCell>
                                                                         <connections>
                                                                             <action selector="clearCookiesPress:" target="6fb-0C-bsO" id="x8S-Px-I0r"/>
@@ -1668,7 +1667,7 @@ CA
                                                                         <rect key="frame" x="121" y="-6" width="54" height="23"/>
                                                                         <buttonCell key="cell" type="push" title="Clear" bezelStyle="rounded" alignment="center" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="oyl-gZ-NQk">
                                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                                            <font key="font" metaFont="message" size="11"/>
+                                                                            <font key="font" metaFont="controlContent" size="11"/>
                                                                         </buttonCell>
                                                                         <connections>
                                                                             <action selector="historyClearPress:" target="6fb-0C-bsO" id="vo1-tg-8bz"/>
@@ -1852,13 +1851,13 @@ Gw
                                         </connections>
                                     </button>
                                     <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KRs-AT-9D8">
-                                        <rect key="frame" x="0.0" y="114" width="126" height="158"/>
+                                        <rect key="frame" x="0.0" y="189" width="126" height="83"/>
                                         <clipView key="contentView" drawsBackground="NO" id="Noe-Za-eMO">
-                                            <rect key="frame" x="1" y="0.0" width="124" height="142"/>
+                                            <rect key="frame" x="1" y="0.0" width="124" height="67"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView identifier="playlists" verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" columnSelection="YES" autosaveName="playlistTableView.prefs" rowSizeStyle="automatic" headerView="tha-4C-kVE" viewBased="YES" id="PML-r0-Bx7" userLabel="Playlist Table View" customClass="PlayTableView" customModule="He3" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="253" height="117"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="253" height="42"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -2083,7 +2082,7 @@ Gw
                                             <nil key="backgroundColor"/>
                                         </clipView>
                                         <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="atn-XO-QDu">
-                                            <rect key="frame" x="1" y="142" width="124" height="15"/>
+                                            <rect key="frame" x="1" y="67" width="124" height="15"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="phY-te-dcT">
@@ -2096,10 +2095,10 @@ Gw
                                         </tableHeaderView>
                                     </scrollView>
                                     <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="2" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IJO-dk-87l">
-                                        <rect key="frame" x="8" y="12" width="38" height="93"/>
+                                        <rect key="frame" x="8" y="12" width="38" height="168"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ham-VS-t4a">
-                                                <rect key="frame" x="0.0" y="74" width="18" height="20"/>
+                                                <rect key="frame" x="0.0" y="149" width="18" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="18" id="JTp-ky-mGF"/>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="18" id="XPl-Vx-uH4"/>
@@ -2114,7 +2113,7 @@ Gw
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="o1D-da-uMx">
-                                                <rect key="frame" x="20" y="74" width="18" height="20"/>
+                                                <rect key="frame" x="20" y="149" width="18" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="18" id="EdH-Et-2HW"/>
                                                     <constraint firstAttribute="height" constant="18" id="h38-0O-QiV"/>
@@ -2156,10 +2155,10 @@ Gw
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
                                     <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WiW-pB-vRx">
-                                        <rect key="frame" x="10" y="10" width="134" height="214"/>
+                                        <rect key="frame" x="10" y="10" width="134" height="71"/>
                                         <subviews>
                                             <button toolTip="Restore selected playlists or playitems" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DNq-eF-IsJ">
-                                                <rect key="frame" x="-6" y="186" width="80" height="32"/>
+                                                <rect key="frame" x="-6" y="18" width="80" height="32"/>
                                                 <buttonCell key="cell" type="push" title="Revert" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3XW-t7-vOU">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -2170,7 +2169,7 @@ Gw
                                                 </connections>
                                             </button>
                                             <button toolTip="Save selected playlists or playitems" verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="zo4-as-HFj">
-                                                <rect key="frame" x="70" y="186" width="70" height="32"/>
+                                                <rect key="frame" x="70" y="18" width="70" height="32"/>
                                                 <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="x6P-T8-kml">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -2237,13 +2236,13 @@ Gw
                                         </customSpacing>
                                     </stackView>
                                     <scrollView horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lou-k5-Ctb">
-                                        <rect key="frame" x="0.0" y="232" width="314" height="40"/>
+                                        <rect key="frame" x="0.0" y="89" width="314" height="183"/>
                                         <clipView key="contentView" drawsBackground="NO" id="Ix6-nN-7A8">
-                                            <rect key="frame" x="1" y="0.0" width="297" height="24"/>
+                                            <rect key="frame" x="1" y="0.0" width="297" height="167"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView identifier="playitems" verticalHuggingPriority="750" tag="1" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" columnSelection="YES" autosaveName="playitemTableView.prefs" rowSizeStyle="automatic" headerView="YTX-gj-uhH" viewBased="YES" id="IBh-ZH-TR3" customClass="PlayTableView" customModule="He3" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="951" height="24"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="951" height="142"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -2772,11 +2771,11 @@ Gw
                                             <nil key="backgroundColor"/>
                                         </clipView>
                                         <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="1e4-tR-Cc8">
-                                            <rect key="frame" x="1" y="24" width="297" height="15"/>
+                                            <rect key="frame" x="1" y="167" width="297" height="15"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
-                                        <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="aSB-Wi-46z">
-                                            <rect key="frame" x="298" y="25" width="15" height="-1"/>
+                                        <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="aSB-Wi-46z">
+                                            <rect key="frame" x="298" y="25" width="15" height="142"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <tableHeaderView key="headerView" id="YTX-gj-uhH" customClass="PlayHeaderView" customModule="He3">
@@ -2864,7 +2863,7 @@ Gw
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="square" title=" " bezelStyle="shadowlessSquare" image="NSActionTemplate" imagePosition="overlaps" alignment="right" controlSize="small" imageScaling="proportionallyDown" inset="2" id="GH5-k2-F6I">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="message" size="11"/>
+                                    <font key="font" metaFont="controlContent" size="11"/>
                                 </buttonCell>
                                 <connections>
                                     <action selector="togglePreferencesPress:" target="QYb-hL-iI7" id="X5f-f6-xOL"/>
@@ -2934,17 +2933,17 @@ Gw
                                                 <items>
                                                     <menuItem title="All Spaces" state="on" id="iu1-bS-9hP">
                                                         <connections>
-                                                            <action selector="floatOverAllSpacesPress:" target="B8D-0N-5wS" id="Gh6-O3-csk"/>
+                                                            <action selector="floatOverSpacesPress:" target="Oky-zY-oP4" id="5Px-AX-eAh"/>
                                                         </connections>
                                                     </menuItem>
                                                     <menuItem title="Single Space" tag="1" id="zZd-ra-QKA">
                                                         <connections>
-                                                            <action selector="floatOverAllSpacesPress:" target="B8D-0N-5wS" id="DBf-fb-Ee5"/>
+                                                            <action selector="floatOverSpacesPress:" target="Oky-zY-oP4" id="GLx-fy-aVp"/>
                                                         </connections>
                                                     </menuItem>
                                                     <menuItem title="Full Screen" tag="2" id="wmD-hE-iTh">
                                                         <connections>
-                                                            <action selector="floatOverFullScreenAppsPress:" target="B8D-0N-5wS" id="L1L-5t-mgB"/>
+                                                            <action selector="floatOverSpacesPress:" target="Oky-zY-oP4" id="KO0-Ue-cFx"/>
                                                         </connections>
                                                     </menuItem>
                                                 </items>
@@ -3036,9 +3035,7 @@ Gw
                             </allowedToolbarItems>
                             <defaultToolbarItems>
                                 <toolbarItem reference="FwO-iD-ty3"/>
-                                <toolbarItem reference="Gs2-HS-MJB"/>
                                 <toolbarItem reference="faz-Y8-DQM"/>
-                                <toolbarItem reference="Gs2-HS-MJB"/>
                                 <toolbarItem reference="fJy-ou-YnS"/>
                                 <toolbarItem reference="5xX-aY-d3F"/>
                                 <toolbarItem reference="Gs2-HS-MJB"/>
