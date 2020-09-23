@@ -211,7 +211,6 @@
 		0F5290AA244F6C0D00A9B9DC /* UserSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserSettings.swift; path = He3/Support/UserSettings.swift; sourceTree = SOURCE_ROOT; };
 		0F5290AB244F6C0D00A9B9DC /* StringHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StringHelpers.swift; path = He3/Support/StringHelpers.swift; sourceTree = SOURCE_ROOT; };
 		0F5290AC244F6C0D00A9B9DC /* PanelButtonBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PanelButtonBar.swift; path = He3/Support/Deprecated/PanelButtonBar.swift; sourceTree = SOURCE_ROOT; };
-		0F5290B8244F6C9100A9B9DC /* dsa_pub.pem */ = {isa = PBXFileReference; lastKnownFileType = text; name = dsa_pub.pem; path = He3/Resources/dsa_pub.pem; sourceTree = SOURCE_ROOT; };
 		0F5290BC2451D3C300A9B9DC /* He3.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = He3.icns; path = "He3/Assets/App Icon/He3.icns"; sourceTree = "<group>"; };
 		0F55CD6324A6794E00E49C6A /* icntIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icntIcon.png; path = "He3/Assets/icnt Icon/icntIcon.png"; sourceTree = "<group>"; };
 		0F55CD6524A6795600E49C6A /* icntIcon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = icntIcon.jpg; path = "He3/Assets/icnt Icon/icntIcon.jpg"; sourceTree = "<group>"; };
@@ -468,7 +467,6 @@
 			children = (
 				0F2DF8C42458644200707628 /* He3.playground */,
 				0F237112244E9AA1009F7914 /* Help */,
-				0F5290B8244F6C9100A9B9DC /* dsa_pub.pem */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -636,8 +634,8 @@
 		0F2370C5244E8CEA009F7914 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1150;
-				LastUpgradeCheck = 1150;
+				LastSwiftUpdateCheck = 1200;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Carlos D. Santiago";
 				TargetAttributes = {
 					0F2370CC244E8CEA009F7914 = {
@@ -794,7 +792,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\nset -x\nbuildPlist=\"He3/Info.plist\"\nsharePlist=\"He3ShareExtension/Info.plist\"\ntestsPlist=\"He3Tests/Info.plist\"\nloginPlist=\"He3Launcher/Info.plist\"\nqlExtPlist=\"He3QLExtension/Info.plist\"\n\nbuildMajor=$(/usr/libexec/PlistBuddy -c \"Print CFBuildMajor\" $sharePlist)\nbuildMinor=$(/usr/libexec/PlistBuddy -c \"Print CFBuildMinor\" $sharePlist)\nbuildPatch=$(/usr/libexec/PlistBuddy -c \"Print CFBuildPatch\" $sharePlist)\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBuildNumber\" $sharePlist)\nbuildDate=$(date \"+%Y%m%d.%H%M%S\")\n\n# Increment the buildNumber if asked\nbuildIncr=$(/usr/libexec/PlistBuddy -c \"Print CFBuildIncrement\" $buildPlist)\nif [ \"$buildIncr\" = \"true\" ];\nthen\n    buildNumber=$(($buildNumber + 1))\nfi\n\n# Formulate the bundle versions\nbundleVersion=$buildMajor.$buildMinor.$buildNumber\nbundleShortVersion=$buildMajor.$buildMinor.$buildPatch\n\n# Set the version numbers in the buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildNumber $buildNumber\" $buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildDate $buildDate\" $buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $bundleVersion\" $buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $bundleShortVersion\" $buildPlist\n\n# Propagate to share\n/usr/libexec/PlistBuddy -c \"Set :CFBuildNumber $buildNumber\" $sharePlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildDate $buildDate\" $sharePlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $bundleVersion\" $sharePlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $bundleShortVersion\" $sharePlist\n\n# Propagate to tests\n/usr/libexec/PlistBuddy -c \"Set :CFBuildNumber $buildNumber\" $testsPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildDate $buildDate\" $testsPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $bundleVersion\" $testsPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $bundleShortVersion\" $testsPlist\n\n# Propagate to launcher\n/usr/libexec/PlistBuddy -c \"Set :CFBuildNumber $buildNumber\" $loginPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildDate $buildDate\" $loginPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $bundleVersion\" $loginPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $bundleShortVersion\" $loginPlist\n\n# Propagate to QL Extension\n/usr/libexec/PlistBuddy -c \"Set :CFBuildNumber $buildNumber\" $qlExtPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildDate $buildDate\" $qlExtPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $bundleVersion\" $qlExtPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $bundleShortVersion\" $qlExtPlist\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\nset -x\nbuildPlist=\"He3/Info.plist\"\nsharePlist=\"He3ShareExtension/Info.plist\"\ntestsPlist=\"He3Tests/Info.plist\"\nloginPlist=\"He3Launcher/Info.plist\"\nqlExtPlist=\"He3QLExtension/Info.plist\"\n\nbuildMajor=$(/usr/libexec/PlistBuddy -c \"Print CFBuildMajor\" $buildPlist)\nbuildMinor=$(/usr/libexec/PlistBuddy -c \"Print CFBuildMinor\" $buildPlist)\nbuildPatch=$(/usr/libexec/PlistBuddy -c \"Print CFBuildPatch\" $buildPlist)\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBuildNumber\" $buildPlist)\nbuildDate=$(date \"+%Y%m%d.%H%M%S\")\n\n# Increment the buildNumber if asked\nbuildIncr=$(/usr/libexec/PlistBuddy -c \"Print CFBuildIncrement\" $buildPlist)\nif [ \"$buildIncr\" = \"true\" ];\nthen\n    buildNumber=$(($buildNumber + 1))\nfi\n\n# Formulate the bundle versions\nbundleVersion=$buildMajor.$buildMinor.$buildNumber\nbundleShortVersion=$buildMajor.$buildMinor.$buildPatch\n\n# Set the version numbers in the buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildNumber $buildNumber\" $buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildDate $buildDate\" $buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $bundleVersion\" $buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $bundleShortVersion\" $buildPlist\n\n# Propagate to share\n/usr/libexec/PlistBuddy -c \"Set :CFBuildNumber $buildNumber\" $sharePlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildDate $buildDate\" $sharePlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $bundleVersion\" $sharePlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $bundleShortVersion\" $sharePlist\n\n# Propagate to tests\n/usr/libexec/PlistBuddy -c \"Set :CFBuildNumber $buildNumber\" $testsPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildDate $buildDate\" $testsPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $bundleVersion\" $testsPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $bundleShortVersion\" $testsPlist\n\n# Propagate to launcher\n/usr/libexec/PlistBuddy -c \"Set :CFBuildNumber $buildNumber\" $loginPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildDate $buildDate\" $loginPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $bundleVersion\" $loginPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $bundleShortVersion\" $loginPlist\n\n# Propagate to QL Extension\n/usr/libexec/PlistBuddy -c \"Set :CFBuildNumber $buildNumber\" $qlExtPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildDate $buildDate\" $qlExtPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $bundleVersion\" $qlExtPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $bundleShortVersion\" $qlExtPlist\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -972,6 +970,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1002,6 +1001,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_INCLUDE_PATHS = "$(inherited) $(PROJECT_DIR)/Carthage/Checkouts/down/Source/cmark";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -1032,6 +1032,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1055,6 +1056,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_INCLUDE_PATHS = "$(inherited) $(PROJECT_DIR)/Carthage/Checkouts/down/Source/cmark";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;
@@ -1080,6 +1082,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = com.slashlos.he3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1107,6 +1110,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = com.slashlos.he3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;

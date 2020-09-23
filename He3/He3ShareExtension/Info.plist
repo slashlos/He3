@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBuildDate</key>
-	<string>20200919.154726</string>
+	<string>20200923.154033</string>
 	<key>CFBuildMajor</key>
 	<string>1</string>
 	<key>CFBuildMinor</key>
@@ -11,7 +11,7 @@
 	<key>CFBuildNumber</key>
 	<string>8380</string>
 	<key>CFBuildPatch</key>
-	<string>1</string>
+	<string>2</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -29,7 +29,7 @@
 	<key>CFBundlePackageType</key>
 	<string>XPC!</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.1</string>
+	<string>1.0.2</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
