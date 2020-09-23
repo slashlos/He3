@@ -941,6 +941,10 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
             break
 
         default:
+			if menuItem.title.hasSuffix(" Tool Bar") {
+				menuItem.title = (showToolbar ? "Hide" : "Show") + " Tool Bar"
+			}
+			else
             // Opacity menu item have opacity as tag value
             if menuItem.tag >= 10 {
                 menuItem.state = (menuItem.tag == settings.opacityPercentage.value ? .on : .off)
@@ -1143,12 +1147,12 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 	var preferencesViewController : NSTitlebarAccessoryViewController?
 	@IBAction func togglePreferencesPress(_ sender: AnyObject) {
 		print("show me preferences")
-		if let toolbar = panel.toolbar, let rvc = preferencesViewController {
+		if let rvc = preferencesViewController {
 			NSAnimationContext.runAnimationGroup({ (context) in
 				context.duration = 0.5
 				
-				panel.animator().toolbar!.isVisible = !toolbar.isVisible
-				showToolbar = toolbar.isVisible
+				showToolbar = showToolbar ? false : true
+				panel.animator().toolbar!.isVisible = showToolbar
 				rvc.view.animator().isHidden = showToolbar
 			})
 		}
