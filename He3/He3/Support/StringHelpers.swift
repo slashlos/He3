@@ -122,8 +122,10 @@ extension String {
 
 extension NSString {
     class func string(fromAsset: String) -> String {
-        let asset = NSDataAsset.init(name: fromAsset)
-        let data = NSData.init(data: (asset?.data)!)
+		guard let asset = NSDataAsset.init(name: fromAsset) else {
+			return String(format: "Unable to locate asset:\n%@", fromAsset)
+		}
+		let data = NSData.init(data: (asset.data))
         let text = String.init(data: data as Data, encoding: String.Encoding.utf8)
         
 		if fromAsset.hasSuffix(".md"), let html = try? Down(markdownString: text!).toHTML()
@@ -140,8 +142,10 @@ extension NSString {
 
 extension NSAttributedString {
     class func string(fromAsset: String) -> NSAttributedString {
-        let asset = NSDataAsset.init(name: fromAsset)
-        let data = NSData.init(data: (asset?.data)!)
+		guard let asset = NSDataAsset.init(name: fromAsset) else {
+			return NSAttributedString.init(string: String(format: "Unable to locate asset:\n%@", fromAsset))
+		}
+		let data = NSData.init(data: (asset.data))
         var text : NSAttributedString
         do {
             text = try NSAttributedString.init(data: data as Data, options:[NSAttributedString.DocumentReadingOptionKey.documentType: NSAttributedString.DocumentType.rtf], documentAttributes: nil)
