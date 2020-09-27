@@ -2209,6 +2209,12 @@ let sameWindow : ViewOptions = []
         }
         catch let error
         {
+			//	If stale bookmark, clear and try again
+			if nil != bookmarks[url] {
+				bookmarks[url] = nil
+				return storeBookmark(url: url)
+			}
+			
 			//	Unless we have a window don't bother; allows to
 			//	silently fail until its use is attempted later.
 			if nil != NSApp.keyWindow {
