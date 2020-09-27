@@ -941,8 +941,8 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
             break
 
         default:
-			if menuItem.title.hasSuffix(" Tool Bar") {
-				menuItem.title = (showToolbar ? "Hide" : "Show") + " Tool Bar"
+			if menuItem.title.hasSuffix(" Toolbar") {
+				menuItem.title = (showToolbar ? "Hide" : "Show") + " Toolbar"
 			}
 			else
             // Opacity menu item have opacity as tag value

@@ -503,7 +503,7 @@ CA
                                                 <action selector="toggleTabBar:" target="Ady-hI-5gd" id="cEt-i1-5Rr"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Show Tool Bar" toolTip="toggle preferences toolbar" id="Zjc-dz-1GG">
+                                        <menuItem title="Show Toolbar" toolTip="toggle preferences toolbar" id="Zjc-dz-1GG">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="togglePreferencesPress:" target="Ady-hI-5gd" id="Ycg-5X-t1S"/>
