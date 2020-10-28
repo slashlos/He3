@@ -1030,6 +1030,8 @@ let sameWindow : ViewOptions = []
                 menuItem.state = UserSettings.RestoreWebURLs.value ? .on : .off
             case "User Agent":
                 break
+ 			case "Use Local Assets":
+ 				menuItem.state = UserSettings.UseLocalAssets.value ? .on : .off
             case "Quit":
                 break
 

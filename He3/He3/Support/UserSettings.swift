@@ -66,10 +66,18 @@ internal struct UserSettings {
         "homePageURL",
         defaultValue: "https://slashlos.github.io/He3/he3_start.html"
     )
+	static let LocalPageURL = Setting<String>(
+		"localPageURL",
+		defaultValue: "he3-local:///asset/he3_start.html"
+	)
     static let HomeStrkURL = Setting<String>(
         "homeStrkURL",
         defaultValue: "https://slashlos.github.io/He3/he3_stark.html"
     )
+	static let LocalStrkURL = Setting<String>(
+		"localStrkURL",
+		defaultValue: "he3-local:///asset/he3_stark.html"
+	)
     static let HelpPageURL = Setting<String>(
         "helpPageURL",
         defaultValue: "https://slashlos.github.io/He3/Help/index.html"
@@ -99,6 +107,7 @@ internal struct UserSettings {
     static let AcceptWebCookie = Setting<Bool>("acceptWebCookie", defaultValue: true)
     static let ShareWebCookies = Setting<Bool>("shareWebCookies", defaultValue: true)
     static let StoreWebCookies = Setting<Bool>("storeWebCookies", defaultValue: true)
+	static let UseLocalAssets = Setting<Bool>("useLocalAssets", defaultValue: false)
 
     //  User non-document windows to restore
     static let KeepListName = Setting<String>("keepList", defaultValue: "Keep")

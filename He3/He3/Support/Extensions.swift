@@ -544,6 +544,17 @@ extension CastingError: CustomStringConvertible {
 // MARK: - Data cast extensions
 
 extension Data {
+	static func data(fromAsset: String) -> Data {
+		guard let asset = NSDataAsset.init(name: fromAsset) else {
+			Swift.print(String(format: "Unable to locate asset: '%@'", fromAsset))
+			return NSImage(named: fromAsset)!.tiffRepresentation!
+		}
+		let data = NSData.init(data: (asset.data))
+		return data as Data
+	}
+}
+
+extension Data {
     func toDictionary(options: JSONSerialization.ReadingOptions = []) throws -> [String: Any] {
         return try to(type: [String: Any].self, options: options)
     }

@@ -44,7 +44,10 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
     }
     var homeURL : URL {
         get {
-            return URL.init(string: incognito ? UserSettings.HomeStrkURL.value : UserSettings.HomePageURL.value)!
+ 			let url = UserSettings.UseLocalAssets.value
+ 				?	URL.init(string: incognito ? UserSettings.LocalStrkURL.value : UserSettings.LocalPageURL.value)!
+ 				:	URL.init(string: incognito ? UserSettings.HomeStrkURL.value  : UserSettings.HomePageURL.value)!
+ 			return url
         }
     }
     var homeColor : NSColor {
