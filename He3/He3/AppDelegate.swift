@@ -1531,7 +1531,7 @@ let sameWindow : ViewOptions = []
         }
         
 		//	Handle Cocoa Auto Layout mechanism exception - not automatically
-		///UserDefaults.standard.set(true, forKey: "NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints")
+		UserDefaults.standard.set(false, forKey: "NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints")
     }
 	
     func applicationWillTerminate(_ aNotification: Notification) {
