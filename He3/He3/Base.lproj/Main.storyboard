@@ -7,6 +7,74 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Save As View Controller-->
+        <scene sceneID="GeZ-F8-lbK">
+            <objects>
+                <viewController storyboardIdentifier="SaveAsViewController" id="2D0-oP-LVi" customClass="SaveAsViewController" customModule="He3" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="ZSt-QL-Zch">
+                        <rect key="frame" x="0.0" y="0.0" width="360" height="83"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rlf-zx-zJK">
+                                <rect key="frame" x="100" y="43" width="161" height="21"/>
+                                <subviews>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iOr-0Z-Oj0">
+                                        <rect key="frame" x="-2" y="3" width="51" height="16"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Format:" id="jim-6f-EJd">
+                                            <font key="font" usesAppearanceFont="YES"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CVP-Lj-F1M">
+                                        <rect key="frame" x="53" y="-3" width="111" height="25"/>
+                                        <popUpButtonCell key="cell" type="push" title="PlayItem" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="2FK-64-B8a" id="fYw-JG-ikE">
+                                            <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="menu"/>
+                                            <menu key="menu" id="vFv-HS-YkG">
+                                                <items>
+                                                    <menuItem title="PlayItem" state="on" id="2FK-64-B8a"/>
+                                                    <menuItem title="PlayList" tag="1" hidden="YES" enabled="NO" id="H2A-93-Nom"/>
+                                                    <menuItem title="WebArchive" tag="2" id="1OI-1y-bc5"/>
+                                                </items>
+                                            </menu>
+                                        </popUpButtonCell>
+                                    </popUpButton>
+                                </subviews>
+                                <visibilityPriorities>
+                                    <integer value="1000"/>
+                                    <integer value="1000"/>
+                                </visibilityPriorities>
+                                <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
+                                    <real value="3.4028234663852886e+38"/>
+                                </customSpacing>
+                            </stackView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sRx-1s-1cV">
+                                <rect key="frame" x="51" y="21" width="259" height="14"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Saves playitem or web archive - web pages only." id="KJe-6g-fJY">
+                                    <font key="font" metaFont="system" size="11"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="Rlf-zx-zJK" firstAttribute="centerX" secondItem="ZSt-QL-Zch" secondAttribute="centerX" id="ZqY-nf-1im"/>
+                            <constraint firstItem="Rlf-zx-zJK" firstAttribute="centerX" secondItem="sRx-1s-1cV" secondAttribute="centerX" id="hDY-R1-sW6"/>
+                            <constraint firstItem="sRx-1s-1cV" firstAttribute="top" secondItem="Rlf-zx-zJK" secondAttribute="bottom" constant="8" symbolic="YES" id="lTi-nz-2oR"/>
+                            <constraint firstAttribute="bottom" secondItem="sRx-1s-1cV" secondAttribute="bottom" constant="21" id="nLd-06-fUm"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="formatPopup" destination="CVP-Lj-F1M" id="Cgp-Nv-Kca"/>
+                        <outlet property="webArchiveMenuItem" destination="1OI-1y-bc5" id="pAn-8L-6GN"/>
+                    </connections>
+                </viewController>
+                <customObject id="2ib-kZ-u5l" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-616" y="-1247.5"/>
+        </scene>
         <!--Window Controller-->
         <scene sceneID="t8N-qi-OCo">
             <objects>
@@ -388,6 +456,18 @@ CA
                                                 <action selector="revertDocumentToSaved:" target="Ady-hI-5gd" id="ywd-wc-9xA"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="BaI-Zb-zFw"/>
+                                        <menuItem title="Archive" keyEquivalent="e" id="lgc-HN-wEC">
+                                            <connections>
+                                                <action selector="archivePress:" target="Ady-hI-5gd" id="UYB-UA-ft9"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Archive All" tag="1" alternate="YES" keyEquivalent="e" id="GTW-Yp-HHO">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="archiveAllPress:" target="Ady-hI-5gd" id="TkO-pd-zGc"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem isSeparatorItem="YES" id="wbg-XB-qHT"/>
                                         <menuItem title="Back" keyEquivalent="[" id="UkE-up-3w1">
                                             <connections>
@@ -419,13 +499,13 @@ CA
                                         </menuItem>
                                         <menuItem title="Snapshot" keyEquivalent="y" id="XZA-7w-cCC">
                                             <connections>
-                                                <action selector="snapshot:" target="Ady-hI-5gd" id="gtn-Ys-r0W"/>
+                                                <action selector="snapshotPress:" target="Ady-hI-5gd" id="AAX-5L-xdZ"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Snapshot All" tag="1" alternate="YES" keyEquivalent="y" id="dLl-Cr-uBv">
                                             <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                             <connections>
-                                                <action selector="snapshotAll:" target="Voe-Tx-rLC" id="7tE-o9-BbX"/>
+                                                <action selector="snapshotAllPress:" target="Ady-hI-5gd" id="Av1-aW-zKX"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -874,7 +954,7 @@ CA
                         <menuItem title="Snapshot All" alternate="YES" id="zig-bH-kHt">
                             <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                             <connections>
-                                <action selector="snapshotAll:" target="Ady-hI-5gd" id="eWR-Db-so1"/>
+                                <action selector="snapshotAllPress:" target="Voe-Tx-rLC" id="3f4-ia-BDK"/>
                             </connections>
                         </menuItem>
                         <menuItem title="Search…" id="H50-eU-quB">
@@ -1864,13 +1944,13 @@ Gw
                                         </connections>
                                     </button>
                                     <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KRs-AT-9D8">
-                                        <rect key="frame" x="0.0" y="139" width="126" height="133"/>
+                                        <rect key="frame" x="0.0" y="39" width="126" height="233"/>
                                         <clipView key="contentView" drawsBackground="NO" id="Noe-Za-eMO">
-                                            <rect key="frame" x="1" y="0.0" width="124" height="117"/>
+                                            <rect key="frame" x="1" y="0.0" width="124" height="217"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView identifier="playlists" verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" columnSelection="YES" autosaveName="playlistTableView.prefs" rowSizeStyle="automatic" headerView="tha-4C-kVE" viewBased="YES" id="PML-r0-Bx7" userLabel="Playlist Table View" customClass="PlayTableView" customModule="He3" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="253" height="92"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="253" height="192"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -2095,7 +2175,7 @@ Gw
                                             <nil key="backgroundColor"/>
                                         </clipView>
                                         <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="atn-XO-QDu">
-                                            <rect key="frame" x="1" y="117" width="124" height="15"/>
+                                            <rect key="frame" x="1" y="217" width="124" height="15"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="phY-te-dcT">
@@ -2108,10 +2188,10 @@ Gw
                                         </tableHeaderView>
                                     </scrollView>
                                     <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="2" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IJO-dk-87l">
-                                        <rect key="frame" x="8" y="12" width="38" height="118"/>
+                                        <rect key="frame" x="8" y="12" width="38" height="18"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ham-VS-t4a">
-                                                <rect key="frame" x="0.0" y="99" width="18" height="20"/>
+                                                <rect key="frame" x="0.0" y="-1" width="18" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="18" id="JTp-ky-mGF"/>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="18" id="XPl-Vx-uH4"/>
@@ -2126,7 +2206,7 @@ Gw
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="o1D-da-uMx">
-                                                <rect key="frame" x="20" y="99" width="18" height="20"/>
+                                                <rect key="frame" x="20" y="-1" width="18" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="18" id="EdH-Et-2HW"/>
                                                     <constraint firstAttribute="height" constant="18" id="h38-0O-QiV"/>
@@ -2168,10 +2248,10 @@ Gw
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
                                     <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WiW-pB-vRx">
-                                        <rect key="frame" x="10" y="10" width="134" height="196"/>
+                                        <rect key="frame" x="10" y="10" width="134" height="71"/>
                                         <subviews>
                                             <button toolTip="Restore selected playlists or playitems" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DNq-eF-IsJ">
-                                                <rect key="frame" x="-6" y="143" width="80" height="32"/>
+                                                <rect key="frame" x="-6" y="18" width="80" height="32"/>
                                                 <buttonCell key="cell" type="push" title="Revert" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3XW-t7-vOU">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -2182,7 +2262,7 @@ Gw
                                                 </connections>
                                             </button>
                                             <button toolTip="Save selected playlists or playitems" verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="zo4-as-HFj">
-                                                <rect key="frame" x="70" y="143" width="70" height="32"/>
+                                                <rect key="frame" x="70" y="18" width="70" height="32"/>
                                                 <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="x6P-T8-kml">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -2249,13 +2329,13 @@ Gw
                                         </customSpacing>
                                     </stackView>
                                     <scrollView horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lou-k5-Ctb">
-                                        <rect key="frame" x="0.0" y="214" width="314" height="58"/>
+                                        <rect key="frame" x="0.0" y="89" width="314" height="183"/>
                                         <clipView key="contentView" drawsBackground="NO" id="Ix6-nN-7A8">
-                                            <rect key="frame" x="1" y="0.0" width="297" height="42"/>
+                                            <rect key="frame" x="1" y="0.0" width="297" height="167"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView identifier="playitems" verticalHuggingPriority="750" tag="1" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" columnSelection="YES" autosaveName="playitemTableView.prefs" rowSizeStyle="automatic" headerView="YTX-gj-uhH" viewBased="YES" id="IBh-ZH-TR3" customClass="PlayTableView" customModule="He3" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="951" height="24"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="951" height="142"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -2784,11 +2864,11 @@ Gw
                                             <nil key="backgroundColor"/>
                                         </clipView>
                                         <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="1e4-tR-Cc8">
-                                            <rect key="frame" x="1" y="42" width="297" height="15"/>
+                                            <rect key="frame" x="1" y="167" width="297" height="15"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="aSB-Wi-46z">
-                                            <rect key="frame" x="298" y="25" width="15" height="17"/>
+                                            <rect key="frame" x="298" y="25" width="15" height="142"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <tableHeaderView key="headerView" id="YTX-gj-uhH" customClass="PlayHeaderView" customModule="He3">

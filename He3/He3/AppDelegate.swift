@@ -493,6 +493,22 @@ let sameWindow : ViewOptions = []
     //  Restore operations are progress until open
     @objc dynamic var openForBusiness = false
     
+	@objc @IBAction func archiveAllPress(_ sender: NSMenuItem) {
+		registerSnaphotsURL(sender) { (snapshotURL) in
+			//	If we have a return object just call them, else notify all
+			if let wvc : WebViewController = sender.representedObject as? WebViewController {
+				sender.representedObject = snapshotURL
+				wvc.archive(sender)
+			}
+			else
+			{
+				sender.representedObject = snapshotURL
+				let notif = Notification(name: Notification.Name(rawValue: "ArchiveAll"), object: sender)
+				NotificationCenter.default.post(notif)
+			}
+		}
+	}
+	
     //  By defaut we show document title bar
     @objc @IBAction func autoHideTitlePress(_ sender: NSMenuItem) {
         UserSettings.AutoHideTitle.value = (sender.state == .off)
@@ -885,9 +901,70 @@ let sameWindow : ViewOptions = []
         }
 	}
 	
-    @objc @IBAction func snapshotAll(_ sender: NSMenuItem) {
-        let notif = Notification(name: Notification.Name(rawValue: "SnapshotAll"), object: sender)
-        NotificationCenter.default.post(notif)
+	func registerSnaphotsURL(_ sender: NSMenuItem, handler: @escaping (URL) -> Void) {
+		var targetURL : URL
+
+		//  1st around authenticate and cache sandbox data if needed
+		if isSandboxed, desktopData == nil {
+			targetURL =
+				UserSettings.SnapshotsURL.value.count == 0
+					? getDesktopDirectory()
+					: URL.init(fileURLWithPath: UserSettings.SnapshotsURL.value, isDirectory: true)
+			
+			let openPanel = NSOpenPanel()
+			openPanel.message = "Authorize access to "
+			openPanel.prompt = "Authorize"
+			openPanel.canChooseFiles = false
+			openPanel.canChooseDirectories = true
+			openPanel.canCreateDirectories = true
+			openPanel.directoryURL = targetURL
+			openPanel.begin() { (result) -> Void in
+				if (result == .OK) {
+					targetURL = openPanel.url!
+					
+					//	Since we do not have data, clear any bookmark
+					
+					if self.storeBookmark(url: targetURL, options: self.rwOptions) {
+						self.desktopData = self.bookmarks[targetURL]
+						UserSettings.SnapshotsURL.value = targetURL.absoluteString
+						if !self.saveBookmarks() {
+							print("Yoink, unable to save snapshot bookmark")
+						}
+
+						self.desktopData = self.bookmarks[targetURL]
+						handler(targetURL)
+					}
+				}
+				else
+				{
+					return
+				}
+			}
+		}
+		else
+		{
+			targetURL =
+				UserSettings.SnapshotsURL.value.count == 0
+					? getDesktopDirectory()
+					: URL.init(fileURLWithPath: UserSettings.SnapshotsURL.value, isDirectory: true)
+			handler(targetURL)
+		}
+	}
+	
+    @objc @IBAction func snapshotAllPress(_ sender: NSMenuItem) {
+		registerSnaphotsURL(sender) { (snapshotURL) in
+			//	If we have a return object just call them, else notify all
+			if let wvc : WebViewController = sender.representedObject as? WebViewController {
+				sender.representedObject = snapshotURL
+				wvc.snapshot(sender)
+			}
+			else
+			{
+				sender.representedObject = snapshotURL
+				let notif = Notification(name: Notification.Name(rawValue: "SnapshotAll"), object: sender)
+				NotificationCenter.default.post(notif)
+			}
+		}
     }
 
 	var canRedo : Bool {
@@ -1132,18 +1209,19 @@ let sameWindow : ViewOptions = []
                 print("Yoink, unable to load bookmarks")
             }
             else
+			if UserSettings.SnapshotsURL.value.count > 0
             {
-                //  1st time gain access to the ~/Deskop
-                let url = URL.init(fileURLWithPath: UserSettings.SnapshotsURL.value, isDirectory: true)
-                if let data = bookmarks[url], fetchBookmark((key: url, value: data)) {
-                    print ("snapshotURL \(url.absoluteString)")
-                    desktopData = data
-                }
-                else
-                if let url = URL.init(string: String(format: "file:///Users/%@/Desktop/", NSUserName())), let data = bookmarks[url] {
-                    UserSettings.SnapshotsURL.value = url.absoluteString
-                    desktopData = data
-                }
+                //  Try and restore snapshots/webarchive url data
+				let url = URL.init(fileURLWithPath: UserSettings.SnapshotsURL.value, isDirectory: true)
+				if let data = bookmarks[url], fetchBookmark((key: url, value: data)) {
+					print ("snapshotURL \(url.absoluteString)")
+					desktopData = data
+				}
+				else
+				if let url = URL.init(string: String(format: "file:///Users/%@/Desktop/", NSUserName())), let data = bookmarks[url] {
+					UserSettings.SnapshotsURL.value = url.absoluteString
+					desktopData = data
+				}
             }
         }
         
@@ -2213,8 +2291,9 @@ let sameWindow : ViewOptions = []
         {
 			//	If stale bookmark, clear and try again
 			if nil != bookmarks[url] {
+				_ = ceaseBookmark(url)
 				bookmarks[url] = nil
-				return storeBookmark(url: url)
+				return storeBookmark(url: url, options: options)
 			}
 			
 			//	Unless we have a window don't bother; allows to
@@ -2243,11 +2322,21 @@ let sameWindow : ViewOptions = []
         return false
     }
 
-	func ceaseBookarmk(_ url: URL) -> Bool {
+	func ceaseBookmark(_ url: URL) -> Bool {
         guard isSandboxed else { return false }
 
 		if nil != bookmarks[url] {
 			url.stopAccessingSecurityScopedResource()
+			return true
+		}
+		return false
+	}
+	
+	func eraseBookmark(_ url: URL) -> Bool {
+		guard isSandboxed else { return false }
+
+		if ceaseBookmark(url) {
+			bookmarks.removeValue(forKey: url)
 			return true
 		}
 		return false
@@ -2260,7 +2349,8 @@ let sameWindow : ViewOptions = []
         let restoredUrl: URL?
 
 		var isStale = true
-        
+        var fetch = false
+
         do
         {
             restoredUrl = try URL.init(resolvingBookmarkData: bookmark.value, options: URL.BookmarkResolutionOptions.withSecurityScope, relativeTo: nil, bookmarkDataIsStale: &isStale)
@@ -2278,11 +2368,23 @@ let sameWindow : ViewOptions = []
         
         if isStale {
             print ("≠ \(bookmark.key)")
-            return false
+			if url.startAccessingSecurityScopedResource() {
+				do {
+					let data = try url.bookmarkData(options: rwOptions, includingResourceValuesForKeys: nil, relativeTo: nil)
+					url.stopAccessingSecurityScopedResource()
+					bookmarks[url] = data
+					fetch = true
+					Swift.print(" \(url) renewal")
+				} catch let error {
+					Swift.print("¿ \(url) renewal: \(error.localizedDescription)")
+				}
+			}
         }
-        
-        let fetch = url.startAccessingSecurityScopedResource()
-        print ("\(fetch ? "•" : "º") \(bookmark.key)")
+        else
+		{
+			fetch = url.startAccessingSecurityScopedResource()
+			print ("\(fetch ? "•" : "º") \(bookmark.key)")
+		}
         return fetch
     }
 	

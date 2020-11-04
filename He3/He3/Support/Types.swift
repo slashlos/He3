@@ -48,6 +48,8 @@ public struct k {
     static let Settings = "settings"
     static let Custom = "Custom"
     static let webloc = "webloc"
+	static let WebArchive = "WebArchive"
+	static let webarchive = "webarchive"
     static let hpi = "h3i"
     static let hpl = "h3l"
 	static let hic = "h3c"

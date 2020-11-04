@@ -834,12 +834,6 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
         willUpdateAlpha()
         print("alphaLevel \(alphaLevel) alpha\(alpha)")
     }
-
-    @IBAction func snapshot(_ sender: Any) {
-        guard let wvc = panel.contentViewController as? WebViewController else { return }
-        wvc.snapshot(sender)
-    }
-    
     @objc @IBAction func selectTabItem(_ sender: Any) {
         panel.selectTabItem(sender)
     }
@@ -938,8 +932,6 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
             break
         case "Magic URL Redirects":
             menuItem.state = UserSettings.DisabledMagicURLs.value ? .off : .on
-        case "Snapshot":
-            menuItem.isEnabled = panel.contentViewController?.isKind(of: WebViewController.self) ?? false
         case "Save":
             break
 

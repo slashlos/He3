@@ -9,6 +9,7 @@
 
 import Cocoa
 import WebKit
+import WebArchiver
 import AVFoundation
 import Carbon.HIToolbox
 import Quartz
@@ -28,6 +29,11 @@ fileprivate var docController : DocumentController {
     get {
         return NSDocumentController.shared as! DocumentController
     }
+}
+
+extension Selector {
+	static let archive = #selector(WebViewController.archive(_:))
+	static let snapshot = #selector(WebViewController.snapshot(_:))
 }
 
 class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegate, NSTabViewDelegate, WKHTTPCookieStoreObserver, QLPreviewPanelDataSource, QLPreviewPanelDelegate {
@@ -104,6 +110,11 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
 
         view.addSubview(loadingIndicator)
 
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(WebViewController.archiveAll(_:)),
+			name: NSNotification.Name(rawValue: "ArchiveAll"),
+			object: nil)
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(WebViewController.loadURL(urlFileURL:)),
@@ -116,7 +127,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
             object: nil)
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(WebViewController.snapshot(_:)),
+            selector: #selector(WebViewController.snapshotAll(_:)),
             name: NSNotification.Name(rawValue: "SnapshotAll"),
             object: nil)
         
@@ -379,17 +390,6 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
     }
 
     // MARK: Actions
-    @objc func validateMenuItem(_ menuItem: NSMenuItem) -> Bool{
-        switch menuItem.title {
-        case "Back":
-            return webView.canGoBack
-        case "Forward":
-            return webView.canGoForward
-        default:
-            return true
-        }
-    }
-
     @objc @IBAction func backPress(_ sender: AnyObject) {
         webView.goBack()
     }
@@ -423,6 +423,60 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
         snapshot(self)
     }
     */
+	@objc @IBAction func archivePress(_ sender: NSMenuItem) {
+		guard let url = webView.url, !url.isFileURL else { return }
+		guard [k.http,k.https].contains(url.scheme) else { return }
+		let window = self.view.window!
+		
+		let filename = webView.title ?? (url.lastPathComponent as NSString).deletingPathExtension
+		let archiveURL = URL.init(fileURLWithPath: filename).appendingPathExtension(k.webarchive)
+
+		let savePanel = NSSavePanel()
+		savePanel.canCreateDirectories = true
+		savePanel.allowedFileTypes = [k.webarchive]
+		savePanel.showsTagField = false
+		savePanel.nameFieldStringValue = archiveURL.lastPathComponent
+		savePanel.beginSheetModal(for: window, completionHandler: { [self] (result: NSApplication.ModalResponse) in
+			if result == .OK, let saveURL = savePanel.url {
+				sender.representedObject = saveURL
+				archive(sender)
+			}
+		})
+	}
+	
+	@objc func archive(_ sender: NSMenuItem) {
+		guard let url = self.webView.url, !url.isFileURL else { return }
+		guard var archiveURL = sender.representedObject as? URL else { return }
+		
+		//	archiveALL URL has only destination, so add name and extension
+		if sender.tag == 1 {
+			let filename = webView.title ?? (url.lastPathComponent as NSString).deletingPathExtension
+			archiveURL.appendPathComponent(filename)
+			archiveURL = archiveURL.appendingPathExtension(k.webarchive)
+		}
+		
+		webView.configuration.websiteDataStore.httpCookieStore.getAllCookies { cookies in
+			self.webView.loadingIndicator.startAnimation(sender)
+			
+			WebArchiver.archive(url: url, cookies: cookies) { result in
+				
+				if let data = result.plistData {
+					do {
+						try data.write(to: archiveURL)
+						if archiveURL.hideFileExtensionInPath(), let name = archiveURL.lastPathComponent.removingPercentEncoding {
+							print("archive => \(name)")
+						}
+					} catch {
+						appDelegate.userAlertMessage("Web page store failed", info: error.localizedDescription)
+					}
+				} else if let firstError = result.errors.first {
+					appDelegate.userAlertMessage("Web page store failed", info: firstError.localizedDescription)
+				}
+				self.webView.loadingIndicator.stopAnimation(sender)
+			}
+		}
+	}
+
 	@objc @IBAction func saveDocument(_ sender: Any) {
 		self.document?.save(sender)
 	}
@@ -556,13 +610,35 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
         resetZoom()
     }
     
-    @IBAction func snapshot(_ sender: Any) {
-        guard let window = self.view.window, window.isVisible else { return }
+	@objc @IBAction func snapshotPress(_ sender: NSMenuItem) {
+		guard let url = webView.url, url != webView.homeURL else { return }
+		guard let snapshotURL = sender.representedObject as? URL else {
+			//	Dispatch to app delegate to handle a singleton
+			sender.representedObject = self
+			appDelegate.snapshotAllPress(sender)
+			return
+		}
+		
+		sender.representedObject = snapshotURL
+		snapshot(sender)
+	}
+	
+    @objc func snapshot(_ sender: NSMenuItem) {
+		guard let url = webView.url, url != webView.homeURL else { return }
+		guard var snapshotURL = sender.representedObject as? URL else { return }
+		
+		//	URL has only destination, so add name and extension
+		let filename = String(format: "%@ Shapshot at %@",
+							  (url.lastPathComponent as NSString).deletingPathExtension,
+							  String.prettyStamp())
+		snapshotURL.appendPathComponent(filename)
+		snapshotURL = snapshotURL.appendingPathExtension("png")
+		
         webView.takeSnapshot(with: nil) { image, error in
             if let image = image {
                 self.webImageView.image = image
                 DispatchQueue.main.async {
-                    self.processSnapshotImage(image)
+					self.processSnapshotImage(image, to: snapshotURL)
                 }
             }
             else
@@ -573,48 +649,13 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
         }
     }
     
-    func processSnapshotImage(_ image: NSImage) {
+    func processSnapshotImage(_ image: NSImage, to snapshotURL: URL) {
         guard let tiffData = image.tiffRepresentation else { NSSound(named: "Sosumi")?.play(); return }
-         
-        //  1st around authenticate and cache sandbox data if needed
-        if appDelegate.isSandboxed, appDelegate.desktopData == nil {
-            var desktop =
-                UserSettings.SnapshotsURL.value.count == 0
-                    ? appDelegate.getDesktopDirectory()
-                    : URL.init(fileURLWithPath: UserSettings.SnapshotsURL.value, isDirectory: true)
-            
-            let openPanel = NSOpenPanel()
-            openPanel.message = "Authorize access to Snapshots"
-            openPanel.prompt = "Authorize"
-            openPanel.canChooseFiles = false
-            openPanel.canChooseDirectories = true
-            openPanel.canCreateDirectories = true
-            openPanel.directoryURL = desktop
-            openPanel.begin() { (result) -> Void in
-                if (result == .OK) {
-                    desktop = openPanel.url!
-                    _ = appDelegate.storeBookmark(url: desktop, options: appDelegate.rwOptions)
-                    appDelegate.desktopData = appDelegate.bookmarks[desktop]
-                    UserSettings.SnapshotsURL.value = desktop.absoluteString
-                    if !appDelegate.saveBookmarks() {
-                        print("Yoink, unable to save desktop booksmark(s)")
-                    }
-                }
-            }
-        }
-        
-        //  Form a filename: ~/"<app's name> View Shot <timestamp>"
-        var name : String
-        if let url = webView.url, url != webView.homeURL { name = url.lastPathComponent } else { name = appDelegate.AppName }
-        let path = URL.init(fileURLWithPath: UserSettings.SnapshotsURL.value).appendingPathComponent(
-            String(format: "%@ Shapshot at %@.png", name, String.prettyStamp()))
-        
         let bitmapImageRep = NSBitmapImageRep(data: tiffData)
-        
-        //  With sandbox clearance to the desktop...
+
         do
         {
-            try bitmapImageRep?.representation(using: .png, properties: [:])?.write(to: path)
+            try bitmapImageRep?.representation(using: .png, properties: [:])?.write(to: snapshotURL)
             // https://developer.apple.com/library/archive/qa/qa1913/_index.html
             if let asset = NSDataAsset(name:"Grab") {
 
@@ -627,12 +668,11 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
                     print("no sound for you")
                 }
             }
-            if path.hideFileExtensionInPath(), let name = path.lastPathComponent.removingPercentEncoding {
-                print("Snaphot => \(name)")
+            if snapshotURL.hideFileExtensionInPath(), let name = snapshotURL.lastPathComponent.removingPercentEncoding {
+                print("snapshot => \(name)")
             }
         } catch let error {
-            NSApp.presentError(error)
-            NSSound(named: "Sosumi")?.play()
+			appDelegate.userAlertMessage("Snapshot failed", info: error.localizedDescription)
         }
     }
     
@@ -657,6 +697,26 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
     @objc @IBAction fileprivate func zoomOut(_ sender: AnyObject) {
         zoomOut()
     }
+	
+	@objc func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
+		switch menuItem.title {
+		case "Back":
+			return webView.canGoBack
+		case "Forward":
+			return webView.canGoForward
+		case "Archive":
+			if let url = webView.url {
+				menuItem.isEnabled = !url.isFileURL
+			}
+			else
+			{
+				menuItem.isEnabled = false
+			}
+		default:
+			return true
+		}
+		return true
+	}
     
     override var representedObject: Any? {
         didSet {
@@ -718,6 +778,14 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
         loadAttributes(dict: item.dictionary())
     }
     
+	@objc func archiveAll(_ note: Notification) {
+		archive(note.object as! NSMenuItem)
+	}
+	
+	@objc func snapshotAll(_ note: Notification) {
+		snapshot(note.object as! NSMenuItem)
+	}
+	
     // TODO: For now just log what we would play once we figure out how to determine when an item finishes so we can start the next
     @objc func playerDidFinishPlaying(_ note: Notification) {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: note.object)

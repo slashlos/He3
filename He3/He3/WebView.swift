@@ -1228,7 +1228,14 @@ class MyWebView : WKWebView {
         item.target = hpc
         subTranslucency.addItem(item)
 
-        item = NSMenuItem(title: "Snapshot", action: #selector(webViewController?.snapshot(_:)), keyEquivalent: "")
+		if let url = url, [k.http,k.https].contains(url.scheme) {
+			item = NSMenuItem(title: "Archive", action: #selector(webViewController?.archivePress(_:)), keyEquivalent: "")
+			item.representedObject = self.window
+			item.target = wvc
+			menu.addItem(item)
+		}
+
+        item = NSMenuItem(title: "Snapshot", action: #selector(webViewController?.snapshotPress(_:)), keyEquivalent: "")
         item.representedObject = self.window
         item.target = wvc
         menu.addItem(item)
