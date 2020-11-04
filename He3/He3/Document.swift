@@ -520,6 +520,11 @@ class Document : NSDocument {
 			let saveAsView = saveAsController.view
 			let formatPopup = saveAsController.formatPopup
 
+			//	Fixup autolayout
+			saveAsView.translatesAutoresizingMaskIntoConstraints = false
+			saveAsView.widthAnchor.constraint(greaterThanOrEqualToConstant: 360.0).isActive = true
+			saveAsView.heightAnchor.constraint(greaterThanOrEqualToConstant: 83.0).isActive = true
+			
 			formatPopup?.item(withTitle: k.Playitem)?.isEnabled = true
 			formatPopup?.item(withTitle: k.Playlist)?.isEnabled = window.tabbedWindows?.count ?? 0 > 1
 			formatPopup?.item(withTitle: k.WebArchive)?.isEnabled = [k.http,k.https].contains(fileURL?.scheme)
@@ -531,7 +536,7 @@ class Document : NSDocument {
                         if let saveURL = savePanel.url, let tag = formatPopup?.selectedTag() {
 							switch tag {
 							case 0:
-								Swift.print("save hpi")
+								Swift.print("save hpi: \(saveURL.path)")
 								try super.write(to: saveURL, ofType: fileType)
 								if saveURL.hideFileExtensionInPath() {
 									self.updateChangeCount(.changeCleared)
@@ -540,7 +545,8 @@ class Document : NSDocument {
 								//MARK:TODO nyi save window as playlist
 								Swift.print("save hpl")
 							case 2:
-								Swift.print("save webarchive")
+								let archiveURL = saveURL.deletingPathExtension().appendingPathExtension(k.webarchive)
+								Swift.print("save webarchive: \(archiveURL.path)")
 								if let wvc = window.contentViewController as? WebViewController {
 									wvc.archive(saveAsController.webArchiveMenuItem)
 								}
