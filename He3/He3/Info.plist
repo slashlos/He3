@@ -74,6 +74,7 @@
 				<string>public.plain-text</string>
 				<string>public.html</string>
 				<string>public.text</string>
+				<string>com.apple.webarchive</string>
 			</array>
 		</dict>
 		<dict>
