@@ -7,14 +7,6 @@ defaultToBase = false
 ignoreEmptyStrings = false
 unstripped = false
 
-[update.code]
-codePaths = ["."]
-localizablePaths = ["."]
-defaultToKeys = false
-additive = true
-unstripped = false
-plistArguments = true
-
 [update.transform]
 codePaths = ["."]
 localizablePaths = ["."]

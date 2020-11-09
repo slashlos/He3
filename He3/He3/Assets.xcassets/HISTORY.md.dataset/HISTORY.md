@@ -21,6 +21,7 @@ Wanting a multi-window interface, better viewing support, etc, I decided to fork
 
 Being a GitHub project He3 has drawn from many others to which I give credit here, and being a good citizen hope to do same for others; Enjoy.
 
+#### Ernesto Elsäßer, WebArchive
 #### Christian Hoffmann: UserSettings.swift
 #### Samuel Beek: StringHelpers.swift
 #### shdwprince: Panel.swift
