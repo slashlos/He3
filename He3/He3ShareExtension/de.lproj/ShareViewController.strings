@@ -1,0 +1,9 @@
+
+/* Class = "NSTextFieldCell"; title = "He3 Service"; ObjectID = "0xp-rC-2gr"; */
+"0xp-rC-2gr.title" = "He3 Service";
+
+/* Class = "NSButtonCell"; title = "Send"; ObjectID = "2l4-PO-we5"; */
+"2l4-PO-we5.title" = "Send";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "6Up-t3-mwm"; */
+"6Up-t3-mwm.title" = "Cancel";

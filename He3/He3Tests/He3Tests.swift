@@ -8,7 +8,6 @@
 
 import XCTest
 
-@testable import He3
 @testable import Down
 
 fileprivate var appDelegate : AppDelegate {

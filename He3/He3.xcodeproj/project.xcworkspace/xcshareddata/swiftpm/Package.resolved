@@ -9,6 +9,24 @@
           "revision": "2aada56e6a0a5593a58e1ad583bd605b6d0b58dd",
           "version": "0.9.2"
         }
+      },
+      {
+        "package": "Fuzi",
+        "repositoryURL": "https://github.com/cezheng/Fuzi",
+        "state": {
+          "branch": null,
+          "revision": "5955a7d9b3bb5f24adb1a46ce8586ba37eee43bc",
+          "version": "3.1.2"
+        }
+      },
+      {
+        "package": "WebArchiver",
+        "repositoryURL": "https://github.com/ernesto-elsaesser/WebArchiver",
+        "state": {
+          "branch": null,
+          "revision": "208e0807fda0d17e11687200bd18007ac41c9ddc",
+          "version": "1.0.1"
+        }
       }
     ]
   },
