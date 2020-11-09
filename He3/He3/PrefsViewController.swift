@@ -9,6 +9,7 @@
 import Foundation
 import AppKit
 import CoreLocation
+import AVKit
 
 class PrefsPanelController : NSWindowController {
     fileprivate var panel: NSPanel! {
@@ -169,6 +170,8 @@ class PrefsViewController : NSViewController {
 		autoLaunchCheckbox.state = UserSettings.LoginAutoStartAtLaunch.value ? .on : .off
 	}
 	
+	//	MARK:- Location Services
+	
 	@objc var locationState : Int {
 		let status = locationStatus
 
@@ -279,9 +282,93 @@ class PrefsViewController : NSViewController {
 		}
 	}
 
-	//	KUDOS: https://stackoverflow.com/a/59120311/564870
+	//	MARK:- AudioVideo Services
+	internal func status(for media: AVMediaType) -> AVAuthorizationStatus {
+		return appDelegate.avStatus(for: media)
+	}
+	internal func service(for media: AVMediaType) -> String {
+		let status = self.status(for: media).rawValue
+		let state = ["not determined","restricted","denied","authorized"][status]
+		return state
+	}
+	internal func privacyURL(for media: AVMediaType) -> URL? {
+		return media == .audio ? URL.PrivacyMicrophoneServices : URL.PrivaryCameraServices
+	}
+	
+	@objc var audioVideoStatusState : String {
+		get {
+			let state = String(format: "State: %@:%@ %#:%@",
+							   AVMediaType.audio as CVarArg, service(for: .audio),
+							   AVMediaType.video as CVarArg, service(for: .video) )
+			return state
+		}
+	}
+
+	@IBOutlet var changeAudioServiceButton: NSButton!
+	@IBOutlet var changeVideoServiceButton: NSButton!
+	
+	@objc @IBAction func changeAudioVideoService(_ sender: NSButton) {
+		let service = sender.title.components(separatedBy: " ").last
+		let media : AVMediaType = service == "Audio" ? .audio : .video
+		guard ![.restricted,.denied].contains(self.status(for: media)) else {
+			sheetOKCancel(String(format: "%@ Services are restricted or denied; reset?", media.rawValue as CVarArg),
+						  info: "Launch Security & Privacy settings app.",
+						  acceptHandler:
+				{ (button) in
+					//  Make them confirm first
+					if button == NSApplication.ModalResponse.alertFirstButtonReturn {
+						for key in self.keys { self.willChangeValue(forKey: key ) }
+						if media == .audio {
+							self.launchPrivacyMicrophoneServiceSettings(self)
+						}
+						else
+						{
+							self.launchPrivacyCameraServiceSettings(self)
+						}
+						for key in self.keys { self.didChangeValue(forKey: key ) }
+					}
+				}
+			)
+			return
+		}
+
+		switch sender.tag {
+		case 0: // stop,start
+			for key in keys { self.willChangeValue(forKey: key ) }
+			appDelegate.audioVideoServicesPress(sender)
+			for key in keys { self.didChangeValue(forKey: key ) }
+
+		default: // deny
+			sheetOKCancel("Authorization required to access Privacy & Settings.",
+						  info: nil,
+						  acceptHandler:
+				{ (button) in
+					if button == NSApplication.ModalResponse.alertFirstButtonReturn {
+						if media == .audio {
+							self.launchPrivacyLocationServiceSettings(sender)
+						}
+						else
+						{
+							self.launchPrivacyLocationServiceSettings(sender)
+						}
+					}
+				}
+			)
+		}
+	}
+
+	@IBAction func launchPrivacyMicrophoneServiceSettings(_ sender: Any) {
+		if let PrivacyMicrophoneServices = URL.PrivacyMicrophoneServices {
+			NSWorkspace.shared.open(PrivacyMicrophoneServices)
+		}
+	}
+	@IBAction func launchPrivacyCameraServiceSettings(_ sender: Any) {
+		if let PrivacyCameraServices = URL.PrivaryCameraServices {
+			NSWorkspace.shared.open(PrivacyCameraServices)
+		}
+	}
 	@IBAction func launchPrivacyLocationServiceSettings(_ sender: Any) {
-		if let PrivacyLocationServices = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_LocationServices") {
+		if let PrivacyLocationServices = URL.PrivacyLocationServices {
 			NSWorkspace.shared.open(PrivacyLocationServices)
 		}
 	}

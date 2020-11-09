@@ -421,3 +421,16 @@ extension URL {
 		return false
 	}
 }
+
+extension URL {
+	//	KUDOS: https://stackoverflow.com/a/59120311/564870
+	static var PrivacyLocationServices : URL? {
+		return URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_LocationServices")
+	}
+	static var PrivacyMicrophoneServices : URL? {
+		return URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Microphone")
+	}
+	static var PrivaryCameraServices : URL? {
+		return URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Camera")
+	}
+}

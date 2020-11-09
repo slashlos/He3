@@ -17,6 +17,7 @@ import ServiceManagement
 import OSLog
 import AppKit
 import WebKit
+import AVKit
 
 extension Notification.Name {
     static let killHe3Launcher = Notification.Name("killHe3Launcher")
@@ -236,6 +237,94 @@ let sameWindow : ViewOptions = []
             return viewOptions
         }
     }
+	
+	var docController : DocumentController {
+		get {
+			return NSDocumentController.shared as! DocumentController
+		}
+	}
+	
+	var os = ProcessInfo().operatingSystemVersion
+	@objc @IBOutlet weak var magicURLMenu: NSMenuItem!
+
+	//	MARK:- Audio Video Services
+	internal func avStatus(for media: AVMediaType) -> AVAuthorizationStatus {
+		let status = AVCaptureDevice.authorizationStatus(for: media)
+		switch status {
+			case .authorized: // The user has previously granted access to the microphone.
+				return .authorized
+			
+			case .notDetermined: // The user has not yet been asked for microphone access.
+				return .notDetermined
+			
+			case .denied: // The user has previously denied access.
+				return .denied
+
+			case .restricted: // The user can't grant access due to restrictions.
+				return .restricted
+			default:
+				Swift.print("Unknown AV status \(status) for .audio")
+				return status
+		}
+	}
+
+	@objc @IBAction func audioVideoServicesPress(_ sender: AnyObject) {
+		let service = sender.title.components(separatedBy: " ").last
+		let media : AVMediaType = service == "Audio" ? .audio : .video
+		let status = self.avStatus(for: media)
+		
+		guard ![.denied,.restricted].contains(status) else {
+			sheetOKCancel("Access denied or restriced.",
+						  info: "Launch Security & Privacy settings app?",
+						  acceptHandler:
+				{ (button) in
+					//  Make them confirm first
+					if button == NSApplication.ModalResponse.alertFirstButtonReturn {
+						if let PrivacyLocationServices = media == .audio
+							? URL.PrivacyMicrophoneServices : URL.PrivaryCameraServices {
+							NSWorkspace.shared.open(PrivacyLocationServices)
+						}
+					}
+				})
+			return
+		}
+		
+		if status == .authorized {
+			sheetOKCancel("Access can only be denied in privacy app.",
+						  info: "Launch Security & Privacy settings app?",
+						  acceptHandler:
+				{ (button) in
+					//  Make them confirm first
+					if button == NSApplication.ModalResponse.alertFirstButtonReturn {
+						if let PrivacyLocationServices = media == .audio
+							? URL.PrivacyMicrophoneServices : URL.PrivaryCameraServices {
+							NSWorkspace.shared.open(PrivacyLocationServices)
+						}
+					}
+				})
+		}
+		else
+		{
+			AVCaptureDevice.requestAccess(for: media, completionHandler: { [self] granted in
+				if !granted {
+					sheetOKCancel("Access not granted.",
+								  info: "Launch Security & Privacy settings app?",
+								  acceptHandler:
+						{ (button) in
+							//  Make them confirm first
+							if button == NSApplication.ModalResponse.alertFirstButtonReturn {
+								if let PrivacyLocationServices = media == .audio
+									? URL.PrivacyMicrophoneServices : URL.PrivaryCameraServices {
+									NSWorkspace.shared.open(PrivacyLocationServices)
+								}
+							}
+						}
+				)}
+			})
+	    }
+    }
+		
+	//	MARK:- Location Services
     //  For those site that require your location while we're active
     var locationManager : CLLocationManager?
 	var locationStatus : CLAuthorizationStatus {
@@ -272,14 +361,6 @@ let sameWindow : ViewOptions = []
 		)
 	}
 	
-    var docController : DocumentController {
-        get {
-            return NSDocumentController.shared as! DocumentController
-        }
-    }
-    
-    var os = ProcessInfo().operatingSystemVersion
-    @objc @IBOutlet weak var magicURLMenu: NSMenuItem!
 
     // MARK:- Shared webView resources
     var _webProcessPool : WKProcessPool?
@@ -1092,7 +1173,16 @@ let sameWindow : ViewOptions = []
                 menuItem.state = UserSettings.HistorySaves.value ? .on : .off
             case "Home Page":
                 break
-            case "Location services":
+			case "Audio":
+				guard menuItem.menu?.title == "Entitlements…" else { return true }
+				menuItem.isEnabled = ![.restricted,.denied].contains(avStatus(for: .audio))
+				menuItem.state = [.authorized].contains(avStatus(for: .audio)) ? .on : .off
+			case "Video":
+				guard menuItem.menu?.title == "Entitlements…" else { return true }
+				menuItem.isEnabled = ![.restricted,.denied].contains(avStatus(for: .video))
+				menuItem.state = [.authorized].contains(avStatus(for: .video)) ? .on : .off
+            case "Location":
+				guard menuItem.menu?.title == "Entitlements…" else { return true }
 				menuItem.isEnabled = ![.restricted,.denied].contains(locationStatus)
                 menuItem.state = isLocationEnabled ? .on : .off
 			case "Auto Launch At Login":
@@ -1107,7 +1197,7 @@ let sameWindow : ViewOptions = []
                 menuItem.state = UserSettings.RestoreWebURLs.value ? .on : .off
             case "User Agent":
                 break
- 			case "Use Local Assets":
+ 			case "Assets":
  				menuItem.state = UserSettings.UseLocalAssets.value ? .on : .off
             case "Quit":
                 break
@@ -2029,6 +2119,12 @@ let sameWindow : ViewOptions = []
     
     dynamic var disableDocumentReOpening = false
 
+	func application(_ sender: NSApplication, willPresentError: Error) -> Error {
+		//MARK: TODO catalog applcication errors
+		Swift.print("Error: \(willPresentError.localizedDescription)")
+		return willPresentError
+	}
+	
     func application(_ sender: NSApplication, openFile path: String) -> Bool {
         // Create a FileManager instance
         let fileManager = FileManager.default
