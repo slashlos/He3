@@ -290,7 +290,7 @@ let sameWindow : ViewOptions = []
 		}
 		
 		if status == .authorized {
-			sheetOKCancel("Access can only be denied in privacy app.",
+			sheetOKCancel("Access can only be stopped in privacy app.",
 						  info: "Launch Security & Privacy settings app?",
 						  acceptHandler:
 				{ (button) in
