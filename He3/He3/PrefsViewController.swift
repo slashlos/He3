@@ -164,7 +164,7 @@ class PrefsViewController : NSViewController {
 	}
 	
 	//	MARK: Notifications
-	var keys = ["canChangeLocationStatus","isLocationEnabled","locationStatus","locationStatusState"]
+	var locationKeys = ["canChangeLocationStatus","isLocationEnabled","locationStatus","locationStatusState"]
 	
 	@objc func autoLaunchChange(_ note: Notification?) {
 		autoLaunchCheckbox.state = UserSettings.LoginAutoStartAtLaunch.value ? .on : .off
@@ -214,12 +214,12 @@ class PrefsViewController : NSViewController {
 		}
 	}
 	@objc func locationServiceChange(_ note: Notification?) {
-		for key in keys { self.willChangeValue(forKey: key ) }
+		for key in locationKeys { self.willChangeValue(forKey: key ) }
 
 		appDelegate.userAlertMessage("Location Status Change", info: locationStatusState)
 		changeLocationServiceButton.state = isLocationEnabled ? .on : .off
 
-		for key in keys { self.didChangeValue(forKey: key ) }
+		for key in locationKeys { self.didChangeValue(forKey: key ) }
 	}
 
 	var locationStatus : CLAuthorizationStatus {
@@ -245,9 +245,9 @@ class PrefsViewController : NSViewController {
 					//  Make them confirm first
 					if button == NSApplication.ModalResponse.alertFirstButtonReturn {
 						
-						for key in self.keys { self.willChangeValue(forKey: key ) }
+						for key in self.locationKeys { self.willChangeValue(forKey: key ) }
 						self.launchPrivacyLocationServiceSettings(sender);
-						for key in self.keys { self.didChangeValue(forKey: key ) }
+						for key in self.locationKeys { self.didChangeValue(forKey: key ) }
 					}
 				}
 			)
@@ -256,9 +256,9 @@ class PrefsViewController : NSViewController {
 
 		switch sender.tag {
 		case 0: // stop,start
-			for key in keys { self.willChangeValue(forKey: key ) }
+			for key in locationKeys { self.willChangeValue(forKey: key ) }
 			appDelegate.locationServicesPress(sender)
-			for key in keys { self.didChangeValue(forKey: key ) }
+			for key in locationKeys { self.didChangeValue(forKey: key ) }
 
 		default: // deny
 			sheetOKCancel("Authorization required to access Privacy & Settings.",
@@ -283,6 +283,9 @@ class PrefsViewController : NSViewController {
 	}
 
 	//	MARK:- AudioVideo Services
+	var avKeys = ["audioEnabled","audioState","audioDenyState",
+				  "videoEnabled","videoState","videoDenyState"]
+
 	internal func status(for media: AVMediaType) -> AVAuthorizationStatus {
 		return appDelegate.avStatus(for: media)
 	}
@@ -297,10 +300,71 @@ class PrefsViewController : NSViewController {
 	
 	@objc var audioVideoStatusState : String {
 		get {
-			let state = String(format: "State: %@:%@ %#:%@",
-							   AVMediaType.audio as CVarArg, service(for: .audio),
-							   AVMediaType.video as CVarArg, service(for: .video) )
+			let state = String(format: "Services state of audio is %@, video is %@.",
+							   service(for: .audio),
+							   service(for: .video) )
 			return state
+		}
+	}
+
+	internal func deniedOrRestricted(for media: AVMediaType) -> Bool {
+		let status = self.status(for: media)
+		return [.restricted,.denied].contains(status)
+	}
+	internal func authorizedOrUndetermined(for media: AVMediaType) -> Bool {
+		let status = self.status(for: media)
+		return [.notDetermined,.authorized].contains(status)
+	}
+	
+	@objc var audioEnabled : Bool {
+		get {
+			return !deniedOrRestricted(for: .audio)
+		}
+		set {
+			
+		}
+	}
+	@objc var audioState : Bool {
+		get {
+			return .authorized == self.status(for: .audio)
+		}
+		set {
+			
+		}
+	}
+
+	@objc var audioDenyState: Bool {
+		get {
+			return deniedOrRestricted(for: .audio)
+		}
+		set {
+			
+		}
+	}
+	
+	@objc var videoEnabled : Bool {
+		get {
+			return !deniedOrRestricted(for: .video)
+		}
+		set {
+			
+		}
+	}
+	@objc var videoState : Bool {
+		get {
+			return .authorized == self.status(for: .video)
+		}
+		set {
+			
+		}
+	}
+	
+	@objc var videoDenyState : Bool {
+		get {
+			return deniedOrRestricted(for: .video)
+		}
+		set {
+			
 		}
 	}
 
@@ -316,8 +380,8 @@ class PrefsViewController : NSViewController {
 						  acceptHandler:
 				{ (button) in
 					//  Make them confirm first
+					for key in self.avKeys { self.willChangeValue(forKey: key ) }
 					if button == NSApplication.ModalResponse.alertFirstButtonReturn {
-						for key in self.keys { self.willChangeValue(forKey: key ) }
 						if media == .audio {
 							self.launchPrivacyMicrophoneServiceSettings(self)
 						}
@@ -325,8 +389,8 @@ class PrefsViewController : NSViewController {
 						{
 							self.launchPrivacyCameraServiceSettings(self)
 						}
-						for key in self.keys { self.didChangeValue(forKey: key ) }
 					}
+					for key in self.avKeys { self.didChangeValue(forKey: key ) }
 				}
 			)
 			return
@@ -334,24 +398,26 @@ class PrefsViewController : NSViewController {
 
 		switch sender.tag {
 		case 0: // stop,start
-			for key in keys { self.willChangeValue(forKey: key ) }
+			for key in avKeys { self.willChangeValue(forKey: key ) }
 			appDelegate.audioVideoServicesPress(sender)
-			for key in keys { self.didChangeValue(forKey: key ) }
+			for key in avKeys { self.didChangeValue(forKey: key ) }
 
 		default: // deny
 			sheetOKCancel("Authorization required to access Privacy & Settings.",
 						  info: nil,
 						  acceptHandler:
 				{ (button) in
+					for key in self.avKeys { self.willChangeValue(forKey: key ) }
 					if button == NSApplication.ModalResponse.alertFirstButtonReturn {
 						if media == .audio {
-							self.launchPrivacyLocationServiceSettings(sender)
+							self.launchPrivacyMicrophoneServiceSettings(sender)
 						}
 						else
 						{
-							self.launchPrivacyLocationServiceSettings(sender)
+							self.launchPrivacyCameraServiceSettings(sender)
 						}
 					}
+					for key in self.avKeys { self.didChangeValue(forKey: key ) }
 				}
 			)
 		}
@@ -370,6 +436,15 @@ class PrefsViewController : NSViewController {
 	@IBAction func launchPrivacyLocationServiceSettings(_ sender: Any) {
 		if let PrivacyLocationServices = URL.PrivacyLocationServices {
 			NSWorkspace.shared.open(PrivacyLocationServices)
+		}
+	}
+	@IBAction func launchPrivacyAudioVideoServiceSettings(_ sender: AnyObject) {
+		if sender.tag == 0 {
+			self.launchPrivacyMicrophoneServiceSettings(sender)
+		}
+		else
+		{
+			self.launchPrivacyCameraServiceSettings(sender)
 		}
 	}
 }
