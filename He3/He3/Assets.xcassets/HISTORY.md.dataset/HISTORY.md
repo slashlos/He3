@@ -4,14 +4,14 @@ He3 is a multi-window, floating  browser, above all else.
 
 ## Back story
 
-He3 began as Helium by Jaden Geller, a single window, floating browser. This fork of that work features significant changes beyond a pull request and was branded to the App store as Helium 3.  It will be known going forward as He3, sporting a new icon, but maintaing some legacy UI details.  A current Helium use should be right at home with He3.
+He3 began as Helium by Jaden Geller, a single window, floating browser. This started as a fork of that work features significant changes beyond a pull request and was branded to the App store as Helium 3.  It will be known going forward as He3, sporting a new icon, but maintaing some legacy UI details.  A current Helium user should be right at home with He3. 
 
 ## Milestones
 
 ### Jaden Geller, Helium 1.0 - 2.0
 Helium creator and version available on App store as well as GitHub which I had initially forked as Helium 3, and also published via App Store.
 
-### CD M Santiago, Helium 3, now He3
+### CD M Santiago, Helium 3, now He3 - "Above All Else"
 
 ![he3_logo](https://github.com/slashlos/He3/raw/master/he3_logo256.png "He3 does windows")
 
@@ -21,7 +21,6 @@ Wanting a multi-window interface, better viewing support, etc, I decided to fork
 
 Being a GitHub project He3 has drawn from many others to which I give credit here, and being a good citizen hope to do same for others; Enjoy.
 
-#### Ernesto Elsäßer, WebArchive
 #### Christian Hoffmann: UserSettings.swift
 #### Samuel Beek: StringHelpers.swift
 #### shdwprince: Panel.swift
@@ -51,6 +50,10 @@ Being a GitHub project He3 has drawn from many others to which I give credit her
 ####
 
 ## Incorporated Other works
-[Markdown Rendering in Swift](https://github.com/iwasrobbed/Down)
+[Markdown](https://github.com/iwasrobbed/Down)
+[WebArchive](https://github.com/ernesto-elsaesser/WebArchiver)
+[SwiftGen](https://github.com/SwiftGen/SwiftGen)
+[Fuzi](https://github.com/cezheng/Fuzi)
+
 
 /los
