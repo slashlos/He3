@@ -11,7 +11,7 @@
 	<key>CFBuildMinor</key>
 	<integer>0</integer>
 	<key>CFBuildNumber</key>
-	<integer>8384</integer>
+	<integer>8381</integer>
 	<key>CFBuildPatch</key>
 	<integer>3</integer>
 	<key>CFBundleDevelopmentRegion</key>
@@ -133,7 +133,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.0.8384</string>
+	<string>1.0.8381</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>
