@@ -854,7 +854,7 @@ class MyWebView : WKWebView {
 */
                 default:
                     print("unkn: \(type)")
-
+					handled += super.performDragOperation(sender) ? 1 : 0 
 ///                    if let data = item.data(forType: type) {
 ///                        handled += self.data(data) ? 1 : 0
 ///                    }

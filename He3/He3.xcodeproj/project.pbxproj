@@ -55,8 +55,10 @@
 		0F9EF95B24776468008DDB93 /* listIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F9EF95A24776468008DDB93 /* listIcon.png */; };
 		0FACD4C42467953000A23B1F /* PromiseFileProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FACD4C32467953000A23B1F /* PromiseFileProvider.swift */; };
 		0FB276F624B1EDD800695BB1 /* PrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB276F524B1EDD800695BB1 /* PrefsViewController.swift */; };
-		0FB6B15D25560A5700363178 /* Localizations.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0FB6B16025560A5700363178 /* Localizations.strings */; };
-		0FB6B15E25560A5700363178 /* Localizations.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0FB6B16025560A5700363178 /* Localizations.strings */; };
+		0FB6B15D25560A5700363178 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0FB6B16025560A5700363178 /* Localizable.strings */; };
+		0FB6B15E25560A5700363178 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0FB6B16025560A5700363178 /* Localizable.strings */; };
+		0FB6B1822559C3DB00363178 /* BartyCrouch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6B1812559C3DB00363178 /* BartyCrouch.swift */; };
+		0FB6B1832559C3DB00363178 /* BartyCrouch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6B1812559C3DB00363178 /* BartyCrouch.swift */; };
 		0FBD9BAF2454603200332EEB /* he3_logo.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0FBD9BAE2454603200332EEB /* he3_logo.icns */; };
 		0FBD9BB8245473C600332EEB /* itemIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0FBD9BB7245473C500332EEB /* itemIcon.icns */; };
 		0FBD9BBA2454746200332EEB /* listIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0FBD9BB92454746200332EEB /* listIcon.icns */; };
@@ -245,15 +247,19 @@
 		0FACD4C32467953000A23B1F /* PromiseFileProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseFileProvider.swift; sourceTree = "<group>"; };
 		0FB276F524B1EDD800695BB1 /* PrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsViewController.swift; sourceTree = "<group>"; };
 		0FB6B15525560A3000363178 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/ShareViewController.strings; sourceTree = "<group>"; };
-		0FB6B15F25560A5700363178 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizations.strings; sourceTree = "<group>"; };
+		0FB6B15F25560A5700363178 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0FB6B16925560AE400363178 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
-		0FB6B16A25560BD400363178 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizations.strings; sourceTree = "<group>"; };
+		0FB6B16A25560BD400363178 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0FB6B16B25560C5B00363178 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
 		0FB6B16C25560C5B00363178 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/ShareViewController.strings; sourceTree = "<group>"; };
-		0FB6B16D25560C5B00363178 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizations.strings; sourceTree = "<group>"; };
+		0FB6B16D25560C5B00363178 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0FB6B16E25560C6B00363178 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Main.strings; sourceTree = "<group>"; };
 		0FB6B16F25560C6C00363178 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/ShareViewController.strings; sourceTree = "<group>"; };
-		0FB6B17025560C6C00363178 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizations.strings; sourceTree = "<group>"; };
+		0FB6B17025560C6C00363178 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		0FB6B1812559C3DB00363178 /* BartyCrouch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BartyCrouch.swift; path = Support/BartyCrouch.swift; sourceTree = "<group>"; };
+		0FB6B192255A12DF00363178 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
+		0FB6B193255A12DF00363178 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/ShareViewController.strings; sourceTree = "<group>"; };
+		0FB6B194255A12DF00363178 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0FBD9BAE2454603200332EEB /* he3_logo.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = he3_logo.icns; path = "He3/Assets/he3 logo/he3_logo.icns"; sourceTree = "<group>"; };
 		0FBD9BB7245473C500332EEB /* itemIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = itemIcon.icns; path = "He3/Assets/item Icon/itemIcon.icns"; sourceTree = "<group>"; };
 		0FBD9BB92454746200332EEB /* listIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = listIcon.icns; path = "He3/Assets/list Icon/listIcon.icns"; sourceTree = "<group>"; };
@@ -412,6 +418,7 @@
 				0FD2127424638EB900EA5D6D /* WebViewController+Navigation+UI.swift */,
 				0FD2127624638FFC00EA5D6D /* WebViewController+Session.swift */,
 				0F2370D6244E8CEC009F7914 /* Assets.xcassets */,
+				0FB6B1812559C3DB00363178 /* BartyCrouch.swift */,
 				0F2370D8244E8CEC009F7914 /* Main.storyboard */,
 				0F2370DB244E8CEC009F7914 /* Info.plist */,
 				0F5290B7244F6C8300A9B9DC /* Resources */,
@@ -490,7 +497,7 @@
 				0F5290A9244F6C0C00A9B9DC /* Bridging-Header.h */,
 				0F0EEE3E247D3283008F1988 /* LoadThumbnailOperation.swift */,
 				0FD21272246386A500EA5D6D /* Extensions.swift */,
-				0FB6B16025560A5700363178 /* Localizations.strings */,
+				0FB6B16025560A5700363178 /* Localizable.strings */,
 				0FD2127E2466D7C800EA5D6D /* Types.swift */,
 				0F82920E249539D900B5C205 /* Settings.swift */,
 				0F5290AB244F6C0D00A9B9DC /* StringHelpers.swift */,
@@ -716,12 +723,14 @@
 				es,
 				de,
 				it,
+				fr,
 			);
 			mainGroup = 0F2370C4244E8CEA009F7914;
 			packageReferences = (
 				0F6FB8CC246C6A3500F5D36B /* XCRemoteSwiftPackageReference "Down" */,
 				0F3717162549077600D65218 /* XCRemoteSwiftPackageReference "Fuzi" */,
 				0F371720254907AA00D65218 /* XCRemoteSwiftPackageReference "WebArchiver" */,
+				0FB6B19C255A160F00363178 /* XCRemoteSwiftPackageReference "BartyCrouch" */,
 			);
 			productRefGroup = 0F2370CE244E8CEA009F7914 /* Products */;
 			projectDirPath = "";
@@ -752,7 +761,7 @@
 				0F55CD6624A6795600E49C6A /* icntIcon.jpg in Resources */,
 				0FBD9BBC2454767300332EEB /* icntIcon.icns in Resources */,
 				0F55CD6424A6794E00E49C6A /* icntIcon.png in Resources */,
-				0FB6B15D25560A5700363178 /* Localizations.strings in Resources */,
+				0FB6B15D25560A5700363178 /* Localizable.strings in Resources */,
 				0F55CD6824A67B3D00E49C6A /* listIcon.jpg in Resources */,
 				0FBD9BBA2454746200332EEB /* listIcon.icns in Resources */,
 				0F9EF954247019E6008DDB93 /* itemIcon.png in Resources */,
@@ -801,7 +810,7 @@
 				0F3716E62548600700D65218 /* he3_logo.png in Resources */,
 				0FC4891F24DDDB340028032C /* listIcon.png in Resources */,
 				0FC4891D24DDDB290028032C /* icntIcon.png in Resources */,
-				0FB6B15E25560A5700363178 /* Localizations.strings in Resources */,
+				0FB6B15E25560A5700363178 /* Localizable.strings in Resources */,
 				0FC4892024DDDB3B0028032C /* itemIcon.png in Resources */,
 				0FC4891E24DDDB2F0028032C /* listIcon.jpg in Resources */,
 				0FC4892124DDDB3F0028032C /* itemIcon.jpg in Resources */,
@@ -827,7 +836,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Localize our files with BartyCroouch: https://github.com/Flinesoft/BartyCrouch\nif which bartycrouch > /dev/null; then\n    bartycrouch update -x\n    bartycrouch lint -x\nelse\n    echo \"warning: BartyCrouch not installed, download it from https://github.com/Flinesoft/BartyCrouch\"\nfi\n";
+			shellScript = "# Localize our files with BartyCroouch: https://github.com/Flinesoft/BartyCrouch\nif which bartycrouch > /dev/null; then\n    bartycrouch update -x\n    \n    bartycrouch lint -x\nelse\n    echo \"warning: BartyCrouch not installed, download it from https://github.com/Flinesoft/BartyCrouch\"\nfi\n";
 		};
 		0FBD9BCA24566C3B00332EEB /* Build DMG */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -897,6 +906,7 @@
 				0F5290B0244F6C0D00A9B9DC /* UrlHelpers.swift in Sources */,
 				0FD21273246386A500EA5D6D /* Extensions.swift in Sources */,
 				0F82920F249539D900B5C205 /* Settings.swift in Sources */,
+				0FB6B1822559C3DB00363178 /* BartyCrouch.swift in Sources */,
 				0F2370FB244E95E3009F7914 /* PlaylistPanelController.swift in Sources */,
 				0F2370D5244E8CEA009F7914 /* Document.swift in Sources */,
 				0FB276F624B1EDD800695BB1 /* PrefsViewController.swift in Sources */,
@@ -945,6 +955,7 @@
 			files = (
 				0F82920D24952ACF00B5C205 /* Types.swift in Sources */,
 				0F8292042495172100B5C205 /* ThumbnailProvider.swift in Sources */,
+				0FB6B1832559C3DB00363178 /* BartyCrouch.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1008,6 +1019,7 @@
 				0FB6B16925560AE400363178 /* es */,
 				0FB6B16B25560C5B00363178 /* de */,
 				0FB6B16E25560C6B00363178 /* it */,
+				0FB6B192255A12DF00363178 /* fr */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -1019,19 +1031,21 @@
 				0FB6B15525560A3000363178 /* es */,
 				0FB6B16C25560C5B00363178 /* de */,
 				0FB6B16F25560C6C00363178 /* it */,
+				0FB6B193255A12DF00363178 /* fr */,
 			);
 			name = ShareViewController.xib;
 			sourceTree = "<group>";
 		};
-		0FB6B16025560A5700363178 /* Localizations.strings */ = {
+		0FB6B16025560A5700363178 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				0FB6B15F25560A5700363178 /* es */,
 				0FB6B16A25560BD400363178 /* en */,
 				0FB6B16D25560C5B00363178 /* de */,
 				0FB6B17025560C6C00363178 /* it */,
+				0FB6B194255A12DF00363178 /* fr */,
 			);
-			name = Localizations.strings;
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1552,6 +1566,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 0.9.2;
+			};
+		};
+		0FB6B19C255A160F00363178 /* XCRemoteSwiftPackageReference "BartyCrouch" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Flinesoft/BartyCrouch.git";
+			requirement = {
+				branch = main;
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

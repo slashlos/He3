@@ -1,23 +1,14 @@
-/* 
-  Localizable.strings
-  He3
-
-  Created by Carlos D. Santiago on 11/6/20.
-  Copyright © 2020 Carlos D. Santiago. All rights reserved.
-*/
-"WebViewController_Label_Hello" = "Hello";
+/* No comment provided by engineer. */
+"CannotImportMessage" = "Impossibile importare il messaggio.";
 
 /* No comment provided by engineer. */
-"CannotImportMessage" = "";
+"CannotImportTitle" = "Impossibile importare il titolo";
 
 /* No comment provided by engineer. */
-"CannotImportTitle" = "";
+"ErrorMessage" = "Segnala errore URL";
 
 /* No comment provided by engineer. */
-"ErrorMessage" = "";
+"ErrorTitle" = "Segnala titolo errore URL";
 
 /* No comment provided by engineer. */
-"ErrorTitle" = "";
-
-/* No comment provided by engineer. */
-"OKTitle" = "";
+"OKTitle" = "OK";

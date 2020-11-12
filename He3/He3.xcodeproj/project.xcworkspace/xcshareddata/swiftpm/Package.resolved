@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "BartyCrouch",
+        "repositoryURL": "https://github.com/Flinesoft/BartyCrouch.git",
+        "state": {
+          "branch": "main",
+          "revision": "baafd5362df2c6763e32628cd181e789d7488dd4",
+          "version": null
+        }
+      },
+      {
         "package": "Down",
         "repositoryURL": "/Users/slashlos/GitHub/Down",
         "state": {
@@ -17,6 +26,69 @@
           "branch": null,
           "revision": "5955a7d9b3bb5f24adb1a46ce8586ba37eee43bc",
           "version": "3.1.2"
+        }
+      },
+      {
+        "package": "HandySwift",
+        "repositoryURL": "https://github.com/Flinesoft/HandySwift.git",
+        "state": {
+          "branch": null,
+          "revision": "4f1f96beb8a4c45b01a2479d8cbaf91bda7d1cb5",
+          "version": "3.2.1"
+        }
+      },
+      {
+        "package": "Microya",
+        "repositoryURL": "https://github.com/Flinesoft/Microya.git",
+        "state": {
+          "branch": null,
+          "revision": "c6fa1ca361a42f110b75fdf19f6dca2608847c6d",
+          "version": "0.3.0"
+        }
+      },
+      {
+        "package": "MungoHealer",
+        "repositoryURL": "https://github.com/JamitLabs/MungoHealer.git",
+        "state": {
+          "branch": null,
+          "revision": "132e5e454298958f60ca6f1f34c733bc41f299e0",
+          "version": "0.3.2"
+        }
+      },
+      {
+        "package": "Rainbow",
+        "repositoryURL": "https://github.com/onevcat/Rainbow.git",
+        "state": {
+          "branch": null,
+          "revision": "626c3d4b6b55354b4af3aa309f998fae9b31a3d9",
+          "version": "3.2.0"
+        }
+      },
+      {
+        "package": "SwiftSyntax",
+        "repositoryURL": "https://github.com/apple/swift-syntax.git",
+        "state": {
+          "branch": null,
+          "revision": "844574d683f53d0737a9c6d706c3ef31ed2955eb",
+          "version": "0.50300.0"
+        }
+      },
+      {
+        "package": "Toml",
+        "repositoryURL": "https://github.com/jdfergason/swift-toml.git",
+        "state": {
+          "branch": "master",
+          "revision": "f26573bd49534f68ac11c2f7467c1d50cdb2afce",
+          "version": null
+        }
+      },
+      {
+        "package": "SwiftCLI",
+        "repositoryURL": "https://github.com/jakeheis/SwiftCLI.git",
+        "state": {
+          "branch": null,
+          "revision": "2816678bcc37f4833d32abeddbdf5e757fa891d8",
+          "version": "6.0.2"
         }
       },
       {
