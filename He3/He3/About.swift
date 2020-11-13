@@ -203,7 +203,7 @@ class AboutBoxController : NSViewController {
 
         //	Setup the version to one we constrict
         versionString = String(format:"Version %@",
-                               infoDictionary["CFBuildMajor"] as! CVarArg)
+                               infoDictionary["CFBundleShortVersionString"] as! CVarArg)
 
         // Version criteria to cycle thru
         self.versionData = versionString;
