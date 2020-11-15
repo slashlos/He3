@@ -12,3 +12,13 @@
 
 /* No comment provided by engineer. */
 "OKTitle" = "OK";
+
+"SERVICE_AUT" = "authorized";
+
+"SERVICE_DEN" = "denied";
+
+/* A/V state text tokens */
+"SERVICE_MSG" = "Services state of audio is %@, video is %@.";
+
+/* A/V text tokens */
+"SERVICE_NOT" = "not determined";

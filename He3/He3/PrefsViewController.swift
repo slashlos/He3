@@ -336,9 +336,9 @@ class PrefsViewController : NSViewController, NSTabViewDelegate {
 	
 	@objc var audioVideoStatusState : String {
 		get {
-			let state = String(format: "Services state of audio is %@, video is %@.",
-							   service(for: .audio),
-							   service(for: .video) )
+			let state = String(format: NSLocalizedString("SERVICE_MSG", comment: ""),
+							   service(for: .audio).localizedLowercase,
+							   service(for: .video).localizedLowercase )
 			return state
 		}
 	}
