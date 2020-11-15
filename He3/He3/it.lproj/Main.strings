@@ -34,8 +34,8 @@
 /* Class = "NSTextField"; ibShadowedToolTip = "current web searches"; ObjectID = "2PN-GF-SkZ"; */
 "2PN-GF-SkZ.ibShadowedToolTip" = "ricerche web attuali";
 
-/* Class = "NSButtonCell"; title = " "; ObjectID = "2l2-8g-Dyj"; */
-"2l2-8g-Dyj.title" = " ";
+/* Class = "NSButtonCell"; title = "He3"; ObjectID = "2l2-8g-Dyj"; */
+"2l2-8g-Dyj.title" = "He3";
 
 /* Class = "NSMenuItem"; title = "Enabled"; ObjectID = "31i-Tw-GdD"; */
 "31i-Tw-GdD.title" = "Abilitato";
@@ -238,8 +238,8 @@
 /* Class = "NSMenuItem"; title = "Window"; ObjectID = "GCB-22-CDu"; */
 "GCB-22-CDu.title" = "Finestra";
 
-/* Class = "NSButtonCell"; title = " "; ObjectID = "GH5-k2-F6I"; */
-"GH5-k2-F6I.title" = " ";
+/* Class = "NSButtonCell"; title = "Preferences"; ObjectID = "GH5-k2-F6I"; */
+"GH5-k2-F6I.title" = "Preferences";
 
 /* Class = "NSMenuItem"; title = "Archive All"; ObjectID = "GTW-Yp-HHO"; */
 "GTW-Yp-HHO.title" = "Archivia tutto";
@@ -346,8 +346,8 @@
 /* Class = "NSMenuItem"; title = "URL in new window…"; ObjectID = "PJM-19-avb"; */
 "PJM-19-avb.title" = "URL in una nuova finestra…";
 
-/* Class = "NSButtonCell"; title = " "; ObjectID = "Pkj-YZ-h8Q"; */
-"Pkj-YZ-h8Q.title" = " ";
+/* Class = "NSButtonCell"; title = "HideMe"; ObjectID = "Pkj-YZ-h8Q"; */
+"Pkj-YZ-h8Q.title" = "HideMe";
 
 /* Class = "NSButton"; ibShadowedToolTip = "cancel any changes"; ObjectID = "Px9-gW-lcP"; */
 "Px9-gW-lcP.ibShadowedToolTip" = "annulla eventuali modifiche";
@@ -796,7 +796,7 @@
 /* Class = "NSMenu"; title = "View"; ObjectID = "qEQ-5f-oRs"; */
 "qEQ-5f-oRs.title" = "Visualizza";
 
-/* Class = "NSButton"; ibShadowedToolTip = "reset current tab contents to default value(s)"; ObjectID = "qIi-Tp-wfp"; */
+/* Class = "NSButton"; ibShadowedToolTip = "reset tab contents to defaults"; ObjectID = "qIi-Tp-wfp"; */
 "qIi-Tp-wfp.ibShadowedToolTip" = "ripristina il contenuto della scheda corrente ai valori predefiniti";
 
 /* Class = "NSMenuItem"; title = "Minimize All"; ObjectID = "qRE-kY-IIX"; */
@@ -953,46 +953,46 @@
 "zYp-sM-0W5.ibShadowedToolTip" = "nega servizi video";
 
 /* Class = "NSSegmentedCell"; QHE-KZ-Y2v.ibShadowedLabels[0] = "All"; ObjectID = "QHE-KZ-Y2v"; */
-"QHE-KZ-Y2v.ibShadowedLabels[0]" = " ";
+"QHE-KZ-Y2v.ibShadowedLabels[0]" = "All";
 
 /* Class = "NSSegmentedCell"; QHE-KZ-Y2v.ibShadowedLabels[1] = "Dis"; ObjectID = "QHE-KZ-Y2v"; */
-"QHE-KZ-Y2v.ibShadowedLabels[1]" = " ";
+"QHE-KZ-Y2v.ibShadowedLabels[1]" = "Dis";
 
 /* Class = "NSSegmentedCell"; QHE-KZ-Y2v.ibShadowedLabels[2] = "Scr"; ObjectID = "QHE-KZ-Y2v"; */
-"QHE-KZ-Y2v.ibShadowedLabels[2]" = " ";
+"QHE-KZ-Y2v.ibShadowedLabels[2]" = "Scr";
 
 /* Class = "NSSegmentedCell"; jnF-id-nPh.ibShadowedLabels[0] = "Bing"; ObjectID = "jnF-id-nPh"; */
-"jnF-id-nPh.ibShadowedLabels[0]" = " ";
+"jnF-id-nPh.ibShadowedLabels[0]" = "Bing";
 
 /* Class = "NSSegmentedCell"; jnF-id-nPh.ibShadowedLabels[1] = "Duck"; ObjectID = "jnF-id-nPh"; */
-"jnF-id-nPh.ibShadowedLabels[1]" = " ";
+"jnF-id-nPh.ibShadowedLabels[1]" = "Duck";
 
 /* Class = "NSSegmentedCell"; jnF-id-nPh.ibShadowedLabels[2] = "Google"; ObjectID = "jnF-id-nPh"; */
-"jnF-id-nPh.ibShadowedLabels[2]" = " ";
+"jnF-id-nPh.ibShadowedLabels[2]" = "Google";
 
 /* Class = "NSSegmentedCell"; jnF-id-nPh.ibShadowedLabels[3] = "Yahoo"; ObjectID = "jnF-id-nPh"; */
-"jnF-id-nPh.ibShadowedLabels[3]" = " ";
+"jnF-id-nPh.ibShadowedLabels[3]" = "Yahoo";
 
 /* Class = "NSSegmentedCell"; jnF-id-nPh.ibShadowedToolTips[0] = "Microsoft Bing"; ObjectID = "jnF-id-nPh"; */
-"jnF-id-nPh.ibShadowedToolTips[0]" = " ";
+"jnF-id-nPh.ibShadowedToolTips[0]" = "Microsoft Bing";
 
 /* Class = "NSSegmentedCell"; jnF-id-nPh.ibShadowedToolTips[1] = "DuckDuckGo"; ObjectID = "jnF-id-nPh"; */
-"jnF-id-nPh.ibShadowedToolTips[1]" = " ";
+"jnF-id-nPh.ibShadowedToolTips[1]" = "DuckDuckGo";
 
 /* Class = "NSSegmentedCell"; jnF-id-nPh.ibShadowedToolTips[2] = "Google"; ObjectID = "jnF-id-nPh"; */
-"jnF-id-nPh.ibShadowedToolTips[2]" = " ";
+"jnF-id-nPh.ibShadowedToolTips[2]" = "Google";
 
 /* Class = "NSSegmentedCell"; jnF-id-nPh.ibShadowedToolTips[3] = "Yahoo!"; ObjectID = "jnF-id-nPh"; */
-"jnF-id-nPh.ibShadowedToolTips[3]" = " ";
+"jnF-id-nPh.ibShadowedToolTips[3]" = "Yahoo!";
 
 /* Class = "NSSegmentedCell"; uOP-xR-z5Z.ibShadowedLabels[0] = "Nvr"; ObjectID = "uOP-xR-z5Z"; */
-"uOP-xR-z5Z.ibShadowedLabels[0]" = " ";
+"uOP-xR-z5Z.ibShadowedLabels[0]" = "Nvr";
 
 /* Class = "NSSegmentedCell"; uOP-xR-z5Z.ibShadowedLabels[1] = "Alw"; ObjectID = "uOP-xR-z5Z"; */
-"uOP-xR-z5Z.ibShadowedLabels[1]" = " ";
+"uOP-xR-z5Z.ibShadowedLabels[1]" = "Alw";
 
 /* Class = "NSSegmentedCell"; uOP-xR-z5Z.ibShadowedLabels[2] = "Ovr"; ObjectID = "uOP-xR-z5Z"; */
-"uOP-xR-z5Z.ibShadowedLabels[2]" = " ";
+"uOP-xR-z5Z.ibShadowedLabels[2]" = "Ovr";
 
 /* Class = "NSSegmentedCell"; uOP-xR-z5Z.ibShadowedLabels[3] = "Out"; ObjectID = "uOP-xR-z5Z"; */
-"uOP-xR-z5Z.ibShadowedLabels[3]" = " ";
+"uOP-xR-z5Z.ibShadowedLabels[3]" = "Out";
