@@ -8,7 +8,7 @@
 "14E-f1-zMF.title" = "Wiedergabelisten";
 
 /* Class = "NSTabViewItem"; label = "Cookies"; ObjectID = "1H6-Li-Gba"; */
-"1H6-Li-Gba.label" = "Cookies";
+"1H6-Li-Gba.label" = "Kekse";
 
 /* Class = "NSMenuItem"; title = "WebArchive"; ObjectID = "1OI-1y-bc5"; */
 "1OI-1y-bc5.title" = "WebArchive";
@@ -337,7 +337,7 @@
 /* Class = "NSMenuItem"; title = "URL in new window…"; ObjectID = "PJM-19-avb"; */
 "PJM-19-avb.title" = "URL in neuem Fenster ...";
 
-/* Class = "NSButtonCell"; title = "HideMe"; ObjectID = "Pkj-YZ-h8Q"; */
+/* Class = "NSButtonCell"; title = " "; ObjectID = "Pkj-YZ-h8Q"; */
 "Pkj-YZ-h8Q.title" = "HideMe";
 
 /* Class = "NSButton"; ibShadowedToolTip = "cancel any changes"; ObjectID = "Px9-gW-lcP"; */
@@ -787,7 +787,7 @@
 /* Class = "NSMenu"; title = "View"; ObjectID = "qEQ-5f-oRs"; */
 "qEQ-5f-oRs.title" = "View";
 
-/* Class = "NSButton"; ibShadowedToolTip = "reset tab contents to defaults"; ObjectID = "qIi-Tp-wfp"; */
+/* Class = "NSButton"; ibShadowedToolTip = "reset current tab contents to default value(s)"; ObjectID = "qIi-Tp-wfp"; */
 "qIi-Tp-wfp.ibShadowedToolTip" = "aktuellen Tab-Inhalt auf Standardwert (e) zurücksetzen";
 
 /* Class = "NSMenuItem"; title = "Minimize All"; ObjectID = "qRE-kY-IIX"; */
@@ -943,10 +943,10 @@
 /* Class = "NSButton"; ibShadowedToolTip = "deny video services"; ObjectID = "zYp-sM-0W5"; */
 "zYp-sM-0W5.ibShadowedToolTip" = "Videodienste verweigern";
 
-/* Class = "NSButtonCell"; title = "He3"; ObjectID = "2l2-8g-Dyj"; */
+/* Class = "NSButtonCell"; title = " 1.0.3"; ObjectID = "2l2-8g-Dyj"; */
 "2l2-8g-Dyj.title" = "He3";
 
-/* Class = "NSButtonCell"; title = "Preferences"; ObjectID = "GH5-k2-F6I"; */
+/* Class = "NSButtonCell"; title = " "; ObjectID = "GH5-k2-F6I"; */
 "GH5-k2-F6I.title" = "Preferences";
 
 /* Class = "NSTextFieldCell"; title = "Depth"; ObjectID = "ItH-l3-YI2"; */
@@ -996,3 +996,6 @@
 
 /* Class = "NSSegmentedCell"; uOP-xR-z5Z.ibShadowedLabels[3] = "Out"; ObjectID = "uOP-xR-z5Z"; */
 "uOP-xR-z5Z.ibShadowedLabels[3]" = "Out";
+
+/* Class = "CocoaBindingsConnection"; ibShadowedIsNilPlaceholder = "1.0.3"; ObjectID = "4OH-h5-EgX"; */
+"4OH-h5-EgX.ibShadowedIsNilPlaceholder" = "1.0.3";

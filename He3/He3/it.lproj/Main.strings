@@ -8,7 +8,7 @@
 "14E-f1-zMF.title" = "Playlist";
 
 /* Class = "NSTabViewItem"; label = "Cookies"; ObjectID = "1H6-Li-Gba"; */
-"1H6-Li-Gba.label" = "Cookie";
+"1H6-Li-Gba.label" = "Biscotti";
 
 /* Class = "NSMenuItem"; title = "WebArchive"; ObjectID = "1OI-1y-bc5"; */
 "1OI-1y-bc5.title" = "WebArchive";
@@ -34,7 +34,7 @@
 /* Class = "NSTextField"; ibShadowedToolTip = "current web searches"; ObjectID = "2PN-GF-SkZ"; */
 "2PN-GF-SkZ.ibShadowedToolTip" = "ricerche web attuali";
 
-/* Class = "NSButtonCell"; title = "He3"; ObjectID = "2l2-8g-Dyj"; */
+/* Class = "NSButtonCell"; title = " 1.0.3"; ObjectID = "2l2-8g-Dyj"; */
 "2l2-8g-Dyj.title" = "He3";
 
 /* Class = "NSMenuItem"; title = "Enabled"; ObjectID = "31i-Tw-GdD"; */
@@ -238,7 +238,7 @@
 /* Class = "NSMenuItem"; title = "Window"; ObjectID = "GCB-22-CDu"; */
 "GCB-22-CDu.title" = "Finestra";
 
-/* Class = "NSButtonCell"; title = "Preferences"; ObjectID = "GH5-k2-F6I"; */
+/* Class = "NSButtonCell"; title = " "; ObjectID = "GH5-k2-F6I"; */
 "GH5-k2-F6I.title" = "Preferences";
 
 /* Class = "NSMenuItem"; title = "Archive All"; ObjectID = "GTW-Yp-HHO"; */
@@ -346,7 +346,7 @@
 /* Class = "NSMenuItem"; title = "URL in new window…"; ObjectID = "PJM-19-avb"; */
 "PJM-19-avb.title" = "URL in una nuova finestra…";
 
-/* Class = "NSButtonCell"; title = "HideMe"; ObjectID = "Pkj-YZ-h8Q"; */
+/* Class = "NSButtonCell"; title = " "; ObjectID = "Pkj-YZ-h8Q"; */
 "Pkj-YZ-h8Q.title" = "HideMe";
 
 /* Class = "NSButton"; ibShadowedToolTip = "cancel any changes"; ObjectID = "Px9-gW-lcP"; */
@@ -796,7 +796,7 @@
 /* Class = "NSMenu"; title = "View"; ObjectID = "qEQ-5f-oRs"; */
 "qEQ-5f-oRs.title" = "Visualizza";
 
-/* Class = "NSButton"; ibShadowedToolTip = "reset tab contents to defaults"; ObjectID = "qIi-Tp-wfp"; */
+/* Class = "NSButton"; ibShadowedToolTip = "reset current tab contents to default value(s)"; ObjectID = "qIi-Tp-wfp"; */
 "qIi-Tp-wfp.ibShadowedToolTip" = "ripristina il contenuto della scheda corrente ai valori predefiniti";
 
 /* Class = "NSMenuItem"; title = "Minimize All"; ObjectID = "qRE-kY-IIX"; */
@@ -996,3 +996,6 @@
 
 /* Class = "NSSegmentedCell"; uOP-xR-z5Z.ibShadowedLabels[3] = "Out"; ObjectID = "uOP-xR-z5Z"; */
 "uOP-xR-z5Z.ibShadowedLabels[3]" = "Out";
+
+/* Class = "CocoaBindingsConnection"; ibShadowedIsNilPlaceholder = "1.0.3"; ObjectID = "4OH-h5-EgX"; */
+"4OH-h5-EgX.ibShadowedIsNilPlaceholder" = "1.0.3";

@@ -105,7 +105,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <button toolTip="cycle through version, build, link date" translatesAutoresizingMaskIntoConstraints="NO" id="rKn-5s-fYK">
-                                <rect key="frame" x="12" y="118" width="259" height="13"/>
+                                <rect key="frame" x="115" y="118" width="53" height="13"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="12" id="baR-Xp-agq"/>
                                 </constraints>
@@ -118,7 +118,7 @@
                                 </connections>
                             </button>
                             <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="ApO-5O-qon">
-                                <rect key="frame" x="12" y="87" width="259" height="5"/>
+                                <rect key="frame" x="6" y="87" width="271" height="5"/>
                             </box>
                             <textField hidden="YES" toolTip="copy app info to pasteboard" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IV0-Ql-nbs">
                                 <rect key="frame" x="62" y="141" width="161" height="17"/>
@@ -154,7 +154,7 @@
                                 </connections>
                             </button>
                             <button toolTip="cycle through read me, history, liicense, privacy information" translatesAutoresizingMaskIntoConstraints="NO" id="0NX-wg-Xfe">
-                                <rect key="frame" x="12" y="97" width="257" height="12"/>
+                                <rect key="frame" x="14" y="97" width="255" height="12"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="12" id="Tzv-hz-N36"/>
                                 </constraints>
@@ -167,17 +167,17 @@
                                 </connections>
                             </button>
                             <scrollView hidden="YES" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OZR-xn-j0b">
-                                <rect key="frame" x="12" y="6" width="259" height="78"/>
+                                <rect key="frame" x="6" y="6" width="271" height="78"/>
                                 <clipView key="contentView" drawsBackground="NO" id="6A6-Eg-DDC">
-                                    <rect key="frame" x="1" y="1" width="257" height="76"/>
+                                    <rect key="frame" x="1" y="1" width="269" height="76"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textView editable="NO" importsGraphics="NO" horizontallyResizable="YES" verticallyResizable="YES" usesFontPanel="YES" usesRuler="YES" linkDetection="YES" spellingCorrection="YES" smartInsertDelete="YES" id="4IG-nm-Y5X">
-                                            <rect key="frame" x="0.0" y="0.0" width="257" height="76"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="269" height="76"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            <size key="minSize" width="257" height="76"/>
+                                            <size key="minSize" width="269" height="76"/>
                                             <size key="maxSize" width="678" height="10000000"/>
                                             <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         </textView>
@@ -201,27 +201,25 @@
                             <constraint firstAttribute="bottom" secondItem="0C4-5f-uW8" secondAttribute="bottom" constant="77" id="1iA-2I-ZpI"/>
                             <constraint firstItem="IV0-Ql-nbs" firstAttribute="top" secondItem="ISs-R1-bl3" secondAttribute="bottom" constant="10" id="4Py-kI-jwY"/>
                             <constraint firstItem="ISs-R1-bl3" firstAttribute="top" secondItem="kg1-aS-nIq" secondAttribute="top" constant="9" id="4uc-cf-arX"/>
-                            <constraint firstItem="rKn-5s-fYK" firstAttribute="centerX" secondItem="ISs-R1-bl3" secondAttribute="centerX" id="7gp-MH-j9v"/>
+                            <constraint firstItem="rKn-5s-fYK" firstAttribute="centerX" secondItem="kg1-aS-nIq" secondAttribute="centerX" id="7gp-MH-j9v"/>
                             <constraint firstAttribute="bottom" secondItem="OZR-xn-j0b" secondAttribute="bottom" constant="6" id="7yr-FV-MTt"/>
-                            <constraint firstItem="rKn-5s-fYK" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="ApO-5O-qon" secondAttribute="trailing" id="97U-V3-PhZ"/>
                             <constraint firstItem="ISs-R1-bl3" firstAttribute="centerX" secondItem="kg1-aS-nIq" secondAttribute="centerX" id="BAF-pp-sSy"/>
-                            <constraint firstItem="0NX-wg-Xfe" firstAttribute="leading" secondItem="ApO-5O-qon" secondAttribute="leading" id="DTR-SJ-l6U"/>
                             <constraint firstItem="b0R-I6-wV0" firstAttribute="leading" relation="lessThanOrEqual" secondItem="kg1-aS-nIq" secondAttribute="leading" constant="62" id="DuB-PV-4lj"/>
                             <constraint firstItem="rKn-5s-fYK" firstAttribute="top" secondItem="IV0-Ql-nbs" secondAttribute="bottom" constant="10" id="IjD-Om-Lsc"/>
-                            <constraint firstItem="rKn-5s-fYK" firstAttribute="leading" relation="lessThanOrEqual" secondItem="kg1-aS-nIq" secondAttribute="leading" constant="12" id="J0e-NW-kyF"/>
                             <constraint firstItem="0C4-5f-uW8" firstAttribute="top" secondItem="kg1-aS-nIq" secondAttribute="top" constant="-1" id="KCm-hN-11F"/>
                             <constraint firstItem="ApO-5O-qon" firstAttribute="leading" secondItem="OZR-xn-j0b" secondAttribute="leading" id="OeC-qj-voD"/>
                             <constraint firstItem="IV0-Ql-nbs" firstAttribute="leading" relation="lessThanOrEqual" secondItem="kg1-aS-nIq" secondAttribute="leading" constant="64" id="Ouj-bR-WKP"/>
+                            <constraint firstItem="OZR-xn-j0b" firstAttribute="centerX" secondItem="kg1-aS-nIq" secondAttribute="centerX" id="QyF-MC-Yea"/>
                             <constraint firstAttribute="trailing" secondItem="b0R-I6-wV0" secondAttribute="trailing" constant="60" id="VXH-X2-ZgM"/>
-                            <constraint firstItem="ApO-5O-qon" firstAttribute="trailing" secondItem="rKn-5s-fYK" secondAttribute="trailing" id="VhN-BH-V88"/>
                             <constraint firstItem="0C4-5f-uW8" firstAttribute="leading" secondItem="kg1-aS-nIq" secondAttribute="leading" id="XWU-AF-ZzI"/>
                             <constraint firstItem="b0R-I6-wV0" firstAttribute="centerY" secondItem="IV0-Ql-nbs" secondAttribute="centerY" id="dfl-pq-lo8"/>
                             <constraint firstItem="ApO-5O-qon" firstAttribute="top" secondItem="0NX-wg-Xfe" secondAttribute="bottom" constant="7" id="dzT-hq-Tjr"/>
-                            <constraint firstItem="rKn-5s-fYK" firstAttribute="leading" secondItem="0NX-wg-Xfe" secondAttribute="leading" id="eLl-jS-mAK"/>
                             <constraint firstAttribute="trailing" secondItem="0C4-5f-uW8" secondAttribute="trailing" id="eiv-4E-A2T"/>
+                            <constraint firstAttribute="trailing" secondItem="ApO-5O-qon" secondAttribute="trailing" constant="6" id="gZh-a0-xwx"/>
+                            <constraint firstItem="0NX-wg-Xfe" firstAttribute="centerX" secondItem="kg1-aS-nIq" secondAttribute="centerX" id="l6g-Bv-reC"/>
                             <constraint firstItem="OZR-xn-j0b" firstAttribute="top" secondItem="ApO-5O-qon" secondAttribute="bottom" constant="5" id="pYp-NK-dAV"/>
+                            <constraint firstItem="ApO-5O-qon" firstAttribute="leading" secondItem="kg1-aS-nIq" secondAttribute="leading" constant="6" id="sAD-NC-PL9"/>
                             <constraint firstItem="0NX-wg-Xfe" firstAttribute="top" secondItem="rKn-5s-fYK" secondAttribute="bottom" constant="9" id="u71-fG-C66"/>
-                            <constraint firstItem="ApO-5O-qon" firstAttribute="trailing" secondItem="OZR-xn-j0b" secondAttribute="trailing" id="vqJ-ab-NUP"/>
                             <constraint firstAttribute="trailing" secondItem="0NX-wg-Xfe" secondAttribute="trailing" constant="14" id="zQm-P9-S5C"/>
                         </constraints>
                     </view>
@@ -1049,21 +1047,21 @@ CA
             <objects>
                 <viewController storyboardIdentifier="PrefsViewController" id="6fb-0C-bsO" customClass="PrefsViewController" customModule="He3" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="cge-K8-5cp">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="306"/>
+                        <rect key="frame" x="0.0" y="0.0" width="484" height="306"/>
                         <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
                         <userGuides>
-                            <userLayoutGuide location="155" affinity="minY"/>
+                            <userLayoutGuide location="156" affinity="minY"/>
                         </userGuides>
                         <subviews>
-                            <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="20" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OZm-yw-Sep">
-                                <rect key="frame" x="38" y="212" width="404" height="74"/>
+                            <stackView distribution="equalCentering" orientation="horizontal" alignment="centerY" spacing="20" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OZm-yw-Sep">
+                                <rect key="frame" x="20" y="212" width="444" height="74"/>
                                 <subviews>
-                                    <stackView distribution="fill" orientation="vertical" alignment="trailing" spacing="6" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fdh-Px-fvj">
-                                        <rect key="frame" x="0.0" y="0.0" width="149" height="74"/>
+                                    <stackView distribution="fillProportionally" orientation="vertical" alignment="trailing" spacing="6" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fdh-Px-fvj">
+                                        <rect key="frame" x="20" y="0.0" width="149" height="74"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P9E-S4-XdO">
                                                 <rect key="frame" x="1" y="58" width="150" height="18"/>
-                                                <buttonCell key="cell" type="check" title="Restore window attrs" bezelStyle="regularSquare" imagePosition="right" state="on" inset="2" id="E3b-ir-qgh">
+                                                <buttonCell key="cell" type="check" title="Restore window attrs" bezelStyle="regularSquare" imagePosition="right" alignment="right" state="on" inset="2" id="E3b-ir-qgh">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
@@ -1074,7 +1072,7 @@ CA
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IAi-3r-3Qi">
                                                 <rect key="frame" x="-2" y="38" width="153" height="18"/>
-                                                <buttonCell key="cell" type="check" title="Auto save documents" bezelStyle="regularSquare" imagePosition="right" state="on" inset="2" id="Ap8-wy-qcF">
+                                                <buttonCell key="cell" type="check" title="Auto save documents" bezelStyle="regularSquare" imagePosition="right" alignment="right" state="on" inset="2" id="Ap8-wy-qcF">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
@@ -1085,7 +1083,7 @@ CA
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="953-Zf-wKv">
                                                 <rect key="frame" x="8" y="18" width="143" height="18"/>
-                                                <buttonCell key="cell" type="check" title="Auto launch at login" bezelStyle="regularSquare" imagePosition="right" state="on" inset="2" id="APP-Q6-J4r">
+                                                <buttonCell key="cell" type="check" title="Auto launch at login" bezelStyle="regularSquare" imagePosition="right" alignment="right" state="on" inset="2" id="APP-Q6-J4r">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
@@ -1095,7 +1093,7 @@ CA
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Sub-VN-g2l">
                                                 <rect key="frame" x="21" y="-2" width="130" height="18"/>
-                                                <buttonCell key="cell" type="check" title="Auto hide title bar" bezelStyle="regularSquare" imagePosition="right" state="on" inset="2" id="9vw-Yp-Z6z">
+                                                <buttonCell key="cell" type="check" title="Auto hide title bar" bezelStyle="regularSquare" imagePosition="right" alignment="right" state="on" inset="2" id="9vw-Yp-Z6z">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
@@ -1119,24 +1117,29 @@ CA
                                         </customSpacing>
                                     </stackView>
                                     <button toolTip="reset current tab contents to default value(s)" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qIi-Tp-wfp">
-                                        <rect key="frame" x="169" y="5" width="64" height="64"/>
+                                        <rect key="frame" x="189" y="0.0" width="64" height="72"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="64" id="w7G-Zr-5il"/>
                                         </constraints>
-                                        <buttonCell key="cell" type="square" title=" " bezelStyle="shadowlessSquare" image="He3" imagePosition="above" alignment="center" imageScaling="proportionallyDown" inset="2" id="2l2-8g-Dyj">
+                                        <buttonCell key="cell" type="square" title=" 1.0.3" bezelStyle="shadowlessSquare" image="He3" imagePosition="above" alignment="center" imageScaling="proportionallyDown" inset="2" id="2l2-8g-Dyj">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
+                                            <font key="font" metaFont="system" size="8"/>
                                         </buttonCell>
                                         <connections>
                                             <action selector="resetDefaults:" target="6fb-0C-bsO" id="fWA-MV-gcY"/>
+                                            <binding destination="6fb-0C-bsO" name="title" keyPath="appVersion" id="4OH-h5-EgX">
+                                                <dictionary key="options">
+                                                    <string key="NSNullPlaceholder">1.0.3</string>
+                                                </dictionary>
+                                            </binding>
                                         </connections>
                                     </button>
                                     <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="6" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="51U-3A-AkS">
-                                        <rect key="frame" x="253" y="0.0" width="151" height="74"/>
+                                        <rect key="frame" x="273" y="0.0" width="151" height="74"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TDA-Ca-mbH">
                                                 <rect key="frame" x="-2" y="58" width="154" height="18"/>
-                                                <buttonCell key="cell" type="check" title="Hide He3 in menu bar" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Mk4-h8-ppN">
+                                                <buttonCell key="cell" type="check" title="Hide He3 in menu bar" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="Mk4-h8-ppN">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
@@ -1147,7 +1150,7 @@ CA
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="agv-9j-6VF">
                                                 <rect key="frame" x="-2" y="38" width="155" height="18"/>
-                                                <buttonCell key="cell" type="check" title="Enable Web Inspector" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="mKF-sV-16P">
+                                                <buttonCell key="cell" type="check" title="Enable Web Inspector" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="mKF-sV-16P">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
@@ -1158,7 +1161,7 @@ CA
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QH5-1U-BI3">
                                                 <rect key="frame" x="-2" y="18" width="149" height="18"/>
-                                                <buttonCell key="cell" type="check" title="Magic URLs disabled" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="QCo-lp-Jmz">
+                                                <buttonCell key="cell" type="check" title="Magic URLs disabled" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="QCo-lp-Jmz">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
@@ -1169,7 +1172,7 @@ CA
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="v5v-dK-ROU">
                                                 <rect key="frame" x="-2" y="-2" width="135" height="18"/>
-                                                <buttonCell key="cell" type="check" title="Restore Web URLs" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="aPG-AH-BSA">
+                                                <buttonCell key="cell" type="check" title="Restore Web URLs" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="aPG-AH-BSA">
                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
@@ -1194,8 +1197,11 @@ CA
                                     </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="fdh-Px-fvj" firstAttribute="centerY" secondItem="qIi-Tp-wfp" secondAttribute="centerY" id="ffQ-1k-c4g"/>
-                                    <constraint firstItem="qIi-Tp-wfp" firstAttribute="top" secondItem="OZm-yw-Sep" secondAttribute="top" constant="5" id="w3b-f7-KQ7"/>
+                                    <constraint firstItem="fdh-Px-fvj" firstAttribute="leading" secondItem="OZm-yw-Sep" secondAttribute="leading" constant="20" symbolic="YES" id="8Ft-Oe-A14"/>
+                                    <constraint firstItem="51U-3A-AkS" firstAttribute="leading" secondItem="qIi-Tp-wfp" secondAttribute="trailing" constant="20" id="JJK-oa-3Uc"/>
+                                    <constraint firstAttribute="trailing" secondItem="51U-3A-AkS" secondAttribute="trailing" constant="20" symbolic="YES" id="dUe-14-bS3"/>
+                                    <constraint firstItem="qIi-Tp-wfp" firstAttribute="leading" secondItem="fdh-Px-fvj" secondAttribute="trailing" constant="20" id="eHC-9c-zYz"/>
+                                    <constraint firstItem="qIi-Tp-wfp" firstAttribute="top" secondItem="OZm-yw-Sep" secondAttribute="top" constant="2" id="w3b-f7-KQ7"/>
                                 </constraints>
                                 <visibilityPriorities>
                                     <integer value="1000"/>
@@ -1209,28 +1215,28 @@ CA
                                 </customSpacing>
                             </stackView>
                             <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="Jax-MV-URW">
-                                <rect key="frame" x="15" y="201" width="450" height="5"/>
+                                <rect key="frame" x="20" y="201" width="444" height="5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="34H-z9-1E1"/>
                                 </constraints>
                             </box>
                             <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="1Xd-k0-OUs">
-                                <rect key="frame" x="15" y="126" width="450" height="5"/>
+                                <rect key="frame" x="20" y="126" width="444" height="5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="tfZ-5E-MA9"/>
                                 </constraints>
                             </box>
                             <tabView controlSize="mini" initialItem="010-Vh-IQ6" translatesAutoresizingMaskIntoConstraints="NO" id="G1q-6O-gOA">
-                                <rect key="frame" x="8" y="7" width="464" height="111"/>
+                                <rect key="frame" x="13" y="7" width="458" height="111"/>
                                 <font key="font" metaFont="label" size="9"/>
                                 <tabViewItems>
                                     <tabViewItem label="AudioVideo" identifier="" id="3tG-Y0-pAd">
                                         <view key="view" toolTip="enable or disable location sharing" id="G2h-4W-ksT">
-                                            <rect key="frame" x="10" y="28" width="444" height="70"/>
+                                            <rect key="frame" x="10" y="19" width="438" height="79"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ck3-gk-SsM">
-                                                    <rect key="frame" x="392" y="52" width="37" height="7"/>
+                                                    <rect key="frame" x="18" y="52" width="402" height="16"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="O8I-ev-xeR">
                                                         <font key="font" metaFont="system"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -1240,148 +1246,137 @@ CA
                                                         <binding destination="6fb-0C-bsO" name="value" keyPath="self.audioVideoStatusState" id="fcp-r5-GNI"/>
                                                     </connections>
                                                 </textField>
-                                                <stackView distribution="fill" orientation="horizontal" alignment="bottom" spacing="30" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RUT-bI-Izc">
-                                                    <rect key="frame" x="33" y="0.0" width="755" height="44"/>
+                                                <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YM5-gd-0Fl">
+                                                    <rect key="frame" x="20" y="0.0" width="105" height="44"/>
                                                     <subviews>
-                                                        <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YM5-gd-0Fl">
-                                                            <rect key="frame" x="0.0" y="0.0" width="105" height="44"/>
-                                                            <subviews>
-                                                                <button toolTip="toggle audio services" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="m7b-fA-hZ1">
-                                                                    <rect key="frame" x="-5" y="20" width="115" height="27"/>
-                                                                    <buttonCell key="cell" type="push" title="Access Audio" alternateTitle="Stop Audio" bezelStyle="rounded" image="NSStatusAvailable" imagePosition="left" alignment="center" alternateImage="NSStatusUnavailable" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gv1-GO-myK">
-                                                                        <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
-                                                                        <font key="font" metaFont="controlContent" size="11"/>
-                                                                    </buttonCell>
-                                                                    <connections>
-                                                                        <action selector="changeAudioVideoService:" target="6fb-0C-bsO" id="e7C-Ee-Wc2"/>
-                                                                        <binding destination="6fb-0C-bsO" name="enabled" keyPath="audioEnabled" id="jnZ-na-4ZD"/>
-                                                                        <binding destination="6fb-0C-bsO" name="value" keyPath="audioState" id="g7p-5x-goX"/>
-                                                                    </connections>
-                                                                </button>
-                                                                <button toolTip="toggle video services" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="G7y-pe-fNw">
-                                                                    <rect key="frame" x="-5" y="-6" width="115" height="27"/>
-                                                                    <buttonCell key="cell" type="push" title="Access Video" alternateTitle="Stop Video" bezelStyle="rounded" image="NSStatusAvailable" imagePosition="left" alignment="center" alternateImage="NSStatusUnavailable" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="O6U-hu-t5R">
-                                                                        <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
-                                                                        <font key="font" metaFont="controlContent" size="11"/>
-                                                                    </buttonCell>
-                                                                    <connections>
-                                                                        <action selector="changeAudioVideoService:" target="6fb-0C-bsO" id="35v-bS-cNH"/>
-                                                                        <binding destination="6fb-0C-bsO" name="enabled" keyPath="videoEnabled" id="tXS-X6-wOo"/>
-                                                                        <binding destination="6fb-0C-bsO" name="value" keyPath="videoState" id="ADO-wv-ofJ"/>
-                                                                    </connections>
-                                                                </button>
-                                                            </subviews>
-                                                            <visibilityPriorities>
-                                                                <integer value="1000"/>
-                                                                <integer value="1000"/>
-                                                            </visibilityPriorities>
-                                                            <customSpacing>
-                                                                <real value="3.4028234663852886e+38"/>
-                                                                <real value="3.4028234663852886e+38"/>
-                                                            </customSpacing>
-                                                        </stackView>
-                                                        <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ou9-oD-cRN">
-                                                            <rect key="frame" x="135" y="0.0" width="101" height="44"/>
-                                                            <subviews>
-                                                                <button toolTip="deny audio services" verticalHuggingPriority="750" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="sej-uF-HBC">
-                                                                    <rect key="frame" x="-5" y="20" width="111" height="27"/>
-                                                                    <buttonCell key="cell" type="push" title="Deny Audio" alternateTitle="Denied Audio" bezelStyle="rounded" image="NSLockUnlockedTemplate" imagePosition="left" alignment="center" alternateImage="NSLockLockedTemplate" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="B6V-NX-K5E">
-                                                                        <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
-                                                                        <font key="font" metaFont="controlContent" size="11"/>
-                                                                    </buttonCell>
-                                                                    <connections>
-                                                                        <action selector="changeAudioVideoService:" target="6fb-0C-bsO" id="CAE-61-dHj"/>
-                                                                        <binding destination="6fb-0C-bsO" name="value" keyPath="audioDenyState" id="HCv-VH-pQk"/>
-                                                                        <binding destination="6fb-0C-bsO" name="enabled" keyPath="audioEnabled" id="tbh-sU-R6g"/>
-                                                                    </connections>
-                                                                </button>
-                                                                <button toolTip="deny video services" verticalHuggingPriority="750" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="zYp-sM-0W5">
-                                                                    <rect key="frame" x="-5" y="-6" width="111" height="27"/>
-                                                                    <buttonCell key="cell" type="push" title="Deny Video" alternateTitle="Denied Video" bezelStyle="rounded" image="NSLockUnlockedTemplate" imagePosition="left" alignment="center" alternateImage="NSLockLockedTemplate" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PEq-x1-LQ4">
-                                                                        <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
-                                                                        <font key="font" metaFont="controlContent" size="11"/>
-                                                                    </buttonCell>
-                                                                    <connections>
-                                                                        <action selector="changeAudioVideoService:" target="6fb-0C-bsO" id="L8H-TP-yiG"/>
-                                                                        <binding destination="6fb-0C-bsO" name="value" keyPath="videoDenyState" id="AOF-jS-8wT"/>
-                                                                        <binding destination="6fb-0C-bsO" name="enabled" keyPath="videoEnabled" id="HZl-eD-WT5"/>
-                                                                    </connections>
-                                                                </button>
-                                                            </subviews>
-                                                            <visibilityPriorities>
-                                                                <integer value="1000"/>
-                                                                <integer value="1000"/>
-                                                            </visibilityPriorities>
-                                                            <customSpacing>
-                                                                <real value="3.4028234663852886e+38"/>
-                                                                <real value="3.4028234663852886e+38"/>
-                                                            </customSpacing>
-                                                        </stackView>
-                                                        <stackView distribution="fill" orientation="vertical" alignment="trailing" spacing="14" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="z7u-rQ-LZG">
-                                                            <rect key="frame" x="266" y="4" width="489" height="38"/>
-                                                            <subviews>
-                                                                <button toolTip="Launch Privacy &amp; Security Settings App." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OIk-oa-hZX">
-                                                                    <rect key="frame" x="376" y="24" width="113" height="14"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="height" constant="14" id="KAE-8C-f5B"/>
-                                                                    </constraints>
-                                                                    <buttonCell key="cell" type="bevel" title="Microphone Security" bezelStyle="rounded" alignment="right" controlSize="small" imageScaling="proportionallyDown" inset="2" id="AFl-mN-aNt">
-                                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                                        <font key="font" metaFont="controlContent" size="11"/>
-                                                                    </buttonCell>
-                                                                    <connections>
-                                                                        <action selector="launchPrivacyMicrophoneServiceSettings:" target="6fb-0C-bsO" id="DSN-NJ-Jz4"/>
-                                                                    </connections>
-                                                                </button>
-                                                                <button toolTip="Launch Camera Privacy &amp; Security App" verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="3jY-Pl-CHQ">
-                                                                    <rect key="frame" x="22" y="0.0" width="467" height="10"/>
-                                                                    <buttonCell key="cell" type="bevel" title="Camera Security" bezelStyle="rounded" alignment="right" controlSize="small" imageScaling="proportionallyDown" inset="2" id="yt9-hZ-qxP">
-                                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                                        <font key="font" metaFont="controlContent" size="11"/>
-                                                                    </buttonCell>
-                                                                    <connections>
-                                                                        <action selector="launchPrivacyMicrophoneServiceSettings:" target="6fb-0C-bsO" id="V1U-eu-xuX"/>
-                                                                    </connections>
-                                                                </button>
-                                                            </subviews>
-                                                            <constraints>
-                                                                <constraint firstItem="3jY-Pl-CHQ" firstAttribute="leading" secondItem="z7u-rQ-LZG" secondAttribute="leading" constant="22" id="WNZ-Hs-gy1"/>
-                                                            </constraints>
-                                                            <visibilityPriorities>
-                                                                <integer value="1000"/>
-                                                                <integer value="1000"/>
-                                                            </visibilityPriorities>
-                                                            <customSpacing>
-                                                                <real value="3.4028234663852886e+38"/>
-                                                                <real value="3.4028234663852886e+38"/>
-                                                            </customSpacing>
-                                                        </stackView>
+                                                        <button toolTip="toggle audio services" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="m7b-fA-hZ1">
+                                                            <rect key="frame" x="-5" y="20" width="115" height="27"/>
+                                                            <buttonCell key="cell" type="push" title="Access Audio" alternateTitle="Stop Audio" bezelStyle="rounded" image="NSStatusAvailable" imagePosition="left" alignment="center" alternateImage="NSStatusUnavailable" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="gv1-GO-myK">
+                                                                <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                                                                <font key="font" metaFont="controlContent" size="11"/>
+                                                            </buttonCell>
+                                                            <connections>
+                                                                <action selector="changeAudioVideoService:" target="6fb-0C-bsO" id="e7C-Ee-Wc2"/>
+                                                                <binding destination="6fb-0C-bsO" name="enabled" keyPath="audioEnabled" id="jnZ-na-4ZD"/>
+                                                                <binding destination="6fb-0C-bsO" name="value" keyPath="audioState" id="g7p-5x-goX"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button toolTip="toggle video services" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="G7y-pe-fNw">
+                                                            <rect key="frame" x="-5" y="-6" width="115" height="27"/>
+                                                            <buttonCell key="cell" type="push" title="Access Video" alternateTitle="Stop Video" bezelStyle="rounded" image="NSStatusAvailable" imagePosition="left" alignment="center" alternateImage="NSStatusUnavailable" controlSize="small" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="O6U-hu-t5R">
+                                                                <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                                                                <font key="font" metaFont="controlContent" size="11"/>
+                                                            </buttonCell>
+                                                            <connections>
+                                                                <action selector="changeAudioVideoService:" target="6fb-0C-bsO" id="35v-bS-cNH"/>
+                                                                <binding destination="6fb-0C-bsO" name="enabled" keyPath="videoEnabled" id="tXS-X6-wOo"/>
+                                                                <binding destination="6fb-0C-bsO" name="value" keyPath="videoState" id="ADO-wv-ofJ"/>
+                                                            </connections>
+                                                        </button>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="z7u-rQ-LZG" firstAttribute="leading" secondItem="RUT-bI-Izc" secondAttribute="leading" constant="266" id="STo-wz-AZ2"/>
-                                                        <constraint firstItem="z7u-rQ-LZG" firstAttribute="top" secondItem="RUT-bI-Izc" secondAttribute="top" constant="2" id="eD6-hl-Cyq"/>
-                                                        <constraint firstItem="z7u-rQ-LZG" firstAttribute="baseline" secondItem="Ou9-oD-cRN" secondAttribute="baseline" constant="-2" id="uhs-lQ-cTj"/>
+                                                        <constraint firstItem="G7y-pe-fNw" firstAttribute="trailing" secondItem="m7b-fA-hZ1" secondAttribute="trailing" id="Vmm-Vu-AST"/>
                                                     </constraints>
                                                     <visibilityPriorities>
-                                                        <integer value="1000"/>
                                                         <integer value="1000"/>
                                                         <integer value="1000"/>
                                                     </visibilityPriorities>
                                                     <customSpacing>
                                                         <real value="3.4028234663852886e+38"/>
                                                         <real value="3.4028234663852886e+38"/>
+                                                    </customSpacing>
+                                                </stackView>
+                                                <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ou9-oD-cRN">
+                                                    <rect key="frame" x="169" y="0.0" width="101" height="44"/>
+                                                    <subviews>
+                                                        <button toolTip="deny audio services" verticalHuggingPriority="750" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="sej-uF-HBC">
+                                                            <rect key="frame" x="-5" y="20" width="111" height="27"/>
+                                                            <buttonCell key="cell" type="push" title="Deny Audio" alternateTitle="Denied Audio" bezelStyle="rounded" image="NSLockUnlockedTemplate" imagePosition="left" alignment="center" alternateImage="NSLockLockedTemplate" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="B6V-NX-K5E">
+                                                                <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                                                                <font key="font" metaFont="controlContent" size="11"/>
+                                                            </buttonCell>
+                                                            <connections>
+                                                                <action selector="changeAudioVideoService:" target="6fb-0C-bsO" id="CAE-61-dHj"/>
+                                                                <binding destination="6fb-0C-bsO" name="value" keyPath="audioDenyState" id="HCv-VH-pQk"/>
+                                                                <binding destination="6fb-0C-bsO" name="enabled" keyPath="audioEnabled" id="tbh-sU-R6g"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button toolTip="deny video services" verticalHuggingPriority="750" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="zYp-sM-0W5">
+                                                            <rect key="frame" x="-5" y="-6" width="111" height="27"/>
+                                                            <buttonCell key="cell" type="push" title="Deny Video" alternateTitle="Denied Video" bezelStyle="rounded" image="NSLockUnlockedTemplate" imagePosition="left" alignment="center" alternateImage="NSLockLockedTemplate" controlSize="small" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PEq-x1-LQ4">
+                                                                <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                                                                <font key="font" metaFont="controlContent" size="11"/>
+                                                            </buttonCell>
+                                                            <connections>
+                                                                <action selector="changeAudioVideoService:" target="6fb-0C-bsO" id="L8H-TP-yiG"/>
+                                                                <binding destination="6fb-0C-bsO" name="value" keyPath="videoDenyState" id="AOF-jS-8wT"/>
+                                                                <binding destination="6fb-0C-bsO" name="enabled" keyPath="videoEnabled" id="HZl-eD-WT5"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="zYp-sM-0W5" firstAttribute="trailing" secondItem="sej-uF-HBC" secondAttribute="trailing" id="o5h-ap-Yif"/>
+                                                    </constraints>
+                                                    <visibilityPriorities>
+                                                        <integer value="1000"/>
+                                                        <integer value="1000"/>
+                                                    </visibilityPriorities>
+                                                    <customSpacing>
+                                                        <real value="3.4028234663852886e+38"/>
+                                                        <real value="3.4028234663852886e+38"/>
+                                                    </customSpacing>
+                                                </stackView>
+                                                <stackView distribution="fill" orientation="vertical" alignment="trailing" spacing="14" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="z7u-rQ-LZG">
+                                                    <rect key="frame" x="305" y="2" width="113" height="42"/>
+                                                    <subviews>
+                                                        <button toolTip="Launch Privacy &amp; Security Settings App." verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OIk-oa-hZX">
+                                                            <rect key="frame" x="0.0" y="28" width="113" height="14"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="14" id="KAE-8C-f5B"/>
+                                                            </constraints>
+                                                            <buttonCell key="cell" type="bevel" title="Microphone Security" bezelStyle="rounded" alignment="right" controlSize="small" imageScaling="proportionallyDown" inset="2" id="AFl-mN-aNt">
+                                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                <font key="font" metaFont="controlContent" size="11"/>
+                                                            </buttonCell>
+                                                            <connections>
+                                                                <action selector="launchPrivacyMicrophoneServiceSettings:" target="6fb-0C-bsO" id="DSN-NJ-Jz4"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button toolTip="Launch Camera Privacy &amp; Security App" verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="3jY-Pl-CHQ">
+                                                            <rect key="frame" x="22" y="0.0" width="91" height="14"/>
+                                                            <buttonCell key="cell" type="bevel" title="Camera Security" bezelStyle="rounded" alignment="right" controlSize="small" imageScaling="proportionallyDown" inset="2" id="yt9-hZ-qxP">
+                                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                <font key="font" metaFont="controlContent" size="11"/>
+                                                            </buttonCell>
+                                                            <connections>
+                                                                <action selector="launchPrivacyMicrophoneServiceSettings:" target="6fb-0C-bsO" id="V1U-eu-xuX"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstItem="3jY-Pl-CHQ" firstAttribute="leading" secondItem="z7u-rQ-LZG" secondAttribute="leading" constant="22" id="WNZ-Hs-gy1"/>
+                                                    </constraints>
+                                                    <visibilityPriorities>
+                                                        <integer value="1000"/>
+                                                        <integer value="1000"/>
+                                                    </visibilityPriorities>
+                                                    <customSpacing>
+                                                        <real value="3.4028234663852886e+38"/>
                                                         <real value="3.4028234663852886e+38"/>
                                                     </customSpacing>
                                                 </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="ck3-gk-SsM" firstAttribute="centerX" secondItem="RUT-bI-Izc" secondAttribute="centerX" id="AYn-iS-wiW"/>
-                                                <constraint firstItem="RUT-bI-Izc" firstAttribute="leading" secondItem="G2h-4W-ksT" secondAttribute="leading" constant="33" id="DdJ-cL-F2Z"/>
-                                                <constraint firstItem="RUT-bI-Izc" firstAttribute="top" secondItem="ck3-gk-SsM" secondAttribute="bottom" constant="8" symbolic="YES" id="GCf-XO-wV5"/>
-                                                <constraint firstAttribute="bottom" secondItem="RUT-bI-Izc" secondAttribute="bottom" id="RyM-CM-z4K"/>
-                                                <constraint firstItem="ck3-gk-SsM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="G2h-4W-ksT" secondAttribute="leading" constant="17" id="hfW-zm-cuZ"/>
-                                                <constraint firstAttribute="trailing" secondItem="ck3-gk-SsM" secondAttribute="trailing" constant="17" id="mft-rU-TLT"/>
+                                                <constraint firstItem="ck3-gk-SsM" firstAttribute="leading" secondItem="G2h-4W-ksT" secondAttribute="leading" constant="20" symbolic="YES" id="MZe-F6-YYh"/>
+                                                <constraint firstItem="YM5-gd-0Fl" firstAttribute="baseline" secondItem="Ou9-oD-cRN" secondAttribute="baseline" id="OZu-ek-EdK"/>
+                                                <constraint firstAttribute="trailing" secondItem="z7u-rQ-LZG" secondAttribute="trailing" constant="20" symbolic="YES" id="REd-lj-0WO"/>
+                                                <constraint firstItem="z7u-rQ-LZG" firstAttribute="top" secondItem="ck3-gk-SsM" secondAttribute="bottom" constant="8" symbolic="YES" id="S1K-3g-cQu"/>
+                                                <constraint firstItem="YM5-gd-0Fl" firstAttribute="top" secondItem="z7u-rQ-LZG" secondAttribute="top" id="Tsf-9S-1Bu"/>
+                                                <constraint firstAttribute="trailing" secondItem="YM5-gd-0Fl" secondAttribute="trailing" constant="313" id="fAA-H2-JTU"/>
+                                                <constraint firstAttribute="trailing" secondItem="ck3-gk-SsM" secondAttribute="trailing" constant="20" symbolic="YES" id="qZI-zg-csJ"/>
                                                 <constraint firstItem="ck3-gk-SsM" firstAttribute="top" secondItem="G2h-4W-ksT" secondAttribute="top" constant="11" id="rCH-P1-xiZ"/>
+                                                <constraint firstItem="Ou9-oD-cRN" firstAttribute="centerX" secondItem="G2h-4W-ksT" secondAttribute="centerX" id="sLD-rO-0FD"/>
+                                                <constraint firstItem="YM5-gd-0Fl" firstAttribute="leading" secondItem="G2h-4W-ksT" secondAttribute="leading" constant="20" symbolic="YES" id="xfX-fp-xkC"/>
                                             </constraints>
                                         </view>
                                     </tabViewItem>
@@ -1799,20 +1794,20 @@ CA
                                     </tabViewItem>
                                 </tabViewItems>
                             </tabView>
-                            <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="10" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Bl-o4-veF">
-                                <rect key="frame" x="15" y="140" width="450" height="59"/>
+                            <stackView distribution="fillEqually" orientation="horizontal" alignment="centerY" spacing="10" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1Bl-o4-veF">
+                                <rect key="frame" x="20" y="137" width="444" height="62"/>
                                 <subviews>
                                     <tabView controlSize="mini" initialItem="1H6-Li-Gba" translatesAutoresizingMaskIntoConstraints="NO" id="8ga-ki-MKn">
-                                        <rect key="frame" x="-7" y="-10" width="265" height="71"/>
+                                        <rect key="frame" x="-7" y="-10" width="231" height="74"/>
                                         <font key="font" metaFont="label" size="9"/>
                                         <tabViewItems>
                                             <tabViewItem label="Cookies" identifier="" id="1H6-Li-Gba">
                                                 <view key="view" id="MR4-UI-CPo">
-                                                    <rect key="frame" x="10" y="28" width="245" height="30"/>
+                                                    <rect key="frame" x="10" y="19" width="211" height="42"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
-                                                        <gridView xPlacement="leading" yPlacement="fill" rowAlignment="none" rowSpacing="0.0" columnSpacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="wvr-NZ-A8J">
-                                                            <rect key="frame" x="6" y="10" width="236" height="14"/>
+                                                        <gridView xPlacement="fill" yPlacement="fill" rowAlignment="none" rowSpacing="0.0" columnSpacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="wvr-NZ-A8J">
+                                                            <rect key="frame" x="-12" y="14" width="236" height="14"/>
                                                             <rows>
                                                                 <gridRow id="E9d-ev-bin"/>
                                                             </rows>
@@ -1875,25 +1870,24 @@ CA
                                                         </gridView>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="wvr-NZ-A8J" firstAttribute="leading" secondItem="MR4-UI-CPo" secondAttribute="leading" constant="6" id="3nU-A9-GPu"/>
-                                                        <constraint firstItem="wvr-NZ-A8J" firstAttribute="top" secondItem="MR4-UI-CPo" secondAttribute="top" constant="6" id="U9P-1p-3tb"/>
-                                                        <constraint firstAttribute="bottom" secondItem="wvr-NZ-A8J" secondAttribute="bottom" constant="10" id="vzc-5D-WSG"/>
+                                                        <constraint firstItem="wvr-NZ-A8J" firstAttribute="centerY" secondItem="MR4-UI-CPo" secondAttribute="centerY" id="1gV-KX-xFC"/>
+                                                        <constraint firstItem="wvr-NZ-A8J" firstAttribute="centerX" secondItem="MR4-UI-CPo" secondAttribute="centerX" id="X4R-YT-6Pq"/>
                                                     </constraints>
                                                 </view>
                                             </tabViewItem>
                                         </tabViewItems>
                                     </tabView>
                                     <tabView controlSize="mini" initialItem="fbw-ta-Z9i" translatesAutoresizingMaskIntoConstraints="NO" id="URB-RX-0w3">
-                                        <rect key="frame" x="254" y="-10" width="203" height="71"/>
+                                        <rect key="frame" x="220" y="-10" width="231" height="74"/>
                                         <font key="font" metaFont="label" size="9"/>
                                         <tabViewItems>
                                             <tabViewItem label="History" identifier="" id="fbw-ta-Z9i">
                                                 <view key="view" id="55J-Bu-6FY">
-                                                    <rect key="frame" x="10" y="28" width="183" height="30"/>
+                                                    <rect key="frame" x="10" y="19" width="211" height="42"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <gridView xPlacement="leading" yPlacement="fill" rowAlignment="none" rowSpacing="0.0" columnSpacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="bnI-9T-e77">
-                                                            <rect key="frame" x="5" y="11" width="170" height="14"/>
+                                                            <rect key="frame" x="21" y="14" width="170" height="14"/>
                                                             <rows>
                                                                 <gridRow id="LVB-SY-xJ0"/>
                                                             </rows>
@@ -1945,9 +1939,8 @@ CA
                                                         </gridView>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="bnI-9T-e77" firstAttribute="leading" secondItem="55J-Bu-6FY" secondAttribute="leading" constant="5" id="GNo-0O-zs3"/>
-                                                        <constraint firstItem="bnI-9T-e77" firstAttribute="top" secondItem="55J-Bu-6FY" secondAttribute="top" constant="5" id="OlH-1w-kE8"/>
-                                                        <constraint firstAttribute="bottom" secondItem="bnI-9T-e77" secondAttribute="bottom" constant="11" id="mha-rP-fQU"/>
+                                                        <constraint firstItem="bnI-9T-e77" firstAttribute="centerY" secondItem="55J-Bu-6FY" secondAttribute="centerY" id="dTZ-pm-bSC"/>
+                                                        <constraint firstItem="bnI-9T-e77" firstAttribute="centerX" secondItem="55J-Bu-6FY" secondAttribute="centerX" id="tQN-bK-Wcp"/>
                                                     </constraints>
                                                 </view>
                                             </tabViewItem>
@@ -1955,12 +1948,8 @@ CA
                                     </tabView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="8ga-ki-MKn" firstAttribute="bottom" secondItem="URB-RX-0w3" secondAttribute="bottom" id="46c-t3-XVr"/>
-                                    <constraint firstItem="8ga-ki-MKn" firstAttribute="top" secondItem="1Bl-o4-veF" secondAttribute="top" id="9Az-d7-s2f"/>
-                                    <constraint firstAttribute="trailing" secondItem="8ga-ki-MKn" secondAttribute="trailing" constant="199" id="Flq-tC-WHM"/>
-                                    <constraint firstItem="URB-RX-0w3" firstAttribute="leading" secondItem="1Bl-o4-veF" secondAttribute="leading" constant="261" id="GOM-1s-2AT"/>
-                                    <constraint firstItem="8ga-ki-MKn" firstAttribute="top" secondItem="URB-RX-0w3" secondAttribute="top" id="nNp-E1-0eu"/>
-                                    <constraint firstAttribute="bottom" secondItem="8ga-ki-MKn" secondAttribute="bottom" id="wlF-S2-EBU"/>
+                                    <constraint firstItem="URB-RX-0w3" firstAttribute="top" secondItem="8ga-ki-MKn" secondAttribute="top" id="b3L-1S-Mr6"/>
+                                    <constraint firstItem="URB-RX-0w3" firstAttribute="bottom" secondItem="8ga-ki-MKn" secondAttribute="bottom" id="pkq-1y-84n"/>
                                 </constraints>
                                 <visibilityPriorities>
                                     <integer value="1000"/>
@@ -1973,22 +1962,26 @@ CA
                             </stackView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="1Xd-k0-OUs" firstAttribute="top" secondItem="1Bl-o4-veF" secondAttribute="bottom" constant="11" id="03r-rR-4Yo"/>
+                            <constraint firstAttribute="trailing" secondItem="OZm-yw-Sep" secondAttribute="trailing" constant="20" symbolic="YES" id="0sJ-1f-Svk"/>
                             <constraint firstAttribute="bottom" secondItem="G1q-6O-gOA" secondAttribute="bottom" constant="17" id="1ZW-MA-S6G"/>
-                            <constraint firstItem="Jax-MV-URW" firstAttribute="leading" secondItem="1Bl-o4-veF" secondAttribute="leading" id="5Fc-5f-gf2"/>
+                            <constraint firstItem="OZm-yw-Sep" firstAttribute="leading" secondItem="cge-K8-5cp" secondAttribute="leading" constant="20" symbolic="YES" id="BTf-6h-2B2"/>
                             <constraint firstAttribute="bottom" secondItem="1Xd-k0-OUs" secondAttribute="bottom" constant="128" id="Ex6-QQ-CDE"/>
-                            <constraint firstItem="1Xd-k0-OUs" firstAttribute="leading" secondItem="G1q-6O-gOA" secondAttribute="leading" id="IDy-Sh-djA"/>
-                            <constraint firstItem="1Xd-k0-OUs" firstAttribute="trailing" secondItem="G1q-6O-gOA" secondAttribute="trailing" id="Ikc-Qa-yx2"/>
+                            <constraint firstItem="1Bl-o4-veF" firstAttribute="leading" secondItem="cge-K8-5cp" secondAttribute="leading" constant="20" symbolic="YES" id="HbF-u4-IRu"/>
                             <constraint firstItem="Jax-MV-URW" firstAttribute="top" secondItem="OZm-yw-Sep" secondAttribute="bottom" constant="8" symbolic="YES" id="Jm5-qv-3KW"/>
                             <constraint firstItem="OZm-yw-Sep" firstAttribute="centerX" secondItem="Jax-MV-URW" secondAttribute="centerX" id="KAl-QK-feA"/>
                             <constraint firstItem="OZm-yw-Sep" firstAttribute="top" secondItem="cge-K8-5cp" secondAttribute="top" constant="20" symbolic="YES" id="M49-iI-jyA"/>
+                            <constraint firstAttribute="trailing" secondItem="1Bl-o4-veF" secondAttribute="trailing" constant="20" symbolic="YES" id="MEi-ix-MH2"/>
                             <constraint firstItem="Jax-MV-URW" firstAttribute="top" secondItem="cge-K8-5cp" secondAttribute="top" constant="102" id="NJ2-1L-Y9Z"/>
                             <constraint firstItem="1Bl-o4-veF" firstAttribute="leading" secondItem="1Xd-k0-OUs" secondAttribute="leading" id="Ptl-9e-dTK"/>
+                            <constraint firstItem="1Xd-k0-OUs" firstAttribute="top" secondItem="1Bl-o4-veF" secondAttribute="bottom" constant="8" symbolic="YES" id="SWs-8S-Yww"/>
+                            <constraint firstItem="Jax-MV-URW" firstAttribute="leading" secondItem="cge-K8-5cp" secondAttribute="leading" constant="20" symbolic="YES" id="UfM-XT-vHj"/>
+                            <constraint firstAttribute="trailing" secondItem="Jax-MV-URW" secondAttribute="trailing" constant="20" symbolic="YES" id="Uyd-QD-ob7"/>
                             <constraint firstItem="OZm-yw-Sep" firstAttribute="centerX" secondItem="cge-K8-5cp" secondAttribute="centerX" id="cmA-Lc-jdZ"/>
+                            <constraint firstAttribute="trailing" secondItem="G1q-6O-gOA" secondAttribute="trailing" constant="20" symbolic="YES" id="dJ4-5k-pfr"/>
                             <constraint firstItem="G1q-6O-gOA" firstAttribute="top" secondItem="cge-K8-5cp" secondAttribute="top" constant="190" id="eWP-5h-B7g"/>
                             <constraint firstItem="G1q-6O-gOA" firstAttribute="top" secondItem="1Xd-k0-OUs" secondAttribute="bottom" constant="12" id="h92-Cz-bt5"/>
-                            <constraint firstItem="Jax-MV-URW" firstAttribute="trailing" secondItem="1Bl-o4-veF" secondAttribute="trailing" id="k8r-Xg-7ef"/>
                             <constraint firstItem="1Bl-o4-veF" firstAttribute="trailing" secondItem="1Xd-k0-OUs" secondAttribute="trailing" id="rE7-WY-vNj"/>
+                            <constraint firstItem="G1q-6O-gOA" firstAttribute="leading" secondItem="cge-K8-5cp" secondAttribute="leading" constant="20" symbolic="YES" id="rnT-3r-gWg"/>
                             <constraint firstItem="1Bl-o4-veF" firstAttribute="top" secondItem="Jax-MV-URW" secondAttribute="bottom" constant="4" id="snI-vh-I7k"/>
                         </constraints>
                     </view>
@@ -2121,13 +2114,13 @@ Gw
                                         </connections>
                                     </button>
                                     <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KRs-AT-9D8">
-                                        <rect key="frame" x="0.0" y="139" width="126" height="133"/>
+                                        <rect key="frame" x="0.0" y="189" width="126" height="83"/>
                                         <clipView key="contentView" drawsBackground="NO" id="Noe-Za-eMO">
-                                            <rect key="frame" x="1" y="0.0" width="124" height="117"/>
+                                            <rect key="frame" x="1" y="0.0" width="124" height="67"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView identifier="playlists" verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" columnSelection="YES" autosaveName="playlistTableView.prefs" rowSizeStyle="automatic" headerView="tha-4C-kVE" viewBased="YES" id="PML-r0-Bx7" userLabel="Playlist Table View" customClass="PlayTableView" customModule="He3" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="253" height="92"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="253" height="42"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -2352,7 +2345,7 @@ Gw
                                             <nil key="backgroundColor"/>
                                         </clipView>
                                         <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="atn-XO-QDu">
-                                            <rect key="frame" x="1" y="117" width="124" height="15"/>
+                                            <rect key="frame" x="1" y="67" width="124" height="15"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="phY-te-dcT">
@@ -2365,10 +2358,10 @@ Gw
                                         </tableHeaderView>
                                     </scrollView>
                                     <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="2" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IJO-dk-87l">
-                                        <rect key="frame" x="8" y="12" width="38" height="118"/>
+                                        <rect key="frame" x="8" y="12" width="38" height="168"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ham-VS-t4a">
-                                                <rect key="frame" x="0.0" y="99" width="18" height="20"/>
+                                                <rect key="frame" x="0.0" y="149" width="18" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="18" id="JTp-ky-mGF"/>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="18" id="XPl-Vx-uH4"/>
@@ -2383,7 +2376,7 @@ Gw
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="o1D-da-uMx">
-                                                <rect key="frame" x="20" y="99" width="18" height="20"/>
+                                                <rect key="frame" x="20" y="149" width="18" height="20"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="18" id="EdH-Et-2HW"/>
                                                     <constraint firstAttribute="height" constant="18" id="h38-0O-QiV"/>
@@ -2425,10 +2418,10 @@ Gw
                                 <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
                                     <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WiW-pB-vRx">
-                                        <rect key="frame" x="10" y="10" width="134" height="146"/>
+                                        <rect key="frame" x="10" y="10" width="134" height="196"/>
                                         <subviews>
                                             <button toolTip="Restore selected playlists or playitems" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DNq-eF-IsJ">
-                                                <rect key="frame" x="-6" y="93" width="80" height="32"/>
+                                                <rect key="frame" x="-6" y="143" width="80" height="32"/>
                                                 <buttonCell key="cell" type="push" title="Revert" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3XW-t7-vOU">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -2439,7 +2432,7 @@ Gw
                                                 </connections>
                                             </button>
                                             <button toolTip="Save selected playlists or playitems" verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="zo4-as-HFj">
-                                                <rect key="frame" x="70" y="93" width="70" height="32"/>
+                                                <rect key="frame" x="70" y="143" width="70" height="32"/>
                                                 <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="x6P-T8-kml">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -2506,13 +2499,13 @@ Gw
                                         </customSpacing>
                                     </stackView>
                                     <scrollView horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lou-k5-Ctb">
-                                        <rect key="frame" x="0.0" y="164" width="314" height="108"/>
+                                        <rect key="frame" x="0.0" y="214" width="314" height="58"/>
                                         <clipView key="contentView" drawsBackground="NO" id="Ix6-nN-7A8">
-                                            <rect key="frame" x="1" y="0.0" width="297" height="92"/>
+                                            <rect key="frame" x="1" y="0.0" width="297" height="42"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView identifier="playitems" verticalHuggingPriority="750" tag="1" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" columnSelection="YES" autosaveName="playitemTableView.prefs" rowSizeStyle="automatic" headerView="YTX-gj-uhH" viewBased="YES" id="IBh-ZH-TR3" customClass="PlayTableView" customModule="He3" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="951" height="67"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="951" height="24"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -3041,11 +3034,11 @@ Gw
                                             <nil key="backgroundColor"/>
                                         </clipView>
                                         <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="1e4-tR-Cc8">
-                                            <rect key="frame" x="1" y="92" width="297" height="15"/>
+                                            <rect key="frame" x="1" y="42" width="297" height="15"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
-                                        <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="0.0625" horizontal="NO" id="aSB-Wi-46z">
-                                            <rect key="frame" x="298" y="25" width="15" height="67"/>
+                                        <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="aSB-Wi-46z">
+                                            <rect key="frame" x="298" y="25" width="15" height="17"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <tableHeaderView key="headerView" id="YTX-gj-uhH" customClass="PlayHeaderView" customModule="He3">

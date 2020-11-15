@@ -24,18 +24,33 @@ class PrefsPanelController : NSWindowController {
 		panel.isMovableByWindowBackground = true
 		panel.isFloatingPanel = true
 		
-		//  We want to allow miniaturizations
+		//  We want to allow miniaturizations and resize
 		panel.styleMask.formUnion(.miniaturizable)
-		panel.styleMask.remove(.resizable)
+		panel.styleMask.formUnion(.resizable)
 
 	}
 }
 
-class PrefsViewController : NSViewController {
+class PrefsViewController : NSViewController, NSTabViewDelegate {
 	var appDelegate : AppDelegate {
 		get {
 			return NSApp.delegate as! AppDelegate
 		}
+	}
+	@objc var appVersion: String {
+		get {
+			let infoDictionary = (Bundle.main.infoDictionary)!
+
+			return infoDictionary["CFBundleShortVersionString"] as! String
+		}
+	}
+
+	func tabView(_ tabView: NSTabView, willSelect tabViewItem: NSTabViewItem?) {
+		self.willChangeValue(forKey: "resetDefaultsToolTip")
+	}
+
+	func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
+		self.didChangeValue(forKey: "resetDefaultsToolTip")
 	}
 
 	//	MARK: Actions
@@ -110,30 +125,51 @@ class PrefsViewController : NSViewController {
 		}
 	}
 	@IBOutlet var tabView: NSTabView!
-
-	@IBAction func resetDefaults(_ sender: Any) {
-		
-		if let label = tabView.selectedTabViewItem?.label {
-			switch label {
-			case "History":
-				self.historyKeepField.window?.makeFirstResponder(nil)
-				UserSettings.HistoryName.value = UserSettings.HistoryName.default
-				UserSettings.HistoryKeep.value = UserSettings.HistoryKeep.default
-				
-			case "Home Page URL":
-				UserSettings.HomePageURL.value = UserSettings.HomePageURL.default
-				
-			case "Search":
-				self.searchKeepField.window?.makeFirstResponder(nil)
-				UserSettings.Search.value = UserSettings.Search.default
-				UserSettings.SearchKeep.value = UserSettings.SearchKeep.default
-				
-			case "User Agent String":
-				UserSettings.UserAgent.value = UserSettings.UserAgent.default
-				
-			default:
-				fatalError(String(format: "Preferences tabView label? '%@'", label))
+	@IBOutlet var resetDefaultsButton: NSButton!
+	@objc var resetDefaultsToolTip : String {
+		get {
+			if let identifier = tabView.selectedTabViewItem?.identifier {
+			    let tabIndex = tabView.indexOfTabViewItem(withIdentifier: identifier)
+				guard ![0,3].contains(tabIndex) else { return "launch Privacy and Settings App" }
 			}
+			return "reset tab contents to defaults"
+		}
+	}
+	@IBAction func resetDefaults(_ sender: AnyObject) {
+		
+		if let identifier = tabView.selectedTabViewItem?.identifier,
+		   let toolTip : String = sender.toolTip {
+			let tabIndex = tabView.indexOfTabViewItem(withIdentifier: identifier)
+			sheetOKCancel(toolTip.capitalized, info: tabIndex == 0 ? nil : "This cannot be undone.", acceptHandler: { (button) in
+				if button == NSApplication.ModalResponse.alertFirstButtonReturn {
+					switch tabIndex {
+					case 0://AudioVideo
+						self.launchPrivacyCameraServiceSettings(sender)
+
+					case 1://"History":
+						self.historyKeepField.window?.makeFirstResponder(nil)
+						UserSettings.HistoryName.value = UserSettings.HistoryName.default
+						UserSettings.HistoryKeep.value = UserSettings.HistoryKeep.default
+						
+					case 2://"Home Page URL":
+						UserSettings.HomePageURL.value = UserSettings.HomePageURL.default
+						
+					case 3://"Location"
+						self.launchPrivacyLocationServiceSettings(sender)
+						
+					case 4://"Search":
+						self.searchKeepField.window?.makeFirstResponder(nil)
+						UserSettings.Search.value = UserSettings.Search.default
+						UserSettings.SearchKeep.value = UserSettings.SearchKeep.default
+						
+					case 5://"User Agent String":
+						UserSettings.UserAgent.value = UserSettings.UserAgent.default
+						
+					default:
+						fatalError(String(format: "Preferences tabView identifier? '%@'", identifier as! CVarArg))
+					}
+				}
+			})
 		}
 	}
 	
@@ -423,6 +459,11 @@ class PrefsViewController : NSViewController {
 		}
 	}
 
+	@IBAction func launchPrivaryServices(_ sender: Any) {
+		if let PrivacyServices = URL.PrivacyServices {
+			NSWorkspace.shared.open(PrivacyServices)
+		}
+	}
 	@IBAction func launchPrivacyMicrophoneServiceSettings(_ sender: Any) {
 		if let PrivacyMicrophoneServices = URL.PrivacyMicrophoneServices {
 			NSWorkspace.shared.open(PrivacyMicrophoneServices)
