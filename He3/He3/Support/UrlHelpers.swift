@@ -424,6 +424,9 @@ extension URL {
 
 extension URL {
 	//	KUDOS: https://stackoverflow.com/a/59120311/564870
+	static var PrivacyServices : URL? {
+		return URL(string: "x-apple.systempreferences:com.apple.preference.security")
+	}
 	static var PrivacyLocationServices : URL? {
 		return URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_LocationServices")
 	}
