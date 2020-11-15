@@ -122,13 +122,14 @@ extension String {
 
 extension NSString {
     class func string(fromAsset: String) -> String {
+		let markDown = fromAsset.hasSuffix(".md")
 		guard let asset = NSDataAsset.init(name: fromAsset) else {
 			return String(format: "Unable to locate asset:\n%@", fromAsset)
 		}
 		let data = NSData.init(data: (asset.data))
         let text = String.init(data: data as Data, encoding: String.Encoding.utf8)
         
-		if fromAsset.hasSuffix(".md"), let html = try? Down(markdownString: text!).toHTML()
+		if markDown, let html = try? Down(markdownString: text!).toHTML()
 		{
 			let htmlDoc = String(format: "<html><body>%@</body></html>", html)
 			let data = Data(htmlDoc.utf8)
