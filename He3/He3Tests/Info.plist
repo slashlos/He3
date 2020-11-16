@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CFBuildDate</key>
-	<string>20201112.115107</string>
+	<string>20201115.195211</string>
 	<key>CFBuildNumber</key>
-	<string>8381</string>
+	<string>8391</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -21,6 +21,6 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0.3</string>
 	<key>CFBundleVersion</key>
-	<string>1.0.8381</string>
+	<string>1.0.8391</string>
 </dict>
 </plist>

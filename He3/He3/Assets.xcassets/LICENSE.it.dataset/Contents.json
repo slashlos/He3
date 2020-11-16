@@ -1,0 +1,12 @@
+{
+  "data" : [
+    {
+      "filename" : "LICENSE.it.txt",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

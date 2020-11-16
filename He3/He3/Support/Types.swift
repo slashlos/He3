@@ -80,7 +80,7 @@ public struct k {
     static let ToolbarItemHeight: CGFloat = 48.0
     static let ToolbarItemSpacer: CGFloat = 1.0
     static let ToolbarTextHeight: CGFloat = 12.0
-	static let PrivacyURL = k.caches + ":///asset/he3_privacy.html"
+	static let PrivacyURL = k.caches + ":///asset/he3_privacy.rtf"
     static let Release = "Release"
     static let ReleaseURL = k.caches + ":///asset/RELEASE.html"
     static let ReleaseNotes = "Release Notes"

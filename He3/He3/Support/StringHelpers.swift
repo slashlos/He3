@@ -123,11 +123,20 @@ extension String {
 extension NSString {
     class func string(fromAsset: String) -> String {
 		let markDown = fromAsset.hasSuffix(".md")
-		guard let asset = NSDataAsset.init(name: fromAsset) else {
+		var text : String?
+		// MARK: TODO implement --exclude= in BartyCrouch
+		/*
+		if let asset = NSDataAsset.init(name: NSLocalizedString(fromAsset, comment: "")) {
+			text = String.init(data: asset.data, encoding: .utf8)
+		}
+		else*/
+		if let asset = NSDataAsset.init(name: fromAsset) {
+			text = String.init(data: asset.data, encoding: .utf8)
+		}
+		else
+		{
 			return String(format: "Unable to locate asset:\n%@", fromAsset)
 		}
-		let data = NSData.init(data: (asset.data))
-        let text = String.init(data: data as Data, encoding: String.Encoding.utf8)
         
 		if markDown, let html = try? Down(markdownString: text!).toHTML()
 		{

@@ -1,0 +1,59 @@
+# He3
+
+He3 es un navegador flotante de múltiples ventanas, por encima de todo.
+
+## Trasfondo
+
+He3 comenzó como Helium de Jaden Geller, un navegador flotante de ventana única. Esto comenzó como una bifurcación de ese trabajo que presenta cambios significativos más allá de una solicitud de extracción y se denominó en la tienda de aplicaciones como Helium 3. Se conocerá en el futuro como He3, con un nuevo ícono, pero manteniendo algunos detalles de la interfaz de usuario heredada. Un usuario actual de helio debería sentirse como en casa con He3.
+
+## Hitos
+
+### Jaden Geller, Helio 1.0 - 2.0
+Creador de helio y versión disponible en App Store, así como en GitHub, que inicialmente había bifurcado como Helium 3 y también publicado a través de App Store.
+
+### CD M Santiago, Helio 3, ahora He3 - "Por encima de todo"
+
+! [he3_logo] (https://github.com/slashlos/He3/raw/master/he3_logo256.png "He3 hace ventanas")
+
+Queriendo una interfaz de múltiples ventanas, mejor soporte de visualización, etc., decidí bifurcar el Helio de ventana única y enviar un tirón, pero mis cambios y dirección eran demasiado extremos, decidí separarme para ser conocido como Helio 3. Con El regreso de Jaden, y para reducir la confusión, Helium 3 está cambiando de nombre y se está cambiando a He3, pero manteniendo sutiles indicios de su legado.
+
+## Colaboradores
+
+Al ser un proyecto de GitHub, He3 se ha basado en muchos otros a los que doy crédito aquí, y siendo un buen ciudadano espero hacer lo mismo por los demás; Disfrutar.
+
+#### Christian Hoffmann: UserSettings.swift
+#### Samuel Beek: StringHelpers.swift
+#### shdwprince: Panel.swift
+#### Viktor Oreshkin: UrlHelpers.swift
+#### travos-ci.org: [Swift 3] (https://travis-ci.org/stek29/Helium)
+
+### CDMS
+
+- 1.9 horquilla y revisión
+- guardar y restaurar automáticamente documentos
+- ventanas y pestañas de documentos,
+- listas de reproducción: elementos globales / compartidos que se pueden guardar
+- imágenes de globos https://pixabay.com
+- Estado del buscador y menús del muelle,
+- preferencias locales, globales,
+- transformadores de valor,
+- edición de agentes de usuario,
+- Historia del documento,
+- menú contextual,
+- Notas de lanzamiento,
+- sobre caja,
+- sandboxing,
+- instantáneas,
+- Envío de la tienda de aplicaciones,
+- cambio de marca a He3.
+
+####
+
+## Incorporado Otras obras
+[Markdown] (https://github.com/iwasrobbed/Down)
+[WebArchive] (https://github.com/ernesto-elsaesser/WebArchiver)
+[SwiftGen] (https://github.com/SwiftGen/SwiftGen)
+[Fuzi] (https://github.com/cezheng/Fuzi)
+
+
+/ los

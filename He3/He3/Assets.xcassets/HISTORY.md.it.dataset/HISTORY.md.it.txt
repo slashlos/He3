@@ -1,0 +1,59 @@
+# He3
+
+He3 è soprattutto un browser mobile multi-finestra.
+
+## Storia precedente
+
+He3 è iniziato come Helium di Jaden Geller, una finestra singola, browser mobile. Questo è iniziato come un fork di quel lavoro che presenta cambiamenti significativi oltre a una richiesta pull ed è stato marchiato nell'App store come Helium 3. In futuro sarà noto come He3, sfoggiando una nuova icona, ma mantenendo alcuni dettagli dell'interfaccia utente legacy. Un utente corrente di elio dovrebbe essere a casa con He3.
+
+## Pietre miliari
+
+### Jaden Geller, Helium 1.0 - 2.0
+Creatore e versione di Helium disponibili su App Store e GitHub che inizialmente avevo biforcato come Helium 3 e pubblicato anche tramite App Store.
+
+### CD M Santiago, Helium 3, ora He3 - "Above All Else"
+
+! [he3_logo] (https://github.com/slashlos/He3/raw/master/he3_logo256.png "He3 fa windows")
+
+Volendo un'interfaccia multi-finestra, un migliore supporto per la visualizzazione, ecc., Ho deciso di biforcare la finestra singola Helium e inviare un pull, ma i miei cambiamenti e la mia direzione erano troppo estremi, ho deciso invece di separarmi per essere conosciuto come Helium 3. Con Il ritorno di Jaden, e per ridurre la confusione, Helium 3 è stato rinominato e passato a He3, ma mantenendo sottili accenni alla sua eredità.
+
+## Contributori
+
+Essendo un progetto GitHub He3 ha attinto da molti altri a cui do credito qui, ed essendo un buon cittadino spero di fare lo stesso per gli altri; Godere.
+
+#### Christian Hoffmann: UserSettings.swift
+#### Samuel Beek: StringHelpers.swift
+#### shdwprince: Panel.swift
+#### Viktor Oreshkin: UrlHelpers.swift
+#### travos-ci.org: [Swift 3] (https://travis-ci.org/stek29/Helium)
+
+### CDMS
+
+- 1.9 forcella e revisione
+- salvataggio automatico del documento, ripristino
+- finestre e schede dei documenti,
+- playlist - elementi globali / condivisi e salvabili
+- immagini di palloncini https://pixabay.com
+- Stato del Finder e menu del dock,
+- preferenze locali e globali,
+- trasformatori di valore,
+- modifica dell'agente utente,
+- storia del documento,
+- menu contestuale,
+- note di rilascio,
+- sulla scatola,
+- sandboxing,
+- istantanee,
+- Presentazione dell'App Store,
+- rebranding in He3.
+
+####
+
+## Incorporated Altri lavori
+[Markdown] (https://github.com/iwasrobbed/Down)
+[WebArchive] (https://github.com/ernesto-elsaesser/WebArchiver)
+[SwiftGen] (https://github.com/SwiftGen/SwiftGen)
+[Fuzi] (https://github.com/cezheng/Fuzi)
+
+
+/ los

@@ -1,0 +1,22 @@
+La licenza MIT (MIT)
+
+Copyright (c) 2020 CD M Santiago
+
+L'autorizzazione è concessa, gratuitamente, a chiunque ne ottenga una copia
+di questo software e dei file di documentazione associati (il "Software"), da trattare
+nel Software senza limitazioni, inclusi senza limitazione i diritti
+utilizzare, copiare, modificare, unire, pubblicare, distribuire, concedere in licenza e / o vendere
+copie del Software e per consentire alle persone a cui è destinato il Software
+forniti a tal fine, alle seguenti condizioni:
+
+L'avviso di copyright di cui sopra e questo avviso di autorizzazione devono essere inclusi in tutto
+copie o porzioni sostanziali del Software.
+
+IL SOFTWARE VIENE FORNITO "COSÌ COM'È", SENZA GARANZIA DI ALCUN TIPO, ESPRESSA O
+IMPLICITA, INCLUSE MA NON LIMITATE ALLE GARANZIE DI COMMERCIABILITÀ,
+IDONEITÀ PER UNO SCOPO PARTICOLARE E NON VIOLAZIONE. IN NESSUN CASO IL
+GLI AUTORI OI TITOLARI DEL COPYRIGHT SONO RESPONSABILI DI QUALSIASI RIVENDICAZIONE, DANNO O ALTRO
+RESPONSABILITÀ, SIA IN UN'AZIONE DI CONTRATTO, TORTO O ALTRO, DERIVANTE DA,
+FUORI O CONNESSI AL SOFTWARE O ALL'USO O ALTRI TRATTAMENTI IN
+SOFTWARE.
+

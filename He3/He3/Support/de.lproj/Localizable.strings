@@ -1,3 +1,9 @@
+/*  %@ */
+"Build" = "Build %@";
+
+/* text token */
+"build" = "build";
+
 /* No comment provided by engineer. */
 "CannotImportMessage" = "Nachricht kann nicht importiert werden.";
 
@@ -5,13 +11,28 @@
 "CannotImportTitle" = "Titel kann nicht importiert werden";
 
 /* No comment provided by engineer. */
+"copyright" = "Copyright © 2020 CD M Santiago. Alle Rechte vorbehalten. | Copyright © 2015 Jaden Geller. Alle Rechte vorbehalten.";
+
+/* No comment provided by engineer. */
 "ErrorMessage" = "URL-Fehler melden";
 
 /* No comment provided by engineer. */
 "ErrorTitle" = "URL-Fehlertitel melden";
 
+/* Assest */
+"he3_privacy.rtf" = "he3_privacy.rtf.de";
+
+/* Assest */
+"HISTORY.md" = "HISTORY.md.de";
+
+/* Assest */
+"LICENSE" = "LICENSE.de";
+
 /* No comment provided by engineer. */
 "OKTitle" = "OK";
+
+/* Assest */
+"README.md" = "README.md.de";
 
 "SERVICE_AUT" = "autorisiert";
 
@@ -22,3 +43,12 @@
 
 /* A/V text tokens */
 "SERVICE_NOT" = "nicht bestimmt";
+
+/* text token */
+"timestamp" = "Zeitstempel";
+
+/*  %@ */
+"Version" = "Version %@";
+
+/* text token */
+"version" = "version";

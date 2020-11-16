@@ -85,8 +85,8 @@ class AboutBoxController : NSViewController {
     internal func showCredits() {
 		//	Names *must* match up to assets inventory; ".md" are markdown
 		//	requiring processing to html, others are already there as
-		//	attributed strings, else plain text.
-        let credits = ["README.md", "HISTORY.md", "LICENSE", "he3_privacy.html"];
+		//	attributed strings, else plain text. Localizations are supported.
+        let credits = ["README.md", "HISTORY.md", "LICENSE", "he3_privacy.rtf"];
         
         if AboutBoxController.creditState >= AboutBoxController.creditStates
         {
@@ -139,7 +139,9 @@ class AboutBoxController : NSViewController {
         let titles = [ versionData, versionLink, versionDate ]
         versionButton.title = titles[AboutBoxController.versionState]!
 
-        let tooltip = [ "version", "build", "timestamp" ]
+        let tooltip = [ NSLocalizedString("version", comment: ""),
+						NSLocalizedString("build", comment: ""),
+						NSLocalizedString("timestamp", comment: "") ]
         versionButton.toolTip = tooltip[AboutBoxController.versionState];
     }
 
@@ -202,12 +204,12 @@ class AboutBoxController : NSViewController {
         let infoDictionary = (Bundle.main.infoDictionary)!
 
         //	Setup the version to one we constrict
-        versionString = String(format:"Version %@",
+        versionString = String(format: NSLocalizedString("Version", comment: ""),
                                infoDictionary["CFBundleShortVersionString"] as! CVarArg)
 
         // Version criteria to cycle thru
         self.versionData = versionString;
-        self.versionLink = String(format:"Build %@",
+		self.versionLink = String(format: NSLocalizedString("Build", comment: ""),
                                   infoDictionary["CFBuildNumber"] as! CVarArg)
         self.versionDate = infoDictionary["CFBuildDate"] as? String;
 
@@ -216,7 +218,7 @@ class AboutBoxController : NSViewController {
         origRect = self.view.frame
 
         // Setup the copyrights field; each separated by "|"
-        copyrightStrings = (infoDictionary["NSHumanReadableCopyright"] as? String)?.components(separatedBy: "|")
+		copyrightStrings = NSLocalizedString("copyright", comment: "").components(separatedBy: "|")
         toggleButton.state = .off
 		
 		///creditTabView.selectTabViewItem(at: 0)
