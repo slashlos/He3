@@ -1,27 +1,34 @@
 [update]
-tasks = ["interfaces", "code", "transform", "normalize"]
+tasks = ["interfaces", "transform", "normalize"]
 
 [update.interfaces]
-paths = [.,"He3","He3/Support
+paths = ["."]
 defaultToBase = false
 ignoreEmptyStrings = false
 unstripped = false
 
+[update.code]
+codePaths = ["."]
+localizablePaths = ["."]
+defaultToKeys = false
+additive = true
+unstripped = false
+
 [update.transform]
-codePaths = [.,"He3","He3/Support"]
-localizablePaths = [.,"He3","He3/Support"]
+codePaths = ["."]
+localizablePaths = ["."]
 transformer = "foundation"
 supportedLanguageEnumPath = "."
 typeName = "BartyCrouch"
 translateMethodName = "translate"
 
 [update.normalize]
-paths = [.,"He3","He3/Support"]
+paths = ["."]
 sourceLocale = "en"
 harmonizeWithSource = true
 sortByKeys = true
 
 [lint]
-paths = [.,"He3","He3/Support"]
+paths = ["."]
 duplicateKeys = true
 emptyValues = true

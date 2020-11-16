@@ -1,0 +1,59 @@
+# He3
+
+He3 ist vor allem ein schwebender Browser mit mehreren Fenstern.
+
+## Hintergrundgeschichte
+
+He3 begann als Helium von Jaden Geller, einem schwebenden Browser mit einem einzigen Fenster. Dies begann als Teil dieser Arbeit und enthielt wesentliche Änderungen, die über eine Pull-Anfrage hinausgingen. Sie wurde im App Store als Helium 3 gebrandmarkt. Sie wird künftig als He3 bezeichnet, mit einem neuen Symbol, wobei jedoch einige ältere Details der Benutzeroberfläche beibehalten werden. Ein aktueller Helium-Benutzer sollte mit He3 zu Hause sein.
+
+## Meilensteine
+
+### Jaden Geller, Helium 1.0 - 2.0
+Helium-Ersteller und -Version im App Store sowie auf GitHub verfügbar, den ich ursprünglich als Helium 3 gegabelt und auch über den App Store veröffentlicht hatte.
+
+### CD M Santiago, Helium 3, jetzt He3 - "Vor allem sonst"
+
+! [he3_logo] (https://github.com/slashlos/He3/raw/master/he3_logo256.png "He3 macht Windows")
+
+Ich wollte eine Benutzeroberfläche mit mehreren Fenstern, eine bessere Unterstützung für die Anzeige usw. und entschied mich, das Helium für ein einzelnes Fenster zu teilen und einen Zug einzureichen. Da meine Änderungen und Richtungen jedoch zu extrem waren, entschied ich mich stattdessen, mich abzuspalten, um als Helium 3 bekannt zu werden Jadens Rückkehr und um Verwirrung zu vermeiden, wird Helium 3 umbenannt und auf He3 umgestellt, wobei jedoch subtile Hinweise auf sein Erbe beibehalten werden.
+
+## Mitwirkende
+
+Als GitHub-Projekt hat He3 von vielen anderen Gebrauch gemacht, denen ich hier Ehre mache, und als guter Bürger hoffe ich, dasselbe für andere zu tun. Genießen.
+
+#### Christian Hoffmann: UserSettings.swift
+#### Samuel Beek: StringHelpers.swift
+#### shdwprince: Panel.swift
+#### Viktor Oreshkin: UrlHelpers.swift
+#### travos-ci.org: [Swift 3] (https://travis-ci.org/stek29/Helium)
+
+### CDMS
+
+- 1,9 Gabel und Überholung
+- Dokument automatisches Speichern, Wiederherstellen
+- Dokumentfenster und Registerkarten,
+- Wiedergabelisten - globale / gemeinsam genutzte, speicherbare Elemente
+- Ballonbilder https://pixabay.com
+- Finder-Status und Dock-Menüs,
+- lokale, globale Präferenzen,
+- Werttransformatoren,
+- Benutzeragentenbearbeitung,
+- Dokumentenverlauf,
+- Kontextmenü,
+- Versionshinweise,
+- über Box,
+- Sandboxen,
+- Schnappschüsse,
+- App Store Einreichung,
+- Umbenennung in He3.
+
+####
+
+## Incorporated Andere Werke
+[Markdown] (https://github.com/iwasrobbed/Down)
+[WebArchiv] (https://github.com/ernesto-elsaesser/WebArchiver)
+[SwiftGen] (https://github.com/SwiftGen/SwiftGen)
+[Fuzi] (https://github.com/cezheng/Fuzi)
+
+
+/ los

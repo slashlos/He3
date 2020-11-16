@@ -1,0 +1,59 @@
+# He3
+
+He3 est avant tout un navigateur flottant à fenêtres multiples.
+
+## Passé
+
+He3 a commencé comme Helium par Jaden Geller, un navigateur flottant à fenêtre unique. Cela a commencé comme une fourchette de ce travail, avec des changements significatifs au-delà d'une pull request et a été marqué dans l'App Store sous le nom d'Helium 3. Il sera connu à l'avenir sous le nom de He3, arborant une nouvelle icône, mais conservant certains détails de l'interface utilisateur héritée. Un utilisateur actuel d'Helium devrait être chez lui avec He3.
+
+## Jalons
+
+### Jaden Geller, Hélium 1.0 - 2.0
+Créateur et version d'Helium disponibles sur l'App Store ainsi que sur GitHub que j'avais initialement forké sous le nom d'Helium 3, et également publié via l'App Store.
+
+### CD M Santiago, Helium 3, maintenant He3 - "Above All Else"
+
+! [he3_logo] (https://github.com/slashlos/He3/raw/master/he3_logo256.png "He3 fait Windows")
+
+Voulant une interface multi-fenêtre, un meilleur support de visualisation, etc., j'ai décidé de bifurquer la fenêtre unique Helium et de soumettre un pull, mais mes changements et ma direction étant trop extrêmes, j'ai décidé à la place de me séparer pour être connu sous le nom d'Helium 3. Avec Le retour de Jaden, et pour réduire la confusion, Helium 3 est en train d'être rebaptisé et est passé à He3 mais en gardant des indices subtils sur son héritage.
+
+## Contributeurs
+
+Étant un projet GitHub, He3 s'est inspiré de beaucoup d'autres auxquels je donne du crédit ici, et être un bon citoyen espère faire de même pour les autres; Prendre plaisir.
+
+#### Christian Hoffmann: UserSettings.swift
+#### Samuel Beek: StringHelpers.swift
+#### shdwprince: Panel.swift
+#### Viktor Oreshkin: UrlHelpers.swift
+#### travos-ci.org: [Swift 3] (https://travis-ci.org/stek29/Helium)
+
+### CDMS
+
+- 1.9 fourche et révision
+- sauvegarde automatique de document, restauration
+- fenêtres et onglets de documents,
+- listes de lecture - éléments globaux / partagés, sauvegardables
+- images de ballons https://pixabay.com
+- État du Finder et menus du dock,
+- préférences locales et globales,
+- transformateurs de valeur,
+- édition de l'agent utilisateur,
+- Historique du document,
+- menu contextuel,
+- notes de version,
+- à propos de la boîte,
+- le bac à sable,
+- instantanés,
+- Soumission de l'App Store,
+- changement de marque vers He3.
+
+####
+
+## Incorporated Autres oeuvres
+[Markdown] (https://github.com/iwasrobbed/Down)
+[WebArchive] (https://github.com/ernesto-elsaesser/WebArchiver)
+[SwiftGen] (https://github.com/SwiftGen/SwiftGen)
+[Fuzi] (https://github.com/cezheng/Fuzi)
+
+
+/ los
