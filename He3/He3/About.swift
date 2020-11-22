@@ -86,7 +86,10 @@ class AboutBoxController : NSViewController {
 		//	Names *must* match up to assets inventory; ".md" are markdown
 		//	requiring processing to html, others are already there as
 		//	attributed strings, else plain text. Localizations are supported.
-        let credits = ["README.md", "HISTORY.md", "LICENSE", "he3_privacy.rtf"];
+        let credits = [NSLocalizedString("README.md", comment: ""),
+					   NSLocalizedString("HISTORY.md", comment: ""),
+					   NSLocalizedString("LICENSE", comment: ""),
+					   NSLocalizedString("he3_privacy.rtf", comment: "")];
         
         if AboutBoxController.creditState >= AboutBoxController.creditStates
         {

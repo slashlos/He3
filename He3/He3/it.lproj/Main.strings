@@ -34,7 +34,7 @@
 /* Class = "NSTextField"; ibShadowedToolTip = "current web searches"; ObjectID = "2PN-GF-SkZ"; */
 "2PN-GF-SkZ.ibShadowedToolTip" = "ricerche web attuali";
 
-/* Class = "NSButtonCell"; title = " 1.0.3"; ObjectID = "2l2-8g-Dyj"; */
+/* Class = "NSButtonCell"; title = " 1.0.4"; ObjectID = "2l2-8g-Dyj"; */
 "2l2-8g-Dyj.title" = "He3";
 
 /* Class = "NSMenuItem"; title = "Enabled"; ObjectID = "31i-Tw-GdD"; */
@@ -998,4 +998,4 @@
 "uOP-xR-z5Z.ibShadowedLabels[3]" = "Out";
 
 /* Class = "CocoaBindingsConnection"; ibShadowedIsNilPlaceholder = "1.0.3"; ObjectID = "4OH-h5-EgX"; */
-"4OH-h5-EgX.ibShadowedIsNilPlaceholder" = "1.0.3";
+"4OH-h5-EgX.ibShadowedIsNilPlaceholder" = "1.0.4";
