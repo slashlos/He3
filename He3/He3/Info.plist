@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBuildDate</key>
-	<string>20201122.122011</string>
+	<string>20201122.122404</string>
 	<key>CFBuildIncrement</key>
 	<false/>
 	<key>CFBuildMajor</key>
@@ -13,7 +13,7 @@
 	<key>CFBuildNumber</key>
 	<integer>8392</integer>
 	<key>CFBuildPatch</key>
-	<integer>4</integer>
+	<integer>5</integer>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
