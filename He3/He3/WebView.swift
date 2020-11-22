@@ -549,12 +549,15 @@ class MyWebView : WKWebView {
 	}
 	
 	override func mouseEntered(with event: NSEvent) {
+		guard !appDelegate.inQuickQuietMode else { return }
 		self.window?.windowController?.mouseEntered(with: event)
 	}
 	override func mouseExited(with event: NSEvent) {
+		guard !appDelegate.inQuickQuietMode else { return }
 		self.window?.windowController?.mouseExited(with: event)
 	}
 	override func mouseMoved(with event: NSEvent) {
+		guard !appDelegate.inQuickQuietMode else { return }
 		self.window?.windowController?.mouseMoved(with: event)
 	}
 

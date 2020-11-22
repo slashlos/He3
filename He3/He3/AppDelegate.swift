@@ -18,6 +18,8 @@ import OSLog
 import AppKit
 import WebKit
 import AVKit
+import AudioToolbox
+import CoreAudioKit
 
 extension Notification.Name {
     static let killHe3Launcher = Notification.Name("killHe3Launcher")
@@ -323,7 +325,120 @@ let sameWindow : ViewOptions = []
 			})
 	    }
     }
+	
+	//	MARK: quickQuiet to affect system volume
+	@objc func quickQuiet(_ note: Notification) {
+		willChangeValue(forKey: "inQuickQuietMode")
+
+		//	Infer muted state when current volume is 0
+		let volume = systemAudioVolume
 		
+		if inQuickQuietMode && lastSystemAudioVolume > 0.0 {
+			print("quickQuiet restore macOS system volume: \(lastSystemAudioVolume)")
+			self.systemAudioVolume = lastSystemAudioVolume
+		}
+		else
+		if !inQuickQuietMode {
+			print("quickQuiet muting macOS system volume: \(volume)")
+			
+			self.systemAudioVolume = 0.0
+			lastSystemAudioVolume = volume
+		}
+		else
+		{
+			print("quickQuiet system volume already at \(volume)")
+		}
+		
+		didChangeValue(forKey: "inQuickQuietMode")
+	}
+
+	//	https://stackoverflow.com/a/27291862/564870
+	var inQuickQuietMode : Bool {
+		get {
+			return systemAudioVolume == 0.0
+		}
+	}
+	var lastSystemAudioVolume = Float(0.0)
+	
+	var defaultAudioDeviceID : AudioDeviceID {
+		get {
+			var defaultOutputDeviceID = AudioDeviceID(0)
+			var defaultOutputDeviceIDSize = UInt32(MemoryLayout.size(ofValue: defaultOutputDeviceID))
+
+			var getDefaultOutputDevicePropertyAddress = AudioObjectPropertyAddress(
+				mSelector: kAudioHardwarePropertyDefaultOutputDevice,
+				mScope: kAudioObjectPropertyScopeGlobal,
+				mElement: AudioObjectPropertyElement(kAudioObjectPropertyElementMaster))
+
+			let status1 = AudioObjectGetPropertyData(
+				AudioObjectID(kAudioObjectSystemObject),
+				&getDefaultOutputDevicePropertyAddress,
+				0,
+				nil,
+				&defaultOutputDeviceIDSize,
+				&defaultOutputDeviceID)
+			
+			guard (status1 == 0) else {
+				Swift.print("Unable to obtain default system audio device ID: \(status1)")
+				return AudioDeviceID(0)
+			}
+			return defaultOutputDeviceID
+		}
+	}
+	
+	var systemAudioVolume: Float {
+		get {
+			let defaultOutputDeviceID = self.defaultAudioDeviceID
+			_ = UInt32(MemoryLayout.size(ofValue: defaultOutputDeviceID))
+
+			var volume = Float32(0.0)
+			var volumeSize = UInt32(MemoryLayout.size(ofValue: volume))
+
+			var volumePropertyAddress = AudioObjectPropertyAddress(
+				mSelector: kAudioHardwareServiceDeviceProperty_VirtualMasterVolume,
+				mScope: kAudioDevicePropertyScopeOutput,
+				mElement: kAudioObjectPropertyElementMaster)
+
+			let status3 = AudioObjectGetPropertyData(
+				defaultOutputDeviceID,
+				&volumePropertyAddress,
+				0,
+				nil,
+				&volumeSize,
+				&volume)
+			
+			guard (status3 == 0) else {
+				Swift.print("Unable to obtain system volumn level: \(status3)")
+				return lastSystemAudioVolume
+			}
+			return volume
+		}
+		set (level) {
+			let defaultOutputDeviceID = self.defaultAudioDeviceID
+			
+			var volume = level // 0.0 ... 1.0
+			let volumeSize = UInt32(MemoryLayout.size(ofValue: volume))
+
+			var volumePropertyAddress = AudioObjectPropertyAddress(
+				mSelector: kAudioHardwareServiceDeviceProperty_VirtualMasterVolume,
+				mScope: kAudioDevicePropertyScopeOutput,
+				mElement: kAudioObjectPropertyElementMaster)
+
+			let status2 = AudioObjectSetPropertyData(
+				defaultOutputDeviceID,
+				&volumePropertyAddress,
+				0,
+				nil,
+				volumeSize,
+				&volume)
+			
+			guard (status2 == 0) else {
+				Swift.print("Unable to set system volume level: \(status2)")
+				return
+			}
+		}
+	}
+	
 	//	MARK:- Location Services
     //  For those site that require your location while we're active
     var locationManager : CLLocationManager?
@@ -1275,6 +1390,13 @@ let sameWindow : ViewOptions = []
             forEventClass: AEEventClass(kInternetEventClass),
             andEventID: AEEventID(kAEGetURL)
         )
+
+		//	Monitor to affect system sound volume
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(AppDelegate.quickQuiet(_:)),
+			name: NSNotification.Name(rawValue: "quickQuiet"),
+			object: nil)
 
         //  So they can interact everywhere with us without focus
         appStatusItem.button?.image = NSImage.init(named: "statusIcon")

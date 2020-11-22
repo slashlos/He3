@@ -56,6 +56,12 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
         }
     }
 
+	var appDelegate : AppDelegate {
+		get {
+			return NSApp.delegate as! AppDelegate
+		}
+	}
+	
     // MARK: Window lifecycle
 	
     override func windowDidLoad() {
@@ -402,6 +408,7 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 	}
 	
 	override func mouseMoved(with event: NSEvent) {
+		guard !appDelegate.inQuickQuietMode else { return }
 		guard monitoringMouseEvents() && mouseIdle else { return }
 
 		guard mouseIdle else { return }
