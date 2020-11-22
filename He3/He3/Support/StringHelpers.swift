@@ -124,12 +124,7 @@ extension NSString {
     class func string(fromAsset: String) -> String {
 		let markDown = fromAsset.hasSuffix(".md")
 		var text : String?
-		// MARK: TODO implement --exclude= in BartyCrouch
-		/*
-		if let asset = NSDataAsset.init(name: NSLocalizedString(fromAsset, comment: "")) {
-			text = String.init(data: asset.data, encoding: .utf8)
-		}
-		else*/
+
 		if let asset = NSDataAsset.init(name: fromAsset) {
 			text = String.init(data: asset.data, encoding: .utf8)
 		}
