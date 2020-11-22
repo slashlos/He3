@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CFBuildDate</key>
-	<string>20201122.084045</string>
+	<string>20201122.121628</string>
 	<key>CFBuildIncrement</key>
-	<true/>
+	<false/>
 	<key>CFBuildMajor</key>
 	<integer>1</integer>
 	<key>CFBuildMinor</key>
