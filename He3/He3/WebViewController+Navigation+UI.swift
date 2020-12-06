@@ -191,6 +191,7 @@ extension WebViewController: WKNavigationDelegate {
 
 	func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
 		print(String(format: "?NV: %p didFail: %p", navigation, webView) + " \((error as NSError).code): \(error.localizedDescription)")
+		guard (error as NSError).code != 204 else { return }
 		handleError(error)
 	}
 
