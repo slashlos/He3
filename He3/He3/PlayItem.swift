@@ -78,7 +78,13 @@ class PlayItem : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
             return link.absoluteString
         }
         set (value) {
-			self.link = URL.init(string: value)!
+			if let url = URL.init(string: value) {
+				link = url
+			}
+			else
+			{
+				NSSound.beep()
+			}
         }
     }
 	
@@ -146,7 +152,7 @@ class PlayItem : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
 	// MARK:- Functions
     override init() {
 		name = String(format:"%@#%@",k.item,UUID().uuidString)
-        link = URL.init(string: "http://")!
+        link = URL.init(string: "about://blank")!
         time = 0.0
         date = Date().timeIntervalSinceReferenceDate
         rank = 0

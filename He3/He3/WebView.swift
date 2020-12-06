@@ -433,12 +433,15 @@ class MyWebView : WKWebView {
 			return self.loadFileURL(url, allowingReadAccessTo: baseURL) != nil
         }
         else
-        if self.load(URLRequest(url: url)) != nil {
-            doc.fileURL = url
-            doc.save(doc)
-            return true
+		if url.absoluteString != k.blank, self.load(URLRequest(url: url)) != nil {
+			doc.fileURL = url
+			return true
+		}
+		else
+		{
+			(navigationDelegate as? WebViewController)?.clear()
+			return true
         }
-        return false
     }
     
     func data(_ data : Data) -> Bool {
@@ -1248,7 +1251,14 @@ class MyWebView : WKWebView {
         item.target = document
         menu.addItem(item)
         
-        item = NSMenuItem(title: "Search…", action: #selector(WebViewController.openSearchPress(_:)), keyEquivalent: "")
+		item = NSMenuItem(title: "SaveAs", action: #selector(document.saveAs(_:)) as Selector, keyEquivalent: "")
+		item.keyEquivalentModifierMask = NSEvent.ModifierFlags.option
+		item.representedObject = self.window
+		item.isAlternate = true
+		item.target = document
+		menu.addItem(item)
+
+		item = NSMenuItem(title: "Search…", action: #selector(WebViewController.openSearchPress(_:)), keyEquivalent: "")
         item.representedObject = self.window
         item.target = wvc
         menu.addItem(item)

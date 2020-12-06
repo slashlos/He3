@@ -7,7 +7,10 @@
 //
 
 import Foundation
+import AVFoundation
+import AppKit
 import Cocoa
+
 ///import CommonCrypto
 
 public func print(_ items: String..., filename: String = #file, function : String = #function, line: Int = #line, separator: String = " ", terminator: String = "\n") {

@@ -292,8 +292,8 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
         super.viewWillAppear()
 
 		//	document.fileURL is recent, webView.url is current URL
-        if let document = self.document, let url = document.fileURL {
-			if url != webView.url {
+		if let document = self.document, let url = document.fileURL, url.absoluteString != k.blank {
+			if url != webView.url || [k.hpi,k.h3i,k.hic,k.h3c].contains(url.pathExtension) {
 				//	Initially, but after window restoration, restore saved frame
 				if let window = self.view.window,
 					!NSEqualRects(window.frame, document.settings.rect.value),
@@ -304,13 +304,17 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
 				switch document.fileType {
 				case k.Playitem:
 					if let link = document.items.first?.list.first?.link {
-						_ = loadURL(url: link)
+						if link.absoluteString == k.blank {
+							clear()
+						}
+						else
+						{
+							_ = loadURL(url: link)
+						}
 					}
-					
-				case k.Playlist:
-					break
-					
-				default:
+				}
+				else
+				{
 					_ = loadURL(url: url)
 				}
 			}
@@ -657,17 +661,8 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
         {
             try bitmapImageRep?.representation(using: .png, properties: [:])?.write(to: snapshotURL)
             // https://developer.apple.com/library/archive/qa/qa1913/_index.html
-            if let asset = NSDataAsset(name:"Grab") {
-
-                do {
-                    // Use NSDataAsset's data property to access the audio file stored in Sound.
-                    let player = try AVAudioPlayer(data:asset.data, fileTypeHint:"caf")
-                    // Play the above sound file.
-                    player.play()
-                } catch {
-                    print("no sound for you")
-                }
-            }
+			NSSound.playIf(.grab)
+			
             if snapshotURL.hideFileExtensionInPath(), let name = snapshotURL.lastPathComponent.removingPercentEncoding {
                 print("snapshot => \(name)")
             }

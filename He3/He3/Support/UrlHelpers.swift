@@ -29,8 +29,9 @@ struct UrlHelpers {
     // https://mathiasbynens.be/demo/url-regex
     static func isValidURL(urlString: String) -> Bool {
 		// built-in cache scheme url
-		if urlString.lowercased().hasPrefix(k.caches+":"), let url = URL.init(string: urlString) {
+		if let url = URL.init(string: urlString), [k.scheme,k.caches].contains(url.scheme) {
 			let paths = url.pathComponents
+			guard paths.count > 2 else { return false }
 			let ident = paths[2]
 			guard let asset = NSDataAsset.init(name: ident) else { return false }
 			let data = NSData.init(data: (asset.data))

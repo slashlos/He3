@@ -12,9 +12,14 @@ import Cocoa
 //  Global static strings
 
 public struct k {
-	static let kUTHe3PlayList = "com.slashlos.he3.h3l"
-	static let kUTHe3PlayItem = "com.slashlos.he3.h3i"
-
+	static let kUTHe3PlayList = "com.slashlos.he3.hpl"
+	static let kUTHe3PlayItem = "com.slashlos.he3.hpi"
+	static let kUThe3PlayIcnt = "com.slashlos.he3.hic"
+	
+	static let kUTHe3Play3ist = "com.slashlos.he3.h3l"
+	static let kUTHe3Play3tem = "com.slashlos.he3.h3i"
+	static let KUTHe3play3cnt = "com.slashlos.he3.h3c"
+	
 	static let AppName = "He3"
 	static let AppLogo = "Above all else"
     static let Helium = "Helium"
@@ -24,6 +29,7 @@ public struct k {
     static let oauth2 = "he3-oauth" /// oauth handler
     static let he3 = "he3"
     static let asset = "asset"
+	static let blank = "about://blank"
 	static let file = "file"
     static let html = "html"
 	static let https = "https"
@@ -50,9 +56,12 @@ public struct k {
     static let webloc = "webloc"
 	static let WebArchive = "WebArchive"
 	static let webarchive = "webarchive"
-    static let hpi = "h3i"
-    static let hpl = "h3l"
-	static let hic = "h3c"
+	static let h3i = "h3i"
+	static let h3l = "h3l"
+	static let h3c = "h3c"
+    static let hpi = "hpi"
+    static let hpl = "hpl"
+	static let hic = "hic"
     static let play = "play"
     static let item = "item"
     static let name = "name"

@@ -12,21 +12,48 @@ import Foundation
 import QuickLook
 import ServiceManagement
 
-// Document type
+// Document Class Types
+//
+//	A Helium document is any file can be read by super but state written by us to defaults.
+//	Such documnet sare never modified in place; only their state can changed and maintained
+//	by a playitem object cached in user defaults.
+//
+//	A Playlist document is a file which is read or written by super; its format adheres
+//	to an Apple propertly-list file.  Its state can be changed and maintained by its
+//	cache in user defaults. It encompasses several Playitem objects.
+//
+//	A Playitem document is a file which is read or written by super; its format adhers
+//	to an Apple property-list file.  Its state can be changed and maintained by its
+//	cache in user defaults. It encompasses a single URL context, similarly as a union of
+//		* a .webloc Safari file,
+//		* a Finder alias,
+//	and enriched with its object state written to disk and its cache in user defaults.
+//
+//	A Release document is an assets based static URL - information released to the user,
+//	for read-only purposes, such as release notes, help text, etc. It does feature a
+//	Playitem object to track its state as cache in the user defaults.
+
 struct DocGroup : OptionSet {
     let rawValue: Int
 
     static var helium    = DocGroup(rawValue: 0)
     static let playlist  = DocGroup(rawValue: 1)
 	static let playitem  = DocGroup(rawValue: 2)
+	static let release	 = DocGroup(rawValue: 3)
 }
-let docHelium : ViewOptions = []
+let docHelium : DocGroup = []
 
 let docGroups = [k.Helium, k.Playlist, k.Playitem, k.Release]
-let docNames = [k.Helium, k.Playlist, k.Helium, k.Release]
+let docNames = [k.Helium, k.Playlist, k.Playitem, k.Release]
 
 extension NSPasteboard.PasteboardType {
     static let docDragType = NSPasteboard.PasteboardType("com.slashlos.docDragDrop")
+}
+
+fileprivate var docController : DocumentController {
+	get {
+		return NSDocumentController.shared as! DocumentController
+	}
 }
 
 class Document : NSDocument {
@@ -35,11 +62,6 @@ class Document : NSDocument {
 		//	Actually we do and want visible dirty dot icon
 		//	centered atop the close button as a red "dot".
         return false
-    }
-    var docController : DocumentController {
-        get {
-            return NSDocumentController.shared as! DocumentController
-        }
     }
     var defaults = UserDefaults.standard
     var autoSaveDocs : Bool {
@@ -53,17 +75,26 @@ class Document : NSDocument {
     
     var docGroup : DocGroup {
         get {
-            if let fileType = self.fileType {
-                return DocGroup(rawValue: docGroups.firstIndex(of: fileType) ?? DocGroup.helium.rawValue)
-            }
-            else
-            {
-                return .helium
-            }
+			if [k.Playlist,k.kUTHe3PlayList,k.kUTHe3Play3ist].contains(self.fileType)
+			|| [k.hpl,k.h3l].contains(fileURL?.pathExtension) {
+				return .playlist
+			}
+			else
+			if [k.Playitem,k.kUTHe3PlayItem,k.kUTHe3Play3tem].contains(self.fileType)
+				|| [k.hpi,k.h3i].contains(fileURL?.pathExtension)  {
+				return .playitem
+			}
+			else
+			if [k.Incognito,k.kUThe3PlayIcnt,k.KUTHe3play3cnt].contains(self.fileType)
+				|| [k.hic,k.h3c].contains(fileURL?.pathExtension)  {
+				return .playitem
+			}
+			
+            return .helium
         }
     }
     
-    var he3PanelController : HeliumController? {
+    var heliumPanelController : HeliumController? {
         get {
             guard let hpc : HeliumController = windowControllers.first as? HeliumController else { return nil }
             return hpc
@@ -71,7 +102,7 @@ class Document : NSDocument {
     }
     var homeURL : URL {
         get {
-            guard let hpc = he3PanelController else { return URL.init(string: UserSettings.HomePageURL.value)! }
+            guard let hpc = heliumPanelController else { return URL.init(string: UserSettings.HomePageURL.value)! }
             return hpc.homeURL
         }
     }
@@ -82,7 +113,7 @@ class Document : NSDocument {
                 return url
             }
             else
-            if let hpc = he3PanelController, let webView = hpc.webView
+            if let hpc = heliumPanelController, let webView = hpc.webView
             {
                 return webView.url
             }
@@ -184,7 +215,7 @@ class Document : NSDocument {
         }
         if let agent : String = dictionary[k.agent] as? String, agent != settings.customUserAgent.value {
             self.settings.customUserAgent.value = agent
-            if let hpc = he3PanelController, let webView = hpc.webView {
+            if let hpc = heliumPanelController, let webView = hpc.webView {
                 webView.customUserAgent = agent
             }
         }
@@ -248,7 +279,7 @@ class Document : NSDocument {
     override var displayName: String! {
         get {
 			guard let fileURL = self.fileURL else {
-				return [k.AppLogo,super.displayName,k.AppLogo][docGroup.rawValue]
+				return [k.AppLogo,super.displayName,k.AppLogo,k.ReleaseNotes][docGroup.rawValue]
 			}
             if fileURL.isFileURL
             {
@@ -295,10 +326,8 @@ class Document : NSDocument {
         
     convenience init(contentsOf url: URL) throws {
         do {
-			let typeName = [k.hpi : k.Playitem, k.hpl : k.Playlist][url.pathExtension] ?? k.Helium
+			let typeName = try docController.typeForContents(of: url)
             try self.init(contentsOf: url, ofType: typeName)
-			///let type = try docController.typeForContents(of: url)
-			///Swift.print("type => \(type)")
         }
     }
     
@@ -344,21 +373,34 @@ class Document : NSDocument {
     override func read(from data: Data, ofType typeName: String) throws {
         
         do {
-            switch docGroup {
-			case .playitem:
+			if [k.Playlist,k.kUTHe3PlayList,k.kUTHe3Play3ist].contains(typeName)
+			|| [k.hpl,k.h3l].contains(fileURL?.pathExtension) {
+				do {
+					let dict = try PropertyListSerialization.propertyList(from: data, options: PropertyListSerialization.ReadOptions.mutableContainers, format: nil)
+					let item = PlayList.init(with: dict as! Dictionary<String, Any>)
+					items.append(item)
+				}
+			}
+			else
+			if [k.Playitem,k.kUTHe3PlayItem,k.kUTHe3Play3tem].contains(typeName)
+				|| [k.hpi,k.h3i,k.hic,k.h3c].contains(fileURL?.pathExtension) {
+				do {
+					let dict = try PropertyListSerialization.propertyList(from: data, options: PropertyListSerialization.ReadOptions.mutableContainers, format: nil)
+					let item = PlayItem.init(with: dict as! Dictionary<String, Any>)
+					items.append(PlayList.init(name: fileURL?.lastPathComponent ?? item.name, list: [item]))
+				}
+			}
+			else
+			if [k.Incognito,k.kUThe3PlayIcnt,k.KUTHe3play3cnt].contains(typeName)
+				|| [k.hic,k.h3c].contains(fileURL?.pathExtension) {
 				do {
 					let dict = try PropertyListSerialization.propertyList(from: data, options: PropertyListSerialization.ReadOptions.mutableContainers, format: nil)
 					let item = PlayItem.init(with: dict as! Dictionary<String, Any>)
 					items.append(PlayList.init(name: item.name, list: [item]))
 				}
-                
-			case .playlist:
-				do {
-					let dict = try PropertyListSerialization.propertyList(from: data, options: PropertyListSerialization.ReadOptions.mutableContainers, format: nil)
-					items.append(PlayList.init(with: dict as! Dictionary<String, Any>))
-				}
-
-            default:
+			}
+			else
+			{
                 for (i,item) in items.enumerated() {
                     switch i {
                     case 0:
@@ -378,20 +420,14 @@ class Document : NSDocument {
 
     override func read(from url: URL, ofType typeName: String) throws {
         
-        switch docGroup {
-		case .playitem, .playlist:
-            try super.read(from: url, ofType: typeName)
-
-		default:
-			if k.file == url.scheme {
-				let wvc = windowControllers.first?.contentViewController as! WebViewController
-				let baseURL = appDelegate.authenticateBaseURL(url)
-				
-				if nil == wvc.webView.loadFileURL(url, allowingReadAccessTo: baseURL) {
-					Swift.print("read? \(url.absoluteString)")
-				}
-			}
-			
+		if [k.kUTHe3PlayList,k.kUTHe3Play3ist].contains(typeName)
+		|| [k.kUTHe3PlayItem,k.kUTHe3Play3tem].contains(typeName)
+		|| [k.kUThe3PlayIcnt,k.KUTHe3play3cnt].contains(typeName)
+		|| [k.Playlist,k.Playitem,k.Incognito].contains(typeName) {
+			try super.read(from: url, ofType: typeName)
+		}
+		else
+		{
 			if let dict = defaults.dictionary(forKey: url.absoluteString) {
 				restoreSettings(with: dict)
 			}
@@ -455,8 +491,13 @@ class Document : NSDocument {
 		guard hasUnautosavedChanges else { return }
 		
 		//	Since we autosave in place, a URL is not really necessary
-		if let url = url, url.isFileURL, [k.hpi,k.hpl].contains(url.pathExtension) {
-			 save(to: url, ofType: k.Playlist, for: .autosaveInPlaceOperation, completionHandler: completionHandler)
+		if let url = url, url.isFileURL, [k.h3i,k.hpi,k.h3l,k.hpl].contains(url.pathExtension) {
+			do {
+				let typeName = try docController.typeForContents(of: url)
+				save(to: url, ofType: typeName, for: .autosaveInPlaceOperation, completionHandler: completionHandler)
+			} catch let error {
+				NSApp.presentError(error)
+			}
 		}
 		else
 		{
@@ -483,10 +524,16 @@ class Document : NSDocument {
 
     @objc @IBAction override func save(_ sender: (Any)?) {
         
-        if let url = url, url.isFileURL, [k.hpi,k.hpl].contains(url.pathExtension) {
-             save(to: url, ofType: k.Playlist, for: .saveOperation, completionHandler: {_ in
-                self.updateChangeCount(.changeCleared)
-            })
+		if let url = url, url.isFileURL, [k.h3i,k.hpi,k.h3l,k.hpl].contains(url.pathExtension) {
+			do {
+				let typeName = try docController.typeForContents(of: url)
+
+				save(to: url, ofType: typeName, for: .saveOperation, completionHandler: {_ in
+					self.updateChangeCount(.changeCleared)
+				})
+			} catch let error {
+				NSApp.presentError(error)
+			}
         }
         else
         {
@@ -515,7 +562,7 @@ class Document : NSDocument {
         if let window = windowControllers.first?.window {
 			let storyboard = NSStoryboard(name: "Main", bundle: nil)
             let savePanel = NSSavePanel()
-            let fileType = self.fileType!
+			let fileType = self.fileType ?? k.Playitem
 			let saveAsController = (storyboard.instantiateController(withIdentifier: "SaveAsViewController") as! SaveAsViewController)
 			let saveAsView = saveAsController.view
 			let formatPopup = saveAsController.formatPopup
@@ -543,7 +590,7 @@ class Document : NSDocument {
 								}
 							case 1:
 								//MARK:TODO nyi save window as playlist
-								Swift.print("save hpl")
+								Swift.print("save \(k.Playlist)")
 							case 2:
 								let archiveURL = saveURL.deletingPathExtension().appendingPathExtension(k.webarchive)
 								Swift.print("save webarchive: \(archiveURL.path)")
@@ -571,7 +618,7 @@ class Document : NSDocument {
             return
         }
 
-        if url.isFileURL, [k.hpi,k.hpl].contains(url.pathExtension) {
+		if url.isFileURL, [k.h3i,k.hpi,k.h3l,k.hpl].contains(url.pathExtension) {
             super.save(to: url, ofType: typeName, for: saveOperation, completionHandler: completionHandler)
         }
         else
@@ -613,12 +660,12 @@ class Document : NSDocument {
     }
     
     override func writeSafely(to url: URL, ofType typeName: String, for saveOperation: NSDocument.SaveOperationType) throws {
-        if url.isFileURL, [k.hpi,k.hpl].contains(url.pathExtension) {
+		if saveOperation == .saveOperation {
+			try write(to: url, ofType: typeName)
+		}
+		else
+		{
             try super.writeSafely(to: url, ofType: typeName, for: saveOperation)
-        }
-        else
-        {
-            try write(to: url, ofType: typeName)
         }
         updateChangeCount( [.saveOperation                  : .changeCleared,
                             .saveAsOperation                : .changeCleared,
@@ -630,7 +677,7 @@ class Document : NSDocument {
     
     override var shouldRunSavePanelWithAccessoryView: Bool {
         get {
-            return docGroup == .playlist
+			return [.playitem,.playlist].contains(docGroup)
         }
     }
     

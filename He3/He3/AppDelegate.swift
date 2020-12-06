@@ -851,7 +851,16 @@ let sameWindow : ViewOptions = []
         
         //  This could be anything so add/if a doc and initialize
         do {
-            let typeName = fileURL.isFileURL && fileURL.pathExtension == k.hpl ? k.Playlist : k.Helium
+			var typeName : String = k.Helium
+			if fileURL.isFileURL {
+				if [k.h3l,k.hpl].contains(fileURL.pathExtension) {
+					typeName = k.Playlist
+				}
+				else
+				if [k.h3i,k.hpi].contains(fileURL.pathExtension) {
+					typeName = k.Playitem
+				}
+			}
             let doc = try docController.makeDocument(withContentsOf: fileURL, ofType: typeName)
             docController.noteNewRecentDocumentURL(fileURL)
 			doc.showWindows()
@@ -942,8 +951,8 @@ let sameWindow : ViewOptions = []
         defer { os_signpost(.end, log: AppDelegate.poi, name: "openURLInNewWindow") }
 
         do {
-            let typeName = url.pathExtension == k.hpl ? k.Playlist : k.Helium
-            let doc = try docController.makeDocument(withContentsOf: url, ofType: typeName)
+			let fileType = try docController.typeForContents(of: url)
+            let doc = try docController.makeDocument(withContentsOf: url, ofType: fileType)
             if doc.windowControllers.count == 0 { doc.makeWindowControllers() }
             guard let wc = doc.windowControllers.first else { return false }
             
@@ -1371,7 +1380,7 @@ let sameWindow : ViewOptions = []
         if flags.contains([NSEvent.ModifierFlags.shift,NSEvent.ModifierFlags.option]) {
             print("shift+option at start")
             resetDefaults()
-            NSSound(named: "Purr")?.play()
+			NSSound.playIf(.purr)
         }
         else
         //  Don't reopen docs when OPTION is held down at startup
@@ -2242,7 +2251,7 @@ let sameWindow : ViewOptions = []
     dynamic var disableDocumentReOpening = false
 
 	func application(_ sender: NSApplication, willPresentError: Error) -> Error {
-		//MARK: TODO catalog applcication errors
+		//MARK: TODO catalog application errors
 		Swift.print("Error: \(willPresentError.localizedDescription)")
 		return willPresentError
 	}

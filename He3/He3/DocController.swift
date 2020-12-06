@@ -17,10 +17,11 @@ class DocumentController : NSDocumentController {
         os_signpost(.begin, log: MyWebView.poi, name: "makeDocument:3")
         defer { os_signpost(.end, log: DocumentController.poi, name: "makeDocument:3") }
 
-        var doc: Document
-        do {
-			if [k.hpi,k.hpl].contains(contentsURL.pathExtension) || [k.Playitem,k.Playlist].contains(typeName) {
-				//	h.pli files are a single playlist item so treat as such, read into settings
+		var doc: Document
+         do {
+			if [k.kUTHe3Play3ist,k.kUTHe3PlayList,k.kUTHe3Play3tem,k.kUTHe3PlayItem].contains(typeName)
+			|| [k.h3l,k.hpl,k.h3i,k.hpi,k.h3c,k.hic].contains(contentsURL.pathExtension)
+			|| [k.Playlist,k.Playitem,k.Incognito].contains(typeName) {
 				doc = try super.makeDocument(for: urlOrNil, withContentsOf: contentsURL, ofType: typeName) as! Document
 				return doc
             }

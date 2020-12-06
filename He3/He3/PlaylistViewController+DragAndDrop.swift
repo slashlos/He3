@@ -212,7 +212,7 @@ extension PlaylistViewController: NSTableViewDataSource {
 			}
 
 			//  If we already know this url 1) known document, 2) our global items cache, use its settings
-			if [k.hpl].contains(url.pathExtension), let dict = NSDictionary.init(contentsOf: url) {
+			if [k.h3l,k.hpl].contains(url.pathExtension), let dict = NSDictionary.init(contentsOf: url) {
 				if nil != dict.value(forKey: k.list) {
 					for item in PlayList.init(with: dict as! Dictionary<String, Any>).list {
 						playitems.append(item)
@@ -221,7 +221,7 @@ extension PlaylistViewController: NSTableViewDataSource {
 				continue
 			}
 			else
-			if [k.hpi].contains(url.pathExtension), let dict = NSDictionary.init(contentsOf: url) {
+			if [k.h3i,k.hpi].contains(url.pathExtension), let dict = NSDictionary.init(contentsOf: url) {
 				if nil != dict.value(forKey: k.link) {
 					playitem = PlayItem.init(with: dict as! Dictionary<String, Any>)
 					playitems.append(playitem)

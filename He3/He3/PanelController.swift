@@ -1095,8 +1095,8 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
     override func windowTitle(forDocumentDisplayName displayName: String) -> String {
         guard let doc = self.doc else { return displayName }
         
-        switch self.doc!.docGroup {
-        case .playlist:
+		switch doc.fileType {
+		case k.Playlist:
             return doc.displayName
             
         default:
