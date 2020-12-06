@@ -654,7 +654,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
     }
     
     func processSnapshotImage(_ image: NSImage, to snapshotURL: URL) {
-        guard let tiffData = image.tiffRepresentation else { NSSound(named: "Sosumi")?.play(); return }
+		guard let tiffData = image.tiffRepresentation else { NSSound.playIf(.sosumi); return }
         let bitmapImageRep = NSBitmapImageRep(data: tiffData)
 
         do

@@ -570,6 +570,64 @@ extension Data {
     }
 }
 
+// https://stackoverflow.com/a/51601171/564870
+public extension NSSound {
+	static let grab		 = NSSound(named: .grab)
+	///
+	static let basso     = NSSound(named: .basso)
+	static let blow      = NSSound(named: .blow)
+	static let bottle    = NSSound(named: .bottle)
+	static let frog      = NSSound(named: .frog)
+	static let funk      = NSSound(named: .funk)
+	static let glass     = NSSound(named: .glass)
+	static let hero      = NSSound(named: .hero)
+	static let morse     = NSSound(named: .morse)
+	static let ping      = NSSound(named: .ping)
+	static let pop       = NSSound(named: .pop)
+	static let purr      = NSSound(named: .purr)
+	static let sosumi    = NSSound(named: .sosumi)
+	static let submarine = NSSound(named: .submarine)
+	static let tink      = NSSound(named: .tink)
+}
+
+public extension NSSound.Name {
+	static let grab		 = NSSound.Name("Grab")
+	///
+	static let basso     = NSSound.Name("Basso")
+	static let blow      = NSSound.Name("Blow")
+	static let bottle    = NSSound.Name("Bottle")
+	static let frog      = NSSound.Name("Frog")
+	static let funk      = NSSound.Name("Funk")
+	static let glass     = NSSound.Name("Glass")
+	static let hero      = NSSound.Name("Hero")
+	static let morse     = NSSound.Name("Morse")
+	static let ping      = NSSound.Name("Ping")
+	static let pop       = NSSound.Name("Pop")
+	static let purr      = NSSound.Name("Purr")
+	static let sosumi    = NSSound.Name("Sosumi")
+	static let submarine = NSSound.Name("Submarine")
+	static let tink      = NSSound.Name("Tink")
+}
+
+//	Conditionally play sound or default system beep
+public extension NSSound {
+	static func playIf(_ name: NSSound.Name) {
+		guard let asset = NSDataAsset(name: name) else {
+			NSSound.beep()
+			return
+		}
+		
+		do {
+			// Use NSDataAsset's data property to access the audio file stored in Sound.
+			let player = try AVAudioPlayer(data:asset.data, fileTypeHint:"caf")
+			// Play the above sound file.
+			player.play()
+		} catch {
+			print("no sound for you")
+			NSSound.beep()
+		}
+	}
+}
 // MARK: - String cast extensions
 
 extension String {

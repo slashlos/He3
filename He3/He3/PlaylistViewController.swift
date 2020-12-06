@@ -403,7 +403,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
             if let play = (object as? PlayList), keyPath == k.name,  playlists.list(newValue as! String).count > 1 {
                 print("duplicate playlist.name \(newValue as! String)")
                 play.name = oldValue as! String
-                NSSound(named: "Sosumi")?.play()
+				NSSound.playIf(.sosumi)
             }
             
             // Save history info which might have changed
@@ -423,7 +423,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
     @objc fileprivate func badPlayLitName(_ notification: Notification) {
         DispatchQueue.main.async {
             self.playlistTableView.reloadData()
-            NSSound(named: "Sosumi")?.play()
+			NSSound.playIf(.sosumi)
          }
     }
     
@@ -818,7 +818,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         else
         {
             print("firstResponder: \(String(describing: whoAmI))")
-            NSSound(named: "Sosumi")?.play()
+			NSSound.playIf(.sosumi)
         }
     }
     @objc @IBOutlet weak var removeButtonTooltip: NSString! {
@@ -928,7 +928,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         else
         {
             print("firstResponder: \(String(describing: whoAmI))")
-            NSSound(named: "Sosumi")?.play()
+			NSSound.playIf(.sosumi)
             return
         }
         
