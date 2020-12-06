@@ -566,7 +566,7 @@ class MyWebView : WKWebView {
 
     // MARK: Drag and Drop - Before Release
     func shouldAllowDrag(_ info: NSDraggingInfo) -> Bool {
-        guard let doc = webViewController?.document, doc.docGroup != .playlist else { return false }
+		guard let doc = webViewController?.document, doc.fileType != k.Playlist else { return false }
         let pboard = info.draggingPasteboard
         let items = pboard.pasteboardItems!
         var canAccept = false

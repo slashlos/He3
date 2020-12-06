@@ -301,8 +301,13 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
 					window.setFrame(document.settings.rect.value, display: true)
 				}
 				
-				switch document.fileType {
-				case k.Playitem:
+				if [k.Playlist,k.kUTHe3PlayList,k.kUTHe3Play3ist].contains(document.fileType)
+				|| [k.hpl,k.h3l].contains(document.fileURL?.pathExtension) {
+					// nothing to do here
+				}
+				else
+				if [k.Playitem,k.kUTHe3PlayItem,k.kUTHe3Play3tem].contains(document.fileType)
+				|| [k.hpi,k.h3i,k.hic,k.h3c].contains(document.fileURL?.pathExtension)  {
 					if let link = document.items.first?.list.first?.link {
 						if link.absoluteString == k.blank {
 							clear()
@@ -333,7 +338,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
     override func viewDidAppear() {
         super.viewDidAppear()
         
-        guard let doc = self.document, doc.docGroup != .playlist else { return }
+		guard let doc = self.document, doc.fileType != k.Playlist else { return }
 		guard !viewAppeared else { return }
 		
         //  https://stackoverflow.com/questions/32056874/programmatically-wkwebview-inside-an-uiview-with-auto-layout
