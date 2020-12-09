@@ -142,7 +142,10 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
     @objc @IBOutlet weak var playlistSplitView: NSSplitView!
 
     //  we are managing a local playlist, so include app delegate histories RONLY
-    var isLocalPlaylist : Bool = false
+	var isGlobalPlaylist : Bool {
+		guard let wc = self.view.window?.windowController else { return false }
+		return (wc as! PlaylistPanelController).isGlobalPlaylist
+	}
     
     var progressIndicator: NSProgressIndicator!
 	var dragSequenceNo = 0
@@ -559,8 +562,6 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
 			//  Start us of cleanly re: change count
             doc.updateChangeCount(.changeCleared)
             self.undoManager?.removeAllActions()
-
-			isLocalPlaylist = true
         }
 		else
 			
@@ -1030,11 +1031,11 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         let whoAmI = self.view.window?.firstResponder
 		var docName = "Global Playlist"
 		
-		guard !isLocalPlaylist, let document = self.view.window?.windowController?.document else { return }
-		if isLocalPlaylist, let url = document.fileURL { docName = "\"" + url!.simpleSpecifier + "\"" }
+		guard isGlobalPlaylist, let document = self.view.window?.windowController?.document else { return }
+		if !isGlobalPlaylist, let url = document.fileURL { docName = "\"" + url!.simpleSpecifier + "\"" }
 		
 		let message = "Do you want to revert the to the last saved version?"
-		let infoMsg = isLocalPlaylist ? "Global Playlist" : docName
+		let infoMsg = isGlobalPlaylist ? "Global Playlist" : docName
 		
         let alert = NSAlert()
 		
@@ -1044,9 +1045,9 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         alert.informativeText = infoMsg
         
         if let window = NSApp.keyWindow {
-            alert.beginSheetModal(for: window, completionHandler: { response in
+			alert.beginSheetModal(for: window, completionHandler: { [self] response in
 				if response == NSApplication.ModalResponse.alertFirstButtonReturn {
-					if self.isLocalPlaylist {
+					if !isGlobalPlaylist {
 						document.revert(sender)
 						document.updateChangeCount(.changeCleared)
 					}
@@ -1062,7 +1063,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         else
         {
 			if alert.runModal() == NSApplication.ModalResponse.alertFirstButtonReturn {
-				if isLocalPlaylist {
+				if !isGlobalPlaylist {
 					document.revert(sender)
 					document.updateChangeCount(.changeCleared)
 				}
@@ -1245,7 +1246,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
 			playCache = playlists
 			
 			// If local save that too
-			if isLocalPlaylist, let document = self.view.window?.windowController?.document {
+			if isGlobalPlaylist, let document = self.view.window?.windowController?.document {
 				(document as! Document).save(sender)
 			}
 			else
@@ -1290,7 +1291,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         {
             switch menuItem.title {
 			case "Revert To Saved…":
-				if isLocalPlaylist, let document = self.view.window?.windowController?.document {
+				if !isGlobalPlaylist, let document = self.view.window?.windowController?.document {
 					menuItem.isEnabled = document.hasUnautosavedChanges
 				}
 				else
@@ -1332,12 +1333,12 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         //  if we have a url show histories in italics
         if tableView.tag == 1 {
             let list : AnyObject = (playlistArrayController.arrangedObjects as! [AnyObject])[playlistArrayController.selectionIndex]
-            if isLocalPlaylist, list.name == UserSettings.HistoryName.value {
+            if !isGlobalPlaylist, list.name == UserSettings.HistoryName.value {
                 cell.font = NSFont.init(name: "Helvetica Oblique", size: -1)
             }
         }
         
-        guard tableView.tag == 0, isLocalPlaylist, item.name == UserSettings.HistoryName.value else { return cell }
+        guard tableView.tag == 0, !isGlobalPlaylist, item.name == UserSettings.HistoryName.value else { return cell }
 
         cell.font = NSFont.init(name: "Helvetica Oblique", size: -1)
         
@@ -1357,7 +1358,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
 			
 			switch tag {
 			case 0:
-				if !isLocalPlaylist, item as! NSObject == historyCache {
+				if isGlobalPlaylist, item as! NSObject == historyCache {
 					if let field = view.textField {
 						field.font = NSFont.init(name: "Helvetica Oblique", size: -1)
 					}
@@ -1365,7 +1366,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
 				
 			case 1:
 				let list : AnyObject = (playlistArrayController.arrangedObjects as! [AnyObject])[playlistArrayController.selectionIndex]
-				if !isLocalPlaylist, list as! NSObject == historyCache {
+				if isGlobalPlaylist, list as! NSObject == historyCache {
 					if let field = view.textField {
 						field.font = NSFont.init(name: "Helvetica Oblique", size: -1)
 					}

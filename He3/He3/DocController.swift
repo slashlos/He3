@@ -71,6 +71,9 @@ class DocumentController : NSDocumentController {
         do {
             doc = try makeUntitledDocument(ofType: k.Incognito) as! Document
             if 0 == doc.windowControllers.count { doc.makeWindowControllers() }
+			if k.PlayType == fileType, let wc = doc.windowControllers.first {
+				(wc as! PlaylistPanelController).isGlobalPlaylist = true
+			}
 			doc.showWindows()
         } catch let error {
             NSApp.presentError(error)
