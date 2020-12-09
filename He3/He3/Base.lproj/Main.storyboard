@@ -367,12 +367,18 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Location" id="bib-Uj-vzu">
                                     <items>
-                                        <menuItem title="New" tag="1" keyEquivalent="n" id="5z8-gm-Cg3">
+                                        <menuItem title="New" tag="1" keyEquivalent="n" toolTip="Playitem" id="5z8-gm-Cg3">
                                             <connections>
                                                 <action selector="newDocument:" target="Ady-hI-5gd" id="MBG-Bq-nZh"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="New Incognito" tag="4" alternate="YES" keyEquivalent="N" id="rzt-yA-tvg">
+                                        <menuItem title="New Playlist" tag="1" alternate="YES" keyEquivalent="n" toolTip="Playlist" id="d3c-O8-4Kz">
+                                            <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="altDocument:" target="Ady-hI-5gd" id="lEP-Ga-fyR"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="New Incognito" tag="4" alternate="YES" keyEquivalent="N" toolTip="Incognito" id="rzt-yA-tvg">
                                             <connections>
                                                 <action selector="altDocument:" target="Ady-hI-5gd" id="zV9-pp-Kyn"/>
                                             </connections>
