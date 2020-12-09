@@ -999,3 +999,15 @@
 
 /* Class = "CocoaBindingsConnection"; ibShadowedIsNilPlaceholder = "1.0.3"; ObjectID = "4OH-h5-EgX"; */
 "4OH-h5-EgX.ibShadowedIsNilPlaceholder" = "1.0.4";
+
+/* Class = "NSMenuItem"; ibShadowedToolTip = "Playitem"; ObjectID = "5z8-gm-Cg3"; */
+"5z8-gm-Cg3.ibShadowedToolTip" = "Playitem";
+
+/* Class = "NSMenuItem"; ibShadowedToolTip = "Playlist"; ObjectID = "d3c-O8-4Kz"; */
+"d3c-O8-4Kz.ibShadowedToolTip" = "Playlist";
+
+/* Class = "NSMenuItem"; title = "New Playlist"; ObjectID = "d3c-O8-4Kz"; */
+"d3c-O8-4Kz.title" = "New Playlist";
+
+/* Class = "NSMenuItem"; ibShadowedToolTip = "Incognito"; ObjectID = "rzt-yA-tvg"; */
+"rzt-yA-tvg.ibShadowedToolTip" = "Incognito";
