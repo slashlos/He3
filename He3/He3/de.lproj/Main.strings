@@ -10,9 +10,6 @@
 /* Class = "NSTabViewItem"; label = "Cookies"; ObjectID = "1H6-Li-Gba"; */
 "1H6-Li-Gba.label" = "Kekse";
 
-/* Class = "NSMenuItem"; title = "WebArchive"; ObjectID = "1OI-1y-bc5"; */
-"1OI-1y-bc5.title" = "WebArchive";
-
 /* Class = "NSMenuItem"; title = "Never"; ObjectID = "1W4-LV-atP"; */
 "1W4-LV-atP.title" = "Nie";
 
@@ -24,9 +21,6 @@
 
 /* Class = "NSMenuItem"; title = "Audio"; ObjectID = "21f-gQ-9ST"; */
 "21f-gQ-9ST.title" = "Audio";
-
-/* Class = "NSMenuItem"; title = "PlayItem"; ObjectID = "2FK-64-B8a"; */
-"2FK-64-B8a.title" = "PlayItem";
 
 /* Class = "NSMenu"; title = "Preferences"; ObjectID = "2N0-Zn-jSm"; */
 "2N0-Zn-jSm.title" = "Einstellungen";
@@ -238,9 +232,6 @@
 /* Class = "NSMenuItem"; title = "Archive All"; ObjectID = "GTW-Yp-HHO"; */
 "GTW-Yp-HHO.title" = "Alle archivieren";
 
-/* Class = "NSMenuItem"; title = "PlayList"; ObjectID = "H2A-93-Nom"; */
-"H2A-93-Nom.title" = "PlayList";
-
 /* Class = "NSMenuItem"; title = "Search…"; ObjectID = "H50-eU-quB"; */
 "H50-eU-quB.title" = "Suche ...";
 
@@ -261,9 +252,6 @@
 
 /* Class = "NSMenuItem"; title = "URL…"; ObjectID = "JqH-ds-lJa"; */
 "JqH-ds-lJa.title" = "URL ...";
-
-/* Class = "NSTextFieldCell"; title = "Saves playitem or web archive - web pages only."; ObjectID = "KJe-6g-fJY"; */
-"KJe-6g-fJY.title" = "Speichert das Spielelement oder das Webarchiv - nur Webseiten.";
 
 /* Class = "NSMenuItem"; title = "Always"; ObjectID = "KPp-15-TZ6"; */
 "KPp-15-TZ6.title" = "Immer";
@@ -688,9 +676,6 @@
 /* Class = "NSMenuItem"; title = "Out"; ObjectID = "jSg-Wr-9LC"; */
 "jSg-Wr-9LC.title" = "Out";
 
-/* Class = "NSTextFieldCell"; title = "Format:"; ObjectID = "jim-6f-EJd"; */
-"jim-6f-EJd.title" = "Format:";
-
 /* Class = "NSMenu"; title = "Translucency"; ObjectID = "kEP-We-47v"; */
 "kEP-We-47v.title" = "Transluzenz";
 
@@ -1011,3 +996,30 @@
 
 /* Class = "NSMenuItem"; ibShadowedToolTip = "Incognito"; ObjectID = "rzt-yA-tvg"; */
 "rzt-yA-tvg.ibShadowedToolTip" = "Incognito";
+
+/* Class = "NSMenuItem"; ibShadowedToolTip = "Playlists"; ObjectID = "14E-f1-zMF"; */
+"14E-f1-zMF.ibShadowedToolTip" = "Playlists";
+
+/* Class = "NSMenuItem"; title = "WebArchive"; ObjectID = "1OI-1y-bc5"; */
+"1OI-1y-bc5.title" = "WebArchive";
+
+/* Class = "NSMenuItem"; title = "Playitem"; ObjectID = "2FK-64-B8a"; */
+"2FK-64-B8a.title" = "PlayItem";
+
+/* Class = "NSMenuItem"; title = "Playlist"; ObjectID = "H2A-93-Nom"; */
+"H2A-93-Nom.title" = "PlayList";
+
+/* Class = "NSTextFieldCell"; title = "Format:"; ObjectID = "jim-6f-EJd"; */
+"jim-6f-EJd.title" = "Format:";
+
+/* Class = "NSButtonCell"; title = "Secure Encoding for Playitems and Playlists"; ObjectID = "U6f-sO-gw3"; */
+"U6f-sO-gw3.title" = "Sichere Codierung für Playitems und Playlists";
+
+/* Class = "NSButton"; ibShadowedToolTip = "use binary archive format"; ObjectID = "cHu-JH-9vF"; */
+"cHu-JH-9vF.ibShadowedToolTip" = "Verwenden Sie das binäre Archivformat";
+
+/* Class = "NSMenuItem"; title = "Playlists"; ObjectID = "2s5-Uv-13m"; */
+"2s5-Uv-13m.title" = "Playlists";
+
+/* Class = "NSDateFormatter"; ibShadowedDateFormat = "yy/MM/dd h:mm a"; ObjectID = "NPl-V6-K7z"; */
+"NPl-V6-K7z.ibShadowedDateFormat" = "yy/MM/dd h:mm a";

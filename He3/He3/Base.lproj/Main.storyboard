@@ -28,14 +28,15 @@
                                     </textField>
                                     <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CVP-Lj-F1M">
                                         <rect key="frame" x="52" y="-4" width="112" height="25"/>
-                                        <popUpButtonCell key="cell" type="push" title="PlayItem" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="2FK-64-B8a" id="fYw-JG-ikE">
+                                        <popUpButtonCell key="cell" type="push" title="Playitem" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="2FK-64-B8a" id="fYw-JG-ikE">
                                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="menu"/>
                                             <menu key="menu" id="vFv-HS-YkG">
                                                 <items>
-                                                    <menuItem title="PlayItem" state="on" id="2FK-64-B8a"/>
-                                                    <menuItem title="PlayList" tag="1" hidden="YES" enabled="NO" id="H2A-93-Nom"/>
-                                                    <menuItem title="WebArchive" tag="2" id="1OI-1y-bc5"/>
+                                                    <menuItem title="Playitem" state="on" id="2FK-64-B8a"/>
+                                                    <menuItem title="Playlist" tag="1" id="H2A-93-Nom"/>
+                                                    <menuItem title="Playlists" tag="2" id="2s5-Uv-13m"/>
+                                                    <menuItem title="WebArchive" tag="3" id="1OI-1y-bc5"/>
                                                 </items>
                                             </menu>
                                         </popUpButtonCell>
@@ -50,24 +51,26 @@
                                     <real value="3.4028234663852886e+38"/>
                                 </customSpacing>
                             </stackView>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sRx-1s-1cV">
-                                <rect key="frame" x="51" y="21" width="258" height="14"/>
-                                <textFieldCell key="cell" lineBreakMode="clipping" title="Saves playitem or web archive - web pages only." id="KJe-6g-fJY">
-                                    <font key="font" metaFont="smallSystem"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
+                            <button toolTip="use binary archive format" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cHu-JH-9vF">
+                                <rect key="frame" x="34" y="18" width="290" height="18"/>
+                                <buttonCell key="cell" type="check" title="Secure Encoding for Playitems and Playlists" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="U6f-sO-gw3">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <connections>
+                                        <binding destination="SG0-ds-15X" name="value" keyPath="values.secureFileArchiving" id="jl3-8p-5N9"/>
+                                    </connections>
+                                </buttonCell>
+                            </button>
                         </subviews>
                         <constraints>
                             <constraint firstItem="Rlf-zx-zJK" firstAttribute="centerX" secondItem="ZSt-QL-Zch" secondAttribute="centerX" id="ZqY-nf-1im"/>
-                            <constraint firstItem="Rlf-zx-zJK" firstAttribute="centerX" secondItem="sRx-1s-1cV" secondAttribute="centerX" id="hDY-R1-sW6"/>
-                            <constraint firstItem="sRx-1s-1cV" firstAttribute="top" secondItem="Rlf-zx-zJK" secondAttribute="bottom" constant="8" symbolic="YES" id="lTi-nz-2oR"/>
-                            <constraint firstAttribute="bottom" secondItem="sRx-1s-1cV" secondAttribute="bottom" constant="21" id="nLd-06-fUm"/>
+                            <constraint firstAttribute="bottom" secondItem="cHu-JH-9vF" secondAttribute="bottom" constant="19" id="reD-Gg-rkl"/>
+                            <constraint firstItem="cHu-JH-9vF" firstAttribute="centerX" secondItem="ZSt-QL-Zch" secondAttribute="centerX" id="uTJ-jh-csL"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="formatPopup" destination="CVP-Lj-F1M" id="Cgp-Nv-Kca"/>
+                        <outlet property="secureFileEncoding" destination="cHu-JH-9vF" id="P4J-gc-xSE"/>
                         <outlet property="webArchiveMenuItem" destination="1OI-1y-bc5" id="pAn-8L-6GN"/>
                     </connections>
                 </viewController>
@@ -956,7 +959,7 @@ CA
                                 </items>
                             </menu>
                         </menuItem>
-                        <menuItem title="Playlists" id="14E-f1-zMF" userLabel="Playlists">
+                        <menuItem title="Playlists" toolTip="Playlists" id="14E-f1-zMF" userLabel="Playlists">
                             <modifierMask key="keyEquivalentModifierMask"/>
                             <connections>
                                 <action selector="presentPlaylistSheet:" target="Ady-hI-5gd" id="daN-bM-r7D"/>
