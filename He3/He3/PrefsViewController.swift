@@ -179,13 +179,13 @@ class PrefsViewController : NSViewController, NSTabViewDelegate {
 		NotificationCenter.default.addObserver(
 			 self,
 			 selector: #selector(autoLaunchChange(_:)),
-			name: .autoLaunchChange,
+			 name: .autoLaunchChange,
 			 object: nil)
 
 		NotificationCenter.default.addObserver(
 			 self,
 			 selector: #selector(locationServiceChange),
-			name: .locationServiceChange,
+			 name: .locationServiceChange,
 			 object: nil)
 
 		tabView.selectTabViewItem(at: 0)
