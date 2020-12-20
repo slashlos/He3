@@ -184,7 +184,7 @@ extension WebViewController: WKNavigationDelegate {
 		
 		//  Finish recording of for this url session
 		if UserSettings.HistorySaves.value, let webView = (webView as? MyWebView), !webView.incognito {
-			let notif = Notification(name: Notification.Name(rawValue: "NewURL"), object: url, userInfo: [k.fini : true, k.view : webView as Any])
+			let notif = Notification(name: .newTitle, object: webView, userInfo: [k.fini : true])
 			NotificationCenter.default.post(notif)
 		}
 	}

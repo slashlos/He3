@@ -22,8 +22,6 @@ class PlaylistPanelController : NSWindowController,NSWindowDelegate {
         }
     }
 
-	var isGlobalPlaylist = false
-
     override func windowTitle(forDocumentDisplayName displayName: String) -> String {
         return (document?.displayName)!
     }

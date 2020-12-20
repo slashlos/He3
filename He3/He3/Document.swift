@@ -37,14 +37,15 @@ struct DocGroup : OptionSet {
     let rawValue: Int
 
     static var helium    = DocGroup(rawValue: 0)
-    static let playlist  = DocGroup(rawValue: 1)
-	static let playitem  = DocGroup(rawValue: 2)
-	static let release	 = DocGroup(rawValue: 3)
+	static let playitem  = DocGroup(rawValue: 1)
+    static let playlist  = DocGroup(rawValue: 2)
+	static let playlists = DocGroup(rawValue: 3)
+	static let release	 = DocGroup(rawValue: 4)
 }
 let docHelium : DocGroup = []
 
-let docGroups = [k.Helium, k.Playlist, k.Playitem, k.Release]
-let docNames = [k.Helium, k.Playlist, k.Playitem, k.Release]
+let docGroups = [k.Helium, k.ItemName, k.PlayName, k.GblsName, k.Release]
+let docNames  = [k.Helium, k.ItemName, k.PlayName, k.GblsName, k.Release]
 
 extension NSPasteboard.PasteboardType {
     static let docDragType = NSPasteboard.PasteboardType("com.slashlos.docDragDrop")
@@ -71,22 +72,29 @@ class Document : NSDocument {
     }
     var settings: Settings
     var items: [PlayList]
-    var contents: Any?
+	
+	//	We "might" be a global playlist if no fileURL
+	//	as seen when we are our window is restored.
+	var isGlobalPlaylist: Bool = false
     
     var docGroup : DocGroup {
         get {
-			if [k.Playlist,k.kUTHe3PlayList,k.kUTHe3Play3ist].contains(self.fileType)
+			if [k.ItemType,k.ItemName].contains(self.fileType)
+			|| [k.hpi,k.h3i].contains(fileURL?.pathExtension)  {
+				return .playitem
+			}
+			else
+			if [k.PlayType,k.PlayName].contains(self.fileType)
 			|| [k.hpl,k.h3l].contains(fileURL?.pathExtension) {
 				return .playlist
 			}
 			else
-			if [k.Playitem,k.kUTHe3PlayItem,k.kUTHe3Play3tem].contains(self.fileType)
-				|| [k.hpi,k.h3i].contains(fileURL?.pathExtension)  {
-				return .playitem
+			if [k.GblsType,k.GblsName].contains(self.fileType) {
+				return .playlists
 			}
 			else
-			if [k.Incognito,k.kUThe3PlayIcnt,k.KUTHe3play3cnt].contains(self.fileType)
-				|| [k.hic,k.h3c].contains(fileURL?.pathExtension)  {
+			if [k.IcntType,k.IcntName].contains(self.fileType)
+			|| [k.hic].contains(fileURL?.pathExtension)  {
 				return .playitem
 			}
 			
@@ -119,7 +127,7 @@ class Document : NSDocument {
             }
             else
             {
-                return homeURL
+				return fileType == k.ItemType ? homeURL : nil
             }
         }
     }
@@ -142,9 +150,9 @@ class Document : NSDocument {
     }
     
     func playitem() -> PlayItem {
-        let item = PlayItem.init()
+        let item = PlayItem()
         item.name = self.displayName
-        if let fileURL = self.fileURL { item.link = fileURL }
+		if let linkURL = ((items.first)?.list.first)?.link { item.link = linkURL }
         item.date = self.settings.date.value
         item.time = self.settings.time.value
         item.rank = self.settings.rank.value
@@ -158,6 +166,39 @@ class Document : NSDocument {
         return item
     }
     
+	func playlist() -> PlayList {
+		guard [.playlist].contains(docGroup), let playlist = items.first else {
+			let item = PlayList()
+			item.name = self.displayName
+			item.date = self.settings.date.value
+			item.list = [self.playitem()]
+			return item
+		}
+		playlist.update(with: dictionary())
+		return playlist
+	}
+	
+	func playlists() -> [Dictionary<String,Any>] {
+		var plists = [Dictionary<String,Any>]()
+		
+		for plist in items {
+			plists.append(plist.dictionary())
+		}
+		
+		return plists
+	}
+	
+	override func encodeRestorableState(with coder: NSCoder) {
+		super.encodeRestorableState(with: coder)
+		
+		coder.encode(isGlobalPlaylist, forKey: "isGlobalPlaylist")
+	}
+	override func restoreState(with coder: NSCoder) {
+		super.restoreState(with: coder)
+		
+		isGlobalPlaylist = coder.decodeBool(forKey: "isGlobalPlaylist")
+	}
+
     func restoreSettings(with dictionary: Dictionary<String,Any>) {
         //  Wait until we're restoring after open or in intialization
         guard !appDelegate.openForBusiness || UserSettings.RestoreDocAttrs.value else { return }
@@ -230,7 +271,7 @@ class Document : NSDocument {
         self.fileURL = url
         
         if let dict = defaults.dictionary(forKey: url.absoluteString) {
-            let item = PlayItem.init(with: dict)
+            let item = PlayItem(from: dict)
             
             if item.rect != NSZeroRect {
                 self.settings.rect.value = item.rect
@@ -279,7 +320,7 @@ class Document : NSDocument {
     override var displayName: String! {
         get {
 			guard let fileURL = self.fileURL else {
-				return [k.AppLogo,super.displayName,k.AppLogo,k.ReleaseNotes][docGroup.rawValue]
+				return [.helium,.playitem].contains(docGroup) ? k.AppLogo : super.displayName
 			}
             if fileURL.isFileURL
             {
@@ -321,6 +362,10 @@ class Document : NSDocument {
         
             //  sync docGroup group identifier to typeName
             fileType = typeName
+			if [k.GblsType,k.GblsName].contains(typeName) {
+				items = appDelegate.restorePlaylists()
+				isGlobalPlaylist = true
+			}
         }
     }
         
@@ -344,59 +389,83 @@ class Document : NSDocument {
     override func data(ofType typeName: String) throws -> Data {
         var array = [PlayList]()
 
-        switch docGroup {
-		case .playitem:
-            // Save as single playlist of our settings
+		switch typeName {
+		case k.ItemType:
+			// Save as single playlist of our settings
 			let playitem = self.playitem()
-			let playlist = PlayList.init(name: displayName, list: [playitem])
+			let playlist = PlayList(name: displayName, list: [playitem])
 			array.append(playlist)
 
-        case .playlist:
-            //  Write playlists, history and searches
-              
-            // Save playlists - no maximum
-            array += items
-            
-            // Save histories - no maximum
-            array.append(PlayList.init(name: UserSettings.HistoryList.keyPath , list: appDelegate.histories))
+		case k.PlayType, k.GblsType:
+			//  Write playlists, history and searches
+			  
+			// Save playlist(s) - no maximum
+			array += items
 
-            //  Save searches - no maximum
-            array.append(PlayList.init(name: UserSettings.SearchNames.keyPath, list: appDelegate.webSearches))
- 
-        default:
-            array.append(PlayList.init(name: displayName, list: [playitem()]))
-        }
-
+		default:
+			array.append(PlayList(name: displayName, list: [playitem()]))
+		}
+		
         return KeyedArchiver.archivedData(withRootObject: array)
     }
 
     override func read(from data: Data, ofType typeName: String) throws {
-        
+        //	Always try first for securely encoded archive
         do {
-			if [k.Playlist,k.kUTHe3PlayList,k.kUTHe3Play3ist].contains(typeName)
-			|| [k.hpl,k.h3l].contains(fileURL?.pathExtension) {
+			if [.playitem].contains(docGroup) {
 				do {
+					let playlists = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSArray.self,PlayList.self,PlayItem.self], from: data) as! [PlayList]
+					for playlist in playlists {
+						items.append(playlist)
+					}
+				} catch let error {
 					let dict = try PropertyListSerialization.propertyList(from: data, options: PropertyListSerialization.ReadOptions.mutableContainers, format: nil)
-					let item = PlayList.init(with: dict as! Dictionary<String, Any>)
+					let item = PlayItem(from: dict as! Dictionary<String, Any>)
+					items.append(PlayList(name: fileURL?.lastPathComponent ?? item.name, list: [item]))
+					
+					if 0 == items.count { NSApp.presentError(error) }
+				}
+			}
+			else
+			if [.playlist].contains(docGroup) {
+				do {
+					let playlists = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSArray.self,PlayList.self,PlayItem.self], from: data) as! [PlayList]
+					for playlist in playlists {
+						items.append(playlist)
+					}
+				} catch let error {
+					let dict = try PropertyListSerialization.propertyList(from: data, options: PropertyListSerialization.ReadOptions.mutableContainers, format: nil)
+					
+					//	Our dictionary = PlayList must have 3 keys
+					guard let plist = dict as? Dictionary<String,Any>, plist.keys.sorted().elementsEqual([k.date,k.list,k.name]) else {
+						NSApp.presentError(error)
+						return
+					}
+
+					let item = PlayList(with: dict as! Dictionary<String, Any>)
 					items.append(item)
 				}
 			}
 			else
-			if [k.Playitem,k.kUTHe3PlayItem,k.kUTHe3Play3tem].contains(typeName)
-				|| [k.hpi,k.h3i,k.hic,k.h3c].contains(fileURL?.pathExtension) {
+			if [.playlists].contains(docGroup) {
 				do {
+					let playlists = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSArray.self,PlayList.self,PlayItem.self], from: data) as! [PlayList]
+					for playlist in playlists {
+						items.append(playlist)
+					}
+				} catch let error {
 					let dict = try PropertyListSerialization.propertyList(from: data, options: PropertyListSerialization.ReadOptions.mutableContainers, format: nil)
-					let item = PlayItem.init(with: dict as! Dictionary<String, Any>)
-					items.append(PlayList.init(name: fileURL?.lastPathComponent ?? item.name, list: [item]))
-				}
-			}
-			else
-			if [k.Incognito,k.kUThe3PlayIcnt,k.KUTHe3play3cnt].contains(typeName)
-				|| [k.hic,k.h3c].contains(fileURL?.pathExtension) {
-				do {
-					let dict = try PropertyListSerialization.propertyList(from: data, options: PropertyListSerialization.ReadOptions.mutableContainers, format: nil)
-					let item = PlayItem.init(with: dict as! Dictionary<String, Any>)
-					items.append(PlayList.init(name: item.name, list: [item]))
+					
+					//	Our dictionary has ["playlists"]
+					guard let plist = dict as? Dictionary<String,Any>, 1 == plist.keys.count, k.Playlists == plist.keys.first else {
+						NSApp.presentError(error)
+						return
+					}
+					
+					for plist in plist[k.Playlists] as! [Dictionary<String,Any>] {
+						let item = PlayList(with: plist)
+						items.append(item)
+					}
 				}
 			}
 			else
@@ -419,12 +488,28 @@ class Document : NSDocument {
     }
 
     override func read(from url: URL, ofType typeName: String) throws {
-        
-		if [k.kUTHe3PlayList,k.kUTHe3Play3ist].contains(typeName)
-		|| [k.kUTHe3PlayItem,k.kUTHe3Play3tem].contains(typeName)
-		|| [k.kUThe3PlayIcnt,k.KUTHe3play3cnt].contains(typeName)
-		|| [k.Playlist,k.Playitem,k.Incognito].contains(typeName) {
-			try super.read(from: url, ofType: typeName)
+        // MARK: TODO: if none then go after pathExtension
+		if [k.ItemType,k.ItemName].contains(typeName)
+		|| [k.PlayType,k.PlayName].contains(typeName)
+		|| [k.IcntType,k.IcntName].contains(typeName)
+		|| [k.GblsType,k.GblsName].contains(typeName)
+		|| [k.hpi,k.h3i,k.hpl,k.h3l,k.hic,k.hgl].contains(url.pathExtension) {
+			do {
+				try super.read(from: url, ofType: typeName)
+			} catch let error {
+				if let dict = NSDictionary(contentsOf: url) as? [String : AnyObject] {
+					if let attrs = dict["attrs"] as? Dictionary<String,Any> {
+						restoreSettings(with: attrs)
+					}
+					if let saved = dict["items"] as? [PlayList] {
+						items.append(contentsOf: saved)
+					}
+				}
+				else
+				{
+					NSApp.presentError(error)
+				}
+			}
 		}
 		else
 		{
@@ -450,12 +535,9 @@ class Document : NSDocument {
         //  non-file revert handling, either defaults or an asset
         switch docGroup {
 			
-        case .playlist:
-            let pvc : PlaylistViewController = windowControllers.first!.contentViewController as! PlaylistViewController
-
+        case .playlists:
             //  Since we're reverting, use the stored version
-            pvc.playlists = appDelegate.restorePlaylists()
-            pvc.playlistArrayController.content = pvc.playlists
+            items = appDelegate.restorePlaylists()
             
         default:
 			if let url = fileURL, let dict = defaults.dictionary(forKey: url.absoluteString) {
@@ -470,28 +552,14 @@ class Document : NSDocument {
         if [k.Custom].contains(typeName) { return }
 
         //  revert() should call read(data) then restore controller later
-        
-        switch docGroup {
-
-		case .playitem:
-            try read(from: url, ofType: typeName)
-
-        case .playlist:
-            let pvc : PlaylistViewController = windowControllers.first!.contentViewController as! PlaylistViewController
-            
-            try super.revert(toContentsOf: url, ofType: typeName)
-            pvc.playlistArrayController.content = pvc.playlists
-            
-        default:
-            try read(from: url, ofType: typeName)
-        }
+        try read(from: url, ofType: typeName)
     }
     
 	open override func autosave(withImplicitCancellability autosavingIsImplicitlyCancellable: Bool, completionHandler: @escaping (Error?) -> Void) {
 		guard hasUnautosavedChanges else { return }
 		
 		//	Since we autosave in place, a URL is not really necessary
-		if let url = url, url.isFileURL, [k.h3i,k.hpi,k.h3l,k.hpl].contains(url.pathExtension) {
+		if let url = url, url.isFileURL, [.playitem,.playlist,.playlists].contains(docGroup) {
 			do {
 				let typeName = try docController.typeForContents(of: url)
 				save(to: url, ofType: typeName, for: .autosaveInPlaceOperation, completionHandler: completionHandler)
@@ -502,18 +570,16 @@ class Document : NSDocument {
 		else
 		{
 			do {
-				switch docGroup {
-				case .playlist:
+				if let url = fileURL, let type = fileType {
+					try self.write(to: url, ofType: type)
+				}
+				else
+				if [.playlists].contains(docGroup) {
 					appDelegate.savePlaylists(self)
-					
-				default:
-					if let url = fileURL, let type = fileType {
-						try self.write(to: url, ofType: type)
-					}
-					else
-					{
-						cacheSettings(fileURL ?? homeURL)
-					}
+				}
+				else
+				{
+					cacheSettings(fileURL ?? homeURL)
 				}
 				completionHandler(nil)
 			} catch let error {
@@ -524,7 +590,7 @@ class Document : NSDocument {
 
     @objc @IBAction override func save(_ sender: (Any)?) {
         
-		if let url = url, url.isFileURL, [k.h3i,k.hpi,k.h3l,k.hpl].contains(url.pathExtension) {
+		if let url = url, url.isFileURL, [.playitem,.playlist,.playlists].contains(docGroup) {
 			do {
 				let typeName = try docController.typeForContents(of: url)
 
@@ -539,7 +605,7 @@ class Document : NSDocument {
         {
             do {
                 switch docGroup {
-                case .playlist:
+                case .playlists:
                     appDelegate.savePlaylists(self)
                     
                 default:
@@ -562,36 +628,50 @@ class Document : NSDocument {
         if let window = windowControllers.first?.window {
 			let storyboard = NSStoryboard(name: "Main", bundle: nil)
             let savePanel = NSSavePanel()
-			let fileType = self.fileType ?? k.Playitem
 			let saveAsController = (storyboard.instantiateController(withIdentifier: "SaveAsViewController") as! SaveAsViewController)
 			let saveAsView = saveAsController.view
 			let formatPopup = saveAsController.formatPopup
+
+			//	Only use current file types
+			///let saveType = [k.ItemType,k.PlayType].contains(self.fileType) ? self.fileType! : k.ItemType
+			let saveType = [k.ItemType,k.PlayType,k.GblsType].contains(self.fileType)
+				? self.fileType!
+				: ["com.slashlos.he3.h3i": k.ItemType,
+				   "com.slashlos.he3.h3l": k.PlayType][self.fileType ?? k.ItemType]
+
+			//	Allow web archive as selection but not allowed as file type
+			formatPopup?.item(withTitle: k.ItemName)?.isEnabled = .playitem == docGroup
+			formatPopup?.item(withTitle: k.ItemName)?.isHidden = .playitem != docGroup
+
+			formatPopup?.item(withTitle: k.GblsName)?.isEnabled = [.playlist,.playlists].contains(docGroup)
+			formatPopup?.item(withTitle: k.GblsName)?.isHidden = ![.playlist,.playlists].contains(docGroup)
+
+			formatPopup?.item(withTitle: k.WebArchive)?.isEnabled = [k.http,k.https].contains(fileURL?.scheme)
+			formatPopup?.item(withTitle: k.WebArchive)?.isHidden = ![k.http,k.https].contains(fileURL?.scheme)
+			
+			formatPopup?.selectItem(withTitle: defaultDraftName())
+			
+			//	We will only saveAs or write to our own supported types
+			savePanel.nameFieldStringValue = url?.lastPathComponent ?? defaultDraftName()
+			savePanel.allowedFileTypes = [self.fileNameExtension(forType: saveType!, saveOperation: .saveAsOperation)!]
 
 			//	Fixup autolayout
 			saveAsView.translatesAutoresizingMaskIntoConstraints = false
 			saveAsView.widthAnchor.constraint(greaterThanOrEqualToConstant: 360.0).isActive = true
 			saveAsView.heightAnchor.constraint(greaterThanOrEqualToConstant: 83.0).isActive = true
-			
-			formatPopup?.item(withTitle: k.Playitem)?.isEnabled = true
-			formatPopup?.item(withTitle: k.Playlist)?.isEnabled = window.tabbedWindows?.count ?? 0 > 1
-			formatPopup?.item(withTitle: k.WebArchive)?.isEnabled = [k.http,k.https].contains(fileURL?.scheme)
-            savePanel.allowedFileTypes = [self.fileNameExtension(forType: fileType, saveOperation: .saveAsOperation)!]
 			savePanel.accessoryView = saveAsView
+			
             savePanel.beginSheetModal(for: window, completionHandler: { (result: NSApplication.ModalResponse) in
                 if result == .OK {
                     do {
                         if let saveURL = savePanel.url, let tag = formatPopup?.selectedTag() {
 							switch tag {
-							case 0:
-								Swift.print("save hpi: \(saveURL.path)")
-								try super.write(to: saveURL, ofType: fileType)
+							case 0,1,2:
+								try self.write(to: saveURL, ofType: [k.ItemType,k.PlayType,k.GblsType][tag])
 								if saveURL.hideFileExtensionInPath() {
 									self.updateChangeCount(.changeCleared)
 								}
-							case 1:
-								//MARK:TODO nyi save window as playlist
-								Swift.print("save \(k.Playlist)")
-							case 2:
+							case 3:
 								let archiveURL = saveURL.deletingPathExtension().appendingPathExtension(k.webarchive)
 								Swift.print("save webarchive: \(archiveURL.path)")
 								if let wvc = window.contentViewController as? WebViewController {
@@ -618,9 +698,20 @@ class Document : NSDocument {
             return
         }
 
-		if url.isFileURL, [k.h3i,k.hpi,k.h3l,k.hpl].contains(url.pathExtension) {
-            super.save(to: url, ofType: typeName, for: saveOperation, completionHandler: completionHandler)
-        }
+		if url.isFileURL, [.playitem,.playlist,.playlists].contains(docGroup) {
+			if UserSettings.SecureFileEncoding.value {
+				super.save(to: url, ofType: typeName, for: saveOperation, completionHandler: completionHandler)
+			}
+			else
+			{
+				do {
+					try writeSafely(to: url, ofType: typeName, for: saveOperation)
+					completionHandler(nil)
+				} catch let error {
+					completionHandler(error)
+				}
+			}
+		}
         else
         {
             do {
@@ -645,22 +736,43 @@ class Document : NSDocument {
     }
     
     override func write(to url: URL, ofType typeName: String) throws {
+		if url.isFileURL, [k.ItemType,k.PlayType,k.GblsType].contains(typeName) {
+			if UserSettings.SecureFileEncoding.value {
+				try super.write(to: url, ofType: typeName)
+			}
+			else
+			{
+				switch typeName {
+				case k.ItemType:
+					try NSDictionary(dictionary: self.playitem().dictionary()).write(to: url)
+					
+				case k.PlayType:
+					try NSDictionary(dictionary: self.playlist().dictionary()).write(to: url)
+					
+				case k.GblsType:
+					var plists = [Dictionary<String,Any>]()
+					
+					for item in items {
+						plists.append(item.dictionary())
+					}
+					
+					try NSDictionary(dictionary: [k.Playlists:plists]).write(to: url)
+					
+				default:
+					fatalError("Unknown docGroup: \(docGroup.rawValue) in write(_,:)")
+				}
+			}
+		}
 		
-        switch docGroup {
-        case .playlist:
-            appDelegate.savePlaylists(self)
-            
-        default:
-            cacheSettings(url)
-            
-            //  When a document is written, update its global play items
-            UserDefaults.standard.synchronize()
-        }
+		//	Regardless of URL, cache settings
+		cacheSettings(url)
+		
+		//  When written, clear its change count
         self.updateChangeCount(.changeCleared)
     }
     
     override func writeSafely(to url: URL, ofType typeName: String, for saveOperation: NSDocument.SaveOperationType) throws {
-		if saveOperation == .saveOperation {
+		if saveOperation == .saveOperation || !UserSettings.SecureFileEncoding.value {
 			try write(to: url, ofType: typeName)
 		}
 		else
@@ -682,7 +794,7 @@ class Document : NSDocument {
     }
     
     override func makeWindowControllers() {
-		let group = [ k.Helium, k.Playlist, k.Helium, k.Release ][docGroup.rawValue]
+		let group = [ k.Helium, k.Helium, k.PlayName, k.PlayName, k.Release ][docGroup.rawValue] /// has to match docGroups ordering
         let identifier = String(format: "%@Controller", group)
         let storyboard = NSStoryboard(name: "Main", bundle: nil)
         

@@ -88,7 +88,7 @@ class PlayItem : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
         }
     }
 	
-	var _thumbnailImage: NSImage?
+	@objc dynamic var _thumbnailImage: NSImage?
     @objc dynamic var thumbnailImage: NSImage {
         get {
 			guard _thumbnailImage == nil else { return _thumbnailImage! }
@@ -195,7 +195,7 @@ class PlayItem : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
         self.agent = agent
         super.init()
     }
-    convenience init(with dictionary: Dictionary<String,Any>) {
+    convenience init(from dictionary: Dictionary<String,Any>) {
         self.init()
         self.update(with: dictionary)
     }
@@ -249,7 +249,7 @@ class PlayItem : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
     
 	var fileURL: URL {
 		get {
-			let path = (name.hasSuffix(k.h3i) || name.hasSuffix(k.hpi)) ? name : name + "." + k.hpi
+			let path = [k.h3i,k.hpi,k.hic].contains(name.pathExtension) ? name : name + "." + k.hpi
 			return URL.init(fileURLWithPath: path)
 		}
 	}
@@ -333,7 +333,7 @@ class PlayItem : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
         print("itemR type: \(type.rawValue)")
         switch type {
         case .rowDragType:
-            self.init(with: propertyList as! Dictionary)
+            self.init(from: propertyList as! Dictionary)
             
         case .playitem:
 			self.init()
@@ -420,7 +420,7 @@ class PlayItem : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
 	
 	static func object(withItemProviderData data: Data, typeIdentifier: String) throws -> Self {
 		do {
-			let item = try PlayItem.init(itemProviderData: data, typeIdentifier: typeIdentifier)
+			let item = try PlayItem(itemProviderData: data, typeIdentifier: typeIdentifier)
 			return item as! Self
 		} catch let error {
 			print("object: \(error.localizedDescription)")

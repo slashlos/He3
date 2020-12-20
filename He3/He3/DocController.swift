@@ -19,9 +19,9 @@ class DocumentController : NSDocumentController {
 
 		var doc: Document
          do {
-			if [k.kUTHe3Play3ist,k.kUTHe3PlayList,k.kUTHe3Play3tem,k.kUTHe3PlayItem].contains(typeName)
-			|| [k.h3l,k.hpl,k.h3i,k.hpi,k.h3c,k.hic].contains(contentsURL.pathExtension)
-			|| [k.Playlist,k.Playitem,k.Incognito].contains(typeName) {
+			if [k.ItemType,k.IcntType,k.PlayType,k.GblsType].contains(typeName)
+			|| [k.ItemName,k.IcntName,k.PlayName,k.GblsName].contains(typeName)
+			|| [k.h3i,k.hpi,k.hic,k.h3l,k.hpl,k.hgl].contains(contentsURL.pathExtension) {
 				doc = try super.makeDocument(for: urlOrNil, withContentsOf: contentsURL, ofType: typeName) as! Document
 				return doc
             }
@@ -66,14 +66,17 @@ class DocumentController : NSDocumentController {
         return doc
     }
     
-    @objc @IBAction func altDocument(_ sender: Any?) {
+    @objc @IBAction func altDocument(_ sender: NSMenuItem) {
         var doc: Document
         do {
-            doc = try makeUntitledDocument(ofType: k.Incognito) as! Document
+			// MARK: toolTip *must* be English in all locales
+			let typeName = sender.toolTip ?? k.Helium
+			let fileType = [k.Helium:k.ItemType,
+							k.PlayName:k.PlayType,
+							k.IcntName:k.IcntType,
+							k.Playlists:k.GblsType][typeName] ?? k.Helium
+            doc = try makeUntitledDocument(ofType: fileType) as! Document
             if 0 == doc.windowControllers.count { doc.makeWindowControllers() }
-			if k.PlayType == fileType, let wc = doc.windowControllers.first {
-				(wc as! PlaylistPanelController).isGlobalPlaylist = true
-			}
 			doc.showWindows()
         } catch let error {
             NSApp.presentError(error)

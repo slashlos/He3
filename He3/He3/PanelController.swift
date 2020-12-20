@@ -104,21 +104,21 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(HeliumController.didUpdateURL(note:)),
-            name: NSNotification.Name(rawValue: "DidUpdateURL"),
+			name: .didUpdateURL,
             object: nil)
 		
         //  Quick Quiet notification
         NotificationCenter.default.addObserver(
             self,
 			selector: #selector(HeliumController.quickQuiet(_:)),
-            name: NSNotification.Name(rawValue: "quickQuiet"),
+			name: .quickQuiet,
             object: nil)
 
         //  Monitor AutoHideTitle preference
         NotificationCenter.default.addObserver(
             self,
 			selector: #selector(HeliumController.autoHideTitleBar(_:)),
-            name: NSNotification.Name(rawValue: "autoHideTitleBar"),
+			name: .autoHideTitleBar,
             object: nil)
 		
 		//  We allow drag from title's document icon to self or Finder
@@ -135,7 +135,7 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
     override var document: AnyObject? {
         didSet {
             if let document = self.document, let webView = self.webView {
-                webView.incognito = document.fileType == k.Incognito
+				webView.incognito = [k.IcntType,k.IcntName].contains(document.fileType)
                 documentDidLoad()
             }
         }
@@ -1096,7 +1096,7 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
         guard let doc = self.doc else { return displayName }
         
 		switch doc.fileType {
-		case k.Playlist:
+		case k.PlayType,k.PlayName:
             return doc.displayName
             
         default:

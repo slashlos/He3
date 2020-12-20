@@ -142,11 +142,32 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
     @objc @IBOutlet weak var playlistSplitView: NSSplitView!
 
     //  we are managing a local playlist, so include app delegate histories RONLY
-	var isGlobalPlaylist : Bool {
-		guard let wc = self.view.window?.windowController else { return false }
-		return (wc as! PlaylistPanelController).isGlobalPlaylist
+	var ppc : PlaylistPanelController? {
+		guard let wc = self.view.window?.windowController else { return nil }
+		guard let ppc = wc as? PlaylistPanelController else { return nil }
+		return ppc
 	}
-    
+	
+	var isGlobalPlaylist : Bool {
+		get {
+			guard let doc = self.doc else { return false }
+			return doc.isGlobalPlaylist
+		}
+	}
+
+	var doc : Document? {
+		get {
+			guard let ppc = self.ppc else { return nil }
+			if let doc = ppc.document as? Document {
+				return doc
+			}
+			else
+			{
+				return nil
+			}
+		}
+	}
+	
     var progressIndicator: NSProgressIndicator!
 	var dragSequenceNo = 0
 
@@ -274,7 +295,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
     }
     var itemIvars : [String] {
         get {
-            return [k.name, k.link, k.time, k.plays, k.rank, k.rect, k.label, k.hover, k.alpha, k.trans, k.link]
+			return [k.name, k.turl, k.date, k.time, k.rank, k.rect, k.plays, k.label, k.hover, k.alpha, k.trans, k.agent]
         }
     }
 
@@ -305,17 +326,17 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
                 NotificationCenter.default.addObserver(
                     self,
                     selector: #selector(shiftKeyDown(_:)),
-                    name: NSNotification.Name(rawValue: "shiftKeyDown"),
+					name: .shiftKeyDown,
                     object: nil)
                 NotificationCenter.default.addObserver(
                     self,
                     selector: #selector(optionKeyDown(_:)),
-                    name: NSNotification.Name(rawValue: "optionKeyDown"),
+					name: .optionKeyDown,
                     object: nil)
                 NotificationCenter.default.addObserver(
                     self,
                     selector: #selector(gotNewHistoryItem(_:)),
-                    name: NSNotification.Name(rawValue: k.item),
+                    name: .playitem,
                     object: nil)
             }
             else
@@ -423,7 +444,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
     }
     
     //  A bad (duplicate) value was attempted
-    @objc fileprivate func badPlayLitName(_ notification: Notification) {
+    @objc fileprivate func badPlayListName(_ notification: Notification) {
         DispatchQueue.main.async {
             self.playlistTableView.reloadData()
 			NSSound.playIf(.sosumi)
@@ -511,6 +532,8 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
     override func viewDidLoad() {
 		super.viewDidLoad()
 		
+		//	Defer document based actions until viewWillAppear()
+		
 		setupProgressIndicator()
 		
         playlistTableView.registerForDraggedTypes(
@@ -547,37 +570,36 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
 	}
     
     override func viewWillAppear() {
-		//	Guard 1-time loading post viewDidLoad()
+		//	Guard 1-time loading post viewDidLoad() when document available
 		guard !observing else { return }
 		
-        //  Load document's URL content
-		if let doc : Document = self.view.window?.windowController?.document as? Document, let url = doc.fileURL {
-            playlistArrayController.add(contentsOf: doc.items)
+        //  Load document's URL or globals already in items
+		if let doc = self.doc {
+			//	Prime global playlists
+			playlistArrayController.add(contentsOf: doc.items)
+		}
 
+		//  Leave non-global extractions contents intact (RONLY but visible
+		if isGlobalPlaylist {
+			//  Prune stale history entries
+			while (playlistArrayController.arrangedObjects as AnyObject).contains(historyCache)
+			{
+				playlistArrayController.removeObject(historyCache)
+			}
+			
+			playlistArrayController.addObject(historyCache)
+		}
+		else
+		if let doc = self.doc, let url = doc.fileURL {
 			//  Set window titleView with url as tooltip like .helium type
 			if let titleView = self.view.window?.standardWindowButton(.closeButton)?.superview {
 				titleView.toolTip = url.absoluteString.removingPercentEncoding
 			}
 
 			//  Start us of cleanly re: change count
-            doc.updateChangeCount(.changeCleared)
-            self.undoManager?.removeAllActions()
-        }
-		else
-			
-        //  Leave non-global extractions contents intact (RONLY but visible
-        {
-			//	Prime global playlists
-			playlistArrayController.add(contentsOf: appDelegate.playlists)
-			
-            //  Prune stale history entries
-			while (playlistArrayController.arrangedObjects as AnyObject).contains(historyCache)
-			{
-				playlistArrayController.removeObject(historyCache)
-			}
-			
-            playlistArrayController.addObject(historyCache)
-        }
+			doc.updateChangeCount(.changeCleared)
+			self.undoManager?.removeAllActions()
+		}
         
         // cache our list before editing
         playCache = playlists
@@ -588,8 +610,8 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         //  Watch for bad (duplicate) playlist names
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(badPlayLitName(_:)),
-            name: NSNotification.Name(rawValue: "BadPlayListName"),
+            selector: #selector(badPlayListName(_:)),
+			name: .badPlayListName,
             object: nil)
 
         //  Start observing any changes
@@ -1031,8 +1053,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         let whoAmI = self.view.window?.firstResponder
 		var docName = "Global Playlist"
 		
-		guard isGlobalPlaylist, let document = self.view.window?.windowController?.document else { return }
-		if !isGlobalPlaylist, let url = document.fileURL { docName = "\"" + url!.simpleSpecifier + "\"" }
+		if !isGlobalPlaylist, let url = doc!.fileURL { docName = "\"" + url.simpleSpecifier + "\"" }
 		
 		let message = "Do you want to revert the to the last saved version?"
 		let infoMsg = isGlobalPlaylist ? "Global Playlist" : docName
@@ -1047,13 +1068,13 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         if let window = NSApp.keyWindow {
 			alert.beginSheetModal(for: window, completionHandler: { [self] response in
 				if response == NSApplication.ModalResponse.alertFirstButtonReturn {
-					if !isGlobalPlaylist {
-						document.revert(sender)
-						document.updateChangeCount(.changeCleared)
+					if isGlobalPlaylist {
+						_ = self.appDelegate.restorePlaylists()
 					}
 					else
 					{
-						_ = self.appDelegate.restorePlaylists()
+						doc?.revertToSaved(sender)
+						doc?.updateChangeCount(.changeCleared)
 					}
 					(whoAmI as! PlayTableView).reloadData()
 					print("revert to saved")
@@ -1063,13 +1084,13 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         else
         {
 			if alert.runModal() == NSApplication.ModalResponse.alertFirstButtonReturn {
-				if !isGlobalPlaylist {
-					document.revert(sender)
-					document.updateChangeCount(.changeCleared)
+				if isGlobalPlaylist {
+					_ = appDelegate.restorePlaylists()
 				}
 				else
 				{
-					_ = appDelegate.restorePlaylists()
+					doc?.revertToSaved(sender)
+					doc?.updateChangeCount(.changeCleared)
 				}
 				(whoAmI as! PlayTableView).reloadData()
 				print("revert to saved")
@@ -1092,7 +1113,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
                     playlists = [PlayList]()
                     for (name,plist) in plists {
                         guard let items = plist as? [Dictionary<String,Any>] else {
-                            let item = PlayItem.init(with: (plist as? Dictionary<String,Any>)!)
+                            let item = PlayItem(from: (plist as? Dictionary<String,Any>)!)
                             let playlist = PlayList()
                             playlist.list.append(item)
                             playlists.append(playlist)
@@ -1100,10 +1121,10 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
                         }
                         var list : [PlayItem] = [PlayItem]()
                         for plist in items {
-                            let item = PlayItem.init(with: plist)
+                            let item = PlayItem(from: plist)
                             list.append(item)
                         }
-                        let playlist = PlayList.init(name: name, list: list)
+                        let playlist = PlayList(name: name, list: list)
                         playlistArrayController.addObject(playlist)
 						names.append(name)
                     }
@@ -1121,7 +1142,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
                         if let value = plists[k.list], let dicts = value as? [[String:Any]]  {
                             for dict in dicts {
                                 if !playlist.list.has(dict[k.link] as! String) {
-                                    let item = PlayItem.init(with: dict)
+                                    let item = PlayItem(from: dict)
                                     self.add(item: item, atIndex: -1)
                                 }
                             }
@@ -1246,8 +1267,8 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
 			playCache = playlists
 			
 			// If local save that too
-			if isGlobalPlaylist, let document = self.view.window?.windowController?.document {
-				(document as! Document).save(sender)
+			if isGlobalPlaylist, let doc = self.doc {
+				doc.save(sender)
 			}
 			else
 			{
@@ -1291,12 +1312,12 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         {
             switch menuItem.title {
 			case "Revert To Saved…":
-				if !isGlobalPlaylist, let document = self.view.window?.windowController?.document {
-					menuItem.isEnabled = document.hasUnautosavedChanges
+				if isGlobalPlaylist {
+					menuItem.isEnabled = true
 				}
 				else
-				{
-					menuItem.isEnabled = true
+				if let document = self.view.window?.windowController?.document {
+					menuItem.isEnabled = document.hasUnautosavedChanges
 				}
 				break
 				
@@ -1451,7 +1472,34 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
             return false
         }
     }
-    
+	
+	@IBAction func OnEnterInTextField(_ sender: Any) {
+		let whoAmI = self.view.window?.firstResponder
+		
+		if whoAmI == playlistTableView {
+			print("playlist")
+		}
+		else
+		{
+			print("playitem")
+		}
+		
+		if let textField = sender as? NSTextField {
+			let row = self.playitemTableView.row(for: sender as! NSView)
+			///let col = self.playitemTableView.column(for: sender as! NSView)
+			let item = (playitemArrayController.arrangedObjects as! [PlayItem])[row]
+			let data = textField.stringValue
+			
+			print("old \(item.link.absoluteString)")
+			print("new \(data)")
+		}
+		else
+		{
+			let type = (sender as AnyObject).className
+			print("sender \(String(describing: type))")
+		}
+	}
+	
     func tableView(_ tableView: NSTableView, toolTipFor cell: NSCell, rect: NSRectPointer, tableColumn: NSTableColumn?, row: Int, mouseLocation: NSPoint) -> String {
         if tableView == playlistTableView
         {

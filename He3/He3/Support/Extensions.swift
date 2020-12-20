@@ -252,6 +252,25 @@ extension Dictionary {
     }
 }
 
+extension Notification.Name {
+	static let archiveAll = Notification.Name("ArchiveAll")
+	static let autoHideTitleBar = Notification.Name("autoHideTitleBar")
+	static let autoLaunchChange = Notification.Name("autoLaunchChange")
+	static let badPlayListName = Notification.Name("BadPlayListName")
+	static let commandKeyDown = Notification.Name("commandKeyDown")
+	static let didUpdateURL = Notification.Name("DidUpdateURL")
+	static let killLauncher = Notification.Name("killLauncher")
+	static let loadURLString = Notification.Name("LoadURLString")
+	static let locationServiceChange = Notification.Name("locationServiceChange")
+	static let newTitle = Notification.Name("newTitle")
+	static let optionKeyDown = Notification.Name("optionKeyDown")
+	static let optionAndCommandKeysDown = Notification.Name("optionAndCommandKeysDown")
+	static let playitem = Notification.Name(k.ItemName)
+	static let quickQuiet = Notification.Name("quickQuiet")
+	static let shiftKeyDown = Notification.Name("shiftKeyDown")
+	static let snapshotAll = Notification.Name("SnapshotAll")
+	static let tvSelectionDidChange = Notification.Name("NSTableViewSelectionDidChange")
+}
 extension NSImage {
     
 	func resize(size: NSSize) -> NSImage {
@@ -644,6 +663,19 @@ extension String {
         let plainData = self.data(using: .utf8)
         return plainData?.base64EncodedString(options: [])
     }
+}
+
+// https://stackoverflow.com/a/32646393/564870
+extension String {
+	var ns: NSString {
+		return self as NSString
+	}
+	var pathExtension: String {
+		return ns.pathExtension
+	}
+	var lastPathComponent: String {
+		return ns.lastPathComponent
+	}
 }
 
 // MARK: - Dictionary cast extensions

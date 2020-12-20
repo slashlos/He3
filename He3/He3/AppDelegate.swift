@@ -21,10 +21,6 @@ import AVKit
 import AudioToolbox
 import CoreAudioKit
 
-extension Notification.Name {
-    static let killHe3Launcher = Notification.Name("killHe3Launcher")
-}
-
 struct RequestUserStrings {
     let currentURLString: String?
     let alertMessageText: String
@@ -205,7 +201,7 @@ struct ViewOptions : OptionSet {
 let sameWindow : ViewOptions = []
 
 @NSApplicationMain
- class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationManagerDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationManagerDelegate {
     static let poi = OSLog(subsystem: "com.slashlos.he3", category: .pointsOfInterest)
 
     //  who we are from 'about'
@@ -243,6 +239,11 @@ let sameWindow : ViewOptions = []
 	var docController : DocumentController {
 		get {
 			return NSDocumentController.shared as! DocumentController
+		}
+	}
+	var fileManager : FileManager {
+		get {
+			return FileManager.default
 		}
 	}
 	
@@ -455,7 +456,7 @@ let sameWindow : ViewOptions = []
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
 		let status = CLLocationManager.authorizationStatus()
 		
-		let notif = Notification(name: Notification.Name(rawValue: "locationServiceChange"), object: status)
+		let notif = Notification(name: .locationServiceChange, object: status)
 		NotificationCenter.default.post(notif)
 		
 		self.didChangeValue(forKey: "isLocationEnabled")
@@ -591,11 +592,11 @@ let sameWindow : ViewOptions = []
                     // Load histories from defaults up to their maximum
                     for playitem in items {
                         if let name : String = playitem as? String, let dict = defaults.dictionary(forKey: name) {
-                            self._webSearches?.append(PlayItem.init(with: dict))
+                            self._webSearches?.append(PlayItem(from: dict))
                         }
                         else
                         if let dict : Dictionary <String,AnyObject> = playitem as? Dictionary <String,AnyObject> {
-                            self._webSearches?.append(PlayItem.init(with: dict))
+                            self._webSearches?.append(PlayItem(from: dict))
                         }
                         else
                         {
@@ -614,7 +615,7 @@ let sameWindow : ViewOptions = []
     }
     fileprivate func addWebSearcheURL(_ seaString: String, searchURL: URL) {
         let seaTime = Date.init().timeIntervalSinceReferenceDate
-        let item = PlayItem.init(name: seaString, link: searchURL, time: seaTime, rank: 0)
+        let item = PlayItem(name: seaString, link: searchURL, time: seaTime, rank: 0)
         
         webSearches.append(item)
     }
@@ -699,7 +700,7 @@ let sameWindow : ViewOptions = []
 			else
 			{
 				sender.representedObject = snapshotURL
-				let notif = Notification(name: Notification.Name(rawValue: "ArchiveAll"), object: sender)
+				let notif = Notification(name: .archiveAll, object: sender)
 				NotificationCenter.default.post(notif)
 			}
 		}
@@ -709,7 +710,7 @@ let sameWindow : ViewOptions = []
     @objc @IBAction func autoHideTitlePress(_ sender: NSMenuItem) {
         UserSettings.AutoHideTitle.value = (sender.state == .off)
 		
-		let notif = Notification(name: Notification.Name(rawValue: "autoHideTitleBar"), object: sender)
+		let notif = Notification(name: .autoHideTitleBar, object: sender)
 		NotificationCenter.default.post(notif)
      }
 
@@ -853,13 +854,7 @@ let sameWindow : ViewOptions = []
         do {
 			var typeName : String = k.Helium
 			if fileURL.isFileURL {
-				if [k.h3l,k.hpl].contains(fileURL.pathExtension) {
-					typeName = k.Playlist
-				}
-				else
-				if [k.h3i,k.hpi].contains(fileURL.pathExtension) {
-					typeName = k.Playitem
-				}
+				typeName = try docController.typeForContents(of: fileURL)
 			}
             let doc = try docController.makeDocument(withContentsOf: fileURL, ofType: typeName)
             docController.noteNewRecentDocumentURL(fileURL)
@@ -896,7 +891,7 @@ let sameWindow : ViewOptions = []
             locationManager?.startUpdatingLocation()
         }
 		
-		let notif = Notification(name: Notification.Name(rawValue: "locationServiceChange"), object: self.locationStatus)
+		let notif = Notification(name: .locationServiceChange, object: self.locationStatus)
 		NotificationCenter.default.post(notif)
     }
     
@@ -946,10 +941,27 @@ let sameWindow : ViewOptions = []
         return openURLInNewWindow(url, context: parentWindow)
     }
     
+	func preflight(_ url: URL) -> Bool {
+		if url.isFileURL {
+			
+			guard fileManager.fileExists(atPath: url.path) else {
+				self.userAlertMessage("File not found.",
+									  info: url.absoluteString.removingPercentEncoding)
+				return false
+			}
+		
+			guard isSandboxed == storeBookmark(url: url) else { return false }
+		}
+		
+		return true
+	}
+	
     func openURLInNewWindow(_ url: URL, context otherWindow : NSWindow? = nil) -> Bool {
         os_signpost(.begin, log: MyWebView.poi, name: "openURLInNewWindow")
         defer { os_signpost(.end, log: AppDelegate.poi, name: "openURLInNewWindow") }
 
+		guard preflight(url) else { return false }
+		
         do {
 			let fileType = try docController.typeForContents(of: url)
             let doc = try docController.makeDocument(withContentsOf: url, ofType: fileType)
@@ -1054,7 +1066,7 @@ let sameWindow : ViewOptions = []
         guard let item: NSMenuItem = sender as? NSMenuItem, let window: NSWindow = item.representedObject as? NSWindow else {
             //  No contextual window, load panel and its playlist controller
             do {
-                let doc = try docController.makeUntitledDocument(ofType: k.Playlist)
+                let doc = try docController.makeUntitledDocument(ofType: k.GblsType)
                 if 0 == doc.windowControllers.count { doc.makeWindowControllers() }
 				doc.showWindows()
             }
@@ -1166,7 +1178,7 @@ let sameWindow : ViewOptions = []
 			else
 			{
 				sender.representedObject = snapshotURL
-				let notif = Notification(name: Notification.Name(rawValue: "SnapshotAll"), object: sender)
+				let notif = Notification(name: .snapshotAll, object: sender)
 				NotificationCenter.default.post(notif)
 			}
 		}
@@ -1404,7 +1416,7 @@ let sameWindow : ViewOptions = []
 		NotificationCenter.default.addObserver(
 			self,
 			selector: #selector(AppDelegate.quickQuiet(_:)),
-			name: NSNotification.Name(rawValue: "quickQuiet"),
+			name: .quickQuiet,
 			object: nil)
 
         //  So they can interact everywhere with us without focus
@@ -1421,7 +1433,7 @@ let sameWindow : ViewOptions = []
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(AppDelegate.haveNewTitle(_:)),
-            name: NSNotification.Name(rawValue: "NewURL"),
+			name: .newTitle,
             object: nil)
 
         //  Load sandbox bookmark url when necessary
@@ -1476,23 +1488,23 @@ let sameWindow : ViewOptions = []
         if let plists = self.defaults.dictionary(forKey: keyPath) {
             for (name,plist) in plists {
                 guard let items = plist as? [Dictionary<String,Any>] else {
-                    let playlist = PlayList.init(name: name, list: [PlayItem]())
+                    let playlist = PlayList(name: name, list: [PlayItem]())
                     playlists.append(playlist)
                     continue
                 }
                 var list : [PlayItem] = [PlayItem]()
                 for plist in items {
-                    let item = PlayItem.init(with: plist)
+                    let item = PlayItem(from: plist)
                     list.append(item)
                 }
-                let playlist = PlayList.init(name: name, list: list)
+                let playlist = PlayList(name: name, list: list)
                 playlists.append(playlist)
             }
         }
         else
         if let dicts = self.defaults.array(forKey: keyPath) as? [Dictionary<String,Any>] {
             for dict in dicts {
-				let playlist = PlayList.init(with: dict)
+				let playlist = PlayList(with: dict)
                 playlists.append(playlist)
             }
         }
@@ -1503,15 +1515,15 @@ let sameWindow : ViewOptions = []
 					var list = [PlayItem]()
 					if let items = self.defaults.array(forKey: name) {
 						for item in items {
-							let playitem = PlayItem.init(with: (item as? Dictionary<String, Any>)!)
+							let playitem = PlayItem(from: (item as? Dictionary<String, Any>)!)
 							list.append(playitem)
 						}
 					}
-                    let playlist = PlayList.init(name: name, list: list)
+                    let playlist = PlayList(name: name, list: list)
                     playlists.append(playlist)
                     continue
                 }
-                let playlist = PlayList.init(with: plist)
+                let playlist = PlayList(with: plist)
                 playlists.append(playlist)
             }
         }
@@ -1551,11 +1563,11 @@ let sameWindow : ViewOptions = []
                     // Load histories from defaults up to their maximum
                     for playitem in items.suffix(keep) {
                         if let name : String = playitem as? String, let dict = defaults.dictionary(forKey: name) {
-                            self._histories?.append(PlayItem.init(with: dict))
+                            self._histories?.append(PlayItem(from: dict))
                         }
                         else
                         if let dict : Dictionary <String,AnyObject> = playitem as? Dictionary <String,AnyObject> {
-                            self._histories?.append(PlayItem.init(with: dict))
+                            self._histories?.append(PlayItem(from: dict))
                         }
                         else
                         {
@@ -1575,8 +1587,8 @@ let sameWindow : ViewOptions = []
 	var _historyCache : PlayList?
 	var  historyCache : PlayList {
 		if  _historyCache == nil {
-			_historyCache = PlayList.init(name: UserSettings.HistoryName.value,
-										  list: histories)
+			_historyCache = PlayList(name: UserSettings.HistoryName.value,
+									 list: histories)
 		}
 		return _historyCache!
 	}
@@ -1603,21 +1615,21 @@ let sameWindow : ViewOptions = []
     var globalKeyDownMonitor : Any? = nil
     var shiftKeyDown : Bool = false {
         didSet {
-            let notif = Notification(name: Notification.Name(rawValue: "shiftKeyDown"),
-                                     object: NSNumber(booleanLiteral: shiftKeyDown));
+			let notif = Notification(name: .shiftKeyDown,
+									 object: NSNumber(booleanLiteral: shiftKeyDown));
             NotificationCenter.default.post(notif)
         }
     }
     var optionKeyDown : Bool = false {
         didSet {
-            let notif = Notification(name: Notification.Name(rawValue: "optionKeyDown"),
+			let notif = Notification(name: .optionKeyDown,
                                      object: NSNumber(booleanLiteral: optionKeyDown));
             NotificationCenter.default.post(notif)
         }
     }
     var commandKeyDown : Bool = false {
         didSet {
-            let notif = Notification(name: Notification.Name(rawValue: "commandKeyDown"),
+			let notif = Notification(name: .commandKeyDown,
                                      object: NSNumber(booleanLiteral: commandKeyDown))
             NotificationCenter.default.post(notif)
         }
@@ -1626,7 +1638,7 @@ let sameWindow : ViewOptions = []
     func keyDownMonitor(event: NSEvent) -> Bool {
         switch event.modifierFlags.intersection(NSEvent.ModifierFlags.deviceIndependentFlagsMask) {
         case [NSEvent.ModifierFlags.control, NSEvent.ModifierFlags.option, NSEvent.ModifierFlags.command]:
-            let notif = Notification(name: Notification.Name(rawValue: "quickQuiet"), object: nil)
+			let notif = Notification(name: .quickQuiet, object: nil)
             NotificationCenter.default.post(notif)
 			print("control-option-command keys are pressed")
 /*
@@ -1674,7 +1686,7 @@ let sameWindow : ViewOptions = []
             return true
             
         case [NSEvent.ModifierFlags.option, NSEvent.ModifierFlags.command]:
-            let notif = Notification(name: Notification.Name(rawValue: "optionAndCommandKeysDown"),
+			let notif = Notification(name: .optionAndCommandKeysDown,
                                      object: NSNumber(booleanLiteral: commandKeyDown))
             NotificationCenter.default.post(notif)
             return true
@@ -1710,7 +1722,7 @@ let sameWindow : ViewOptions = []
         SMLoginItemSetEnabled(launcherAppId as CFString, true)
 
         if isRunning {
-            DistributedNotificationCenter.default().post(name: .killHe3Launcher, object: Bundle.main.bundleIdentifier!)
+            DistributedNotificationCenter.default().post(name: .killLauncher, object: Bundle.main.bundleIdentifier!)
         }
 
         // Local/Global Monitor
@@ -1869,36 +1881,22 @@ let sameWindow : ViewOptions = []
 
     @objc fileprivate func haveNewTitle(_ notification: Notification) {
         guard UserSettings.HistorySaves.value else { return }
-        guard let info = notification.userInfo, let webView : MyWebView = info[k.view] as? MyWebView, !webView.incognito else { return }
-        guard let itemURL = notification.object as? URL, itemURL != webView.homeURL else { return }
-        
-        let item : PlayItem = PlayItem.init()
-        var fini = (info[k.fini] as AnyObject).boolValue == true
-        
+		guard let webView : MyWebView = notification.object as? MyWebView, !webView.incognito else { return }
+		guard let info = notification.userInfo else { return }
+		let item = webView.playitem
+		let link = item.link
+		
+		guard link != webView.homeURL else { return }
+		let fini = (info[k.fini] as AnyObject).boolValue == true
+ 
         //  If the title is already seen, update global and playlists
-        if let dict = defaults.dictionary(forKey: itemURL.absoluteString) {
-            item.update(with: dict)
+		if nil != defaults.dictionary(forKey: item.link.absoluteString) {
+			//  publish tally across playlists
+			for play in playlists {
+				guard let seen = play.list.link(item.link.absoluteString) else { continue }
+				seen.plays += fini ? 0 : 1
+			}
         }
-        else
-        {
-            if let fileURL: URL = (itemURL as NSURL).filePathURL {
-                let path = fileURL.absoluteString//.stringByRemovingPercentEncoding
-                let attr = metadataDictionaryForFileAt(fileURL.path)
-                let fuzz = (itemURL as AnyObject).deletingPathExtension!!.lastPathComponent as NSString
-                item.name = fuzz.removingPercentEncoding!
-                item.link = URL.init(string: path)!
-                item.time = attr?[kMDItemDurationSeconds] as? TimeInterval ?? 0
-            }
-            else
-            {
-                item.name = itemURL.lastPathComponent
-                item.link = itemURL
-                item.time = 0
-            }
-            fini = false
-        }
-        item.rank = histories.count + 1
-        histories.append(item)
 
         //  if not finished bump plays for this item
         if fini {
@@ -1907,18 +1905,15 @@ let sameWindow : ViewOptions = []
         }
         else
         {
-            //  publish tally across playlists
-            for play in playlists {
-                guard let seen = play.list.link(item.link.absoluteString) else { continue }
-                seen.plays += 1
-            }
+			item.rank = histories.count + 1
+			histories.append(item)
         }
         
         //  always synchronize this item to defaults - lazily
         defaults.set(item.dictionary(), forKey: item.link.absoluteString)
         
         //  tell any playlist controller we have updated history
-		let notif = Notification(name: Notification.Name(rawValue: k.item), object: item,
+		let notif = Notification(name: .playitem, object: item,
 								 userInfo: [k.list : historyCache])
         NotificationCenter.default.post(notif)
     }
@@ -2244,7 +2239,7 @@ let sameWindow : ViewOptions = []
             // Notice: string will contain whole selection, not just the urls
             // So this may (and will) fail. It should instead find url in whole
             // Text somehow
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "LoadURLString"), object: selection)
+			NotificationCenter.default.post(name: .loadURLString, object: selection)
         }
     }
     
@@ -2258,8 +2253,6 @@ let sameWindow : ViewOptions = []
 	
     func application(_ sender: NSApplication, openFile path: String) -> Bool {
         // Create a FileManager instance
-        let fileManager = FileManager.default
-
 		do {
 			let files = try fileManager.contentsOfDirectory(atPath: path)
 			for file in files {
@@ -2268,17 +2261,12 @@ let sameWindow : ViewOptions = []
 			return true
 		} catch { }
 
-		guard fileManager.fileExists(atPath: path) else {
-			print("Yoink exists? \(path)")
-			return false
-		}
-
 		guard let url = URL(string: path.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!) else {
 			print("Yoink encoding URL\(path)")
 			return false
 		}
 
-		if isSandboxed != storeBookmark(url: url) { return false }
+		guard preflight(url) else { return false }
 		
 		return openFileInNewWindow(url)
 	}
@@ -2529,7 +2517,7 @@ let sameWindow : ViewOptions = []
 				DispatchQueue.main.async {
 					///NSApp.presentError(error)
 					self.userAlertMessage(error.localizedDescription,
-										  info: String(format: "Stale, Missing? Update bookmark:\n%@",
+										  info: String(format: "Please update stale, missing bookmark:\n%@",
 													   url.absoluteString.removingPercentEncoding!))
 				}
 			}

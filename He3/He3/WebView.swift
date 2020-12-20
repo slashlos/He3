@@ -243,7 +243,29 @@ class MyWebView : WKWebView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
+	
+	
+	var playitem: PlayItem {
+		get {
+			let item = PlayItem()
+			item.link = self.url ?? homeURL
+			let fuzz = (item.link as AnyObject).deletingPathExtension!!.lastPathComponent as NSString
+			item.name = fuzz.removingPercentEncoding!
+			let attr = appDelegate.metadataDictionaryForFileAt(item.link.path)
+			item.time = attr?[kMDItemDurationSeconds] as? TimeInterval ?? 0
+			item.rect = self.window?.frame ?? .zero
+			if let doc = self.window?.windowController?.document {
+				let settings = (doc as! Document).settings
+				item.label = settings.autoHideTitlePreference.value.rawValue
+				item.hover = settings.floatAboveAllPreference.value.rawValue
+				item.alpha = settings.opacityPercentage.value
+				item.trans = settings.translucencyPreference.value.rawValue
+				item.agent = settings.customUserAgent.value
+			}
+			return item
+		}
+	}
+
     @objc internal func menuClicked(_ sender: AnyObject) {
         if let menuItem = sender as? NSMenuItem {
             print("Menu \(menuItem.title) clicked")
@@ -424,7 +446,7 @@ class MyWebView : WKWebView {
 
         if url.isFileURL
         {
-            if appDelegate.isSandboxed != appDelegate.storeBookmark(url: url) {
+			if !appDelegate.preflight(url) {
                 print("Yoink, unable to sandbox \(url)")
                 return false
             }
@@ -566,7 +588,7 @@ class MyWebView : WKWebView {
 
     // MARK: Drag and Drop - Before Release
     func shouldAllowDrag(_ info: NSDraggingInfo) -> Bool {
-		guard let doc = webViewController?.document, doc.fileType != k.Playlist else { return false }
+		guard let doc = webViewController?.document, ![k.PlayType,k.PlayName].contains(doc.fileType) else { return false }
         let pboard = info.draggingPasteboard
         let items = pboard.pasteboardItems!
         var canAccept = false
@@ -1035,14 +1057,23 @@ class MyWebView : WKWebView {
         item.target = docController
         menu.addItem(item)
         
-        item = NSMenuItem(title: "New Incognito", action: #selector(docController.altDocument(_:)), keyEquivalent: "")
-        item.keyEquivalentModifierMask = NSEvent.ModifierFlags.shift
+        item = NSMenuItem(title: "New Playlist", action: #selector(docController.altDocument(_:)), keyEquivalent: "")
+        item.keyEquivalentModifierMask = NSEvent.ModifierFlags.control
 		item.tag = ViewOptions.i_view.rawValue
+		item.representedObject = k.PlayType
         item.isAlternate = true
         item.target = docController
         menu.addItem(item)
 
-        item = NSMenuItem(title: "New Tab", action: #selector(docController.newDocument(_:)), keyEquivalent: "")
+		item = NSMenuItem(title: "New Incognito", action: #selector(docController.altDocument(_:)), keyEquivalent: "")
+		item.keyEquivalentModifierMask = NSEvent.ModifierFlags.shift
+		item.tag = ViewOptions.i_view.rawValue
+		item.representedObject = k.IcntType
+		item.isAlternate = true
+		item.target = docController
+		menu.addItem(item)
+
+		item = NSMenuItem(title: "New Tab", action: #selector(docController.newDocument(_:)), keyEquivalent: "")
         item.keyEquivalentModifierMask = NSEvent.ModifierFlags.option
 		item.tag = ViewOptions.t_view.rawValue
         item.representedObject = self.window

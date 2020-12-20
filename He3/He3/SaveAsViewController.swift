@@ -11,6 +11,7 @@ import AppKit
 
 class SaveAsViewController : NSViewController {
 	
+	@IBOutlet var secureFileEncoding: NSButton!
 	@IBOutlet var formatPopup: NSPopUpButton!
 	@IBOutlet var webArchiveMenuItem: NSMenuItem!
 }

@@ -18,7 +18,7 @@ fileprivate var appDelegate : AppDelegate {
 
 class LaunchController: NSWindowController {
     func windowShouldClose(_ sender: NSWindow) -> Bool {
-		let notif = Notification(name: Notification.Name(rawValue: "autoLaunchChange"), object: nil)
+		let notif = Notification(name: .autoLaunchChange, object: nil)
 		NotificationCenter.default.post(notif)
 		
 		return true
@@ -33,7 +33,7 @@ class LaunchViewController: NSViewController {
 			window.orderOut(sender)
 		}
 		
-		let notif = Notification(name: Notification.Name(rawValue: "autoLaunchChange"), object: nil)
+		let notif = Notification(name: .autoLaunchChange, object: nil)
 		NotificationCenter.default.post(notif)
 	}
 	
@@ -61,7 +61,7 @@ class LaunchViewController: NSViewController {
 							 info: appBundleIdentifier)
 		}
 		
-		let notif = Notification(name: Notification.Name(rawValue: "autoLaunchChange"), object: nil)
+		let notif = Notification(name: .autoLaunchChange, object: nil)
 		NotificationCenter.default.post(notif)
 	}
 	

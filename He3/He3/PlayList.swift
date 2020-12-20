@@ -75,7 +75,7 @@ class PlayList : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
         }
     }
 	
-	var _thumbnailImage: NSImage?
+	@objc dynamic var _thumbnailImage: NSImage?
 	@objc dynamic var thumbnailImage: NSImage {
 		get {
 			guard _thumbnailImage == nil else { return _thumbnailImage! }
@@ -93,7 +93,7 @@ class PlayList : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
     
 	var fileURL: URL {
 		get {
-			let path = (name.hasSuffix(k.h3l) || name.hasSuffix(k.hpl)) ? name : name + "." + k.hpl
+			let path = [k.h3l,k.hpl].contains(name.pathExtension) ? name : name + "." + k.hpl
 			return URL.init(fileURLWithPath: path)
 		}
 	}
@@ -110,14 +110,14 @@ class PlayList : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(shiftKeyDown(_:)),
-            name: NSNotification.Name(rawValue: "shiftKeyDown"),
+			name: .shiftKeyDown,
             object: nil)
 
         //  watch option key changes affecting our playlist
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(optionKeyDown(_:)),
-            name: NSNotification.Name(rawValue: "optionKeyDown"),
+			name: .optionKeyDown,
             object: nil)
     }
     
@@ -165,7 +165,7 @@ class PlayList : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
                 else
                 if createMissingItems
                 {
-                    list.append(PlayItem.init(with: plist))
+                    list.append(PlayItem(from: plist))
                 }
             }
         }
@@ -296,7 +296,7 @@ class PlayList : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
 	
 	static func object(withItemProviderData data: Data, typeIdentifier: String) throws -> Self {
 		do {
-			let item = try PlayList.init(itemProviderData: data, typeIdentifier: typeIdentifier)
+			let item = try PlayList(itemProviderData: data, typeIdentifier: typeIdentifier)
 			return item as! Self
 		} catch let error {
 			print("object: \(error.localizedDescription)")

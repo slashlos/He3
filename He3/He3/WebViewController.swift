@@ -292,23 +292,17 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
         super.viewWillAppear()
 
 		//	document.fileURL is recent, webView.url is current URL
-		if let document = self.document, let url = document.fileURL, url.absoluteString != k.blank {
-			if url != webView.url || [k.hpi,k.h3i,k.hic,k.h3c].contains(url.pathExtension) {
+		if let doc = self.document, let url = doc.fileURL, url.absoluteString != k.blank {
+			if url != webView.url || [.playitem,.playlist,.playlists].contains(doc.docGroup) {
 				//	Initially, but after window restoration, restore saved frame
 				if let window = self.view.window,
-					!NSEqualRects(window.frame, document.settings.rect.value),
-					!NSEqualSizes(NSZeroSize, document.settings.rect.value.size) {
-					window.setFrame(document.settings.rect.value, display: true)
+					!NSEqualRects(window.frame, doc.settings.rect.value),
+					!NSEqualSizes(NSZeroSize, doc.settings.rect.value.size) {
+					window.setFrame(doc.settings.rect.value, display: true)
 				}
 				
-				if [k.Playlist,k.kUTHe3PlayList,k.kUTHe3Play3ist].contains(document.fileType)
-				|| [k.hpl,k.h3l].contains(document.fileURL?.pathExtension) {
-					// nothing to do here
-				}
-				else
-				if [k.Playitem,k.kUTHe3PlayItem,k.kUTHe3Play3tem].contains(document.fileType)
-				|| [k.hpi,k.h3i,k.hic,k.h3c].contains(document.fileURL?.pathExtension)  {
-					if let link = document.items.first?.list.first?.link {
+				if [.playitem].contains(doc.docGroup) {
+					if let link = doc.items.first?.list.first?.link {
 						if link.absoluteString == k.blank {
 							clear()
 						}
@@ -317,6 +311,10 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
 							_ = loadURL(url: link)
 						}
 					}
+				}
+				else
+				if [.playlist,.playlists].contains(doc.docGroup) {
+					// nothing to do here
 				}
 				else
 				{
@@ -338,7 +336,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
     override func viewDidAppear() {
         super.viewDidAppear()
         
-		guard let doc = self.document, doc.fileType != k.Playlist else { return }
+		guard let doc = self.document, ![k.PlayType,k.PlayName].contains(doc.fileType) else { return }
 		guard !viewAppeared else { return }
 		
         //  https://stackoverflow.com/questions/32056874/programmatically-wkwebview-inside-an-uiview-with-auto-layout
@@ -912,7 +910,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
 
                     //  Initial recording for this url session
                     if UserSettings.HistorySaves.value, !webView.incognito {
-                        let notif = Notification(name: Notification.Name(rawValue: "NewURL"), object: url, userInfo: [k.fini : false, k.view : self.webView as Any])
+						let notif = Notification(name: .newTitle, object: self.webView, userInfo: [k.fini : false])
                         NotificationCenter.default.post(notif)
                     }
                     

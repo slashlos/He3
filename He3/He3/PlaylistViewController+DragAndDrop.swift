@@ -27,6 +27,7 @@ extension PlaylistViewController: NSTableViewDataSource {
     func tableView(_ tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {
 		let arrayController = [playlistArrayController,playitemArrayController][tableView.tag]!
 		let item = (arrayController.arrangedObjects as! [AnyObject])[row]
+		let fileURL = item.fileURL!
 		
 		let fileExtension = (tableView as! PlayTableView).pathExtension
 		let typeIdentifier = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension,
@@ -36,7 +37,7 @@ extension PlaylistViewController: NSTableViewDataSource {
 		//	this dictionary gets us to the source object for our provider delegate
 		provider.userInfo = [FilePromiseProvider.UserInfoKeys.tagKey : tableView.tag,
 							 FilePromiseProvider.UserInfoKeys.rowKey : row,
-							 FilePromiseProvider.UserInfoKeys.urlKey : item.fileURL as Any]
+							 FilePromiseProvider.UserInfoKeys.urlKey : fileURL as Any]
 		return provider
     }
 	
@@ -214,16 +215,16 @@ extension PlaylistViewController: NSTableViewDataSource {
 			//  If we already know this url 1) known document, 2) our global items cache, use its settings
 			if [k.h3l,k.hpl].contains(url.pathExtension), let dict = NSDictionary.init(contentsOf: url) {
 				if nil != dict.value(forKey: k.list) {
-					for item in PlayList.init(with: dict as! Dictionary<String, Any>).list {
+					for item in PlayList(with: dict as! Dictionary<String, Any>).list {
 						playitems.append(item)
 					}
 				}
 				continue
 			}
 			else
-			if [k.h3i,k.hpi].contains(url.pathExtension), let dict = NSDictionary.init(contentsOf: url) {
+			if [k.h3i,k.hpi,k.hic].contains(url.pathExtension), let dict = NSDictionary.init(contentsOf: url) {
 				if nil != dict.value(forKey: k.link) {
-					playitem = PlayItem.init(with: dict as! Dictionary<String, Any>)
+					playitem = PlayItem(from: dict as! Dictionary<String, Any>)
 					playitems.append(playitem)
 				}
 				continue
@@ -234,7 +235,7 @@ extension PlaylistViewController: NSTableViewDataSource {
 			}
 			else
 			if let dict = defaults.dictionary(forKey: (url.absoluteString)) {
-				playitem = PlayItem.init(with: dict)
+				playitem = PlayItem(from: dict)
 			}
 			else
 			{
@@ -286,7 +287,7 @@ extension PlaylistViewController: NSTableViewDataSource {
 						if error != nil {
 							self.reportURLError(fileURL, error: error!)
 						} else {
-							let item = PlayItem.init(name: fileURL.lastPathComponent, link: fileURL, time: 0.0, rank: 0)
+							let item = PlayItem(name: fileURL.lastPathComponent, link: fileURL, time: 0.0, rank: 0)
 							self.add(item: item, atIndex: toRow)
 
 							/** Select the newly inserted item,
@@ -317,7 +318,7 @@ extension PlaylistViewController: NSTableViewDataSource {
 						playlistArrayController.setSelectionIndex(toRow)
 
 					default:
-						playlist = PlayList.init(name: (url as URL).lastPathComponent, list: [PlayItem]())
+						playlist = PlayList(name: (url as URL).lastPathComponent, list: [PlayItem]())
 						add(list: playlist!, atIndex: -1)
 						playlistTableView.reloadData()
 						
@@ -394,7 +395,7 @@ extension PlaylistViewController: NSTableViewDataSource {
                             let filePath = pasteboardItem.string(forType: itemType),
                             let url = URL(string: filePath) {
 							
-							let item = PlayItem.init(name: url.simpleSpecifier, link: url, time: 0.0, rank: 0)
+							let item = PlayItem(name: url.simpleSpecifier, link: url, time: 0.0, rank: 0)
 							self.add(item: item, atIndex: toRow)
 							numItemsInserted += 1
                         }

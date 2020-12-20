@@ -108,7 +108,8 @@ internal struct UserSettings {
     static let ShareWebCookies = Setting<Bool>("shareWebCookies", defaultValue: true)
     static let StoreWebCookies = Setting<Bool>("storeWebCookies", defaultValue: true)
 	static let UseLocalAssets = Setting<Bool>("useLocalAssets", defaultValue: false)
-
+	static let SecureFileEncoding = Setting<Bool>("secureFileArchiving", defaultValue: true)
+	
     //  User non-document windows to restore
     static let KeepListName = Setting<String>("keepList", defaultValue: "Keep")
     
