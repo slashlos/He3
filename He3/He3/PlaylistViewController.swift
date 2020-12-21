@@ -910,19 +910,21 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
 		
 		playPlaylist(sender)
 		
-        //  Unless we're the standalone helium playlist window dismiss all
-        if !(self.view.window?.isKind(of: Panel.self))! {
-            /// dismiss whatever got us here
-            super.dismiss(sender)
+		//  Unless we're the standalone helium playlist window dismiss all
+		guard let window = NSApp.keyWindow, !window.className.hasSuffix("AlertPanel") else { return }
+		
+		if !(self.view.window?.isKind(of: Panel.self))! {
+			/// dismiss whatever got us here
+			super.dismiss(sender)
 
-            //  If we were run modally as a window, close it
-            //  current window to be reused for the 1st item
-            if sender.isKind(of: NSTableView.self),
-                let ppc = self.view.window?.windowController, ppc.isKind(of: PlaylistPanelController.self) {
-                NSApp.abortModal()
-                ppc.window?.orderOut(sender)
-            }
-        }
+			//  If we were run modally as a window, close it
+			//  current window to be reused for the 1st item
+			if sender.isKind(of: NSTableView.self),
+				let ppc = self.view.window?.windowController, ppc.isKind(of: PlaylistPanelController.self) {
+				NSApp.abortModal()
+				ppc.window?.orderOut(sender)
+			}
+		}
 	}
 	
     @objc @IBAction func playPlaylist(_ sender: AnyObject) {
