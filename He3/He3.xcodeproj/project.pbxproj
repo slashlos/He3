@@ -54,6 +54,7 @@
 		0F9EF9592471FAF9008DDB93 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD2127E2466D7C800EA5D6D /* Types.swift */; };
 		0F9EF95B24776468008DDB93 /* listIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F9EF95A24776468008DDB93 /* listIcon.png */; };
 		0FACD4C42467953000A23B1F /* PromiseFileProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FACD4C32467953000A23B1F /* PromiseFileProvider.swift */; };
+		0FB09334259BAAD2007B3DFD /* He3Script.sh in Resources */ = {isa = PBXBuildFile; fileRef = 0FB09333259BAAD2007B3DFD /* He3Script.sh */; };
 		0FB276F624B1EDD800695BB1 /* PrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB276F524B1EDD800695BB1 /* PrefsViewController.swift */; };
 		0FB6B15D25560A5700363178 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0FB6B16025560A5700363178 /* Localizable.strings */; };
 		0FB6B15E25560A5700363178 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0FB6B16025560A5700363178 /* Localizable.strings */; };
@@ -245,6 +246,8 @@
 		0F9EF953247019E6008DDB93 /* itemIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = itemIcon.png; path = "He3/Assets/item Icon/itemIcon.png"; sourceTree = "<group>"; };
 		0F9EF95A24776468008DDB93 /* listIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = listIcon.png; path = "He3/Assets/list Icon/listIcon.png"; sourceTree = "<group>"; };
 		0FACD4C32467953000A23B1F /* PromiseFileProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseFileProvider.swift; sourceTree = "<group>"; };
+		0FB09333259BAAD2007B3DFD /* He3Script.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = He3Script.sh; sourceTree = "<group>"; };
+		0FB0935F259BAD1B007B3DFD /* He3ShareExtensionScript.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = He3ShareExtensionScript.sh; sourceTree = "<group>"; };
 		0FB276F524B1EDD800695BB1 /* PrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsViewController.swift; sourceTree = "<group>"; };
 		0FB6B15525560A3000363178 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/ShareViewController.strings; sourceTree = "<group>"; };
 		0FB6B15F25560A5700363178 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -352,6 +355,8 @@
 		0F2370C4244E8CEA009F7914 = {
 			isa = PBXGroup;
 			children = (
+				0FB0935F259BAD1B007B3DFD /* He3ShareExtensionScript.sh */,
+				0FB09333259BAAD2007B3DFD /* He3Script.sh */,
 				0F3716FD254861FD00D65218 /* he3_icnt.png */,
 				0F3716EE254860CF00D65218 /* icntIcon.jpg */,
 				0F3716E52548600700D65218 /* he3_logo.png */,
@@ -757,6 +762,7 @@
 				0F2370D7244E8CEC009F7914 /* Assets.xcassets in Resources */,
 				0F55CD6A24A67B7100E49C6A /* itemIcon.jpg in Resources */,
 				0F5290BD2451D3C400A9B9DC /* He3.icns in Resources */,
+				0FB09334259BAAD2007B3DFD /* He3Script.sh in Resources */,
 				0F237113244E9AA1009F7914 /* Help in Resources */,
 				0F55CD6624A6795600E49C6A /* icntIcon.jpg in Resources */,
 				0FBD9BBC2454767300332EEB /* icntIcon.icns in Resources */,
@@ -836,7 +842,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Localize our files with BartyCroouch: https://github.com/Flinesoft/BartyCrouch\nif which bartycrouch > /dev/null; then\n    bartycrouch update -x\n    \n    bartycrouch lint -x\nelse\n    echo \"warning: BartyCrouch not installed, download it from https://github.com/Flinesoft/BartyCrouch\"\nfi\n";
+			shellScript = "source He3Script.sh\n";
 		};
 		0FBD9BCA24566C3B00332EEB /* Build DMG */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -871,7 +877,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\nset -x\nbuildPlist=\"He3/Info.plist\"\nsharePlist=\"He3ShareExtension/Info.plist\"\ntestsPlist=\"He3Tests/Info.plist\"\nloginPlist=\"He3Launcher/Info.plist\"\nqlExtPlist=\"He3QLExtension/Info.plist\"\n\nbuildMajor=$(/usr/libexec/PlistBuddy -c \"Print CFBuildMajor\" $buildPlist)\nbuildMinor=$(/usr/libexec/PlistBuddy -c \"Print CFBuildMinor\" $buildPlist)\nbuildPatch=$(/usr/libexec/PlistBuddy -c \"Print CFBuildPatch\" $buildPlist)\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBuildNumber\" $buildPlist)\nbuildDate=$(date \"+%Y%m%d.%H%M%S\")\n\n# Increment the buildNumber if asked\nbuildIncr=$(/usr/libexec/PlistBuddy -c \"Print CFBuildIncrement\" $buildPlist)\nif [ \"$buildIncr\" = \"true\" ];\nthen\n    buildNumber=$(($buildNumber + 1))\nfi\n\n# Formulate the bundle versions\nbundleVersion=$buildMajor.$buildMinor.$buildNumber\nbundleShortVersion=$buildMajor.$buildMinor.$buildPatch\n\n# Set the version numbers in the buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildNumber $buildNumber\" $buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildDate $buildDate\" $buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $bundleVersion\" $buildPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $bundleShortVersion\" $buildPlist\n\n# Propagate to share\n/usr/libexec/PlistBuddy -c \"Set :CFBuildNumber $buildNumber\" $sharePlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildDate $buildDate\" $sharePlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $bundleVersion\" $sharePlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $bundleShortVersion\" $sharePlist\n\n# Propagate to tests\n/usr/libexec/PlistBuddy -c \"Set :CFBuildNumber $buildNumber\" $testsPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildDate $buildDate\" $testsPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $bundleVersion\" $testsPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $bundleShortVersion\" $testsPlist\n\n# Propagate to launcher\n/usr/libexec/PlistBuddy -c \"Set :CFBuildNumber $buildNumber\" $loginPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildDate $buildDate\" $loginPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $bundleVersion\" $loginPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $bundleShortVersion\" $loginPlist\n\n# Propagate to QL Extension\n/usr/libexec/PlistBuddy -c \"Set :CFBuildNumber $buildNumber\" $qlExtPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBuildDate $buildDate\" $qlExtPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $bundleVersion\" $qlExtPlist\n/usr/libexec/PlistBuddy -c \"Set :CFBundleShortVersionString $bundleShortVersion\" $qlExtPlist\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\nsource He3ShareExtensionScript.sh\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
