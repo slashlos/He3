@@ -1020,6 +1020,3 @@
 
 /* Class = "NSMenuItem"; title = "Playlists"; ObjectID = "2s5-Uv-13m"; */
 "2s5-Uv-13m.title" = "Playlists";
-
-/* Class = "NSDateFormatter"; ibShadowedDateFormat = "yy/MM/dd h:mm a"; ObjectID = "NPl-V6-K7z"; */
-"NPl-V6-K7z.ibShadowedDateFormat" = "yy/MM/dd h:mm a";

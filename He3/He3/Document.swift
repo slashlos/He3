@@ -152,7 +152,10 @@ class Document : NSDocument {
     func playitem() -> PlayItem {
         let item = PlayItem()
         item.name = self.displayName
-		if let linkURL = ((items.first)?.list.first)?.link { item.link = linkURL }
+		if let linkURL = heliumPanelController?.webView?.url {
+			item.link = linkURL
+			item.name = linkURL.deletingPathExtension().lastPathComponent
+		}
         item.date = self.settings.date.value
         item.time = self.settings.time.value
         item.rank = self.settings.rank.value
@@ -624,37 +627,49 @@ class Document : NSDocument {
         }
     }
     
+	
+	@objc @IBAction func selectFileType(_ sender: Any?) {
+		if let item = (sender as! NSPopUpButton).selectedItem, item.isEnabled {
+			let type = [k.ItemType,k.PlayType,k.GblsType,k.WebArchive][item.tag]
+			if let extn = self.fileNameExtension(forType: type, saveOperation: .saveAsOperation) {
+				savePanel.allowedFileTypes = [extn]
+			}
+		}
+	}
+
+	var savePanel = NSSavePanel()
+
     @objc @IBAction override func saveAs(_ sender: Any?) {
         if let window = windowControllers.first?.window {
 			let storyboard = NSStoryboard(name: "Main", bundle: nil)
-            let savePanel = NSSavePanel()
-			let saveAsController = (storyboard.instantiateController(withIdentifier: "SaveAsViewController") as! SaveAsViewController)
+ 			let saveAsController = (storyboard.instantiateController(withIdentifier: "SaveAsViewController") as! SaveAsViewController)
 			let saveAsView = saveAsController.view
 			let formatPopup = saveAsController.formatPopup
-
-			//	Only use current file types
+			formatPopup?.target = self
+			
 			///let saveType = [k.ItemType,k.PlayType].contains(self.fileType) ? self.fileType! : k.ItemType
-			let saveType = [k.ItemType,k.PlayType,k.GblsType].contains(self.fileType)
-				? self.fileType!
-				: ["com.slashlos.he3.h3i": k.ItemType,
-				   "com.slashlos.he3.h3l": k.PlayType][self.fileType ?? k.ItemType]
+			//let saveType = [k.ItemType,k.PlayType,k.GblsType].contains(self.fileType) ? self.fileType : k.ItemType
 
 			//	Allow web archive as selection but not allowed as file type
-			formatPopup?.item(withTitle: k.ItemName)?.isEnabled = .playitem == docGroup
-			formatPopup?.item(withTitle: k.ItemName)?.isHidden = .playitem != docGroup
-
 			formatPopup?.item(withTitle: k.GblsName)?.isEnabled = [.playlist,.playlists].contains(docGroup)
 			formatPopup?.item(withTitle: k.GblsName)?.isHidden = ![.playlist,.playlists].contains(docGroup)
 
 			formatPopup?.item(withTitle: k.WebArchive)?.isEnabled = [k.http,k.https].contains(fileURL?.scheme)
 			formatPopup?.item(withTitle: k.WebArchive)?.isHidden = ![k.http,k.https].contains(fileURL?.scheme)
 			
-			formatPopup?.selectItem(withTitle: defaultDraftName())
+			if let item = formatPopup?.item(withTitle: defaultDraftName()) {
+				formatPopup?.select(item)
+			}
+			else
+			{
+				//	We can always write a playitem
+				formatPopup?.selectItem(at: 0)
+			}
 			
 			//	We will only saveAs or write to our own supported types
 			savePanel.nameFieldStringValue = url?.lastPathComponent ?? defaultDraftName()
-			savePanel.allowedFileTypes = [self.fileNameExtension(forType: saveType!, saveOperation: .saveAsOperation)!]
-
+			savePanel.allowedFileTypes = [self.fileNameExtension(forType: k.ItemType, saveOperation: .saveAsOperation)!]
+			
 			//	Fixup autolayout
 			saveAsView.translatesAutoresizingMaskIntoConstraints = false
 			saveAsView.widthAnchor.constraint(greaterThanOrEqualToConstant: 360.0).isActive = true
@@ -664,7 +679,7 @@ class Document : NSDocument {
             savePanel.beginSheetModal(for: window, completionHandler: { (result: NSApplication.ModalResponse) in
                 if result == .OK {
                     do {
-                        if let saveURL = savePanel.url, let tag = formatPopup?.selectedTag() {
+						if let saveURL = self.savePanel.url, let tag = formatPopup?.selectedTag() {
 							switch tag {
 							case 0,1,2:
 								try self.write(to: saveURL, ofType: [k.ItemType,k.PlayType,k.GblsType][tag])
