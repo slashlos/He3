@@ -221,12 +221,31 @@ extension WebViewController: WKNavigationDelegate {
 
 	func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
 		let authMethod = challenge.protectionSpace.authenticationMethod
-		print(String(format: "2AC: didReceive: %p \(authMethod)", webView))
 
 		guard let serverTrust = challenge.protectionSpace.serverTrust else { return completionHandler(.useCredential, nil) }
+		print(String(format: "2AC: didReceive: %p \(authMethod)", webView))
+		var cfError : CFError?
+		
+		guard (SecTrustEvaluateWithError(serverTrust, &cfError)) else {
+			if let error = cfError {
+				print(String(format: "2AC: didReceive: %p \(error.localizedDescription)", webView))
+			}
+
+			NSApp.presentError(cfError!)
+			completionHandler(.useCredential, nil)
+			return
+		}
+
 		let exceptions = SecTrustCopyExceptions(serverTrust)
-		SecTrustSetExceptions(serverTrust, exceptions)
-		completionHandler(.useCredential, URLCredential(trust: serverTrust))
+		if SecTrustSetExceptions(serverTrust, exceptions) {
+			print(String(format: "2AC: didReceive: %p .useCredential", webView))
+			completionHandler(.useCredential, URLCredential(trust: serverTrust))
+		}
+		else
+		{
+			print(String(format: "2AC: didReceive: %p credential(s) not accepted", webView))
+			completionHandler(.useCredential, nil)
+		}
 	}
 
 	func webViewWebContentProcessDidTerminate(_ webView: WKWebView) {
