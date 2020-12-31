@@ -415,7 +415,7 @@ class Document : NSDocument {
     override func read(from data: Data, ofType typeName: String) throws {
         //	Always try first for securely encoded archive
         do {
-			if [.playitem].contains(docGroup) {
+			if [k.ItemType].contains(typeName) || [.playitem].contains(docGroup) {
 				do {
 					let playlists = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSArray.self,PlayList.self,PlayItem.self], from: data) as! [PlayList]
 					for playlist in playlists {
@@ -430,7 +430,7 @@ class Document : NSDocument {
 				}
 			}
 			else
-			if [.playlist].contains(docGroup) {
+			if [k.PlayType].contains(typeName) || [.playlist].contains(docGroup) {
 				do {
 					let playlists = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSArray.self,PlayList.self,PlayItem.self], from: data) as! [PlayList]
 					for playlist in playlists {
@@ -450,7 +450,7 @@ class Document : NSDocument {
 				}
 			}
 			else
-			if [.playlists].contains(docGroup) {
+			if [k.GblsType].contains(typeName) || [.playlists].contains(docGroup) {
 				do {
 					let playlists = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSArray.self,PlayList.self,PlayItem.self], from: data) as! [PlayList]
 					for playlist in playlists {
@@ -634,6 +634,10 @@ class Document : NSDocument {
 			if let extn = self.fileNameExtension(forType: type, saveOperation: .saveAsOperation) {
 				savePanel.allowedFileTypes = [extn]
 			}
+			else
+			if 3 == item.tag {
+				savePanel.allowedFileTypes = [k.webarchive]
+			}
 		}
 	}
 
@@ -687,9 +691,9 @@ class Document : NSDocument {
 									self.updateChangeCount(.changeCleared)
 								}
 							case 3:
-								let archiveURL = saveURL.deletingPathExtension().appendingPathExtension(k.webarchive)
-								Swift.print("save webarchive: \(archiveURL.path)")
+								Swift.print("save webarchive: \(saveURL.path)")
 								if let wvc = window.contentViewController as? WebViewController {
+									saveAsController.webArchiveMenuItem.representedObject = saveURL
 									wvc.archive(saveAsController.webArchiveMenuItem)
 								}
 							default:
