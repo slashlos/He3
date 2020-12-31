@@ -29,6 +29,7 @@ class DocumentController : NSDocumentController {
 			print("\(error.localizedDescription)")
         }
 		
+		//	dynamic type names come here as workaround
 		doc = try Document.init(contentsOf: contentsURL, ofType: typeName)
 		doc.makeWindowControllers()
 		doc.revertToSaved(self)
