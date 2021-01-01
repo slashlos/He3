@@ -4,7 +4,7 @@
 //
 //  Created by Christian Hoffmann on 10/31/15.
 //  Copyright © 2015 Jaden Geller. All rights reserved.
-//  Copyright © 2017-2020 CD M Santiago. All rights reserved.
+//  Copyright © 2017-2021 CD M Santiago. All rights reserved.
 //
 
 import Foundation

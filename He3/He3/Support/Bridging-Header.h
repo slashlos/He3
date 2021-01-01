@@ -5,7 +5,7 @@
 //  He3 (Helium 3)
 //
 //  Created by Carlos D. Santiago on 4/20/20.
-//  Copyright © 2020 CD M Santiago. All rights reserved.
+//  Copyright © 2020-2021 CD M Santiago. All rights reserved.
 
 #import "WKWebViewPrivate.h"
 

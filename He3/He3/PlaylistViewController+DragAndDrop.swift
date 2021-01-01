@@ -330,7 +330,16 @@ extension PlaylistViewController: NSTableViewDataSource {
 					}
 					 
 				default: // playitemTableView:
-					playlist = playlistArrayController.selectedObjects.first as? PlayList
+					if let currlist = playlistArrayController.selectedObjects.first as? PlayList {
+						playlist = currlist
+					}
+					else
+					{
+						//	We must have a playlist to insert into
+						playlist = PlayList()
+						add(list: playlist!, atIndex: -1)
+						playlistTableView.reloadData()
+					}
 				}
 
 				//	see what item(s) we can muster from this URL

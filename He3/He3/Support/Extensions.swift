@@ -308,7 +308,6 @@ extension NSObject {
 }
 
 extension NSUserInterfaceItemIdentifier {
-	static let link = NSUserInterfaceItemIdentifier(rawValue: "link")
 	static let playlists = NSUserInterfaceItemIdentifier(rawValue: "Playlists")
 }
 

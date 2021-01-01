@@ -4,7 +4,7 @@
 //
 //  Created by Kyle Carson on 10/30/15.
 //  Copyright © 2015 Jaden Geller. All rights reserved.
-//  Copyright © 2020 CD M Santiago. All rights reserved.
+//  Copyright © 2020-2021 CD M Santiago. All rights reserved.
 //
 
 import Cocoa

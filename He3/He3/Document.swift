@@ -3,7 +3,7 @@
 //  He3 (Helium 3)
 //
 //  Created by Carlos D. Santiago on 6/27/17.
-//  Copyright © 2017-2020 CD M Santiago. All rights reserved.
+//  Copyright © 2017-2021 CD M Santiago. All rights reserved.
 //
 //  Document instance read/save/write are to default; use super for files
 

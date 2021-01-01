@@ -44,6 +44,6 @@
 		<string>$(PRODUCT_MODULE_NAME).ThumbnailProvider</string>
 	</dict>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2020 Carlos D. Santiago. All rights reserved.</string>
+	<string>Copyright © 2020-2021 Carlos D. Santiago. All rights reserved.</string>
 </dict>
 </plist>

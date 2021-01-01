@@ -4,7 +4,7 @@
 //
 //  Created by Jaden Geller on 4/9/15.
 //  Copyright (c) 2015 Jaden Geller. All rights reserved.
-//  Copyright © 2017-2020 CD M Santiago. All rights reserved.
+//  Copyright © 2017-2021 CD M Santiago. All rights reserved.
 //
 //  We have user IBAction centrally here, share by panel and webView controllers
 //  The design is to centrally house the preferences and notify these interested

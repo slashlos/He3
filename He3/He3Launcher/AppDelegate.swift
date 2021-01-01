@@ -9,7 +9,7 @@
 import Cocoa
 
 extension Notification.Name {
-    static let killHe3Launcher = Notification.Name("killHe3Launcher")
+	static let killLauncher = Notification.Name("killHe3Launcher")
 }
 
 @NSApplicationMain
