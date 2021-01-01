@@ -3,7 +3,7 @@
 //  He3
 //
 //  Created by Carlos D. Santiago on 10/25/20.
-//  Copyright © 2020 Carlos D. Santiago. All rights reserved.
+//  Copyright © 2020-2021 Carlos D. Santiago. All rights reserved.
 //
 
 import Cocoa

@@ -4,7 +4,7 @@
 #  He3
 #
 #  Created by Carlos D. Santiago on 12/29/20.
-#  Copyright © 2020 Carlos D. Santiago. All rights reserved.
+#  Copyright © 2020-2021 Carlos D. Santiago. All rights reserved.
 
 set -x
 buildPlist="He3/Info.plist"

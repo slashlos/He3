@@ -4,7 +4,7 @@
 #  He3
 #
 #  Created by Carlos D. Santiago on 12/29/20.
-#  Copyright © 2020 Carlos D. Santiago. All rights reserved.
+#  Copyright © 2020-2021 Carlos D. Santiago. All rights reserved.
 
 # Localize our files with BartyCroouch: https://github.com/Flinesoft/BartyCrouch
 if which bartycrouch > /dev/null; then
