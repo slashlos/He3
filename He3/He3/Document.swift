@@ -263,7 +263,6 @@ class Document : NSDocument {
                 webView.customUserAgent = agent
             }
         }
-        self.updateChangeCount(.changeDone)
     }
     
     func restoreSettings(with playitem: PlayItem) {
@@ -347,7 +346,6 @@ class Document : NSDocument {
         }
         set (newName) {
             super.displayName = newName
-            self.updateChangeCount(.changeDone)
         }
     }
     
@@ -488,6 +486,10 @@ class Document : NSDocument {
         catch let error {
             Swift.print("\(error.localizedDescription)")
         }
+		
+		if let url = fileURL, let dict = defaults.dictionary(forKey: url.absoluteString) {
+			restoreSettings(with: dict)
+		}
     }
 
     override func read(from url: URL, ofType typeName: String) throws {
