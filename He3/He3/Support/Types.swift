@@ -112,7 +112,9 @@ public struct k {
 }
 
 extension NSUserInterfaceItemIdentifier {
+	static let link = NSUserInterfaceItemIdentifier(rawValue: "link")
     static let name = NSUserInterfaceItemIdentifier(rawValue: "name")
     static let plays = NSUserInterfaceItemIdentifier(rawValue: "plays")
+	static let rank = NSUserInterfaceItemIdentifier(rawValue: "rank")
 	static let turl = NSUserInterfaceItemIdentifier(rawValue: "turl")
 }
