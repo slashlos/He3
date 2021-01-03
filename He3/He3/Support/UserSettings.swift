@@ -68,7 +68,7 @@ internal struct UserSettings {
     )
 	static let LocalPageURL = Setting<String>(
 		"localPageURL",
-		defaultValue: "he3-local:///asset/he3_start.html"
+		defaultValue: "local:///asset/he3_start.html"
 	)
     static let HomeStrkURL = Setting<String>(
         "homeStrkURL",
@@ -76,7 +76,7 @@ internal struct UserSettings {
     )
 	static let LocalStrkURL = Setting<String>(
 		"localStrkURL",
-		defaultValue: "he3-local:///asset/he3_stark.html"
+		defaultValue: "local:///asset/he3_stark.html"
 	)
     static let HelpPageURL = Setting<String>(
         "helpPageURL",
@@ -91,7 +91,7 @@ internal struct UserSettings {
     //  Snapshots path loading once
     static let SnapshotsURL = Setting<String>("snapshotsURL", defaultValue: "")
 
-    //  User Defaults keys
+    //  User Defaults keys; HistoryName is user naming, HistoryList is fixed - pref naming
     static let HistoryName  = Setting<String>("historyName", defaultValue:"History")
     static let HistoryKeep  = Setting<Int>("historyKeep", defaultValue:2048)
     static let HistoryList  = Setting<String>("historyList", defaultValue:"histories")

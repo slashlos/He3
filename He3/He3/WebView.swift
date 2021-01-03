@@ -200,7 +200,7 @@ class MyWebView : WKWebView {
 
     override class func handlesURLScheme(_ urlScheme: String) -> Bool {
         print("handleURLScheme: \(urlScheme)")
-        return [k.scheme,k.caches].contains(urlScheme)
+        return [k.scheme,k.local].contains(urlScheme)
     }
     var selectedText : String?
     var selectedURL : URL?

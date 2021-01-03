@@ -84,7 +84,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
 		return queue
 	}()
 	lazy var destinationURL: URL = {
-		let dragKey = String(format: "%@://drag.%ld)", k.caches, webView.lastDragSequence)
+		let dragKey = String(format: "%@://drag.%ld)", k.local, webView.lastDragSequence)
 		let destinationURL = URL.init(string: dragKey)
 		if nil == defaults.array(forKey: dragKey) {
 			defaults.setValue([URL](), forKey: dragKey)
@@ -293,7 +293,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
 
 		//	document.fileURL is recent, webView.url is current URL
 		if let doc = self.document, let url = doc.fileURL, url.absoluteString != k.blank {
-			if url != webView.url || [.playitem,.playlist,.playlists].contains(doc.docGroup) {
+			if url != webView.url || [.playitem,.playlist].contains(doc.docGroup) {
 				//	Initially, but after window restoration, restore saved frame
 				if let window = self.view.window,
 					!NSEqualRects(window.frame, doc.settings.rect.value),
@@ -313,7 +313,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
 					}
 				}
 				else
-				if [.playlist,.playlists].contains(doc.docGroup) {
+				if [.playlist].contains(doc.docGroup) {
 					// nothing to do here
 				}
 				else

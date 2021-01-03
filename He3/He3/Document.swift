@@ -39,13 +39,12 @@ struct DocGroup : OptionSet {
     static var helium    = DocGroup(rawValue: 0)
 	static let playitem  = DocGroup(rawValue: 1)
     static let playlist  = DocGroup(rawValue: 2)
-	static let playlists = DocGroup(rawValue: 3)
-	static let release	 = DocGroup(rawValue: 4)
+	static let release	 = DocGroup(rawValue: 3)
 }
 let docHelium : DocGroup = []
 
-let docGroups = [k.Helium, k.ItemName, k.PlayName, k.GblsName, k.Release]
-let docNames  = [k.Helium, k.ItemName, k.PlayName, k.GblsName, k.Release]
+let docGroups = [k.Helium, k.ItemName, k.PlayName, k.Release]
+let docNames  = [k.Helium, k.ItemName, k.PlayName, k.Release]
 
 extension NSPasteboard.PasteboardType {
     static let docDragType = NSPasteboard.PasteboardType("com.slashlos.docDragDrop")
@@ -87,10 +86,6 @@ class Document : NSDocument {
 			if [k.PlayType,k.PlayName].contains(self.fileType)
 			|| [k.hpl,k.h3l].contains(fileURL?.pathExtension) {
 				return .playlist
-			}
-			else
-			if [k.GblsType,k.GblsName].contains(self.fileType) {
-				return .playlists
 			}
 			else
 			if [k.IcntType,k.IcntName].contains(self.fileType)
@@ -329,11 +324,16 @@ class Document : NSDocument {
                 return fileURL.deletingPathExtension().lastPathComponent
             }
             else
-            if k.caches == fileURL.scheme {
+            if k.local == fileURL.scheme {
                 let paths = fileURL.pathComponents
+				assert(paths[0] == "/")
                 let cache = paths[1]
                 let stamp = paths[2]
 
+				if k.defaults == paths[1] {
+					return fileURL.deletingPathExtension().lastPathComponent.capitalized
+				}
+				
                 if let date = stamp.tad2Date() {
                     let dateFMT = DateFormatter()
                     dateFMT.locale = Locale(identifier: "en_US_POSIX")
@@ -363,10 +363,6 @@ class Document : NSDocument {
         
             //  sync docGroup group identifier to typeName
             fileType = typeName
-			if [k.GblsType,k.GblsName].contains(typeName) {
-				items = appDelegate.restorePlaylists()
-				isGlobalPlaylist = true
-			}
         }
     }
         
@@ -384,6 +380,12 @@ class Document : NSDocument {
 
             fileURL = url
             fileType = typeName
+			
+			//	a global playlists is source from local defaults
+			guard url.scheme == k.local else { return }
+			let paths = url.deletingPathExtension().pathComponents
+			guard paths[0] == "/", paths[1] == k.defaults else { return }
+			isGlobalPlaylist = true
         }
     }
     
@@ -397,7 +399,7 @@ class Document : NSDocument {
 			let playlist = PlayList(name: displayName, list: [playitem])
 			array.append(playlist)
 
-		case k.PlayType, k.GblsType:
+		case k.PlayType:
 			//  Write playlists, history and searches
 			  
 			// Save playlist(s) - no maximum
@@ -438,34 +440,21 @@ class Document : NSDocument {
 					let dict = try PropertyListSerialization.propertyList(from: data, options: PropertyListSerialization.ReadOptions.mutableContainers, format: nil)
 					
 					//	Our dictionary = PlayList must have 3 keys
-					guard let plist = dict as? Dictionary<String,Any>, plist.keys.sorted().elementsEqual([k.date,k.list,k.name]) else {
-						NSApp.presentError(error)
-						return
-					}
-
-					let item = PlayList(with: dict as! Dictionary<String, Any>)
-					items.append(item)
-				}
-			}
-			else
-			if [k.GblsType].contains(typeName) || [.playlists].contains(docGroup) {
-				do {
-					let playlists = try NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSArray.self,PlayList.self,PlayItem.self], from: data) as! [PlayList]
-					for playlist in playlists {
-						items.append(playlist)
-					}
-				} catch let error {
-					let dict = try PropertyListSerialization.propertyList(from: data, options: PropertyListSerialization.ReadOptions.mutableContainers, format: nil)
-					
-					//	Our dictionary has ["playlists"]
-					guard let plist = dict as? Dictionary<String,Any>, 1 == plist.keys.count, k.Playlists == plist.keys.first else {
-						NSApp.presentError(error)
-						return
-					}
-					
-					for plist in plist[k.Playlists] as! [Dictionary<String,Any>] {
-						let item = PlayList(with: plist)
+					if let plist = dict as? Dictionary<String,Any>, plist.keys.sorted().elementsEqual([k.date,k.list,k.name]) {
+						let item = PlayList(with: dict as! Dictionary<String, Any>)
 						items.append(item)
+					}
+					else
+					if let plist = dict as? Dictionary<String,Any>, 1 == plist.keys.count, k.Playlists == plist.keys.first {
+						for plist in plist[k.Playlists] as! [Dictionary<String,Any>] {
+							let item = PlayList(with: plist)
+							items.append(item)
+						}
+					}
+					else
+					{
+						NSApp.presentError(error)
+						return
 					}
 				}
 			}
@@ -497,10 +486,22 @@ class Document : NSDocument {
 		if [k.ItemType,k.ItemName].contains(typeName)
 		|| [k.PlayType,k.PlayName].contains(typeName)
 		|| [k.IcntType,k.IcntName].contains(typeName)
-		|| [k.GblsType,k.GblsName].contains(typeName)
-		|| [k.hpi,k.h3i,k.hpl,k.h3l,k.hic,k.hgl].contains(url.pathExtension) {
+		|| [k.hpi,k.h3i,k.hpl,k.h3l,k.hic].contains(url.pathExtension) {
 			do {
-				try super.read(from: url, ofType: typeName)
+				if k.local == url.scheme {
+					let paths = url.deletingPathExtension().pathComponents
+					assert(paths[1] == k.defaults)
+					let keyPath = paths[2]
+					
+					items = appDelegate.restorePlaylists(keyPath)
+					
+					//	A global playlist is a local: defaults URL on our short list
+					self.isGlobalPlaylist = [k.histories,k.playlists].contains(keyPath)
+				}
+				else
+				{
+					try super.read(from: url, ofType: typeName)
+				}
 			} catch let error {
 				if let dict = NSDictionary(contentsOf: url) as? [String : AnyObject] {
 					if let attrs = dict["attrs"] as? Dictionary<String,Any> {
@@ -538,16 +539,8 @@ class Document : NSDocument {
         }
 
         //  non-file revert handling, either defaults or an asset
-        switch docGroup {
-			
-        case .playlists:
-            //  Since we're reverting, use the stored version
-            items = appDelegate.restorePlaylists()
-            
-        default:
-			if let url = fileURL, let dict = defaults.dictionary(forKey: url.absoluteString) {
-				restoreSettings(with: dict)
-			}
+		if let url = fileURL, let dict = defaults.dictionary(forKey: url.absoluteString) {
+			restoreSettings(with: dict)
         }
     }
     
@@ -564,7 +557,7 @@ class Document : NSDocument {
 		guard hasUnautosavedChanges else { return }
 		
 		//	Since we autosave in place, a URL is not really necessary
-		if let url = url, url.isFileURL, [.playitem,.playlist,.playlists].contains(docGroup) {
+		if let url = url, url.isFileURL, [.playitem,.playlist].contains(docGroup) {
 			do {
 				let typeName = try docController.typeForContents(of: url)
 				save(to: url, ofType: typeName, for: .autosaveInPlaceOperation, completionHandler: completionHandler)
@@ -579,10 +572,6 @@ class Document : NSDocument {
 					try self.write(to: url, ofType: type)
 				}
 				else
-				if [.playlists].contains(docGroup) {
-					appDelegate.savePlaylists(self)
-				}
-				else
 				{
 					cacheSettings(fileURL ?? homeURL)
 				}
@@ -595,7 +584,7 @@ class Document : NSDocument {
 
     @objc @IBAction override func save(_ sender: (Any)?) {
         
-		if let url = url, url.isFileURL, [.playitem,.playlist,.playlists].contains(docGroup) {
+		if let url = url, url.isFileURL, [.playitem,.playlist].contains(docGroup) {
 			do {
 				let typeName = try docController.typeForContents(of: url)
 
@@ -608,21 +597,15 @@ class Document : NSDocument {
         }
         else
         {
-            do {
-                switch docGroup {
-                case .playlists:
-                    appDelegate.savePlaylists(self)
-                    
-                default:
-                    if let url = fileURL, let type = fileType {
-                        try self.write(to: url, ofType: type)
-                    }
-                    else
-                    {
-                        cacheSettings(fileURL ?? homeURL)
-                    }
-                }
-                updateChangeCount(.changeCleared)
+			do {
+				if let url = fileURL, let type = fileType {
+					try self.write(to: url, ofType: type)
+				}
+				else
+				{
+					cacheSettings(fileURL ?? homeURL)
+				}
+				updateChangeCount(.changeCleared)
             } catch let error {
                 NSApp.presentError(error)
             }
@@ -632,7 +615,7 @@ class Document : NSDocument {
 	
 	@objc @IBAction func selectFileType(_ sender: Any?) {
 		if let item = (sender as! NSPopUpButton).selectedItem, item.isEnabled {
-			let type = [k.ItemType,k.PlayType,k.GblsType,k.WebArchive][item.tag]
+			let type = [k.ItemType,k.PlayType,k.WebArchive][item.tag]
 			if let extn = self.fileNameExtension(forType: type, saveOperation: .saveAsOperation) {
 				savePanel.allowedFileTypes = [extn]
 			}
@@ -654,12 +637,9 @@ class Document : NSDocument {
 			formatPopup?.target = self
 			
 			///let saveType = [k.ItemType,k.PlayType].contains(self.fileType) ? self.fileType! : k.ItemType
-			//let saveType = [k.ItemType,k.PlayType,k.GblsType].contains(self.fileType) ? self.fileType : k.ItemType
+			//let saveType = [k.ItemType,k.PlayType].contains(self.fileType) ? self.fileType : k.ItemType
 
 			//	Allow web archive as selection but not allowed as file type
-			formatPopup?.item(withTitle: k.GblsName)?.isEnabled = [.playlist,.playlists].contains(docGroup)
-			formatPopup?.item(withTitle: k.GblsName)?.isHidden = ![.playlist,.playlists].contains(docGroup)
-
 			formatPopup?.item(withTitle: k.WebArchive)?.isEnabled = [k.http,k.https].contains(fileURL?.scheme)
 			formatPopup?.item(withTitle: k.WebArchive)?.isHidden = ![k.http,k.https].contains(fileURL?.scheme)
 			
@@ -687,12 +667,12 @@ class Document : NSDocument {
                     do {
 						if let saveURL = self.savePanel.url, let tag = formatPopup?.selectedTag() {
 							switch tag {
-							case 0,1,2:
-								try self.write(to: saveURL, ofType: [k.ItemType,k.PlayType,k.GblsType][tag])
+							case 0,1:
+								try self.write(to: saveURL, ofType: [k.ItemType,k.PlayType][tag])
 								if saveURL.hideFileExtensionInPath() {
 									self.updateChangeCount(.changeCleared)
 								}
-							case 3:
+							case 2:
 								Swift.print("save webarchive: \(saveURL.path)")
 								if let wvc = window.contentViewController as? WebViewController {
 									saveAsController.webArchiveMenuItem.representedObject = saveURL
@@ -719,7 +699,7 @@ class Document : NSDocument {
             return
         }
 
-		if url.isFileURL, [.playitem,.playlist,.playlists].contains(docGroup) {
+		if url.isFileURL, [.playitem,.playlist].contains(docGroup) {
 			if UserSettings.SecureFileEncoding.value {
 				super.save(to: url, ofType: typeName, for: saveOperation, completionHandler: completionHandler)
 			}
@@ -757,7 +737,7 @@ class Document : NSDocument {
     }
     
     override func write(to url: URL, ofType typeName: String) throws {
-		if url.isFileURL, [k.ItemType,k.PlayType,k.GblsType].contains(typeName) {
+		if url.isFileURL, [k.ItemType,k.PlayType].contains(typeName) {
 			if UserSettings.SecureFileEncoding.value {
 				try super.write(to: url, ofType: typeName)
 			}
@@ -768,16 +748,23 @@ class Document : NSDocument {
 					try NSDictionary(dictionary: self.playitem().dictionary()).write(to: url)
 					
 				case k.PlayType:
-					try NSDictionary(dictionary: self.playlist().dictionary()).write(to: url)
-					
-				case k.GblsType:
 					var plists = [Dictionary<String,Any>]()
-					
-					for item in items {
-						plists.append(item.dictionary())
+
+					if k.local == url.scheme {
+						let paths = url.deletingPathExtension().pathComponents
+						assert(paths[1] == k.defaults)
+						let keyPath = paths[2]
+
+						appDelegate.saveToPlaylists(keyPath)
 					}
-					
-					try NSDictionary(dictionary: [k.Playlists:plists]).write(to: url)
+					else
+					{
+						for item in items {
+							plists.append(item.dictionary())
+						}
+						
+						try NSDictionary(dictionary: [k.Playlists:plists]).write(to: url)
+					}
 					
 				default:
 					fatalError("Unknown docGroup: \(docGroup.rawValue) in write(_,:)")

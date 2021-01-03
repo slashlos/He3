@@ -12,9 +12,6 @@ import Cocoa
 //  Global static strings
 
 public struct k {
-	static let GblsType = "com.slashlos.he3.hgl"
-	static let GblsName = "Playlists"
-	
 	static let PlayType = "com.slashlos.he3.hpl"
 	static let PlayName = "Playlist"
 
@@ -28,11 +25,11 @@ public struct k {
 	static let AppLogo = "Above all else"
     static let Helium = "Helium"
     static let scheme = "he3"
-    static let caches = "he3-local" /// cache string
-    static let oauth2 = "he3-oauth" /// oauth handler
-    static let he3 = "he3"
+    static let local = "local" /// cache string
+    static let oauth2 = "oauth" /// oauth handler
     static let asset = "asset"
 	static let blank = "about://blank"
+	static let defaults = "defaults"
 	static let file = "file"
     static let html = "html"
 	static let https = "https"
@@ -61,7 +58,6 @@ public struct k {
 	static let h3l = "h3l"
     static let hpi = "hpi"
     static let hpl = "hpl"
-	static let hgl = "hgl"
 	static let hic = "hic"
     static let play = "play"
     static let item = "item"
@@ -90,9 +86,12 @@ public struct k {
     static let ToolbarItemHeight: CGFloat = 48.0
     static let ToolbarItemSpacer: CGFloat = 1.0
     static let ToolbarTextHeight: CGFloat = 12.0
-	static let PrivacyURL = k.caches + ":///asset/he3_privacy.rtf"
+	static let histories = "histories"
+	static let HistoriesURL = URL.init(string: k.local + ":///" + k.defaults + "/" + k.histories)!.appendingPathExtension(k.hpl)
+	static let PlaylistsURL = URL.init(string: k.local + ":///" + k.defaults + "/" + k.playlists)!.appendingPathExtension(k.hpl)
+	static let PrivacyURL = URL.init(string: k.local + ":///asset/he3_privacy.rtf")
     static let Release = "Release"
-    static let ReleaseURL = k.caches + ":///asset/RELEASE.html"
+    static let ReleaseURL = k.local + ":///asset/RELEASE.html"
     static let ReleaseNotes = "Release Notes"
     static let bingInfo = "Microsoft Bing Search"
     static let bingName = "Bing"

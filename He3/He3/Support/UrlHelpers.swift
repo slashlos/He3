@@ -29,9 +29,10 @@ struct UrlHelpers {
     // https://mathiasbynens.be/demo/url-regex
     static func isValidURL(urlString: String) -> Bool {
 		// built-in cache scheme url
-		if let url = URL.init(string: urlString), [k.scheme,k.caches].contains(url.scheme) {
+		if let url = URL.init(string: urlString), [k.scheme,k.local].contains(url.scheme) {
 			let paths = url.pathComponents
 			guard paths.count > 2 else { return false }
+			assert(paths[1] == k.asset)
 			let ident = paths[2]
 			guard let asset = NSDataAsset.init(name: ident) else { return false }
 			let data = NSData.init(data: (asset.data))
@@ -319,7 +320,7 @@ extension URL {
     //  TAD encoded resource name URLs for data, html, text, …
     init?(cache data: Data) {
         let name = String(format: "data/%@", String.timestamp())
-        self = URL.init(string: String(format: "%@:///%@", k.caches, name))!
+        self = URL.init(string: String(format: "%@:///%@", k.local, name))!
         
         let mime = "data/data"
         let text = data.hexEncodedString()
@@ -329,7 +330,7 @@ extension URL {
     }
     init?(cache text: String, embed: Bool = false) {
         let name = String(format: "text/%@", String.timestamp())
-        self = URL.init(string: String(format: "%@:///%@", k.caches, name))!
+        self = URL.init(string: String(format: "%@:///%@", k.local, name))!
         
         let mime = embed ? "text/html" : "text/plain-text"
         let text = embed ? String(format: "<html><body><pre>%@</pre></body></html>", text) : text
@@ -339,7 +340,7 @@ extension URL {
     }
     init?(cache text: NSAttributedString, embed: Bool = true) {
         let name = String(format: "html/%@", String.timestamp())
-        self = URL.init(string: String(format: "%@:///%@", k.caches, name))!
+        self = URL.init(string: String(format: "%@:///%@", k.local, name))!
         
         do {
             let docAttrs = [NSAttributedString.DocumentAttributeKey.documentType: NSAttributedString.DocumentType.html]

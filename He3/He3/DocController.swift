@@ -19,9 +19,9 @@ class DocumentController : NSDocumentController {
 
 		var doc: Document
          do {
-			if [k.ItemType,k.IcntType,k.PlayType,k.GblsType].contains(typeName)
-			|| [k.ItemName,k.IcntName,k.PlayName,k.GblsName].contains(typeName)
-			|| [k.h3i,k.hpi,k.hic,k.h3l,k.hpl,k.hgl].contains(contentsURL.pathExtension) {
+			if [k.ItemType,k.IcntType,k.PlayType].contains(typeName)
+			|| [k.ItemName,k.IcntName,k.PlayName].contains(typeName)
+			|| [k.h3i,k.hpi,k.hic,k.h3l,k.hpl].contains(contentsURL.pathExtension) {
 				doc = try super.makeDocument(for: urlOrNil, withContentsOf: contentsURL, ofType: typeName) as! Document
 				return doc
             }
@@ -74,8 +74,7 @@ class DocumentController : NSDocumentController {
 			let typeName = sender.toolTip ?? k.Helium
 			let fileType = [k.Helium:k.ItemType,
 							k.PlayName:k.PlayType,
-							k.IcntName:k.IcntType,
-							k.Playlists:k.GblsType][typeName] ?? k.Helium
+							k.IcntName:k.IcntType][typeName] ?? k.Helium
             doc = try makeUntitledDocument(ofType: fileType) as! Document
             if 0 == doc.windowControllers.count { doc.makeWindowControllers() }
 			doc.showWindows()

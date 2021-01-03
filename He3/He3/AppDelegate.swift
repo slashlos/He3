@@ -523,7 +523,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
                 _webConfiguration!.suppressesIncrementalRendering = false
 
                 //  Support our internal (local) scheme
-                _webConfiguration!.setURLSchemeHandler(CacheSchemeHandler(), forURLScheme: k.caches)
+                _webConfiguration!.setURLSchemeHandler(CacheSchemeHandler(), forURLScheme: k.scheme)
 
                 // Use nonPersistent() or default() depending on if you want cookies persisted to disk
                 // and shared between WKWebViews of the same app (default), or not persisted and not shared
@@ -1065,8 +1065,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         //  If we have a window, present a sheet with playlists, otherwise ...
         guard let item: NSMenuItem = sender as? NSMenuItem, let window: NSWindow = item.representedObject as? NSWindow else {
             //  No contextual window, load panel and its playlist controller
+
             do {
-                let doc = try docController.makeUntitledDocument(ofType: k.GblsType)
+				let doc = try docController.makeDocument(withContentsOf: k.PlaylistsURL, ofType: k.PlayType)
                 if 0 == doc.windowControllers.count { doc.makeWindowControllers() }
 				doc.showWindows()
             }
@@ -1482,6 +1483,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
     }
     
 	func restorePlaylists(_  keyPath: String = k.playlists) -> [PlayList] {
+		assert(k.PlaylistsURL.deletingPathExtension().lastPathComponent == k.playlists, "k.playlists not in URL")
         var playlists = [PlayList]()
             
         //  read back playlists as [Dictionary] or [String] keys to each [PlayItem]
@@ -1535,13 +1537,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
     }
     
     @objc @IBAction func savePlaylists(_ sender: Any) {
+		assert(k.PlaylistsURL.deletingPathExtension().lastPathComponent == k.playlists, "k.playlists not in URL")
+		saveToPlaylists(k.playlists)
+	}
+	
+	func saveToPlaylists(_ keyPath: String = k.playlists) {
         var plists = [Dictionary<String,Any>]()
         
         for plist in playlists {
             plists.append(plist.dictionary())
         }
         
-        defaults.set(plists, forKey: k.playlists)
+        defaults.set(plists, forKey: keyPath)
 		defaults.synchronize()
     }
     
@@ -1795,6 +1802,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         savePlaylists(self)
         
         // Save histories to defaults up to their maximum
+		assert(k.histories == UserSettings.HistoryList.value, "k.histories not HistoryList")
         let keep = UserSettings.HistoryKeep.value
         var temp = Array<Any>()
         for item in histories.sorted(by: { (lhs, rhs) -> Bool in return lhs.rank < rhs.rank}).suffix(keep) {
