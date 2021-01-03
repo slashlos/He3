@@ -421,14 +421,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
             }
             
         default:
-			// playlist names must be unique
-			if let play = (object as? PlayList), keyPath == k.name,  playlists.list(newValue as! String).count > 1 {
-				print("duplicate playlist.name \(newValue as! String)")
-				play.name = oldValue as! String
-				NSSound.playIf(.sosumi)
-				return
-			}
-			
+
             if let undo = self.undoManager {
                 
                 //  scalars handled here with its matching closure block
@@ -439,21 +432,14 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
                         undo.setActionName(String.init(format: "Edit %@", keyPath!))
                     }
                 })
+				
+				// Save history info which might have changed
+				if let play = (object as? PlayList), keyPath == k.name, play == historyCache {
+					if UserSettings.HistoryName.value == oldValue as? String {
+						UserSettings.HistoryName.value = newValue as! String
+					}
+				}
 				print(String.init(format: "%@.%@ %@ -> %@", (object as AnyObject).name, keyPath!, oldValue as! CVarArg, newValue as! CVarArg))
-            }
-            
-            // playlist names must be unique
-            if let play = (object as? PlayList), keyPath == k.name,  playlists.list(newValue as! String).count > 1 {
-                print("duplicate playlist.name \(newValue as! String)")
-                play.name = oldValue as! String
-				NSSound.playIf(.sosumi)
-            }
-            
-            // Save history info which might have changed
-            if let play = (object as? PlayList), keyPath == k.name, play == historyCache {
-                if UserSettings.HistoryName.value == oldValue as? String {
-                    UserSettings.HistoryName.value = newValue as! String
-                }
             }
         }
         
