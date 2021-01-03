@@ -256,7 +256,6 @@ extension Notification.Name {
 	static let archiveAll = Notification.Name("ArchiveAll")
 	static let autoHideTitleBar = Notification.Name("autoHideTitleBar")
 	static let autoLaunchChange = Notification.Name("autoLaunchChange")
-	static let badPlayListName = Notification.Name("BadPlayListName")
 	static let commandKeyDown = Notification.Name("commandKeyDown")
 	static let didUpdateURL = Notification.Name("DidUpdateURL")
 	static let killLauncher = Notification.Name("killLauncher")
