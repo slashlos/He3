@@ -92,6 +92,17 @@ class PlayTableView : NSTableView {
     }
 }
 
+class PlayItemCornerView : NSView {
+	override init(frame frameRect: NSRect) {
+		super.init(frame: frameRect)
+	}
+	
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
+		///fatalError("init(coder:) has not been implemented")
+	}
+}
+
 class PlayItemCornerButton : NSButton {/*
 	override init(frame frameRect: NSRect) {
 		super.init(frame: frameRect)
@@ -612,9 +623,10 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         self.observing = true
 		
         //  Pin the playitem corner view to the header and scroll bar views
-        guard let cornerView = playitemTableView.cornerView else { return }
-		cornerView.addSubview(itemCornerButton)
-        itemCornerButton.center(cornerView)
+		if let cornerView = playitemTableView.cornerView {
+			cornerView.addSubview(itemCornerButton)
+			itemCornerButton.center(cornerView)
+		}
 		
 		//	load our thumbnails for all our items
 		if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
