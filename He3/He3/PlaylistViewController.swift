@@ -1076,14 +1076,9 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         if let window = NSApp.keyWindow {
 			alert.beginSheetModal(for: window, completionHandler: { [self] response in
 				if response == NSApplication.ModalResponse.alertFirstButtonReturn {
-					if isGlobalPlaylist {
-						_ = self.appDelegate.restorePlaylists()
-					}
-					else
-					{
-						doc?.revertToSaved(sender)
-						doc?.updateChangeCount(.changeCleared)
-					}
+					doc?.revertToSaved(sender)
+					doc?.updateChangeCount(.changeCleared)
+					
 					(whoAmI as! PlayTableView).reloadData()
 					print("revert to saved")
 				}
@@ -1092,14 +1087,9 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         else
         {
 			if alert.runModal() == NSApplication.ModalResponse.alertFirstButtonReturn {
-				if isGlobalPlaylist {
-					_ = appDelegate.restorePlaylists()
-				}
-				else
-				{
-					doc?.revertToSaved(sender)
-					doc?.updateChangeCount(.changeCleared)
-				}
+				doc?.revertToSaved(sender)
+				doc?.updateChangeCount(.changeCleared)
+				
 				(whoAmI as! PlayTableView).reloadData()
 				print("revert to saved")
 			}
@@ -1275,13 +1265,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
 			playCache = playlists
 			
 			// If local save that too
-			if isGlobalPlaylist, let doc = self.doc {
-				doc.save(sender)
-			}
-			else
-			{
-				appDelegate.playlists = playlists
-			}
+			if let doc = self.doc { doc.save(sender) }
 		
 		case false:
 			// Restore NON-HISTORY playlist(s) from cache
