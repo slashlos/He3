@@ -225,13 +225,13 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
     
 	@objc @IBOutlet weak var itemCornerButton : PlayItemCornerButton!
 	@objc @IBAction func itemCornerAction(_ sender: Any) {
+		guard let playlist = playlistArrayController.selectedObjects.first as? PlayList else { return }
         // Renumber playlist items via array controller
         playitemTableView.beginUpdates()
         
         //  True - prune duplicates & publish, false resequence
         switch shiftKeyDown {
         case true:
-			let playlist = playlistArrayController.selectedObjects.first as! PlayList
 			playlist.willChangeValue(forKey: k.tally)
             var seen = [String:PlayItem]()
             for (row,item) in (playitemArrayController.arrangedObjects as! [PlayItem]).enumerated().reversed() {
