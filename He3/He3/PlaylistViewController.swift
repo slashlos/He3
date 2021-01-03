@@ -410,6 +410,14 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
             }
             
         default:
+			// playlist names must be unique
+			if let play = (object as? PlayList), keyPath == k.name,  playlists.list(newValue as! String).count > 1 {
+				print("duplicate playlist.name \(newValue as! String)")
+				play.name = oldValue as! String
+				NSSound.playIf(.sosumi)
+				return
+			}
+			
             if let undo = self.undoManager {
                 
                 //  scalars handled here with its matching closure block
@@ -440,15 +448,8 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         
         if let doc = self.view.window?.windowController?.document {
 			print("doc changed")
-			doc.updateChangeCount(.changeDone) }
-    }
-    
-    //  A bad (duplicate) value was attempted
-    @objc fileprivate func badPlayListName(_ notification: Notification) {
-        DispatchQueue.main.async {
-            self.playlistTableView.reloadData()
-			NSSound.playIf(.sosumi)
-         }
+			doc.updateChangeCount(.changeDone)
+		}
     }
     
     var canRedo : Bool {
@@ -607,13 +608,6 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         //  Reset split view dimensions
         self.playlistSplitView.setPosition(120, ofDividerAt: 0)
         
-        //  Watch for bad (duplicate) playlist names
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(badPlayListName(_:)),
-			name: .badPlayListName,
-            object: nil)
-
         //  Start observing any changes
         self.observing = true
 		
@@ -1530,15 +1524,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         }
         return "no tip for you"
     }
-    func tableViewSelectionIsChanging(_ notification: Notification) {
-        let tableView : NSTableView = notification.object as! NSTableView
-        if tableView == playlistTableView {
-             let rowSet = IndexSet(integer: tableView.selectedRow)
-             let colSet = IndexSet(integer: tableView.column(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "name")))
-             tableView.reloadData(forRowIndexes: rowSet, columnIndexes: colSet)
-         }
-    }
-
+	
     func tableViewSelectionDidChange(_ notification: Notification) {
         //  Alert tooltip changes when selection does in tableView
         let buttons = [ "add", "remove", "play", "restore", "save"]
