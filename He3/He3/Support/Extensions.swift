@@ -13,6 +13,8 @@ import Cocoa
 
 ///import CommonCrypto
 
+fileprivate var defaults = UserDefaults.standard
+
 public func print(_ items: String..., filename: String = #file, function : String = #function, line: Int = #line, separator: String = " ", terminator: String = "\n") {
     #if DEBUG
         ///let pretty = "\(URL(fileURLWithPath: filename).lastPathComponent) [#\(line)] \(function)\n\t-> "
@@ -129,6 +131,16 @@ extension Array where Element:PlayList {
         }
         return list
     }
+	func saveToDefaults(_ keyPath: String = k.playlists) {
+		var plists = [Dictionary<String,Any>]()
+		
+		for plist in self {
+			plists.append(plist.dictionary())
+		}
+		
+		defaults.set(plists, forKey: keyPath)
+		defaults.synchronize()
+	}
 }
 
 extension Array where Element:PlayItem {
@@ -143,9 +155,18 @@ extension Array where Element:PlayItem {
         }
         return nil
     }
-    func link(_ urlString: String) -> PlayItem? {
+	func link(_ urlString: String) -> PlayItem? {
+		for item in self {
+			if item.link.absoluteString == urlString {
+				return item
+			}
+		}
+		return nil
+	}
+
+    func name(_ name: String) -> PlayItem? {
         for item in self {
-            if item.link.absoluteString == urlString {
+            if item.name == name {
                 return item
             }
         }
