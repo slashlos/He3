@@ -953,7 +953,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
 			guard isSandboxed == storeBookmark(url: url) else { return false }
 		}
 		
-		return true
+		return [k.file,k.http,k.https,k.scheme,k.local].contains(url.scheme)
 	}
 	
     func openURLInNewWindow(_ url: URL, context otherWindow : NSWindow? = nil) -> Bool {
