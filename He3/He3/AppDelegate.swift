@@ -1538,20 +1538,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
     
     @objc @IBAction func savePlaylists(_ sender: Any) {
 		assert(k.PlaylistsURL.deletingPathExtension().lastPathComponent == k.playlists, "k.playlists not in URL")
-		saveToPlaylists(k.playlists)
+		playlists.saveToDefaults(k.playlists)
 	}
 	
-	func saveToPlaylists(_ keyPath: String = k.playlists) {
-        var plists = [Dictionary<String,Any>]()
-        
-        for plist in playlists {
-            plists.append(plist.dictionary())
-        }
-        
-        defaults.set(plists, forKey: keyPath)
-		defaults.synchronize()
-    }
-    
     //  Histories restore deferred until requested
     @objc dynamic var _histories : [PlayItem]?
     @objc dynamic var  histories : [PlayItem] {
