@@ -153,19 +153,23 @@ class PlayList : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
         self.update(with: dictionary, createMissingItems: true)
     }
     func update(with dictionary: Dictionary<String,Any>, createMissingItems: Bool = false) {
+		guard 3 == dictionary.keys.count, dictionary.keys.sorted().elementsEqual([k.date,k.list,k.name]) else { return }
         if let name : String = dictionary[k.name] as? String, name != self.name {
             self.name = name
         }
         if let plists : [Dictionary<String,Any>] = dictionary[k.list] as? [Dictionary<String,Any>] {
             
             for plist in plists {
-                if let item : PlayItem = list.link(plist[k.link] as! String) {
-                    item.update(with: plist)
+				if !createMissingItems,
+				   let item1 : PlayItem = list.name(plist[k.name] as! String),
+				   let item2 : PlayItem = list.link(plist[k.link] as! String), item1 == item2
+				{
+                    item1.update(with: plist)
                 }
                 else
                 if createMissingItems
                 {
-                    list.append(PlayItem(from: plist))
+					self.list.append(PlayItem(from: plist))
                 }
             }
         }
