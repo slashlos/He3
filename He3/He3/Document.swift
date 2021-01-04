@@ -428,6 +428,10 @@ class Document : NSDocument {
 					
 					if 0 == items.count { NSApp.presentError(error) }
 				}
+				
+				if let url = fileURL, let dict = defaults.dictionary(forKey: url.absoluteString) {
+					restoreSettings(with: dict)
+				}
 			}
 			else
 			if [k.PlayType].contains(typeName) || [.playlist].contains(docGroup) {
@@ -440,7 +444,7 @@ class Document : NSDocument {
 					let dict = try PropertyListSerialization.propertyList(from: data, options: PropertyListSerialization.ReadOptions.mutableContainers, format: nil)
 					
 					//	Our dictionary = PlayList must have 3 keys
-					if let plist = dict as? Dictionary<String,Any>, plist.keys.sorted().elementsEqual([k.date,k.list,k.name]) {
+					if let plist = dict as? Dictionary<String,Any>, 3 == plist.keys.count, plist.keys.sorted().elementsEqual([k.date,k.list,k.name]) {
 						let item = PlayList(with: dict as! Dictionary<String, Any>)
 						items.append(item)
 					}
@@ -475,10 +479,6 @@ class Document : NSDocument {
         catch let error {
             Swift.print("\(error.localizedDescription)")
         }
-		
-		if let url = fileURL, let dict = defaults.dictionary(forKey: url.absoluteString) {
-			restoreSettings(with: dict)
-		}
     }
 
     override func read(from url: URL, ofType typeName: String) throws {
@@ -535,7 +535,6 @@ class Document : NSDocument {
             catch let error {
                 NSApp.presentError(error)
             }
-            return
         }
 
         //  non-file revert handling, either defaults or an asset
@@ -737,8 +736,8 @@ class Document : NSDocument {
     }
     
     override func write(to url: URL, ofType typeName: String) throws {
-		if url.isFileURL, [k.ItemType,k.PlayType].contains(typeName) {
-			if UserSettings.SecureFileEncoding.value {
+		if [k.ItemType,k.PlayType].contains(typeName) {
+			if url.isFileURL, UserSettings.SecureFileEncoding.value {
 				try super.write(to: url, ofType: typeName)
 			}
 			else
@@ -755,7 +754,7 @@ class Document : NSDocument {
 						assert(paths[1] == k.defaults)
 						let keyPath = paths[2]
 
-						appDelegate.saveToPlaylists(keyPath)
+						items.saveToDefaults(keyPath)
 					}
 					else
 					{
