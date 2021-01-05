@@ -46,9 +46,6 @@
 /* Class = "NSMenu"; title = "Window"; ObjectID = "3T3-to-DAm"; */
 "3T3-to-DAm.title" = "Finestra";
 
-/* Class = "NSTableColumn"; headerCell.title = "Time"; ObjectID = "3W1-zN-OJV"; */
-"3W1-zN-OJV.headerCell.title" = "Ora";
-
 /* Class = "NSButtonCell"; title = "Revert"; ObjectID = "3XW-t7-vOU"; */
 "3XW-t7-vOU.title" = "Ripristina";
 
@@ -61,12 +58,6 @@
 /* Class = "NSMenu"; title = "Recent"; ObjectID = "4CK-ZL-gyh"; */
 "4CK-ZL-gyh.title" = "Recenti";
 
-/* Class = "NSSegmentedControl"; ibShadowedToolTip = "all, disabled, full screen"; ObjectID = "4L2-w2-Afb"; */
-"4L2-w2-Afb.ibShadowedToolTip" = "tutto, disabilitato, schermo intero";
-
-/* Class = "CocoaBindingsConnection"; ibShadowedIsNilPlaceholder = "n/a"; ObjectID = "4Z9-v6-Sfk"; */
-"4Z9-v6-Sfk.ibShadowedIsNilPlaceholder" = "n / a";
-
 /* Class = "NSMenuItem"; title = "All Spaces"; ObjectID = "4hh-G0-MfV"; */
 "4hh-G0-MfV.title" = "Tutti gli spazi";
 
@@ -78,9 +69,6 @@
 
 /* Class = "NSMenuItem"; title = "Edit"; ObjectID = "5QF-Oa-p0T"; */
 "5QF-Oa-p0T.title" = "Modifica";
-
-/* Class = "NSMenuItem"; title = "Never"; ObjectID = "5hp-RN-6gc"; */
-"5hp-RN-6gc.title" = "Mai";
 
 /* Class = "NSMenuItem"; title = "About He3"; ObjectID = "5kV-Vb-QxS"; */
 "5kV-Vb-QxS.title" = "Informazioni su He3";
@@ -100,9 +88,6 @@
 /* Class = "NSMenuItem"; title = "New"; ObjectID = "5z8-gm-Cg3"; */
 "5z8-gm-Cg3.title" = "Nuovo";
 
-/* Class = "NSMenuItem"; title = "Outside"; ObjectID = "63D-wu-bt2"; */
-"63D-wu-bt2.title" = "Fuori";
-
 /* Class = "NSMenu"; title = "Auto-hide Title Bar"; ObjectID = "6Pz-s0-PiJ"; */
 "6Pz-s0-PiJ.title" = "Nascondi automaticamente la barra del titolo";
 
@@ -121,14 +106,8 @@
 /* Class = "NSWindow"; title = "Playlists"; ObjectID = "9Nm-Xe-vMy"; */
 "9Nm-Xe-vMy.title" = "Playlist";
 
-/* Class = "CocoaBindingsConnection"; ibShadowedIsNilPlaceholder = "n/a"; ObjectID = "9ng-Pn-jW1"; */
-"9ng-Pn-jW1.ibShadowedIsNilPlaceholder" = "n / a";
-
 /* Class = "NSMenuItem"; title = "Mouse Over"; ObjectID = "9pC-Gy-y3r"; */
 "9pC-Gy-y3r.title" = "Passaggio del mouse";
-
-/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "9tK-DX-lGy"; */
-"9tK-DX-lGy.title" = "Cella vista tabella";
 
 /* Class = "NSButtonCell"; title = "Auto hide title bar"; ObjectID = "9vw-Yp-Z6z"; */
 "9vw-Yp-Z6z.title" = "Nascondi automaticamente la barra del titolo";
@@ -150,9 +129,6 @@
 
 /* Class = "NSButtonCell"; title = "Auto save documents"; ObjectID = "Ap8-wy-qcF"; */
 "Ap8-wy-qcF.title" = "Salvataggio automatico dei documenti";
-
-/* Class = "NSMenuItem"; title = "Never"; ObjectID = "B1g-sX-P7u"; */
-"B1g-sX-P7u.title" = "Mai";
 
 /* Class = "NSButtonCell"; alternateTitle = "Denied Audio"; ObjectID = "B6V-NX-K5E"; */
 "B6V-NX-K5E.alternateTitle" = "Audio negato";
@@ -205,15 +181,6 @@
 /* Class = "NSMenuItem"; title = "User Agent"; ObjectID = "FUP-fV-Bla"; */
 "FUP-fV-Bla.title" = "Agente utente";
 
-/* Class = "NSTableColumn"; headerCell.title = "Name"; ObjectID = "FZ4-3v-Vfd"; */
-"FZ4-3v-Vfd.headerCell.title" = "Nome";
-
-/* Class = "NSTableColumn"; headerCell.title = "Spaces"; ObjectID = "Fmz-cc-tVY"; */
-"Fmz-cc-tVY.headerCell.title" = "Spazi";
-
-/* Class = "NSTableColumn"; headerToolTip = "above all windows"; ObjectID = "Fmz-cc-tVY"; */
-"Fmz-cc-tVY.headerToolTip" = "sopra tutte le finestre";
-
 /* Class = "NSToolbarItem"; label = "Auto Hide Title"; ObjectID = "FwO-iD-ty3"; */
 "FwO-iD-ty3.label" = "Nascondi automaticamente titolo";
 
@@ -246,12 +213,6 @@
 
 /* Class = "NSWindow"; title = "Above All Else"; ObjectID = "IQv-IB-iLA"; */
 "IQv-IB-iLA.title" = "Sopra tutto il resto";
-
-/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "ISX-CW-UdA"; */
-"ISX-CW-UdA.title" = "Cella di testo";
-
-/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "ITE-O7-hFi"; */
-"ITE-O7-hFi.title" = "Cella vista tabella";
 
 /* Class = "NSTextField"; ibShadowedToolTip = "copy app info to pasteboard"; ObjectID = "IV0-Ql-nbs"; */
 "IV0-Ql-nbs.ibShadowedToolTip" = "copia le informazioni sull'app nel tavolo di montaggio";
@@ -288,9 +249,6 @@
 
 /* Class = "NSMenuItem"; title = "Services"; ObjectID = "NMo-om-nkz"; */
 "NMo-om-nkz.title" = "Servizi";
-
-/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "NRw-Yb-hKR"; */
-"NRw-Yb-hKR.title" = "Cella vista tabella";
 
 /* Class = "NSButton"; ibShadowedToolTip = "Launch Privacy & Security Settings App."; ObjectID = "NXZ-RL-dcP"; */
 "NXZ-RL-dcP.ibShadowedToolTip" = "Avvia l'app per le impostazioni di privacy e sicurezza.";
@@ -340,9 +298,6 @@
 /* Class = "NSButton"; ibShadowedToolTip = "cancel any changes"; ObjectID = "Px9-gW-lcP"; */
 "Px9-gW-lcP.ibShadowedToolTip" = "annulla eventuali modifiche";
 
-/* Class = "NSMenuItem"; title = "Over"; ObjectID = "QBV-tT-xeS"; */
-"QBV-tT-xeS.title" = "Finita";
-
 /* Class = "NSButtonCell"; title = "Magic URLs disabled"; ObjectID = "QCo-lp-Jmz"; */
 "QCo-lp-Jmz.title" = "URL magici disabilitati";
 
@@ -351,9 +306,6 @@
 
 /* Class = "NSMenuItem"; title = "Minimize"; ObjectID = "RBU-pk-9Vw"; */
 "RBU-pk-9Vw.title" = "Riduci a icona";
-
-/* Class = "NSMenuItem"; title = "Outside"; ObjectID = "RZv-db-KcU"; */
-"RZv-db-KcU.title" = "Fuori";
 
 /* Class = "NSMenuItem"; title = "File…"; ObjectID = "RbQ-rp-cWl"; */
 "RbQ-rp-cWl.title" = "File…";
@@ -373,14 +325,8 @@
 /* Class = "NSButton"; ibShadowedToolTip = "remember location enabled state - NYI"; ObjectID = "SIp-GK-Veu"; */
 "SIp-GK-Veu.ibShadowedToolTip" = "ricorda lo stato abilitato alla posizione - NYI";
 
-/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "SJy-qY-USx"; */
-"SJy-qY-USx.title" = "Cella vista tabella";
-
 /* Class = "NSTabViewItem"; label = "Home Page URL"; ObjectID = "SLV-rV-kfe"; */
 "SLV-rV-kfe.label" = "URL della home page";
-
-/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "T73-QR-KHf"; */
-"T73-QR-KHf.title" = "Cella di testo";
 
 /* Class = "NSMenuItem"; title = "Show Tab Bar"; ObjectID = "TBF-W3-Or9"; */
 "TBF-W3-Or9.title" = "Mostra barra delle schede";
@@ -439,9 +385,6 @@
 /* Class = "NSMenuItem"; title = "90%"; ObjectID = "ZfN-02-SRd"; */
 "ZfN-02-SRd.title" = "90%";
 
-/* Class = "NSMenuItem"; title = "Float"; ObjectID = "Zic-q4-Zgm"; */
-"Zic-q4-Zgm.title" = "Float";
-
 /* Class = "NSMenuItem"; ibShadowedToolTip = "toggle preferences toolbar"; ObjectID = "Zjc-dz-1GG"; */
 "Zjc-dz-1GG.ibShadowedToolTip" = "attiva / disattiva la barra degli strumenti delle preferenze";
 
@@ -451,17 +394,8 @@
 /* Class = "NSMenuItem"; title = "Stop Web Loading"; ObjectID = "Zx7-Nq-NAs"; */
 "Zx7-Nq-NAs.title" = "Interrompi caricamento web";
 
-/* Class = "NSTableColumn"; headerCell.title = "Translucency"; ObjectID = "a0x-FK-bxj"; */
-"a0x-FK-bxj.headerCell.title" = "Traslucenza";
-
-/* Class = "NSTableColumn"; headerToolTip = "mouse translucency"; ObjectID = "a0x-FK-bxj"; */
-"a0x-FK-bxj.headerToolTip" = "traslucenza del mouse";
-
 /* Class = "NSWindow"; title = "He3 Login Launcher Preference Setting"; ObjectID = "aDH-9w-c3M"; */
 "aDH-9w-c3M.title" = "Impostazione delle preferenze del programma di avvio dell'accesso He3";
-
-/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "aE3-9X-jmf"; */
-"aE3-9X-jmf.title" = "Cella vista tabella";
 
 /* Class = "NSButtonCell"; title = "Restore Web URLs"; ObjectID = "aPG-AH-BSA"; */
 "aPG-AH-BSA.title" = "Ripristina URL Web";
@@ -508,9 +442,6 @@
 /* Class = "NSButton"; ibShadowedToolTip = "toggle location services"; ObjectID = "c1j-Wt-OVY"; */
 "c1j-Wt-OVY.ibShadowedToolTip" = "attiva / disattiva i servizi di localizzazione";
 
-/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "c4Q-JJ-Kx7"; */
-"c4Q-JJ-Kx7.title" = "Cella di testo";
-
 /* Class = "NSMenu"; title = "Auto-hide Title Bar"; ObjectID = "cR7-xG-evQ"; */
 "cR7-xG-evQ.title" = "Nascondi automaticamente la barra del titolo";
 
@@ -547,26 +478,14 @@
 /* Class = "NSMenuItem"; title = "Outside"; ObjectID = "e8c-51-6y0"; */
 "e8c-51-6y0.title" = "Fuori";
 
-/* Class = "NSButtonCell"; title = "Outside"; ObjectID = "eAp-17-NEt"; */
-"eAp-17-NEt.title" = "Fuori";
-
 /* Class = "NSTableColumn"; headerCell.title = "Count"; ObjectID = "eTP-QM-9yi"; */
 "eTP-QM-9yi.headerCell.title" = "Conteggio";
 
 /* Class = "NSTextFieldCell"; title = "Label"; ObjectID = "eiI-qd-4ce"; */
 "eiI-qd-4ce.title" = "Etichetta";
 
-/* Class = "NSTableColumn"; headerCell.title = "Plays"; ObjectID = "etn-d3-AIr"; */
-"etn-d3-AIr.headerCell.title" = "Riproduce";
-
-/* Class = "NSTableColumn"; headerToolTip = "play count"; ObjectID = "etn-d3-AIr"; */
-"etn-d3-AIr.headerToolTip" = "conteggio riproduzioni";
-
 /* Class = "NSMenuItem"; title = "40%"; ObjectID = "euX-6m-E9M"; */
 "euX-6m-E9M.title" = "40%";
-
-/* Class = "NSTableColumn"; headerCell.title = "Opacity"; ObjectID = "eyl-fn-AYC"; */
-"eyl-fn-AYC.headerCell.title" = "Opacità";
 
 /* Class = "NSMenuItem"; title = "Merge All Windows"; ObjectID = "ezP-vi-H8g"; */
 "ezP-vi-H8g.title" = "Unisci tutte le finestre";
@@ -598,9 +517,6 @@
 /* Class = "NSMenu"; title = "Zoom"; ObjectID = "fqm-ZV-dAN"; */
 "fqm-ZV-dAN.title" = "Zoom";
 
-/* Class = "NSMenuItem"; title = "Always"; ObjectID = "gE5-oJ-JEp"; */
-"gE5-oJ-JEp.title" = "Sempre";
-
 /* Class = "NSButtonCell"; title = "Collect"; ObjectID = "gJd-s4-GDn"; */
 "gJd-s4-GDn.title" = "Raccogli";
 
@@ -609,12 +525,6 @@
 
 /* Class = "NSMenuItem"; title = "Paste"; ObjectID = "gVA-U4-sdL"; */
 "gVA-U4-sdL.title" = "Incolla";
-
-/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "ggL-Bf-sj1"; */
-"ggL-Bf-sj1.title" = "Cella vista tabella";
-
-/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "gn8-c2-Xxr"; */
-"gn8-c2-Xxr.title" = "Cella vista tabella";
 
 /* Class = "NSMenuItem"; title = "Prev Tab"; ObjectID = "go3-ee-QR9"; */
 "go3-ee-QR9.title" = "Scheda precedente";
@@ -628,9 +538,6 @@
 /* Class = "NSButtonCell"; title = "Access Audio"; ObjectID = "gv1-GO-myK"; */
 "gv1-GO-myK.title" = "Accedi all'audio";
 
-/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "h49-mc-SQq"; */
-"h49-mc-SQq.title" = "Cella vista tabella";
-
 /* Class = "NSMenuItem"; title = "Outside"; ObjectID = "h7B-rs-H5s"; */
 "h7B-rs-H5s.title" = "Fuori";
 
@@ -642,9 +549,6 @@
 
 /* Class = "NSMenuItem"; title = "Preferences"; ObjectID = "hd6-Gd-vCv"; */
 "hd6-Gd-vCv.title" = "Preferenze";
-
-/* Class = "NSSegmentedControl"; ibShadowedToolTip = "never, always, over, outside"; ObjectID = "heO-tV-oDL"; */
-"heO-tV-oDL.ibShadowedToolTip" = "mai, sempre, fuori, fuori";
 
 /* Class = "NSMenuItem"; title = "Opacity"; ObjectID = "htE-fe-3NL"; */
 "htE-fe-3NL.title" = "Opacità";
@@ -658,12 +562,6 @@
 /* Class = "NSMenuItem"; title = "Tab To Window"; ObjectID = "i75-l3-rPe"; */
 "i75-l3-rPe.title" = "Scheda nella finestra";
 
-/* Class = "NSTableColumn"; headerCell.title = "#"; ObjectID = "i8h-Lq-4L8"; */
-"i8h-Lq-4L8.headerCell.title" = "#";
-
-/* Class = "NSTableColumn"; headerToolTip = "play order"; ObjectID = "i8h-Lq-4L8"; */
-"i8h-Lq-4L8.headerToolTip" = "ordine di riproduzione";
-
 /* Class = "NSMenuItem"; title = "File…"; ObjectID = "iba-HN-Jos"; */
 "iba-HN-Jos.title" = "File ...";
 
@@ -675,9 +573,6 @@
 
 /* Class = "NSWindow"; title = "Preferences"; ObjectID = "iz9-pb-VSF"; */
 "iz9-pb-VSF.title" = "Preferenze";
-
-/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "j6C-4n-kTW"; */
-"j6C-4n-kTW.title" = "Cella di testo";
 
 /* Class = "NSMenuItem"; title = "Release Info"; ObjectID = "jCx-kC-uHJ"; */
 "jCx-kC-uHJ.title" = "Informazioni sulla versione";
@@ -721,12 +616,6 @@
 /* Class = "NSButtonCell"; title = "Play"; ObjectID = "mvj-Ud-PSU"; */
 "mvj-Ud-PSU.title" = "Riproduci";
 
-/* Class = "NSTableColumn"; headerCell.title = "Rect"; ObjectID = "mwR-gL-vIn"; */
-"mwR-gL-vIn.headerCell.title" = "Rect";
-
-/* Class = "NSTableColumn"; headerToolTip = "size and location"; ObjectID = "mwR-gL-vIn"; */
-"mwR-gL-vIn.headerToolTip" = "dimensione e posizione";
-
 /* Class = "NSMenuItem"; title = "Snapshot"; ObjectID = "myp-D2-ebl"; */
 "myp-D2-ebl.title" = "Istantanea";
 
@@ -739,23 +628,11 @@
 /* Class = "NSMenuItem"; title = "Playlists"; ObjectID = "nTq-9d-Cuj"; */
 "nTq-9d-Cuj.title" = "Playlist";
 
-/* Class = "NSMenuItem"; title = "Single"; ObjectID = "nUx-DD-ycu"; */
-"nUx-DD-ycu.title" = "Singolo";
-
 /* Class = "NSTextFieldCell"; title = "Depth"; ObjectID = "nwl-Fb-jyW"; */
 "nwl-Fb-jyW.title" = "Profondità";
 
 /* Class = "NSMenuItem"; title = "Float Above"; ObjectID = "oHk-Z0-ePj"; */
 "oHk-Z0-ePj.title" = "Float Above";
-
-/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "of0-3u-hQF"; */
-"of0-3u-hQF.title" = "Cella di testo";
-
-/* Class = "NSTableColumn"; headerCell.title = "Labelless"; ObjectID = "ofy-Rm-Ytf"; */
-"ofy-Rm-Ytf.headerCell.title" = "Labelless";
-
-/* Class = "NSTableColumn"; headerToolTip = "auto hide label"; ObjectID = "ofy-Rm-Ytf"; */
-"ofy-Rm-Ytf.headerToolTip" = "Nascondi automaticamente etichetta";
 
 /* Class = "NSMenuItem"; title = "File in new tab…"; ObjectID = "opw-7V-Qjd"; */
 "opw-7V-Qjd.title" = "File in una nuova scheda ...";
@@ -765,9 +642,6 @@
 
 /* Class = "NSMenuItem"; title = "New Tab"; ObjectID = "p6F-MQ-MMg"; */
 "p6F-MQ-MMg.title" = "Nuova scheda";
-
-/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "pBO-sM-nTp"; */
-"pBO-sM-nTp.title" = "Cella di testo";
 
 /* Class = "NSMenuItem"; title = "Delete"; ObjectID = "pa3-QI-u2k"; */
 "pa3-QI-u2k.title" = "Elimina";
@@ -799,9 +673,6 @@
 /* Class = "NSMenuItem"; title = "New Incognito"; ObjectID = "rzt-yA-tvg"; */
 "rzt-yA-tvg.title" = "Nuova navigazione in incognito";
 
-/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "s5V-yY-6tc"; */
-"s5V-yY-6tc.title" = "Cella di testo";
-
 /* Class = "NSMenuItem"; title = "Never"; ObjectID = "sAL-RQ-Lba"; */
 "sAL-RQ-Lba.title" = "Mai";
 
@@ -811,9 +682,6 @@
 /* Class = "NSMenuItem"; title = "Window"; ObjectID = "sa6-w8-Bve"; */
 "sa6-w8-Bve.title" = "Finestra";
 
-/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "t9Q-z6-XiI"; */
-"t9Q-z6-XiI.title" = "Cella vista tabella";
-
 /* Class = "NSButton"; ibShadowedToolTip = "Play selected playlist"; ObjectID = "tOS-xf-jmG"; */
 "tOS-xf-jmG.ibShadowedToolTip" = "Riproduci playlist selezionata";
 
@@ -822,9 +690,6 @@
 
 /* Class = "NSMenuItem"; title = "Over"; ObjectID = "uQA-ak-q1K"; */
 "uQA-ak-q1K.title" = "Finita";
-
-/* Class = "NSTableColumn"; headerCell.title = "URL"; ObjectID = "uQe-2d-GQY"; */
-"uQe-2d-GQY.headerCell.title" = "URL";
 
 /* Class = "NSMenu"; title = "He3"; ObjectID = "uQy-DD-JDr"; */
 "uQy-DD-JDr.title" = "He3";
@@ -841,9 +706,6 @@
 /* Class = "NSMenuItem"; title = "Delete"; ObjectID = "vRN-Yy-rnB"; */
 "vRN-Yy-rnB.title" = "Elimina";
 
-/* Class = "NSTableColumn"; headerCell.title = "Added"; ObjectID = "vWm-ko-T1E"; */
-"vWm-ko-T1E.headerCell.title" = "Aggiunto";
-
 /* Class = "NSTextField"; ibShadowedToolTip = "current histiory URLs"; ObjectID = "wR3-bh-jHn"; */
 "wR3-bh-jHn.ibShadowedToolTip" = "URL di cronologia correnti";
 
@@ -859,9 +721,6 @@
 /* Class = "NSMenuItem"; title = "Help"; ObjectID = "wpr-3q-Mcd"; */
 "wpr-3q-Mcd.title" = "Aiuto";
 
-/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "wqk-WR-2Tx"; */
-"wqk-WR-2Tx.title" = "Cella di testo";
-
 /* Class = "NSTextFieldCell"; title = "Label"; ObjectID = "wv0-UB-7Bv"; */
 "wv0-UB-7Bv.title" = "Etichetta";
 
@@ -876,12 +735,6 @@
 
 /* Class = "NSMenuItem"; title = "Revert To Saved…"; ObjectID = "xOh-zJ-vOA"; */
 "xOh-zJ-vOA.title" = "Ripristina file salvati ...";
-
-/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "xjD-IL-sL9"; */
-"xjD-IL-sL9.title" = "Cella vista tabella";
-
-/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "xoz-kC-to0"; */
-"xoz-kC-to0.title" = "Cella vista tabella";
 
 /* Class = "NSMenuItem"; title = "One Space"; ObjectID = "y3i-Zq-FM3"; */
 "y3i-Zq-FM3.title" = "Uno spazio";
@@ -937,15 +790,6 @@
 /* Class = "NSButton"; ibShadowedToolTip = "deny video services"; ObjectID = "zYp-sM-0W5"; */
 "zYp-sM-0W5.ibShadowedToolTip" = "nega servizi video";
 
-/* Class = "NSSegmentedCell"; QHE-KZ-Y2v.ibShadowedLabels[0] = "All"; ObjectID = "QHE-KZ-Y2v"; */
-"QHE-KZ-Y2v.ibShadowedLabels[0]" = "All";
-
-/* Class = "NSSegmentedCell"; QHE-KZ-Y2v.ibShadowedLabels[1] = "Dis"; ObjectID = "QHE-KZ-Y2v"; */
-"QHE-KZ-Y2v.ibShadowedLabels[1]" = "Dis";
-
-/* Class = "NSSegmentedCell"; QHE-KZ-Y2v.ibShadowedLabels[2] = "Scr"; ObjectID = "QHE-KZ-Y2v"; */
-"QHE-KZ-Y2v.ibShadowedLabels[2]" = "Scr";
-
 /* Class = "NSSegmentedCell"; jnF-id-nPh.ibShadowedLabels[0] = "Bing"; ObjectID = "jnF-id-nPh"; */
 "jnF-id-nPh.ibShadowedLabels[0]" = "Bing";
 
@@ -969,18 +813,6 @@
 
 /* Class = "NSSegmentedCell"; jnF-id-nPh.ibShadowedToolTips[3] = "Yahoo!"; ObjectID = "jnF-id-nPh"; */
 "jnF-id-nPh.ibShadowedToolTips[3]" = "Yahoo!";
-
-/* Class = "NSSegmentedCell"; uOP-xR-z5Z.ibShadowedLabels[0] = "Nvr"; ObjectID = "uOP-xR-z5Z"; */
-"uOP-xR-z5Z.ibShadowedLabels[0]" = "Nvr";
-
-/* Class = "NSSegmentedCell"; uOP-xR-z5Z.ibShadowedLabels[1] = "Alw"; ObjectID = "uOP-xR-z5Z"; */
-"uOP-xR-z5Z.ibShadowedLabels[1]" = "Alw";
-
-/* Class = "NSSegmentedCell"; uOP-xR-z5Z.ibShadowedLabels[2] = "Ovr"; ObjectID = "uOP-xR-z5Z"; */
-"uOP-xR-z5Z.ibShadowedLabels[2]" = "Ovr";
-
-/* Class = "NSSegmentedCell"; uOP-xR-z5Z.ibShadowedLabels[3] = "Out"; ObjectID = "uOP-xR-z5Z"; */
-"uOP-xR-z5Z.ibShadowedLabels[3]" = "Out";
 
 /* Class = "CocoaBindingsConnection"; ibShadowedIsNilPlaceholder = "1.0.3"; ObjectID = "4OH-h5-EgX"; */
 "4OH-h5-EgX.ibShadowedIsNilPlaceholder" = "1.0.4";
@@ -1018,5 +850,32 @@
 /* Class = "NSButton"; ibShadowedToolTip = "use binary archive format"; ObjectID = "cHu-JH-9vF"; */
 "cHu-JH-9vF.ibShadowedToolTip" = "utilizzare il formato di archivio binario";
 
-/* Class = "NSMenuItem"; title = "Playlists"; ObjectID = "2s5-Uv-13m"; */
-"2s5-Uv-13m.title" = "Playlists";
+/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "Bbx-3U-l0a"; */
+"Bbx-3U-l0a.title" = "";
+
+/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "UMy-Hx-DMs"; */
+"UMy-Hx-DMs.title" = "";
+
+/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "VMp-MU-QBc"; */
+"VMp-MU-QBc.title" = "";
+
+/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "aJ0-p2-hBc"; */
+"aJ0-p2-hBc.title" = "";
+
+/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "5sI-1d-41K"; */
+"5sI-1d-41K.title" = "";
+
+/* Class = "NSTableColumn"; headerCell.title = "Rank"; ObjectID = "Aih-gN-H3I"; */
+"Aih-gN-H3I.headerCell.title" = "";
+
+/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "dYy-Sx-ih6"; */
+"dYy-Sx-ih6.title" = "";
+
+/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "pzE-2P-rd8"; */
+"pzE-2P-rd8.title" = "";
+
+/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "qku-Hp-Zlc"; */
+"qku-Hp-Zlc.title" = "";
+
+/* Class = "NSTableColumn"; headerCell.title = "Name"; ObjectID = "tRZ-sf-aAJ"; */
+"tRZ-sf-aAJ.headerCell.title" = "";
