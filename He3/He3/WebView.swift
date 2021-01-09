@@ -124,6 +124,11 @@ class CacheSchemeHandler : NSObject,WKURLSchemeHandler {
 			{
 				return
 			}
+			
+		case k.defaults:
+			dict = Dictionary<String,String>()
+			dict[k.text] = defaults.string(forKey: ident)
+			dict[k.mime] = "text/html"
 
 		case k.text, k.html:
             let cache = String(format: "%@/%@", group, ident)
