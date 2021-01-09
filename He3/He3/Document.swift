@@ -319,7 +319,7 @@ class Document : NSDocument {
 			guard let fileURL = self.fileURL else {
 				return [.helium,.playitem].contains(docGroup) ? k.AppLogo : super.displayName
 			}
-            if fileURL.isFileURL
+            if fileURL.isFileURL || k.asset == fileURL.scheme
             {
                 return fileURL.deletingPathExtension().lastPathComponent
             }
@@ -385,7 +385,7 @@ class Document : NSDocument {
 			guard url.scheme == k.local else { return }
 			let paths = url.deletingPathExtension().pathComponents
 			guard paths[0] == "/", paths[1] == k.defaults else { return }
-			isGlobalPlaylist = true
+			isGlobalPlaylist = typeName == k.PlayType
         }
     }
     
@@ -427,10 +427,6 @@ class Document : NSDocument {
 					items.append(PlayList(name: fileURL?.lastPathComponent ?? item.name, list: [item]))
 					
 					if 0 == items.count { NSApp.presentError(error) }
-				}
-				
-				if let url = fileURL, let dict = defaults.dictionary(forKey: url.absoluteString) {
-					restoreSettings(with: dict)
 				}
 			}
 			else
@@ -479,48 +475,70 @@ class Document : NSDocument {
         catch let error {
             Swift.print("\(error.localizedDescription)")
         }
+		
+		if let url = fileURL, let dict = defaults.dictionary(forKey: url.absoluteString) {
+			restoreSettings(with: dict)
+		}
     }
 
     override func read(from url: URL, ofType typeName: String) throws {
-        // MARK: TODO: if none then go after pathExtension
+		let oneOfUs = [k.hpi,k.h3i,k.hpl,k.h3l,k.hic].contains(url.pathExtension)
+		
+        //	Push to super any file: URLs for our documents.
+		//	Handle local: URLs here, otherwise defer to WkWebView
 		if [k.ItemType,k.ItemName].contains(typeName)
 		|| [k.PlayType,k.PlayName].contains(typeName)
 		|| [k.IcntType,k.IcntName].contains(typeName)
-		|| [k.hpi,k.h3i,k.hpl,k.h3l,k.hic].contains(url.pathExtension) {
+		|| oneOfUs {
 			do {
 				if k.local == url.scheme {
 					let paths = url.deletingPathExtension().pathComponents
-					assert(paths[1] == k.defaults)
+					assert([k.asset,k.defaults].contains(paths[1]))
 					let keyPath = paths[2]
 					
-					items = appDelegate.restorePlaylists(keyPath)
+					switch paths[1] {
+					case k.asset:
+						break
+					
+					case k.defaults:
+						if k.PlayType == typeName {
+							items = appDelegate.restorePlaylists(keyPath)
+						}
+						else
+						{
+							items = appDelegate.restorePlaylists(keyPath)
+						}
+						
+					default:
+						let message = String(format: "Unknown local sub-scheme: %@", paths[1])
+						fatalError(message)
+					}
 					
 					//	A global playlist is a local: defaults URL on our short list
 					self.isGlobalPlaylist = [k.histories,k.playlists].contains(keyPath)
 				}
 				else
+				if oneOfUs
 				{
 					try super.read(from: url, ofType: typeName)
 				}
+				
+				if let dict = defaults.dictionary(forKey: url.absoluteString) {
+					restoreSettings(with: dict)
+				}
 			} catch let error {
 				if let dict = NSDictionary(contentsOf: url) as? [String : AnyObject] {
-					if let attrs = dict["attrs"] as? Dictionary<String,Any> {
-						restoreSettings(with: attrs)
-					}
 					if let saved = dict["items"] as? [PlayList] {
 						items.append(contentsOf: saved)
+					}
+					if let attrs = dict["attrs"] as? Dictionary<String,Any> {
+						restoreSettings(with: attrs)
 					}
 				}
 				else
 				{
 					NSApp.presentError(error)
 				}
-			}
-		}
-		else
-		{
-			if let dict = defaults.dictionary(forKey: url.absoluteString) {
-				restoreSettings(with: dict)
 			}
 		}
     }
@@ -751,10 +769,21 @@ class Document : NSDocument {
 
 					if k.local == url.scheme {
 						let paths = url.deletingPathExtension().pathComponents
-						assert(paths[1] == k.defaults)
+						assert([k.asset,k.defaults].contains(paths[1]))
 						let keyPath = paths[2]
 
-						items.saveToDefaults(keyPath)
+						switch paths[1] {
+						case k.asset:
+							let message = String(format: "Unwriteable scheme: %@", url.absoluteString)
+							fatalError(message)
+
+						case k.defaults:
+							items.saveToDefaults(keyPath)
+							
+						default:
+							let message = String(format: "Unknown scheme: %@", paths[1])
+							fatalError(message)
+						}
 					}
 					else
 					{
