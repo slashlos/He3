@@ -13,6 +13,15 @@ import OSLog
 class DocumentController : NSDocumentController {
     static let poi = OSLog(subsystem: "com.slashlos.he3", category: .pointsOfInterest)
 
+	@objc override func typeForContents(of url: URL) throws -> String {
+		let type = [k.hpi:k.ItemType,
+					k.h3i:k.ItemType,
+					k.hpl:k.PlayType,
+					k.h3l:k.PlayType,
+					k.hic:k.IcntType][url.pathExtension] ?? k.ItemType
+		return type
+	}
+
     override func makeDocument(for urlOrNil: URL?, withContentsOf contentsURL: URL, ofType typeName: String) throws -> Document {
         os_signpost(.begin, log: MyWebView.poi, name: "makeDocument:3")
         defer { os_signpost(.end, log: DocumentController.poi, name: "makeDocument:3") }

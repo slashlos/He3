@@ -223,6 +223,10 @@ class PlayItem : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
         if let rect = dictionary[k.rect] as? NSRect, rect != self.rect {
             self.rect = rect
         }
+		if let rect = dictionary[k.rect] as? String {
+			self.rect = NSRectFromString(rect)
+		}
+
         if let plays : Int = dictionary[k.plays] as? Int, plays != self.plays {
             self.plays = plays
         }

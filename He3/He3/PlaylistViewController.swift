@@ -580,11 +580,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
 		//  Leave non-global extractions contents intact (RONLY but visible
 		if isGlobalPlaylist {
 			//  Prune stale history entries
-			while (playlistArrayController.arrangedObjects as AnyObject).contains(historyCache)
-			{
-				playlistArrayController.removeObject(historyCache)
-			}
-			
+			playlists.removeAll{$0 == historyCache}
 			playlistArrayController.addObject(historyCache)
 		}
 		else
@@ -1004,7 +1000,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         guard let playlist = playlistArrayController.selectedObjects.first as? PlayList else { return }
 
         //  If history is current playlist, add to the history
-        if historyCache.name == playlist.name {
+        if historyCache == playlist {
             self.add(item: note.object as! PlayItem, atIndex: -1)
         }
     }
@@ -1215,7 +1211,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
                 //  propagate history to our delegate
                 if playlist == historyCache { appDelegate.histories = historyCache.list }
             }
-			userAlertMessage("Saved playlist(\(names.count))", info: names.count > 9 ? nil : names.listing)
+			userAlertMessage("Saved playlist(\(names.count))", info: names.count > 3 ? nil : names.listing)
         }
         else
         {
@@ -1230,7 +1226,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
                 defaults.set(playitem.dictionary(), forKey: playitem.link.absoluteString)
                 names.append(playitem.name)
             }
-            userAlertMessage("Saved playitem(\(names.count))", info: (names.count > 9) ? nil : names.listing)
+            userAlertMessage("Saved playitem(\(names.count))", info: (names.count > 3) ? nil : names.listing)
         }
 
         defaults.synchronize()
@@ -1247,15 +1243,19 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         //  Save or go
         switch (sender! as AnyObject).tag == 0 {
 		case true:
+			// Always prune history entry(s)
+			playlists.removeAll{$0 == historyCache}
+
 			// Save to the cache
 			playCache = playlists
 			
 			// If local save that too
-			if let doc = self.doc { doc.save(sender) }
+			if let doc = self.doc { doc.items = playlists; doc.save(sender) }
 		
 		case false:
 			// Restore NON-HISTORY playlist(s) from cache
-			while let historyIndex = playCache.firstIndex(of: historyCache) { playCache.remove(at: historyIndex) }
+			playCache.removeAll{$0 == historyCache}
+			
 			playlists = playCache
         }
     }
@@ -1272,7 +1272,13 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         defaults.set(isHidden, forKey: pref)
         col.isHidden = isHidden
     }
-
+	
+	@IBAction func itemHoverChange(_ sender: NSSegmentedControl) {
+		let item = playitemArrayController.selectedObjects.first as! PlayItem
+		
+		item.hover = sender.selectedTag()
+	}
+	
     @objc func validateMenuItem(_ menuItem: NSMenuItem) -> Bool {
         if menuItem.title.hasPrefix("Redo") {
             menuItem.isEnabled = self.canRedo
@@ -1344,47 +1350,50 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         return cell
     }
 	
-	
 	func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
 		let tag = tableView.tag
 		
 		if let column = tableColumn {
-			let view : NSTableCellView = tableView.makeView(withIdentifier: column.identifier, owner: self) as! NSTableCellView
+			let view = tableView.makeView(withIdentifier: column.identifier, owner: self)
 			let item = ([playlistArrayController,playitemArrayController][tag]?.arrangedObjects as! [AnyObject])[row]
+			let textView : NSTableCellView? = view as? NSTableCellView
 			
 			//	Default font for text field
-			if let field = view.textField { field.font = .systemFont(ofSize: -1) }
+			if let field = textView?.textField {
+				field.font = .systemFont(ofSize: -1)
+				field.isEditable = true
+			}
 			
 			switch tag {
 			case 0:
 				if isGlobalPlaylist, item as! NSObject == historyCache {
-					if let field = view.textField {
+					if let field = textView?.textField {
 						field.font = NSFont.init(name: "Helvetica Oblique", size: -1)
+						field.isEditable = false
+					}
+				}
+
+			case 1:
+				let list : AnyObject = playlistArrayController.selectedObjects.first as AnyObject
+				if isGlobalPlaylist, list as! NSObject == historyCache {
+					if let field = textView?.textField {
+						field.font = NSFont.init(name: "Helvetica Oblique", size: -1)
+						field.isEditable = false
 					}
 				}
 				
-			case 1:
-				let list : AnyObject = (playlistArrayController.arrangedObjects as! [AnyObject])[playlistArrayController.selectionIndex]
-				if isGlobalPlaylist, list as! NSObject == historyCache {
-					if let field = view.textField {
-						field.font = NSFont.init(name: "Helvetica Oblique", size: -1)
-					}
+				if [.rank,.name].contains(column.identifier) {
+					view?.toolTip = item.turl
 				}
-				view.toolTip = item.turl
 
 			default:
 				break
 			}
 			
-			if let view : PlayTableCellView = view as? PlayTableCellView {
-				view.isEditable = self.tableView(tableView, shouldEdit: column, row: row)
-			}
-			view.objectValue = item
 			return view
 		}
 		return nil
 	}
-	
 	
     //  We cannot alter a playitem once plays is non-zero; set to zero to alter
 	@objc func textFieldShouldBecomeEditable(_ textField: PlayTableTextField) -> Bool {
@@ -1393,7 +1402,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
 		let tableColumn = textField.tableColumn!
 		
 		if tableView == playlistTableView, let playlist : PlayList = item as? PlayList {
-			guard playlist.name != UserSettings.HistoryName.value else { return false }
+			guard playlist != historyCache else { return false }
 			return tableColumn.identifier == .name
 		}
 		else

@@ -1110,8 +1110,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
     @objc @IBAction func showReleaseInfo(_ sender: Any) {
         do
         {
-            let url = URL.init(string: k.ReleaseURL)!
-            let doc = try docController.makeDocument(withContentsOf: url, ofType: k.Release)
+			let doc = try docController.makeDocument(withContentsOf: k.ReleaseURL, ofType: k.ItemType)
 			doc.showWindows()
         }
         catch let error {
@@ -1383,6 +1382,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         //  We need our own to reopen our "document" urls
         _ = DocumentController.init()
         
+		//	Prime our histories
+		_ = histories
+		
         let flags : NSEvent.ModifierFlags = NSEvent.ModifierFlags(rawValue: NSEvent.modifierFlags.rawValue & NSEvent.ModifierFlags.deviceIndependentFlagsMask.rawValue)
         let event = NSAppleEventDescriptor.currentProcess()
 
@@ -1557,17 +1559,27 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
                     let keep = UserSettings.HistoryKeep.value
                     
                     // Load histories from defaults up to their maximum
-                    for playitem in items.suffix(keep) {
-                        if let name : String = playitem as? String, let dict = defaults.dictionary(forKey: name) {
-                            self._histories?.append(PlayItem(from: dict))
+                    for item in items.suffix(keep) {
+						var playitem: PlayItem?
+						
+                        if let name : String = item as? String, let dict = defaults.dictionary(forKey: name) {
+                            playitem = PlayItem(from: dict)
                         }
                         else
-                        if let dict : Dictionary <String,AnyObject> = playitem as? Dictionary <String,AnyObject> {
-                            self._histories?.append(PlayItem(from: dict))
+                        if let dict : Dictionary <String,AnyObject> = item as? Dictionary <String,AnyObject> {
+                            playitem = PlayItem(from: dict)
                         }
+						
+						if let playitem = playitem
+						{
+							if let dict = defaults.dictionary(forKey: playitem.link.absoluteString) {
+								playitem.update(with: dict)
+							}
+							self._histories?.append(playitem)
+						}
                         else
                         {
-                            print("unknown history \(playitem)")
+                            print("unknown history \(item)")
                         }
                     }
                     print("\(self._histories!.count) history(s) restored")
