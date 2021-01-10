@@ -886,9 +886,6 @@
 /* Class = "NSTableColumn"; headerCell.title = "Date"; ObjectID = "k7j-Fu-HmK"; */
 "k7j-Fu-HmK.headerCell.title" = "";
 
-/* Class = "NSTableColumn"; headerToolTip = "date"; ObjectID = "k7j-Fu-HmK"; */
-"k7j-Fu-HmK.headerToolTip" = "";
-
 /* Class = "NSTableColumn"; headerCell.title = "URL"; ObjectID = "wxm-Fc-IxO"; */
 "wxm-Fc-IxO.headerCell.title" = "";
 
@@ -909,30 +906,6 @@
 
 /* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "Qh1-mL-PAS"; */
 "Qh1-mL-PAS.title" = "";
-
-/* Class = "NSTableColumn"; headerCell.title = "Label"; ObjectID = "bFe-vy-doZ"; */
-"bFe-vy-doZ.headerCell.title" = "";
-
-/* Class = "NSTableColumn"; headerToolTip = "auto hide window title"; ObjectID = "bFe-vy-doZ"; */
-"bFe-vy-doZ.headerToolTip" = "";
-
-/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "tQb-U6-m4B"; */
-"tQb-U6-m4B.title" = "";
-
-/* Class = "NSSegmentedCell"; 02x-WU-6CE.ibShadowedLabels[0] = "ALW"; ObjectID = "02x-WU-6CE"; */
-"02x-WU-6CE.ibShadowedLabels[0]" = "";
-
-/* Class = "NSSegmentedCell"; 02x-WU-6CE.ibShadowedLabels[1] = "NVR"; ObjectID = "02x-WU-6CE"; */
-"02x-WU-6CE.ibShadowedLabels[1]" = "";
-
-/* Class = "NSSegmentedCell"; 02x-WU-6CE.ibShadowedToolTips[0] = "always"; ObjectID = "02x-WU-6CE"; */
-"02x-WU-6CE.ibShadowedToolTips[0]" = "";
-
-/* Class = "NSSegmentedCell"; 02x-WU-6CE.ibShadowedToolTips[1] = "never"; ObjectID = "02x-WU-6CE"; */
-"02x-WU-6CE.ibShadowedToolTips[1]" = "";
-
-/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "07W-IW-8D8"; */
-"07W-IW-8D8.title" = "";
 
 /* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "5sI-1d-41K"; */
 "5sI-1d-41K.title" = "";
@@ -969,3 +942,18 @@
 
 /* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "wh5-s9-ifc"; */
 "wh5-s9-ifc.title" = "";
+
+/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "cLo-HR-UG7"; */
+"cLo-HR-UG7.title" = "";
+
+/* Class = "NSTableColumn"; headerCell.title = "Label"; ObjectID = "tBg-6g-aYG"; */
+"tBg-6g-aYG.headerCell.title" = "";
+
+/* Class = "NSTableColumn"; headerToolTip = "auto hide title"; ObjectID = "tBg-6g-aYG"; */
+"tBg-6g-aYG.headerToolTip" = "";
+
+/* Class = "NSSegmentedCell"; q1P-kv-dmp.ibShadowedLabels[0] = "Alw"; ObjectID = "q1P-kv-dmp"; */
+"q1P-kv-dmp.ibShadowedLabels[0]" = "";
+
+/* Class = "NSSegmentedCell"; q1P-kv-dmp.ibShadowedLabels[1] = "Nvr"; ObjectID = "q1P-kv-dmp"; */
+"q1P-kv-dmp.ibShadowedLabels[1]" = "";
