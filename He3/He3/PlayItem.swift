@@ -220,11 +220,14 @@ class PlayItem : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
         if let rank : Int = dictionary[k.rank] as? Int, rank != self.rank {
             self.rank = rank
         }
-        if let rect = dictionary[k.rect] as? NSRect, rect != self.rect {
+        if let rect = dictionary[k.rect] as? NSRect, rect != self.rect, rect != NSZeroRect {
             self.rect = rect
         }
-		if let rect = dictionary[k.rect] as? String {
-			self.rect = NSRectFromString(rect)
+		if let temp = dictionary[k.rect] as? String {
+			let tRect = NSRectFromString(temp)
+			if tRect != NSZeroRect {
+				self.rect = tRect
+			}
 		}
 
         if let plays : Int = dictionary[k.plays] as? Int, plays != self.plays {
