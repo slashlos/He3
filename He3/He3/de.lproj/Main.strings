@@ -862,14 +862,8 @@
 /* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "aJ0-p2-hBc"; */
 "aJ0-p2-hBc.title" = "";
 
-/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "5sI-1d-41K"; */
-"5sI-1d-41K.title" = "";
-
 /* Class = "NSTableColumn"; headerCell.title = "Rank"; ObjectID = "Aih-gN-H3I"; */
 "Aih-gN-H3I.headerCell.title" = "";
-
-/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "dYy-Sx-ih6"; */
-"dYy-Sx-ih6.title" = "";
 
 /* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "pzE-2P-rd8"; */
 "pzE-2P-rd8.title" = "";
@@ -879,3 +873,99 @@
 
 /* Class = "NSTableColumn"; headerCell.title = "Name"; ObjectID = "tRZ-sf-aAJ"; */
 "tRZ-sf-aAJ.headerCell.title" = "";
+
+/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "NmA-YF-01e"; */
+"NmA-YF-01e.title" = "";
+
+/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "Oox-4Q-2Ru"; */
+"Oox-4Q-2Ru.title" = "";
+
+/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "P6g-ut-qF5"; */
+"P6g-ut-qF5.title" = "";
+
+/* Class = "NSTableColumn"; headerCell.title = "Date"; ObjectID = "k7j-Fu-HmK"; */
+"k7j-Fu-HmK.headerCell.title" = "";
+
+/* Class = "NSTableColumn"; headerToolTip = "date"; ObjectID = "k7j-Fu-HmK"; */
+"k7j-Fu-HmK.headerToolTip" = "";
+
+/* Class = "NSTableColumn"; headerCell.title = "URL"; ObjectID = "wxm-Fc-IxO"; */
+"wxm-Fc-IxO.headerCell.title" = "";
+
+/* Class = "NSTableColumn"; headerCell.title = "Time"; ObjectID = "yp2-ZP-mdT"; */
+"yp2-ZP-mdT.headerCell.title" = "";
+
+/* Class = "NSTableColumn"; headerToolTip = "running time"; ObjectID = "yp2-ZP-mdT"; */
+"yp2-ZP-mdT.headerToolTip" = "";
+
+/* Class = "NSTableColumn"; headerCell.title = "Frame"; ObjectID = "GJN-H4-aIh"; */
+"GJN-H4-aIh.headerCell.title" = "";
+
+/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "YPV-cr-Bsj"; */
+"YPV-cr-Bsj.title" = "";
+
+/* Class = "NSTableColumn"; headerCell.title = "Plays"; ObjectID = "80y-fU-4Uu"; */
+"80y-fU-4Uu.headerCell.title" = "";
+
+/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "Qh1-mL-PAS"; */
+"Qh1-mL-PAS.title" = "";
+
+/* Class = "NSTableColumn"; headerCell.title = "Label"; ObjectID = "bFe-vy-doZ"; */
+"bFe-vy-doZ.headerCell.title" = "";
+
+/* Class = "NSTableColumn"; headerToolTip = "auto hide window title"; ObjectID = "bFe-vy-doZ"; */
+"bFe-vy-doZ.headerToolTip" = "";
+
+/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "tQb-U6-m4B"; */
+"tQb-U6-m4B.title" = "";
+
+/* Class = "NSSegmentedCell"; 02x-WU-6CE.ibShadowedLabels[0] = "ALW"; ObjectID = "02x-WU-6CE"; */
+"02x-WU-6CE.ibShadowedLabels[0]" = "";
+
+/* Class = "NSSegmentedCell"; 02x-WU-6CE.ibShadowedLabels[1] = "NVR"; ObjectID = "02x-WU-6CE"; */
+"02x-WU-6CE.ibShadowedLabels[1]" = "";
+
+/* Class = "NSSegmentedCell"; 02x-WU-6CE.ibShadowedToolTips[0] = "always"; ObjectID = "02x-WU-6CE"; */
+"02x-WU-6CE.ibShadowedToolTips[0]" = "";
+
+/* Class = "NSSegmentedCell"; 02x-WU-6CE.ibShadowedToolTips[1] = "never"; ObjectID = "02x-WU-6CE"; */
+"02x-WU-6CE.ibShadowedToolTips[1]" = "";
+
+/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "07W-IW-8D8"; */
+"07W-IW-8D8.title" = "";
+
+/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "5sI-1d-41K"; */
+"5sI-1d-41K.title" = "";
+
+/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "Luc-cC-cQA"; */
+"Luc-cC-cQA.title" = "";
+
+/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "SAi-EE-10w"; */
+"SAi-EE-10w.title" = "";
+
+/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "TVk-lk-owl"; */
+"TVk-lk-owl.title" = "";
+
+/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "dYy-Sx-ih6"; */
+"dYy-Sx-ih6.title" = "";
+
+/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "fJF-SJ-rr6"; */
+"fJF-SJ-rr6.title" = "";
+
+/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "jND-2g-ccy"; */
+"jND-2g-ccy.title" = "";
+
+/* Class = "NSSegmentedCell"; oFe-UV-7SD.ibShadowedLabels[0] = "ALW"; ObjectID = "oFe-UV-7SD"; */
+"oFe-UV-7SD.ibShadowedLabels[0]" = "";
+
+/* Class = "NSSegmentedCell"; oFe-UV-7SD.ibShadowedLabels[1] = "NVR"; ObjectID = "oFe-UV-7SD"; */
+"oFe-UV-7SD.ibShadowedLabels[1]" = "";
+
+/* Class = "NSSegmentedCell"; oFe-UV-7SD.ibShadowedToolTips[0] = "always"; ObjectID = "oFe-UV-7SD"; */
+"oFe-UV-7SD.ibShadowedToolTips[0]" = "";
+
+/* Class = "NSSegmentedCell"; oFe-UV-7SD.ibShadowedToolTips[1] = "never"; ObjectID = "oFe-UV-7SD"; */
+"oFe-UV-7SD.ibShadowedToolTips[1]" = "";
+
+/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "wh5-s9-ifc"; */
+"wh5-s9-ifc.title" = "";
