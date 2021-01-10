@@ -216,10 +216,13 @@ class Document : NSDocument {
         if let rank : Int = dictionary[k.rank] as? Int, rank != self.settings.rank.value {
             self.settings.rank.value = rank
         }
-        if let rect = dictionary[k.rect] as? String {
-            self.settings.rect.value = NSRectFromString(rect)
-			if let window = self.windowControllers.first?.window, !NSEqualRects(NSZeroRect, CGRect(for: rect)) {
-                window.setFrame(from: rect)
+		if let temp = dictionary[k.rect] as? String {
+			let tRect = NSRectFromString(temp)
+			if tRect != NSZeroRect {
+				self.settings.rect.value = tRect
+				if let window = self.windowControllers.first?.window {
+					window.setFrame(from: temp)
+				}
             }
         }
         if let plays : Int = dictionary[k.plays] as? Int, plays != self.settings.plays.value {
@@ -475,10 +478,6 @@ class Document : NSDocument {
         catch let error {
             Swift.print("\(error.localizedDescription)")
         }
-		
-		if let url = fileURL, let dict = defaults.dictionary(forKey: url.absoluteString) {
-			restoreSettings(with: dict)
-		}
     }
 
     override func read(from url: URL, ofType typeName: String) throws {
