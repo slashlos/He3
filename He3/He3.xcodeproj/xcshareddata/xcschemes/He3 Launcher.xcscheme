@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
    LastUpgradeVersion = "1200"
-   wasCreatedForAppExtension = "YES"
-   version = "2.0">
+   version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
@@ -15,23 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0F528FFE244F142800A9B9DC"
-               BuildableName = "He3 ShareExtension.appex"
-               BlueprintName = "He3 ShareExtension"
-               ReferencedContainer = "container:He3.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0F2370CC244E8CEA009F7914"
-               BuildableName = "He3.app"
-               BlueprintName = "He3"
+               BlueprintIdentifier = "0F307165246A3D0B00684B84"
+               BuildableName = "He3 Launcher.app"
+               BlueprintName = "He3 Launcher"
                ReferencedContainer = "container:He3.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -43,37 +28,25 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0F52902C244F3A5800A9B9DC"
-               BuildableName = "He3Tests.xctest"
-               BlueprintName = "He3Tests"
-               ReferencedContainer = "container:He3.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
-      selectedDebuggerIdentifier = ""
-      selectedLauncherIdentifier = "Xcode.IDEFoundation.Launcher.PosixSpawn"
+      selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
+      selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
-      askForAppToLaunch = "Yes"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
-      allowLocationSimulation = "YES"
-      launchAutomaticallySubstyle = "2">
+      allowLocationSimulation = "YES">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0F2370CC244E8CEA009F7914"
-            BuildableName = "He3.app"
-            BlueprintName = "He3"
+            BlueprintIdentifier = "0F307165246A3D0B00684B84"
+            BuildableName = "He3 Launcher.app"
+            BlueprintName = "He3 Launcher"
             ReferencedContainer = "container:He3.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -83,15 +56,14 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
-      debugDocumentVersioning = "YES"
-      launchAutomaticallySubstyle = "2">
+      debugDocumentVersioning = "YES">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0F2370CC244E8CEA009F7914"
-            BuildableName = "He3.app"
-            BlueprintName = "He3"
+            BlueprintIdentifier = "0F307165246A3D0B00684B84"
+            BuildableName = "He3 Launcher.app"
+            BlueprintName = "He3 Launcher"
             ReferencedContainer = "container:He3.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

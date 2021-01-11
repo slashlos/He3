@@ -81,6 +81,7 @@ public struct k {
     static let vers = "vers"
     static let data = "data"
     static let turl = "turl"
+	static let tRect = "tRect"
     static let TitleUtility: CGFloat = 16.0
     static let TitleNormal: CGFloat = 22.0
     static let ToolbarItemHeight: CGFloat = 48.0
@@ -91,7 +92,7 @@ public struct k {
 	static let PlaylistsURL = URL.init(string: k.local + ":///" + k.defaults + "/" + k.playlists)!.appendingPathExtension(k.hpl)
 	static let PrivacyURL = URL.init(string: k.local + ":///asset/he3_privacy.rtf")
     static let Release = "Release"
-    static let ReleaseURL = k.local + ":///asset/RELEASE.html"
+	static let ReleaseURL = URL.init(string: k.local + ":///asset/RELEASE.html")!
     static let ReleaseNotes = "Release Notes"
     static let bingInfo = "Microsoft Bing Search"
     static let bingName = "Bing"

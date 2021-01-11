@@ -112,5 +112,45 @@ class PlayTableCellView : NSTableCellView {
 
 		return imageComponents
 	}
-	
 }
+
+class PlayItemLabelView : PlayTableCellView {
+	@IBOutlet var labelSegControl: NSSegmentedControl!
+	
+	override init(frame frameRect: NSRect) {
+		super.init(frame: frameRect)
+		
+		labelSegControl = NSSegmentedControl()
+		labelSegControl.identifier = .label
+		labelSegControl.segmentCount = 2
+		labelSegControl.setLabel("Alw", forSegment: 0)
+		labelSegControl.setLabel("Nvr", forSegment: 1)
+		self.addSubview(labelSegControl)
+		
+		print("init(frame)")
+
+	}
+	
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
+		
+		if labelSegControl == nil {
+			labelSegControl = NSSegmentedControl()
+			labelSegControl.identifier = .label
+			labelSegControl.segmentCount = 2
+			labelSegControl.setLabel("Alw", forSegment: 0)
+			labelSegControl.setLabel("Nvr", forSegment: 1)
+			self.addSubview(labelSegControl)
+		}
+		print("init(coder)")
+		///fatalError("init(coder:) has not been implemented")
+	}
+	
+	override func draw(_ dirtyRect: NSRect) {
+		super.draw(dirtyRect)
+	}
+	
+	@IBAction func labelSegPress(_ sender: Any) {
+	}
+}
+

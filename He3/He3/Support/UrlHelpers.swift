@@ -32,12 +32,25 @@ struct UrlHelpers {
 		if let url = URL.init(string: urlString), [k.scheme,k.local].contains(url.scheme) {
 			let paths = url.pathComponents
 			guard paths.count > 2 else { return false }
-			assert(paths[1] == k.asset)
-			let ident = paths[2]
-			guard let asset = NSDataAsset.init(name: ident) else { return false }
-			let data = NSData.init(data: (asset.data))
-			guard let string = String.init(data: data as Data, encoding: String.Encoding.utf8) else { return false }
-			return string.count > 0
+			assert([k.asset,k.defaults].contains(paths[1]))
+			let keyPath = paths[2]
+			
+			switch paths[1] {
+			case k.asset:
+				guard let asset = NSDataAsset.init(name: keyPath) else { return false }
+				let data = NSData.init(data: (asset.data))
+				guard let string = String.init(data: data as Data, encoding: String.Encoding.utf8) else { return false }
+				return string.count > 0
+			
+			case k.defaults:
+				if nil != defaults.object(forKey: keyPath) {
+					return true
+				}
+				
+			default:
+				let message = String(format: "Unknown scheme: %@", paths[1])
+				fatalError(message)
+			}
 		}
 		
         // swiftlint:disable:next force_try

@@ -329,6 +329,8 @@ extension NSObject {
 
 extension NSUserInterfaceItemIdentifier {
 	static let playlists = NSUserInterfaceItemIdentifier(rawValue: "Playlists")
+	static let label = NSUserInterfaceItemIdentifier(rawValue: "label")
+	static let hover = NSUserInterfaceItemIdentifier(rawValue: "hover")
 }
 
 extension NSView {

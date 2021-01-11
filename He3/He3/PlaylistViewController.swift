@@ -306,7 +306,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
     }
     var itemIvars : [String] {
         get {
-			return [k.name, k.turl, k.date, k.time, k.rank, k.rect, k.plays, k.label, k.hover, k.alpha, k.trans, k.agent]
+			return [k.name, k.turl, k.date, k.time, k.rank, k.tRect, k.plays, k.label, k.hover, k.alpha, k.trans, k.agent]
         }
     }
 

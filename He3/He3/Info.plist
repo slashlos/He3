@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBuildDate</key>
-	<string>20201206.130309</string>
+	<string>20210110.200802</string>
 	<key>CFBuildIncrement</key>
 	<false/>
 	<key>CFBuildMajor</key>
@@ -11,7 +11,7 @@
 	<key>CFBuildMinor</key>
 	<integer>0</integer>
 	<key>CFBuildNumber</key>
-	<real>8393</real>
+	<string>8414</string>
 	<key>CFBuildPatch</key>
 	<integer>4</integer>
 	<key>CFBundleDevelopmentRegion</key>
@@ -37,6 +37,8 @@
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.slashlos.he3.hpi</string>
+				<string>com.slashlos.he3.h3i</string>
+				<string>Playitem</string>
 			</array>
 			<key>NSDocumentClass</key>
 			<string>$(PRODUCT_MODULE_NAME).Document</string>
@@ -58,11 +60,17 @@
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.slashlos.he3.hpl</string>
+				<string>com.slashlos.he3.h3l</string>
+				<string>Playlist</string>
 			</array>
 			<key>NSDocumentClass</key>
 			<string>$(PRODUCT_MODULE_NAME).Document</string>
 		</dict>
 		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>hic</string>
+			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>icntIcon</string>
 			<key>CFBundleTypeName</key>
@@ -74,8 +82,11 @@
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.adobe.pdf</string>
-				<string>public.audiovosual-content</string>
+				<string>public.movie</string>
 				<string>public.image</string>
+				<string>public.data</string>
+				<string>public.plain-text</string>
+				<string>public.html</string>
 				<string>public.text</string>
 				<string>com.apple.webarchive</string>
 			</array>
@@ -84,7 +95,6 @@
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>hic</string>
-				<string>h3c</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>icntIcon</string>
@@ -97,6 +107,7 @@
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.slashlos.he3.hic</string>
+				<string>Incognito</string>
 			</array>
 			<key>NSDocumentClass</key>
 			<string>$(PRODUCT_MODULE_NAME).Document</string>
@@ -129,15 +140,16 @@
 			<string>Viewer</string>
 			<key>CFBundleURLIconFile</key>
 			<string>icntIcon</string>
+			<key>CFBundleURLName</key>
+			<string>He3</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>he3</string>
-				<string>he3-local</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.0.8393.000000</string>
+	<string>1.0.8414</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>
@@ -179,59 +191,15 @@
 			<key>UTTypeIconFile</key>
 			<string>icntIcon</string>
 			<key>UTTypeIdentifier</key>
-			<string>com.slashlos.he3.hic</string>
+			<string>Incognito</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>public.filename-extension</key>
 				<array>
 					<string>hic</string>
-					<string>h3c</string>
 				</array>
 			</dict>
 		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>com.apple.property-list</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>Playlist</string>
-			<key>UTTypeIconFile</key>
-			<string>listIcon</string>
-			<key>UTTypeIdentifier</key>
-			<string>com.slashlos.he3.hpl</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>hpl</string>
-					<string>h3l</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>com.apple.property-list</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>Playitem</string>
-			<key>UTTypeIconFile</key>
-			<string>itemIcon</string>
-			<key>UTTypeIdentifier</key>
-			<string>com.slashlos.he3.hpi</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>hpi</string>
-					<string>h3i</string>
-				</array>
-			</dict>
-		</dict>
-	</array>
-	<key>UTImportedTypeDeclarations</key>
-	<array>
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
@@ -248,27 +216,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>hic</string>
-					<string>h3c</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>com.apple.property-list</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>Playitem</string>
-			<key>UTTypeIconFile</key>
-			<string>itemIcon</string>
-			<key>UTTypeIdentifier</key>
-			<string>com.slashlos.he3.hpi</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>hpi</string>
-					<string>h3i</string>
 				</array>
 			</dict>
 		</dict>
@@ -288,49 +235,65 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>hpl</string>
-					<string>h3l</string>
 				</array>
 			</dict>
 		</dict>
 		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>com.apple.property-list</string>
+			</array>
 			<key>UTTypeDescription</key>
-			<string>Image</string>
+			<string>Playitem</string>
+			<key>UTTypeIconFile</key>
+			<string>itemIcon</string>
 			<key>UTTypeIdentifier</key>
-			<string>public.image</string>
+			<string>com.slashlos.he3.hpi</string>
 			<key>UTTypeTagSpecification</key>
-			<dict/>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>hpi</string>
+				</array>
+			</dict>
 		</dict>
 		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>com.apple.property-list</string>
+			</array>
 			<key>UTTypeDescription</key>
-			<string>Movie</string>
+			<string>PlayItem</string>
+			<key>UTTypeIconFile</key>
+			<string>itemIcon</string>
 			<key>UTTypeIdentifier</key>
-			<string>public.audiovisual-content</string>
+			<string>Playitem</string>
 			<key>UTTypeTagSpecification</key>
-			<dict/>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>hpi</string>
+				</array>
+			</dict>
 		</dict>
 		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>com.apple.property-list</string>
+			</array>
 			<key>UTTypeDescription</key>
-			<string>PDF</string>
+			<string>Playlist</string>
+			<key>UTTypeIconFile</key>
+			<string>listIcon</string>
 			<key>UTTypeIdentifier</key>
-			<string>com.adobe.pdf</string>
+			<string>Playlist</string>
 			<key>UTTypeTagSpecification</key>
-			<dict/>
-		</dict>
-		<dict>
-			<key>UTTypeDescription</key>
-			<string>Text</string>
-			<key>UTTypeIdentifier</key>
-			<string>public.text</string>
-			<key>UTTypeTagSpecification</key>
-			<dict/>
-		</dict>
-		<dict>
-			<key>UTTypeDescription</key>
-			<string>Archive</string>
-			<key>UTTypeIdentifier</key>
-			<string>com.apple.webarchive</string>
-			<key>UTTypeTagSpecification</key>
-			<dict/>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>hpl</string>
+				</array>
+			</dict>
 		</dict>
 	</array>
 	<key>Use Legacy Swift Language Version</key>

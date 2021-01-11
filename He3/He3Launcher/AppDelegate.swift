@@ -31,7 +31,7 @@ extension AppDelegate: NSApplicationDelegate {
 		if !isRunning {
             DistributedNotificationCenter.default().addObserver(self,
 																selector: #selector(self.terminate),
-																name: .killHe3Launcher,
+																name: .killLauncher,
 																object: he3AppIdentifier)
 			let path = Bundle.main.bundlePath as NSString
 			var components = path.pathComponents

@@ -946,9 +946,6 @@
 /* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "G0i-BS-bUr"; */
 "G0i-BS-bUr.title" = "";
 
-/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "VW7-Dg-DkI"; */
-"VW7-Dg-DkI.title" = "";
-
 /* Class = "NSTableColumn"; headerCell.title = "Labelless"; ObjectID = "FJ3-74-Ped"; */
 "FJ3-74-Ped.headerCell.title" = "";
 
@@ -957,9 +954,6 @@
 
 /* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "LCh-dH-4qA"; */
 "LCh-dH-4qA.title" = "";
-
-/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "OAz-4j-cJb"; */
-"OAz-4j-cJb.title" = "";
 
 /* Class = "NSTableColumn"; headerCell.title = "Hover"; ObjectID = "Psh-n5-75y"; */
 "Psh-n5-75y.headerCell.title" = "";
@@ -975,9 +969,6 @@
 
 /* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "IOD-Sa-Nqt"; */
 "IOD-Sa-Nqt.title" = "";
-
-/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "uN5-4c-K3h"; */
-"uN5-4c-K3h.title" = "";
 
 /* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "GS1-W8-wOc"; */
 "GS1-W8-wOc.title" = "";
@@ -1002,3 +993,69 @@
 
 /* Class = "NSTableColumn"; headerToolTip = "user agent string for web URL"; ObjectID = "atu-Gi-jgG"; */
 "atu-Gi-jgG.headerToolTip" = "";
+
+/* Class = "NSSegmentedCell"; znb-8T-yYo.ibShadowedLabels[0] = "Nvr"; ObjectID = "znb-8T-yYo"; */
+"znb-8T-yYo.ibShadowedLabels[0]" = "";
+
+/* Class = "NSSegmentedCell"; znb-8T-yYo.ibShadowedLabels[1] = "Alw"; ObjectID = "znb-8T-yYo"; */
+"znb-8T-yYo.ibShadowedLabels[1]" = "";
+
+/* Class = "NSSegmentedCell"; znb-8T-yYo.ibShadowedToolTips[0] = "never"; ObjectID = "znb-8T-yYo"; */
+"znb-8T-yYo.ibShadowedToolTips[0]" = "";
+
+/* Class = "NSSegmentedCell"; znb-8T-yYo.ibShadowedToolTips[1] = "always"; ObjectID = "znb-8T-yYo"; */
+"znb-8T-yYo.ibShadowedToolTips[1]" = "";
+
+/* Class = "NSSegmentedCell"; AzY-Hf-5OU.ibShadowedLabels[0] = "All"; ObjectID = "AzY-Hf-5OU"; */
+"AzY-Hf-5OU.ibShadowedLabels[0]" = "";
+
+/* Class = "NSSegmentedCell"; AzY-Hf-5OU.ibShadowedLabels[1] = "One"; ObjectID = "AzY-Hf-5OU"; */
+"AzY-Hf-5OU.ibShadowedLabels[1]" = "";
+
+/* Class = "NSSegmentedCell"; AzY-Hf-5OU.ibShadowedLabels[2] = "Full"; ObjectID = "AzY-Hf-5OU"; */
+"AzY-Hf-5OU.ibShadowedLabels[2]" = "";
+
+/* Class = "NSSegmentedCell"; AzY-Hf-5OU.ibShadowedToolTips[0] = "all screens"; ObjectID = "AzY-Hf-5OU"; */
+"AzY-Hf-5OU.ibShadowedToolTips[0]" = "";
+
+/* Class = "NSSegmentedCell"; AzY-Hf-5OU.ibShadowedToolTips[1] = "one screen"; ObjectID = "AzY-Hf-5OU"; */
+"AzY-Hf-5OU.ibShadowedToolTips[1]" = "";
+
+/* Class = "NSSegmentedCell"; AzY-Hf-5OU.ibShadowedToolTips[2] = "full screen"; ObjectID = "AzY-Hf-5OU"; */
+"AzY-Hf-5OU.ibShadowedToolTips[2]" = "";
+
+/* Class = "NSSegmentedCell"; t0R-M6-quw.ibShadowedLabels[0] = "Nvr"; ObjectID = "t0R-M6-quw"; */
+"t0R-M6-quw.ibShadowedLabels[0]" = "";
+
+/* Class = "NSSegmentedCell"; t0R-M6-quw.ibShadowedLabels[1] = "Alw"; ObjectID = "t0R-M6-quw"; */
+"t0R-M6-quw.ibShadowedLabels[1]" = "";
+
+/* Class = "NSSegmentedCell"; t0R-M6-quw.ibShadowedLabels[2] = "Ovr"; ObjectID = "t0R-M6-quw"; */
+"t0R-M6-quw.ibShadowedLabels[2]" = "";
+
+/* Class = "NSSegmentedCell"; t0R-M6-quw.ibShadowedLabels[3] = "Out"; ObjectID = "t0R-M6-quw"; */
+"t0R-M6-quw.ibShadowedLabels[3]" = "";
+
+/* Class = "NSSegmentedCell"; t0R-M6-quw.ibShadowedLabels[4] = "Oovr"; ObjectID = "t0R-M6-quw"; */
+"t0R-M6-quw.ibShadowedLabels[4]" = "";
+
+/* Class = "NSSegmentedCell"; t0R-M6-quw.ibShadowedLabels[5] = "Oout"; ObjectID = "t0R-M6-quw"; */
+"t0R-M6-quw.ibShadowedLabels[5]" = "";
+
+/* Class = "NSSegmentedCell"; t0R-M6-quw.ibShadowedToolTips[0] = "never"; ObjectID = "t0R-M6-quw"; */
+"t0R-M6-quw.ibShadowedToolTips[0]" = "";
+
+/* Class = "NSSegmentedCell"; t0R-M6-quw.ibShadowedToolTips[1] = "always"; ObjectID = "t0R-M6-quw"; */
+"t0R-M6-quw.ibShadowedToolTips[1]" = "";
+
+/* Class = "NSSegmentedCell"; t0R-M6-quw.ibShadowedToolTips[2] = "mouse over"; ObjectID = "t0R-M6-quw"; */
+"t0R-M6-quw.ibShadowedToolTips[2]" = "";
+
+/* Class = "NSSegmentedCell"; t0R-M6-quw.ibShadowedToolTips[3] = "mouse outside"; ObjectID = "t0R-M6-quw"; */
+"t0R-M6-quw.ibShadowedToolTips[3]" = "";
+
+/* Class = "NSSegmentedCell"; t0R-M6-quw.ibShadowedToolTips[4] = "off over"; ObjectID = "t0R-M6-quw"; */
+"t0R-M6-quw.ibShadowedToolTips[4]" = "";
+
+/* Class = "NSSegmentedCell"; t0R-M6-quw.ibShadowedToolTips[5] = "off outside"; ObjectID = "t0R-M6-quw"; */
+"t0R-M6-quw.ibShadowedToolTips[5]" = "";

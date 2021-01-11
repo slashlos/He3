@@ -91,7 +91,7 @@ class He3Tests: XCTestCase {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
 		var playlistTypeUTI : AnyObject?
-		let playlistFileURL = URL.init(fileURLWithPath: "/Users/slashlos/GitHub/He3/He3/He3Tests/PlayList.h3l")
+		let playlistFileURL = URL.init(fileURLWithPath: "/Users/slashlos/GitHub/He3/He3/He3Tests/PlayList.hpl")
 		do {
 			try (playlistFileURL as NSURL).getResourceValue(&playlistTypeUTI, forKey: URLResourceKey.typeIdentifierKey)
 			print("playlistTypeUTI \(String(describing: playlistTypeUTI))")
@@ -108,7 +108,7 @@ class He3Tests: XCTestCase {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
 		var playitemTypeUTI : AnyObject?
-		let playitemFileURL = URL.init(fileURLWithPath: "/Users/slashlos/GitHub/He3/He3/He3Tests/PlayItem.h3i")
+		let playitemFileURL = URL.init(fileURLWithPath: "/Users/slashlos/GitHub/He3/He3/He3Tests/PlayItem.hpi")
 		do {
 			try (playitemFileURL as NSURL).getResourceValue(&playitemTypeUTI, forKey: URLResourceKey.typeIdentifierKey)
 			print("playitemTypeUTI \(String(describing: playitemTypeUTI))")
