@@ -2862,7 +2862,7 @@ Gw
                                                                         <levelIndicator verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qBP-E5-kPt">
                                                                             <rect key="frame" x="0.0" y="0.0" width="96" height="18"/>
                                                                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                                                            <levelIndicatorCell key="cell" controlSize="small" editable="YES" alignment="left" doubleValue="6" minValue="1" maxValue="11" warningValue="6" criticalValue="4" id="X3f-EG-kIU"/>
+                                                                            <levelIndicatorCell key="cell" controlSize="small" editable="YES" alignment="left" doubleValue="6" maxValue="10" warningValue="5" criticalValue="3" id="X3f-EG-kIU"/>
                                                                             <connections>
                                                                                 <binding destination="hVQ-nc-Oyo" name="value" keyPath="objectValue.opacity" id="9V6-qD-uWI"/>
                                                                             </connections>
