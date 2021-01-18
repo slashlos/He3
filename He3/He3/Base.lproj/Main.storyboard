@@ -2925,7 +2925,7 @@ Gw
                                                 </tableView>
                                             </subviews>
                                         </clipView>
-                                        <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="Mib-ye-Dwb">
+                                        <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="0.71448275862068966" horizontal="YES" id="Mib-ye-Dwb">
                                             <rect key="frame" x="1" y="168" width="404" height="15"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
@@ -3069,10 +3069,10 @@ Gw
             </objects>
             <point key="canvasLocation" x="1258.5" y="413"/>
         </scene>
-        <!--Titlebar Accessory View Controller-->
+        <!--Preferences Accessory View Controller-->
         <scene sceneID="hZq-LY-s76">
             <objects>
-                <viewController storyboardIdentifier="RightSideAccesoryViewController" id="m11-6x-Rpg" customClass="NSTitlebarAccessoryViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PreferencesAccesoryViewController" id="m11-6x-Rpg" customClass="PreferencesAccessoryViewController" customModule="He3" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="JIb-m2-Qst">
                         <rect key="frame" x="0.0" y="0.0" width="26" height="13"/>
                         <autoresizingMask key="autoresizingMask"/>

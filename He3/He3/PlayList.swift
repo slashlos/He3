@@ -122,11 +122,11 @@ class PlayList : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
     }
     
     @objc internal func shiftKeyDown(_ note: Notification) {
-        self.kvoTooltips([k.tooltip])
+		self.kvoToolTips([Notification.Name.shiftKeyDown.rawValue])
     }
     
     @objc internal func optionKeyDown(_ note: Notification) {
-        self.kvoTooltips([k.tooltip])
+		self.kvoToolTips([Notification.Name.optionKeyDown.rawValue])
     }
 
     convenience init(name:String, list:Array <PlayItem>) {

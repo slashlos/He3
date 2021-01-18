@@ -314,7 +314,7 @@ extension NSImage {
 }
 
 extension NSObject {
-    func kvoTooltips(_ keyPaths : [String]) {
+    func kvoToolTips(_ keyPaths : [String]) {
         for keyPath in (keyPaths)
         {
             self.willChangeValue(forKey: keyPath)

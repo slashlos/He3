@@ -135,7 +135,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(WebViewController.commandKeyDown(_:)),
-            name: NSNotification.Name(rawValue: "commandKeyDown"),
+            name: .commandKeyDown,
             object: nil)
         /*
         //  Watch option + command key changes
