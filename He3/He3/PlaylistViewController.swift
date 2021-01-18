@@ -92,30 +92,6 @@ class PlayTableView : NSTableView {
     }
 }
 
-class PlayItemCornerView : NSView {
-	override init(frame frameRect: NSRect) {
-		super.init(frame: frameRect)
-	}
-	
-	required init?(coder: NSCoder) {
-		super.init(coder: coder)
-		///fatalError("init(coder:) has not been implemented")
-	}
-}
-
-class PlayItemCornerButton : NSButton {/*
-	override init(frame frameRect: NSRect) {
-		super.init(frame: frameRect)
-		self.wantsLayer = true
-		self.layer?.backgroundColor = NSColor.blue.cgColor
-	}
-	
-	required init?(coder: NSCoder) {
-		super.init(coder: coder)
-		///fatalError("init(coder:) has not been implemented")
-	}*/
-}
-
 class PlayHeaderView : NSTableHeaderView {
     override func menu(for event: NSEvent) -> NSMenu? {
         let action = #selector(PlaylistViewController.toggleColumnVisiblity(_ :))
@@ -159,6 +135,10 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
 		return ppc
 	}
 	
+	var rvc : PlayItemAccessoryViewController {
+		return self.view.window?.titlebarAccessoryViewControllers.first as! PlayItemAccessoryViewController
+	}
+	
 	var isGlobalPlaylist : Bool {
 		get {
 			guard let doc = self.doc else { return false }
@@ -200,31 +180,11 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
 
     var shiftKeyDown : Bool {
         get {
-            return (NSApp.delegate as! AppDelegate).shiftKeyDown
-        }
-    }
-    var menuIconName : String {
-        get {
-            if shiftKeyDown {
-                return "NSActionTemplate"
-            }
-            else
-            {
-                return "NSRefreshTemplate"
-            }
-        }
-    }
-    @objc @IBOutlet weak var itemCornerImage : NSImage! {
-        get {
-            return NSImage.init(imageLiteralResourceName: self.menuIconName)
-        }
-        set (value) {
-            
+			return (NSApp.delegate as! AppDelegate).shiftKeyDown
         }
     }
     
-	@objc @IBOutlet weak var itemCornerButton : PlayItemCornerButton!
-	@objc @IBAction func itemCornerAction(_ sender: Any) {
+	@objc @IBAction func itemAction(_ sender: Any) {
 		guard let playlist = playlistArrayController.selectedObjects.first as? PlayList else { return }
         // Renumber playlist items via array controller
         playitemTableView.beginUpdates()
@@ -260,7 +220,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
                 }
             }
 			playlist.didChangeValue(forKey: k.tally)
-            self.itemCornerButton.needsDisplay = true
+            rvc.itemActionButton.needsDisplay = true
 
         case false:
             for (row,item) in (playitemArrayController.arrangedObjects as! [PlayItem]).enumerated() {
@@ -277,20 +237,6 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         }
         playitemTableView.endUpdates()
 	}
-    @objc @IBOutlet weak var itemCornerTooltip : NSString! {
-        get {
-            if shiftKeyDown {
-                return "Consolidate"
-            }
-            else
-            {
-                return "Resequence"
-            }
-        }
-        set (value) {
-            
-        }
-    }
 
 	//  delegate keeps our parsing dict to keeps names unique
     //  PlayList.name.willSet will track changes in playdicts
@@ -336,11 +282,6 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
             if state {
                 NotificationCenter.default.addObserver(
                     self,
-                    selector: #selector(shiftKeyDown(_:)),
-					name: .shiftKeyDown,
-                    object: nil)
-                NotificationCenter.default.addObserver(
-                    self,
                     selector: #selector(optionKeyDown(_:)),
 					name: .optionKeyDown,
                     object: nil)
@@ -367,27 +308,11 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         }
     }
     
-    @objc internal func shiftKeyDown(_ note: Notification) {
-		//	Don't bother unless we're a first responder
-		guard self.view.window == NSApp.keyWindow, [playlistTableView,playitemTableView].contains(self.view.window?.firstResponder) else { return }
-		
-        let keyPaths = ["itemCornerImage","itemCornerTooltip"]
-        for keyPath in (keyPaths)
-        {
-            self.willChangeValue(forKey: keyPath)
-        }
-        
-        for keyPath in (keyPaths)
-        {
-            self.didChangeValue(forKey: keyPath)
-        }
-    }
-    
     @objc internal func optionKeyDown(_ note: Notification) {
 		//	Don't bother unless we're a first responder
 		guard self.view.window == NSApp.keyWindow, [playlistTableView,playitemTableView].contains(self.view.window?.firstResponder) else { return }
 
-        let keyPaths = ["playTooltip"]
+        let keyPaths = ["playToolTip"]
         for keyPath in (keyPaths)
         {
             self.willChangeValue(forKey: keyPath)
@@ -604,12 +529,6 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         //  Start observing any changes
         self.observing = true
 		
-        //  Pin the playitem corner view to the header and scroll bar views
-		if let cornerView = playitemTableView.cornerView {
-			cornerView.addSubview(itemCornerButton)
-			itemCornerButton.center(cornerView)
-		}
-		
 		//	load our thumbnails for all our items
 		if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
 			for playlist in playlists {
@@ -777,7 +696,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
             print("firstResponder: \(String(describing: whoAmI))")
         }
     }
-    @objc @IBOutlet weak var addButtonTooltip : NSString! {
+    @objc @IBOutlet weak var addButtonToolTip : NSString! {
         get {
             let whoAmI = self.view.window?.firstResponder
             
@@ -832,7 +751,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
 			NSSound.playIf(.sosumi)
         }
     }
-    @objc @IBOutlet weak var removeButtonTooltip: NSString! {
+    @objc @IBOutlet weak var removeButtonToolTip: NSString! {
         get {
             let whoAmI = self.view.window?.firstResponder
             
@@ -966,7 +885,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
             play(sender, items:list, maxSize: list.count)
         }
     }
-    @objc @IBOutlet weak var playButtonTooltip: NSString! {
+    @objc @IBOutlet weak var playButtonToolTip: NSString! {
         get {
             let whoAmI = self.view.window?.firstResponder
             
@@ -1010,7 +929,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
 	}
 	
 	@objc @IBOutlet weak var restoreButton: NSButton!
-    @objc @IBOutlet weak var restoreButtonTooltip: NSString! {
+    @objc @IBOutlet weak var restoreButtonToolTip: NSString! {
         get {
             let whoAmI = self.view.window?.firstResponder
 
@@ -1165,7 +1084,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
     }
 
     @objc @IBOutlet weak var saveButton: NSButton!
-    @objc @IBOutlet weak var saveButtonTooltip: NSString! {
+    @objc @IBOutlet weak var saveButtonToolTip: NSString! {
         get {
             let whoAmI = self.view.window?.firstResponder
             
@@ -1323,7 +1242,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
 	
 	private func tableViewColumnDidResize(notification: NSNotification ) {
         // Pay attention to column resizes and aggressively force the tableview's cornerview to redraw.
-		self.playitemTableView.cornerView?.needsDisplay = true
+		rvc.view.needsDisplay = true
     }
     
     func tableView(_ tableView: NSTableView, dataCellFor tableColumn: NSTableColumn?, row: Int) -> NSCell? {
@@ -1523,11 +1442,11 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         let hpc = tableView.delegate as! PlaylistViewController
 //        print("change tooltips \(buttons)")
         for button in buttons {
-            hpc.willChangeValue(forKey: String(format: "%@ButtonTooltip", button))
+            hpc.willChangeValue(forKey: String(format: "%@ButtonToolTip", button))
         }
         ;
         for button in buttons {
-            hpc.didChangeValue(forKey: String(format: "%@ButtonTooltip", button))
+            hpc.didChangeValue(forKey: String(format: "%@ButtonToolTip", button))
         }
     }
 }

@@ -20,6 +20,10 @@ extension NSColor {
     }
 }
 
+class PreferencesAccessoryViewController : NSTitlebarAccessoryViewController {
+
+}
+
 class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProviderDelegate,NSDraggingSource,NSPasteboardWriting {
     var webViewController: WebViewController {
         get {
@@ -82,7 +86,7 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 		
 		//	Setup our preferences accessory view and toolbar
 
-		let rvc = storyboard!.instantiateController(withIdentifier: "RightSideAccesoryViewController") as! NSTitlebarAccessoryViewController
+		let rvc = storyboard!.instantiateController(withIdentifier: "PreferencesAccesoryViewController") as! NSTitlebarAccessoryViewController
 		rvc.layoutAttribute = .trailing
 		rvc.isHidden = false
 		self.panel.addTitlebarAccessoryViewController(rvc)
