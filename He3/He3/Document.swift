@@ -80,7 +80,7 @@ class Document : NSDocument {
         get {
 			if [k.ItemType,k.ItemName].contains(self.fileType)
 			|| [k.hpi,k.h3i].contains(fileURL?.pathExtension)  {
-				return .playitem
+				return [k.asset,k.local].contains(fileURL?.scheme) ? .release : .playitem
 			}
 			else
 			if [k.PlayType,k.PlayName].contains(self.fileType)
@@ -760,6 +760,11 @@ class Document : NSDocument {
 			}
 			else
 			{
+				guard ![k.asset,k.local].contains(url.scheme) else {
+					cacheSettings(url)
+					return
+				}
+				
 				switch typeName {
 				case k.ItemType:
 					try NSDictionary(dictionary: self.playitem().dictionary()).write(to: url)
@@ -830,7 +835,7 @@ class Document : NSDocument {
     }
     
     override func makeWindowControllers() {
-		let group = [ k.Helium, k.Helium, k.PlayName, k.PlayName, k.Release ][docGroup.rawValue] /// has to match docGroups ordering
+		let group = [ k.Helium, k.Helium, k.PlayName, k.Release ][docGroup.rawValue] /// has to match docGroups ordering
         let identifier = String(format: "%@Controller", group)
         let storyboard = NSStoryboard(name: "Main", bundle: nil)
         
