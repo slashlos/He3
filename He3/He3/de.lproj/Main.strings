@@ -958,13 +958,13 @@
 /* Class = "NSTableColumn"; headerCell.title = "Hover"; ObjectID = "Psh-n5-75y"; */
 "Psh-n5-75y.headerCell.title" = "";
 
-/* Class = "NSTableColumn"; headerToolTip = "auto hide window title"; ObjectID = "Psh-n5-75y"; */
+/* Class = "NSTableColumn"; headerToolTip = "hover above all, one or full screen"; ObjectID = "Psh-n5-75y"; */
 "Psh-n5-75y.headerToolTip" = "";
 
 /* Class = "NSTableColumn"; headerCell.title = "Translucency"; ObjectID = "0og-NP-UrC"; */
 "0og-NP-UrC.headerCell.title" = "";
 
-/* Class = "NSTableColumn"; headerToolTip = "auto hide window title"; ObjectID = "0og-NP-UrC"; */
+/* Class = "NSTableColumn"; headerToolTip = "window translucency"; ObjectID = "0og-NP-UrC"; */
 "0og-NP-UrC.headerToolTip" = "";
 
 /* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "IOD-Sa-Nqt"; */
@@ -978,9 +978,6 @@
 
 /* Class = "NSTableColumn"; headerToolTip = "window opacity level"; ObjectID = "Paz-J3-uvl"; */
 "Paz-J3-uvl.headerToolTip" = "";
-
-/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "sOg-Yv-xut"; */
-"sOg-Yv-xut.title" = "";
 
 /* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "KqZ-2C-aOT"; */
 "KqZ-2C-aOT.title" = "";
@@ -1036,10 +1033,10 @@
 /* Class = "NSSegmentedCell"; t0R-M6-quw.ibShadowedLabels[3] = "Out"; ObjectID = "t0R-M6-quw"; */
 "t0R-M6-quw.ibShadowedLabels[3]" = "";
 
-/* Class = "NSSegmentedCell"; t0R-M6-quw.ibShadowedLabels[4] = "Oovr"; ObjectID = "t0R-M6-quw"; */
+/* Class = "NSSegmentedCell"; t0R-M6-quw.ibShadowedLabels[4] = "Ovr-"; ObjectID = "t0R-M6-quw"; */
 "t0R-M6-quw.ibShadowedLabels[4]" = "";
 
-/* Class = "NSSegmentedCell"; t0R-M6-quw.ibShadowedLabels[5] = "Oout"; ObjectID = "t0R-M6-quw"; */
+/* Class = "NSSegmentedCell"; t0R-M6-quw.ibShadowedLabels[5] = "Out-"; ObjectID = "t0R-M6-quw"; */
 "t0R-M6-quw.ibShadowedLabels[5]" = "";
 
 /* Class = "NSSegmentedCell"; t0R-M6-quw.ibShadowedToolTips[0] = "never"; ObjectID = "t0R-M6-quw"; */
@@ -1059,3 +1056,6 @@
 
 /* Class = "NSSegmentedCell"; t0R-M6-quw.ibShadowedToolTips[5] = "off outside"; ObjectID = "t0R-M6-quw"; */
 "t0R-M6-quw.ibShadowedToolTips[5]" = "";
+
+/* Class = "NSSegmentedCell"; ibShadowedToolTip = "hover above all, one or full screen"; ObjectID = "AzY-Hf-5OU"; */
+"AzY-Hf-5OU.ibShadowedToolTip" = "";
