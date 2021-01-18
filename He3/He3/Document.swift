@@ -491,12 +491,13 @@ class Document : NSDocument {
 		|| oneOfUs {
 			do {
 				if k.local == url.scheme {
-					let paths = url.deletingPathExtension().pathComponents
+					let paths = url.pathComponents
 					assert([k.asset,k.defaults].contains(paths[1]))
 					let keyPath = paths[2]
 					
 					switch paths[1] {
 					case k.asset:
+						//	WebView will load this later
 						break
 					
 					case k.defaults:

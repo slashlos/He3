@@ -522,8 +522,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
                 _webConfiguration!.preferences = webPreferences
                 _webConfiguration!.suppressesIncrementalRendering = false
 
-                //  Support our internal (local) scheme
+                //  Support our internal (local) schemes
                 _webConfiguration!.setURLSchemeHandler(CacheSchemeHandler(), forURLScheme: k.scheme)
+				_webConfiguration!.setURLSchemeHandler(CacheSchemeHandler(), forURLScheme: k.local)
 
                 // Use nonPersistent() or default() depending on if you want cookies persisted to disk
                 // and shared between WKWebViews of the same app (default), or not persisted and not shared

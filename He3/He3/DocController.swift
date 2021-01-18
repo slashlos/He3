@@ -57,6 +57,9 @@ class DocumentController : NSDocumentController {
             NSApp.presentError(error)
             doc = try self.makeUntitledDocument(ofType: typeName) as! Document
         }
+		
+		//	some URLs (asset: scheme) need explicit handling
+		if 0 == doc.windowControllers.count { doc.makeWindowControllers() }
         return doc
     }
     
