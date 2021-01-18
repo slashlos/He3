@@ -1328,11 +1328,11 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
 		if tableView == playitemTableView, let playitem : PlayItem = item as? PlayItem {
 			let virgin = playitem.plays == 0
 
-			guard playitem.name != UserSettings.HistoryName.value else { return false }
+			///guard playitem.name != UserSettings.HistoryName.value else { return false }
 			
 			switch tableColumn.identifier {
 			case .link:
-				return !virgin && !appDelegate.isSandboxed
+				return !virgin && !appDelegate.isSandboxed && !appDelegate.isBookmarked(playitem.link)
 				
 			case .plays:
 				return true
