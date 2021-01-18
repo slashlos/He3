@@ -246,8 +246,8 @@
         <!--Window Controller-->
         <scene sceneID="3Vy-ae-Byb">
             <objects>
-                <windowController storyboardIdentifier="ReleaseController" id="Mba-6M-yew" customClass="ReleaseController" customModule="He3" sceneMemberID="viewController">
-                    <window key="window" identifier="Release" title="Release" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" appearanceType="aqua" frameAutosaveName="" animationBehavior="default" tabbingIdentifier="release" tabbingMode="disallowed" id="Ufa-aB-AvU" customClass="Panel" customModule="He3" customModuleProvider="target">
+                <windowController storyboardIdentifier="ReleaseController" id="Mba-6M-yew" customClass="ReleaseController" customModule="He3" customModuleProvider="target" sceneMemberID="viewController">
+                    <window key="window" identifier="Release" title="Release" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" appearanceType="aqua" frameAutosaveName="" animationBehavior="default" tabbingIdentifier="release" tabbingMode="disallowed" id="Ufa-aB-AvU" customClass="ReleasePanel" customModule="He3" customModuleProvider="target">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="-2135" y="500" width="480" height="270"/>
@@ -2131,15 +2131,28 @@ Gw
                                             <binding destination="YAy-lX-dae" name="toolTip" keyPath="removeButtonToolTip" id="3m7-fU-8CT"/>
                                         </connections>
                                     </button>
+                                    <button toolTip="Play selected playlist" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tOS-xf-jmG">
+                                        <rect key="frame" x="136" y="2" width="86" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                        <buttonCell key="cell" type="push" title="Play" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mvj-Ud-PSU">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="playPlaylist:" target="YAy-lX-dae" id="SZn-cv-787"/>
+                                            <binding destination="Vul-U2-GKW" name="enabled" keyPath="canRemove" id="vK7-nd-MFs"/>
+                                            <binding destination="YAy-lX-dae" name="toolTip" keyPath="playButtonToolTip" id="vch-EN-bDD"/>
+                                        </connections>
+                                    </button>
                                     <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KRs-AT-9D8">
-                                        <rect key="frame" x="0.0" y="34" width="225" height="158"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
+                                        <rect key="frame" x="0.0" y="35" width="225" height="157"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <clipView key="contentView" drawsBackground="NO" id="Noe-Za-eMO">
-                                            <rect key="frame" x="1" y="1" width="223" height="156"/>
+                                            <rect key="frame" x="1" y="1" width="223" height="155"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <tableView identifier="playlists" verticalHuggingPriority="750" allowsExpansionToolTips="YES" alternatingRowBackgroundColors="YES" columnSelection="YES" autosaveName="playlistTableView.prefs" rowSizeStyle="automatic" headerView="tha-4C-kVE" viewBased="YES" id="PML-r0-Bx7" userLabel="Playlist Table View" customClass="PlayTableView" customModule="He3" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="223" height="131"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="223" height="130"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <size key="intercellSpacing" width="3" height="2"/>
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -2159,12 +2172,12 @@ Gw
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView id="nOC-W2-m1F" customClass="PlayTableCellView" customModule="He3" customModuleProvider="target">
-                                                                    <rect key="frame" x="1" y="1" width="51" height="17"/>
+                                                                    <rect key="frame" x="11" y="1" width="51" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="L0P-pv-bhp">
                                                                             <rect key="frame" x="0.0" y="1" width="51" height="16"/>
-                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="VMp-MU-QBc">
+                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Playlist" id="VMp-MU-QBc">
                                                                                 <font key="font" usesAppearanceFont="YES"/>
                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -2206,12 +2219,12 @@ Gw
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView id="mpC-2k-0Vl" customClass="PlayTableCellView" customModule="He3" customModuleProvider="target">
-                                                                    <rect key="frame" x="55" y="1" width="43" height="17"/>
+                                                                    <rect key="frame" x="65" y="1" width="43" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="H6m-dQ-g4e">
                                                                             <rect key="frame" x="0.0" y="1" width="43" height="16"/>
-                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="aJ0-p2-hBc">
+                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Date" id="aJ0-p2-hBc">
                                                                                 <dateFormatter key="formatter" dateStyle="short" id="Hwv-wR-Bew"/>
                                                                                 <font key="font" usesAppearanceFont="YES"/>
                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -2255,12 +2268,12 @@ Gw
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView id="KUA-Kp-myS" customClass="PlayTableCellView" customModule="He3" customModuleProvider="target">
-                                                                    <rect key="frame" x="101" y="1" width="43" height="17"/>
+                                                                    <rect key="frame" x="111" y="1" width="43" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="WjY-sf-VEd">
                                                                             <rect key="frame" x="0.0" y="1" width="43" height="16"/>
-                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="Bbx-3U-l0a">
+                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Count" id="Bbx-3U-l0a">
                                                                                 <font key="font" usesAppearanceFont="YES"/>
                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -2299,12 +2312,12 @@ Gw
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView id="Xi8-1N-yvt" customClass="PlayTableCellView" customModule="He3" customModuleProvider="target">
-                                                                    <rect key="frame" x="147" y="1" width="45" height="17"/>
+                                                                    <rect key="frame" x="157" y="1" width="45" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Zfv-mx-dim">
                                                                             <rect key="frame" x="0.0" y="1" width="45" height="16"/>
-                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="UMy-Hx-DMs">
+                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Plays" id="UMy-Hx-DMs">
                                                                                 <font key="font" usesAppearanceFont="YES"/>
                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -2354,19 +2367,6 @@ Gw
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableHeaderView>
                                     </scrollView>
-                                    <button toolTip="Play selected playlist" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tOS-xf-jmG">
-                                        <rect key="frame" x="126" y="3" width="86" height="32"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                                        <buttonCell key="cell" type="push" title="Play" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="mvj-Ud-PSU">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
-                                        <connections>
-                                            <action selector="playPlaylist:" target="YAy-lX-dae" id="SZn-cv-787"/>
-                                            <binding destination="Vul-U2-GKW" name="enabled" keyPath="canRemove" id="vK7-nd-MFs"/>
-                                            <binding destination="YAy-lX-dae" name="toolTip" keyPath="playButtonToolTip" id="vch-EN-bDD"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                             </customView>
                             <customView fixedFrame="YES" id="ahD-mY-TSA">
@@ -2374,7 +2374,7 @@ Gw
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button toolTip="Restore selected playlists or playitems" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DNq-eF-IsJ">
-                                        <rect key="frame" x="13" y="3" width="74" height="32"/>
+                                        <rect key="frame" x="3" y="2" width="74" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <buttonCell key="cell" type="push" title="Revert" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3XW-t7-vOU">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -2387,7 +2387,7 @@ Gw
                                     </button>
                                     <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="17" horizontalPageScroll="10" verticalLineScroll="17" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hfM-u8-PHl">
                                         <rect key="frame" x="0.0" y="34" width="406" height="158"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <clipView key="contentView" id="BJQ-bV-ZGA">
                                             <rect key="frame" x="1" y="1" width="404" height="141"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -2399,7 +2399,7 @@ Gw
                                                     <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                     <tableColumns>
-                                                        <tableColumn identifier="rank" width="40" minWidth="30" maxWidth="120" id="Aih-gN-H3I">
+                                                        <tableColumn identifier="rank" width="40" minWidth="30" maxWidth="120" headerToolTip="ranking" id="Aih-gN-H3I">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Rank">
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -2413,12 +2413,12 @@ Gw
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView id="nav-Rf-jzV" customClass="PlayTableCellView" customModule="He3" customModuleProvider="target">
-                                                                    <rect key="frame" x="8" y="0.0" width="38" height="24"/>
+                                                                    <rect key="frame" x="18" y="0.0" width="38" height="24"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="jeF-pf-zmc">
                                                                             <rect key="frame" x="0.0" y="4" width="38" height="16"/>
-                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Table View Cell" id="5sI-1d-41K">
+                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Rank" id="5sI-1d-41K">
                                                                                 <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#,##0" numberStyle="currencyISOCode" allowsFloats="NO" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" id="GI1-s3-8V2"/>
                                                                                 <font key="font" usesAppearanceFont="YES"/>
                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -2443,7 +2443,7 @@ Gw
                                                                 <binding destination="fqr-Ij-jQ9" name="value" keyPath="arrangedObjects.rank" id="juQ-jt-QFL"/>
                                                             </connections>
                                                         </tableColumn>
-                                                        <tableColumn identifier="name" width="80" minWidth="40" maxWidth="240" id="tRZ-sf-aAJ">
+                                                        <tableColumn identifier="name" width="80" minWidth="40" maxWidth="240" headerToolTip="simple name" id="tRZ-sf-aAJ">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Name">
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -2457,12 +2457,12 @@ Gw
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView id="k60-Yr-Qk8" customClass="PlayTableCellView" customModule="He3" customModuleProvider="target">
-                                                                    <rect key="frame" x="63" y="0.0" width="80" height="24"/>
+                                                                    <rect key="frame" x="73" y="0.0" width="80" height="24"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Vbe-FV-Zac">
                                                                             <rect key="frame" x="0.0" y="4" width="80" height="16"/>
-                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="Table View Cell" id="dYy-Sx-ih6">
+                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="Name" id="dYy-Sx-ih6">
                                                                                 <font key="font" usesAppearanceFont="YES"/>
                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -2486,7 +2486,7 @@ Gw
                                                                 <binding destination="fqr-Ij-jQ9" name="value" keyPath="arrangedObjects.name" id="7k7-Oj-ym9"/>
                                                             </connections>
                                                         </tableColumn>
-                                                        <tableColumn identifier="turl" width="60" minWidth="40" maxWidth="400" id="wxm-Fc-IxO">
+                                                        <tableColumn identifier="turl" width="60" minWidth="40" maxWidth="400" headerToolTip="uniform resource locator" id="wxm-Fc-IxO">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="URL">
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2500,12 +2500,12 @@ Gw
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView id="vAh-Kz-B7n" customClass="PlayTableCellView" customModule="He3" customModuleProvider="target">
-                                                                    <rect key="frame" x="160" y="0.0" width="60" height="17"/>
+                                                                    <rect key="frame" x="170" y="0.0" width="60" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="KbR-oA-dAV">
                                                                             <rect key="frame" x="0.0" y="1" width="60" height="16"/>
-                                                                            <textFieldCell key="cell" lineBreakMode="truncatingHead" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" alignment="right" title="Table View Cell" id="fJF-SJ-rr6">
+                                                                            <textFieldCell key="cell" lineBreakMode="truncatingHead" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" alignment="right" title="URL" id="fJF-SJ-rr6">
                                                                                 <font key="font" usesAppearanceFont="YES"/>
                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -2529,7 +2529,7 @@ Gw
                                                                 <binding destination="fqr-Ij-jQ9" name="value" keyPath="arrangedObjects.turl" id="HZJ-1Q-cqE"/>
                                                             </connections>
                                                         </tableColumn>
-                                                        <tableColumn identifier="date" editable="NO" width="60" minWidth="40" maxWidth="160" headerToolTip="" id="k7j-Fu-HmK">
+                                                        <tableColumn identifier="date" editable="NO" width="60" minWidth="40" maxWidth="160" headerToolTip="date added" id="k7j-Fu-HmK">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Date">
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2543,12 +2543,12 @@ Gw
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView id="SAA-ti-eG2" customClass="PlayTableCellView" customModule="He3" customModuleProvider="target">
-                                                                    <rect key="frame" x="237" y="0.0" width="60" height="17"/>
+                                                                    <rect key="frame" x="247" y="0.0" width="60" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="P4x-mc-moI">
                                                                             <rect key="frame" x="0.0" y="1" width="60" height="16"/>
-                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="SAi-EE-10w">
+                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Date" id="SAi-EE-10w">
                                                                                 <dateFormatter key="formatter" dateStyle="short" timeStyle="short" id="tEu-AI-Er2"/>
                                                                                 <font key="font" usesAppearanceFont="YES"/>
                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -2577,7 +2577,7 @@ Gw
                                                                 </binding>
                                                             </connections>
                                                         </tableColumn>
-                                                        <tableColumn identifier="time" width="40" minWidth="40" maxWidth="120" headerToolTip="running time" id="yp2-ZP-mdT">
+                                                        <tableColumn identifier="time" width="40" minWidth="40" maxWidth="120" headerToolTip="audio-video running time" id="yp2-ZP-mdT">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Time">
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2591,12 +2591,12 @@ Gw
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView id="SUU-qJ-qDD" customClass="PlayTableCellView" customModule="He3" customModuleProvider="target">
-                                                                    <rect key="frame" x="314" y="0.0" width="40" height="17"/>
+                                                                    <rect key="frame" x="324" y="0.0" width="40" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Cj5-Ek-FfK">
                                                                             <rect key="frame" x="0.0" y="1" width="40" height="16"/>
-                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Table View Cell" id="Luc-cC-cQA">
+                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Time" id="Luc-cC-cQA">
                                                                                 <font key="font" usesAppearanceFont="YES"/>
                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -2628,7 +2628,7 @@ Gw
                                                                 </binding>
                                                             </connections>
                                                         </tableColumn>
-                                                        <tableColumn identifier="tRect" width="60" minWidth="60" maxWidth="240" id="GJN-H4-aIh">
+                                                        <tableColumn identifier="tRect" width="60" minWidth="60" maxWidth="240" headerToolTip="window frame" id="GJN-H4-aIh">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Frame">
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2642,12 +2642,12 @@ Gw
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView id="lp3-Df-Dvh" customClass="PlayTableCellView" customModule="He3" customModuleProvider="target">
-                                                                    <rect key="frame" x="371" y="0.0" width="60" height="17"/>
+                                                                    <rect key="frame" x="381" y="0.0" width="60" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="mdf-wO-wWK">
                                                                             <rect key="frame" x="0.0" y="1" width="60" height="16"/>
-                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" identifier="rect" title="Table View Cell" id="TVk-lk-owl">
+                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" identifier="rect" title="Frame" id="TVk-lk-owl">
                                                                                 <font key="font" usesAppearanceFont="YES"/>
                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -2672,7 +2672,7 @@ Gw
                                                                 </tableCellView>
                                                             </prototypeCellViews>
                                                         </tableColumn>
-                                                        <tableColumn identifier="plays" width="40" minWidth="30" maxWidth="80" id="80y-fU-4Uu">
+                                                        <tableColumn identifier="plays" width="40" minWidth="30" maxWidth="80" headerToolTip="play counter" id="80y-fU-4Uu">
                                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Plays">
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -2686,12 +2686,12 @@ Gw
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView id="hjg-Hy-qra" customClass="PlayTableCellView" customModule="He3" customModuleProvider="target">
-                                                                    <rect key="frame" x="448" y="0.0" width="40" height="17"/>
+                                                                    <rect key="frame" x="458" y="0.0" width="40" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="bTm-lf-Bmd">
                                                                             <rect key="frame" x="0.0" y="1" width="40" height="16"/>
-                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Table View Cell" id="jND-2g-ccy">
+                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="right" title="Plays" id="jND-2g-ccy">
                                                                                 <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#,##0" allowsFloats="NO" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" id="2vK-OG-bXt"/>
                                                                                 <font key="font" usesAppearanceFont="YES"/>
                                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -2727,10 +2727,10 @@ Gw
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView id="aNV-aY-Ugq" customClass="PlayTableCellView" customModule="He3" customModuleProvider="target">
-                                                                    <rect key="frame" x="505" y="0.0" width="60" height="17"/>
+                                                                    <rect key="frame" x="515" y="0.0" width="60" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
-                                                                        <segmentedControl verticalHuggingPriority="750" id="JWC-19-zca">
+                                                                        <segmentedControl toolTip="never, always" verticalHuggingPriority="750" id="JWC-19-zca">
                                                                             <rect key="frame" x="0.0" y="-2" width="73" height="21"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                                             <segmentedCell key="cell" controlSize="small" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="znb-8T-yYo">
@@ -2765,12 +2765,12 @@ Gw
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView id="ZVF-xs-qfO" customClass="PlayTableCellView" customModule="He3" customModuleProvider="target">
-                                                                    <rect key="frame" x="582" y="0.0" width="90" height="17"/>
+                                                                    <rect key="frame" x="592" y="0.0" width="90" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
-                                                                        <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QhR-rh-tT7">
+                                                                        <segmentedControl toolTip="hover above all, one or full screen" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QhR-rh-tT7">
                                                                             <rect key="frame" x="0.0" y="-2" width="91" height="21"/>
-                                                                            <segmentedCell key="cell" controlSize="small" borderStyle="border" alignment="left" toolTip="hover above all, one or full screen" identifier="hover" style="rounded" trackingMode="selectOne" id="AzY-Hf-5OU">
+                                                                            <segmentedCell key="cell" controlSize="small" borderStyle="border" alignment="left" identifier="hover" style="rounded" trackingMode="selectOne" id="AzY-Hf-5OU">
                                                                                 <font key="font" metaFont="smallSystem"/>
                                                                                 <segments>
                                                                                     <segment label="All" alignment="right" toolTip="all screens"/>
@@ -2810,11 +2810,11 @@ Gw
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView id="oKg-Fg-4up" customClass="PlayTableCellView" customModule="He3" customModuleProvider="target">
-                                                                    <rect key="frame" x="689" y="0.0" width="120" height="17"/>
+                                                                    <rect key="frame" x="699" y="0.0" width="120" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <segmentedControl verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NP7-vW-1JK">
-                                                                            <rect key="frame" x="0.0" y="-2" width="195" height="21"/>
+                                                                            <rect key="frame" x="-2" y="-2" width="199" height="21"/>
                                                                             <segmentedCell key="cell" controlSize="small" borderStyle="border" alignment="left" style="rounded" trackingMode="selectOne" id="t0R-M6-quw">
                                                                                 <font key="font" metaFont="smallSystem"/>
                                                                                 <segments>
@@ -2822,8 +2822,8 @@ Gw
                                                                                     <segment label="Alw" toolTip="always" selected="YES" tag="1"/>
                                                                                     <segment label="Ovr" toolTip="mouse over" tag="2"/>
                                                                                     <segment label="Out" toolTip="mouse outside" tag="3"/>
-                                                                                    <segment label="Ovr-" toolTip="off over" tag="-2"/>
-                                                                                    <segment label="Out-" alignment="right" toolTip="off outside" tag="-3"/>
+                                                                                    <segment label="≠Ovr" toolTip="off over" tag="-2"/>
+                                                                                    <segment label="≠Out" alignment="right" toolTip="off outside" tag="-3"/>
                                                                                 </segments>
                                                                             </segmentedCell>
                                                                             <connections>
@@ -2843,7 +2843,7 @@ Gw
                                                             </connections>
                                                         </tableColumn>
                                                         <tableColumn identifier="opacity" width="120" minWidth="60" maxWidth="240" headerToolTip="window opacity level" id="Paz-J3-uvl">
-                                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Opacilty">
+                                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Opacity">
                                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             </tableHeaderCell>
@@ -2856,7 +2856,7 @@ Gw
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView id="hVQ-nc-Oyo" customClass="PlayTableCellView" customModule="He3" customModuleProvider="target">
-                                                                    <rect key="frame" x="826" y="0.0" width="120" height="17"/>
+                                                                    <rect key="frame" x="836" y="0.0" width="120" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <levelIndicator verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qBP-E5-kPt">
@@ -2888,7 +2888,7 @@ Gw
                                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                             <prototypeCellViews>
                                                                 <tableCellView id="ODy-Dj-KcL" customClass="PlayTableCellView" customModule="He3" customModuleProvider="target">
-                                                                    <rect key="frame" x="963" y="0.0" width="157" height="17"/>
+                                                                    <rect key="frame" x="973" y="0.0" width="157" height="17"/>
                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="FCE-sD-z0M">
@@ -2925,7 +2925,7 @@ Gw
                                                 </tableView>
                                             </subviews>
                                         </clipView>
-                                        <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="Mib-ye-Dwb">
+                                        <scroller key="horizontalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="0.3820689655172414" horizontal="YES" id="Mib-ye-Dwb">
                                             <rect key="frame" x="1" y="142" width="404" height="15"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
@@ -2939,8 +2939,8 @@ Gw
                                         </tableHeaderView>
                                     </scrollView>
                                     <button toolTip="Discard changes and dismiss" verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="b6L-u6-6xa">
-                                        <rect key="frame" x="252" y="3" width="76" height="32"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <rect key="frame" x="259" y="2" width="76" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="374-ij-eOf">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -2953,7 +2953,7 @@ Gw
                                         </connections>
                                     </button>
                                     <button toolTip="Dismiss editing, keep changes" horizontalHuggingPriority="249" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NuZ-En-DGv">
-                                        <rect key="frame" x="326" y="3" width="70" height="32"/>
+                                        <rect key="frame" x="333" y="2" width="70" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                         <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Mja-kD-PVK">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -2964,8 +2964,8 @@ Gw
                                         </connections>
                                     </button>
                                     <button toolTip="Save selected playlists or playitems" verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="zo4-as-HFj">
-                                        <rect key="frame" x="85" y="3" width="72" height="32"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <rect key="frame" x="75" y="2" width="72" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="x6P-T8-kml">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -3016,7 +3016,7 @@ Gw
                         </segmentedControl>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="ugQ-px-nDA">
                             <rect key="frame" x="0.0" y="1" width="37" height="16"/>
-                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="wh5-s9-ifc">
+                            <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="PlayTable" id="wh5-s9-ifc">
                                 <font key="font" usesAppearanceFont="YES"/>
                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

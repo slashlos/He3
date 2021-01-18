@@ -850,212 +850,233 @@
 /* Class = "NSButton"; ibShadowedToolTip = "use binary archive format"; ObjectID = "cHu-JH-9vF"; */
 "cHu-JH-9vF.ibShadowedToolTip" = "utilizzare il formato di archivio binario";
 
-/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "Bbx-3U-l0a"; */
-"Bbx-3U-l0a.title" = "";
+/* Class = "NSTextFieldCell"; title = "Count"; ObjectID = "Bbx-3U-l0a"; */
+"Bbx-3U-l0a.title" = "Count";
 
-/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "UMy-Hx-DMs"; */
-"UMy-Hx-DMs.title" = "";
+/* Class = "NSTextFieldCell"; title = "Plays"; ObjectID = "UMy-Hx-DMs"; */
+"UMy-Hx-DMs.title" = "Plays";
 
-/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "VMp-MU-QBc"; */
-"VMp-MU-QBc.title" = "";
+/* Class = "NSTextFieldCell"; title = "Playlist"; ObjectID = "VMp-MU-QBc"; */
+"VMp-MU-QBc.title" = "Playlist";
 
-/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "aJ0-p2-hBc"; */
-"aJ0-p2-hBc.title" = "";
+/* Class = "NSTextFieldCell"; title = "Date"; ObjectID = "aJ0-p2-hBc"; */
+"aJ0-p2-hBc.title" = "Date";
 
 /* Class = "NSTableColumn"; headerCell.title = "Rank"; ObjectID = "Aih-gN-H3I"; */
-"Aih-gN-H3I.headerCell.title" = "";
+"Aih-gN-H3I.headerCell.title" = "Rank";
 
 /* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "pzE-2P-rd8"; */
-"pzE-2P-rd8.title" = "";
+"pzE-2P-rd8.title" = "Rank";
 
 /* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "qku-Hp-Zlc"; */
-"qku-Hp-Zlc.title" = "";
+"qku-Hp-Zlc.title" = "Name";
 
 /* Class = "NSTableColumn"; headerCell.title = "Name"; ObjectID = "tRZ-sf-aAJ"; */
-"tRZ-sf-aAJ.headerCell.title" = "";
+"tRZ-sf-aAJ.headerCell.title" = "Name";
 
 /* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "NmA-YF-01e"; */
-"NmA-YF-01e.title" = "";
+"NmA-YF-01e.title" = "URL";
 
 /* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "Oox-4Q-2Ru"; */
-"Oox-4Q-2Ru.title" = "";
+"Oox-4Q-2Ru.title" = "Date";
 
 /* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "P6g-ut-qF5"; */
-"P6g-ut-qF5.title" = "";
+"P6g-ut-qF5.title" = "Time";
 
 /* Class = "NSTableColumn"; headerCell.title = "Date"; ObjectID = "k7j-Fu-HmK"; */
-"k7j-Fu-HmK.headerCell.title" = "";
+"k7j-Fu-HmK.headerCell.title" = "Date";
 
 /* Class = "NSTableColumn"; headerCell.title = "URL"; ObjectID = "wxm-Fc-IxO"; */
-"wxm-Fc-IxO.headerCell.title" = "";
+"wxm-Fc-IxO.headerCell.title" = "URL";
 
 /* Class = "NSTableColumn"; headerCell.title = "Time"; ObjectID = "yp2-ZP-mdT"; */
-"yp2-ZP-mdT.headerCell.title" = "";
+"yp2-ZP-mdT.headerCell.title" = "Time";
 
-/* Class = "NSTableColumn"; headerToolTip = "running time"; ObjectID = "yp2-ZP-mdT"; */
-"yp2-ZP-mdT.headerToolTip" = "";
+/* Class = "NSTableColumn"; headerToolTip = "audio-video running time"; ObjectID = "yp2-ZP-mdT"; */
+"yp2-ZP-mdT.headerToolTip" = "tempo di esecuzione audio-video";
 
 /* Class = "NSTableColumn"; headerCell.title = "Frame"; ObjectID = "GJN-H4-aIh"; */
-"GJN-H4-aIh.headerCell.title" = "";
+"GJN-H4-aIh.headerCell.title" = "Frame";
 
 /* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "YPV-cr-Bsj"; */
-"YPV-cr-Bsj.title" = "";
+"YPV-cr-Bsj.title" = "Frame";
 
 /* Class = "NSTableColumn"; headerCell.title = "Plays"; ObjectID = "80y-fU-4Uu"; */
-"80y-fU-4Uu.headerCell.title" = "";
+"80y-fU-4Uu.headerCell.title" = "Plays";
 
 /* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "Qh1-mL-PAS"; */
-"Qh1-mL-PAS.title" = "";
+"Qh1-mL-PAS.title" = "Translucency";
 
-/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "5sI-1d-41K"; */
-"5sI-1d-41K.title" = "";
+/* Class = "NSTextFieldCell"; title = "Rank"; ObjectID = "5sI-1d-41K"; */
+"5sI-1d-41K.title" = "Rank";
 
-/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "Luc-cC-cQA"; */
-"Luc-cC-cQA.title" = "";
+/* Class = "NSTextFieldCell"; title = "Time"; ObjectID = "Luc-cC-cQA"; */
+"Luc-cC-cQA.title" = "Time";
 
-/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "SAi-EE-10w"; */
-"SAi-EE-10w.title" = "";
+/* Class = "NSTextFieldCell"; title = "Date"; ObjectID = "SAi-EE-10w"; */
+"SAi-EE-10w.title" = "Date";
 
-/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "TVk-lk-owl"; */
-"TVk-lk-owl.title" = "";
+/* Class = "NSTextFieldCell"; title = "Frame"; ObjectID = "TVk-lk-owl"; */
+"TVk-lk-owl.title" = "Frame";
 
-/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "dYy-Sx-ih6"; */
-"dYy-Sx-ih6.title" = "";
+/* Class = "NSTextFieldCell"; title = "Name"; ObjectID = "dYy-Sx-ih6"; */
+"dYy-Sx-ih6.title" = "Name";
 
-/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "fJF-SJ-rr6"; */
-"fJF-SJ-rr6.title" = "";
+/* Class = "NSTextFieldCell"; title = "URL"; ObjectID = "fJF-SJ-rr6"; */
+"fJF-SJ-rr6.title" = "URL";
 
-/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "jND-2g-ccy"; */
-"jND-2g-ccy.title" = "";
+/* Class = "NSTextFieldCell"; title = "Plays"; ObjectID = "jND-2g-ccy"; */
+"jND-2g-ccy.title" = "Plays";
 
 /* Class = "NSSegmentedCell"; oFe-UV-7SD.ibShadowedLabels[0] = "ALW"; ObjectID = "oFe-UV-7SD"; */
-"oFe-UV-7SD.ibShadowedLabels[0]" = "";
+"oFe-UV-7SD.ibShadowedLabels[0]" = "ALW";
 
 /* Class = "NSSegmentedCell"; oFe-UV-7SD.ibShadowedLabels[1] = "NVR"; ObjectID = "oFe-UV-7SD"; */
-"oFe-UV-7SD.ibShadowedLabels[1]" = "";
+"oFe-UV-7SD.ibShadowedLabels[1]" = "NVR";
 
 /* Class = "NSSegmentedCell"; oFe-UV-7SD.ibShadowedToolTips[0] = "always"; ObjectID = "oFe-UV-7SD"; */
-"oFe-UV-7SD.ibShadowedToolTips[0]" = "";
+"oFe-UV-7SD.ibShadowedToolTips[0]" = "sempre";
 
 /* Class = "NSSegmentedCell"; oFe-UV-7SD.ibShadowedToolTips[1] = "never"; ObjectID = "oFe-UV-7SD"; */
-"oFe-UV-7SD.ibShadowedToolTips[1]" = "";
+"oFe-UV-7SD.ibShadowedToolTips[1]" = "mai";
 
-/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "wh5-s9-ifc"; */
-"wh5-s9-ifc.title" = "";
+/* Class = "NSTextFieldCell"; title = "PlayTable"; ObjectID = "wh5-s9-ifc"; */
+"wh5-s9-ifc.title" = "PlayTable";
 
 /* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "G0i-BS-bUr"; */
-"G0i-BS-bUr.title" = "";
+"G0i-BS-bUr.title" = "Labelless";
 
 /* Class = "NSTableColumn"; headerCell.title = "Labelless"; ObjectID = "FJ3-74-Ped"; */
-"FJ3-74-Ped.headerCell.title" = "";
+"FJ3-74-Ped.headerCell.title" = "Labelless";
 
 /* Class = "NSTableColumn"; headerToolTip = "auto hide window title"; ObjectID = "FJ3-74-Ped"; */
-"FJ3-74-Ped.headerToolTip" = "";
+"FJ3-74-Ped.headerToolTip" = "nascondi automaticamente il titolo della finestra";
 
 /* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "LCh-dH-4qA"; */
-"LCh-dH-4qA.title" = "";
+"LCh-dH-4qA.title" = "Hover";
 
 /* Class = "NSTableColumn"; headerCell.title = "Hover"; ObjectID = "Psh-n5-75y"; */
-"Psh-n5-75y.headerCell.title" = "";
+"Psh-n5-75y.headerCell.title" = "PlayTable";
 
 /* Class = "NSTableColumn"; headerToolTip = "hover above all, one or full screen"; ObjectID = "Psh-n5-75y"; */
-"Psh-n5-75y.headerToolTip" = "";
+"Psh-n5-75y.headerToolTip" = "passa sopra tutto, uno o tutto lo schermo";
 
 /* Class = "NSTableColumn"; headerCell.title = "Translucency"; ObjectID = "0og-NP-UrC"; */
-"0og-NP-UrC.headerCell.title" = "";
+"0og-NP-UrC.headerCell.title" = "Translucency";
 
 /* Class = "NSTableColumn"; headerToolTip = "window translucency"; ObjectID = "0og-NP-UrC"; */
-"0og-NP-UrC.headerToolTip" = "";
+"0og-NP-UrC.headerToolTip" = "traslucenza della finestra";
 
 /* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "IOD-Sa-Nqt"; */
-"IOD-Sa-Nqt.title" = "";
+"IOD-Sa-Nqt.title" = "Translucency";
 
 /* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "GS1-W8-wOc"; */
-"GS1-W8-wOc.title" = "";
+"GS1-W8-wOc.title" = "Opacity";
 
-/* Class = "NSTableColumn"; headerCell.title = "Opacilty"; ObjectID = "Paz-J3-uvl"; */
-"Paz-J3-uvl.headerCell.title" = "";
+/* Class = "NSTableColumn"; headerCell.title = "Opacity"; ObjectID = "Paz-J3-uvl"; */
+"Paz-J3-uvl.headerCell.title" = "Opacity";
 
 /* Class = "NSTableColumn"; headerToolTip = "window opacity level"; ObjectID = "Paz-J3-uvl"; */
-"Paz-J3-uvl.headerToolTip" = "";
+"Paz-J3-uvl.headerToolTip" = "livello di opacità della finestra";
 
 /* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "KqZ-2C-aOT"; */
-"KqZ-2C-aOT.title" = "";
+"KqZ-2C-aOT.title" = "Agent";
 
 /* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "aIH-Bi-Wqe"; */
-"aIH-Bi-Wqe.title" = "";
+"aIH-Bi-Wqe.title" = "Frame";
 
 /* Class = "NSTableColumn"; headerCell.title = "Agent"; ObjectID = "atu-Gi-jgG"; */
-"atu-Gi-jgG.headerCell.title" = "";
+"atu-Gi-jgG.headerCell.title" = "Agent";
 
 /* Class = "NSTableColumn"; headerToolTip = "user agent string for web URL"; ObjectID = "atu-Gi-jgG"; */
-"atu-Gi-jgG.headerToolTip" = "";
+"atu-Gi-jgG.headerToolTip" = "stringa agente utente per l'URL web";
 
 /* Class = "NSSegmentedCell"; znb-8T-yYo.ibShadowedLabels[0] = "Nvr"; ObjectID = "znb-8T-yYo"; */
-"znb-8T-yYo.ibShadowedLabels[0]" = "";
+"znb-8T-yYo.ibShadowedLabels[0]" = "mai";
 
 /* Class = "NSSegmentedCell"; znb-8T-yYo.ibShadowedLabels[1] = "Alw"; ObjectID = "znb-8T-yYo"; */
-"znb-8T-yYo.ibShadowedLabels[1]" = "";
+"znb-8T-yYo.ibShadowedLabels[1]" = "Alw";
 
 /* Class = "NSSegmentedCell"; znb-8T-yYo.ibShadowedToolTips[0] = "never"; ObjectID = "znb-8T-yYo"; */
-"znb-8T-yYo.ibShadowedToolTips[0]" = "";
+"znb-8T-yYo.ibShadowedToolTips[0]" = "mai";
 
 /* Class = "NSSegmentedCell"; znb-8T-yYo.ibShadowedToolTips[1] = "always"; ObjectID = "znb-8T-yYo"; */
-"znb-8T-yYo.ibShadowedToolTips[1]" = "";
+"znb-8T-yYo.ibShadowedToolTips[1]" = "sempre";
 
 /* Class = "NSSegmentedCell"; AzY-Hf-5OU.ibShadowedLabels[0] = "All"; ObjectID = "AzY-Hf-5OU"; */
-"AzY-Hf-5OU.ibShadowedLabels[0]" = "";
+"AzY-Hf-5OU.ibShadowedLabels[0]" = "All";
 
 /* Class = "NSSegmentedCell"; AzY-Hf-5OU.ibShadowedLabels[1] = "One"; ObjectID = "AzY-Hf-5OU"; */
-"AzY-Hf-5OU.ibShadowedLabels[1]" = "";
+"AzY-Hf-5OU.ibShadowedLabels[1]" = "One";
 
 /* Class = "NSSegmentedCell"; AzY-Hf-5OU.ibShadowedLabels[2] = "Full"; ObjectID = "AzY-Hf-5OU"; */
-"AzY-Hf-5OU.ibShadowedLabels[2]" = "";
+"AzY-Hf-5OU.ibShadowedLabels[2]" = "Full";
 
 /* Class = "NSSegmentedCell"; AzY-Hf-5OU.ibShadowedToolTips[0] = "all screens"; ObjectID = "AzY-Hf-5OU"; */
-"AzY-Hf-5OU.ibShadowedToolTips[0]" = "";
+"AzY-Hf-5OU.ibShadowedToolTips[0]" = "tutti gli schermi";
 
 /* Class = "NSSegmentedCell"; AzY-Hf-5OU.ibShadowedToolTips[1] = "one screen"; ObjectID = "AzY-Hf-5OU"; */
-"AzY-Hf-5OU.ibShadowedToolTips[1]" = "";
+"AzY-Hf-5OU.ibShadowedToolTips[1]" = "uno schermo";
 
 /* Class = "NSSegmentedCell"; AzY-Hf-5OU.ibShadowedToolTips[2] = "full screen"; ObjectID = "AzY-Hf-5OU"; */
-"AzY-Hf-5OU.ibShadowedToolTips[2]" = "";
+"AzY-Hf-5OU.ibShadowedToolTips[2]" = "a schermo intero";
 
 /* Class = "NSSegmentedCell"; t0R-M6-quw.ibShadowedLabels[0] = "Nvr"; ObjectID = "t0R-M6-quw"; */
-"t0R-M6-quw.ibShadowedLabels[0]" = "";
+"t0R-M6-quw.ibShadowedLabels[0]" = "Nvr";
 
 /* Class = "NSSegmentedCell"; t0R-M6-quw.ibShadowedLabels[1] = "Alw"; ObjectID = "t0R-M6-quw"; */
-"t0R-M6-quw.ibShadowedLabels[1]" = "";
+"t0R-M6-quw.ibShadowedLabels[1]" = "ALw";
 
 /* Class = "NSSegmentedCell"; t0R-M6-quw.ibShadowedLabels[2] = "Ovr"; ObjectID = "t0R-M6-quw"; */
-"t0R-M6-quw.ibShadowedLabels[2]" = "";
+"t0R-M6-quw.ibShadowedLabels[2]" = "Ovr";
 
 /* Class = "NSSegmentedCell"; t0R-M6-quw.ibShadowedLabels[3] = "Out"; ObjectID = "t0R-M6-quw"; */
-"t0R-M6-quw.ibShadowedLabels[3]" = "";
+"t0R-M6-quw.ibShadowedLabels[3]" = "Out";
 
-/* Class = "NSSegmentedCell"; t0R-M6-quw.ibShadowedLabels[4] = "Ovr-"; ObjectID = "t0R-M6-quw"; */
-"t0R-M6-quw.ibShadowedLabels[4]" = "";
+/* Class = "NSSegmentedCell"; t0R-M6-quw.ibShadowedLabels[4] = "≠Ovr"; ObjectID = "t0R-M6-quw"; */
+"t0R-M6-quw.ibShadowedLabels[4]" = "≠Ovr";
 
-/* Class = "NSSegmentedCell"; t0R-M6-quw.ibShadowedLabels[5] = "Out-"; ObjectID = "t0R-M6-quw"; */
-"t0R-M6-quw.ibShadowedLabels[5]" = "";
+/* Class = "NSSegmentedCell"; t0R-M6-quw.ibShadowedLabels[5] = "≠Out"; ObjectID = "t0R-M6-quw"; */
+"t0R-M6-quw.ibShadowedLabels[5]" = "≠Out";
 
 /* Class = "NSSegmentedCell"; t0R-M6-quw.ibShadowedToolTips[0] = "never"; ObjectID = "t0R-M6-quw"; */
-"t0R-M6-quw.ibShadowedToolTips[0]" = "";
+"t0R-M6-quw.ibShadowedToolTips[0]" = "mai";
 
 /* Class = "NSSegmentedCell"; t0R-M6-quw.ibShadowedToolTips[1] = "always"; ObjectID = "t0R-M6-quw"; */
-"t0R-M6-quw.ibShadowedToolTips[1]" = "";
+"t0R-M6-quw.ibShadowedToolTips[1]" = "sempre";
 
 /* Class = "NSSegmentedCell"; t0R-M6-quw.ibShadowedToolTips[2] = "mouse over"; ObjectID = "t0R-M6-quw"; */
-"t0R-M6-quw.ibShadowedToolTips[2]" = "";
+"t0R-M6-quw.ibShadowedToolTips[2]" = "passare il mouse";
 
 /* Class = "NSSegmentedCell"; t0R-M6-quw.ibShadowedToolTips[3] = "mouse outside"; ObjectID = "t0R-M6-quw"; */
-"t0R-M6-quw.ibShadowedToolTips[3]" = "";
+"t0R-M6-quw.ibShadowedToolTips[3]" = "mouse fuori";
 
 /* Class = "NSSegmentedCell"; t0R-M6-quw.ibShadowedToolTips[4] = "off over"; ObjectID = "t0R-M6-quw"; */
-"t0R-M6-quw.ibShadowedToolTips[4]" = "";
+"t0R-M6-quw.ibShadowedToolTips[4]" = "fuori";
 
 /* Class = "NSSegmentedCell"; t0R-M6-quw.ibShadowedToolTips[5] = "off outside"; ObjectID = "t0R-M6-quw"; */
-"t0R-M6-quw.ibShadowedToolTips[5]" = "";
+"t0R-M6-quw.ibShadowedToolTips[5]" = "fuori";
 
-/* Class = "NSSegmentedCell"; ibShadowedToolTip = "hover above all, one or full screen"; ObjectID = "AzY-Hf-5OU"; */
-"AzY-Hf-5OU.ibShadowedToolTip" = "";
+/* Class = "NSTableColumn"; headerToolTip = "play counter"; ObjectID = "80y-fU-4Uu"; */
+"80y-fU-4Uu.headerToolTip" = "giocare contatore";
+
+/* Class = "NSTableColumn"; headerToolTip = "ranking"; ObjectID = "Aih-gN-H3I"; */
+"Aih-gN-H3I.headerToolTip" = "classifica";
+
+/* Class = "NSTableColumn"; headerToolTip = "window frame"; ObjectID = "GJN-H4-aIh"; */
+"GJN-H4-aIh.headerToolTip" = "telaio della finestra";
+
+/* Class = "NSTableColumn"; headerToolTip = "date added"; ObjectID = "k7j-Fu-HmK"; */
+"k7j-Fu-HmK.headerToolTip" = "data aggiunta";
+
+/* Class = "NSTableColumn"; headerToolTip = "simple name"; ObjectID = "tRZ-sf-aAJ"; */
+"tRZ-sf-aAJ.headerToolTip" = "nome semplice";
+
+/* Class = "NSTableColumn"; headerToolTip = "uniform resource locator"; ObjectID = "wxm-Fc-IxO"; */
+"wxm-Fc-IxO.headerToolTip" = "localizzatore di risorse uniformi";
+
+/* Class = "NSSegmentedControl"; ibShadowedToolTip = "hover above all, one or full screen"; ObjectID = "QhR-rh-tT7"; */
+"QhR-rh-tT7.ibShadowedToolTip" = "passa sopra tutto, uno o tutto lo schermo";
+
+/* Class = "NSSegmentedControl"; ibShadowedToolTip = "never, always"; ObjectID = "JWC-19-zca"; */
+"JWC-19-zca.ibShadowedToolTip" = "mai sempre";
