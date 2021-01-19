@@ -55,8 +55,6 @@
 		0F9EF95B24776468008DDB93 /* listIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F9EF95A24776468008DDB93 /* listIcon.png */; };
 		0FACD4C42467953000A23B1F /* PromiseFileProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FACD4C32467953000A23B1F /* PromiseFileProvider.swift */; };
 		0FB09334259BAAD2007B3DFD /* He3Script.sh in Resources */ = {isa = PBXBuildFile; fileRef = 0FB09333259BAAD2007B3DFD /* He3Script.sh */; };
-		0FB09385259BE564007B3DFD /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB09384259BE564007B3DFD /* ShareViewController.swift */; };
-		0FB09388259BE564007B3DFD /* ShareViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0FB09386259BE564007B3DFD /* ShareViewController.xib */; };
 		0FB0938D259BE564007B3DFD /* He3ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0FB09380259BE564007B3DFD /* He3ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0FB093A6259D5C35007B3DFD /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F529001244F142800A9B9DC /* Cocoa.framework */; };
 		0FB276F624B1EDD800695BB1 /* PrefsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB276F524B1EDD800695BB1 /* PrefsViewController.swift */; };
@@ -254,14 +252,6 @@
 		0FB09333259BAAD2007B3DFD /* He3Script.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = He3Script.sh; sourceTree = "<group>"; };
 		0FB0935F259BAD1B007B3DFD /* He3ShareExtensionScript.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = He3ShareExtensionScript.sh; sourceTree = "<group>"; };
 		0FB09380259BE564007B3DFD /* He3ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = He3ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		0FB09384259BE564007B3DFD /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
-		0FB09387259BE564007B3DFD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ShareViewController.xib; sourceTree = "<group>"; };
-		0FB09389259BE564007B3DFD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0FB0938A259BE564007B3DFD /* He3ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = He3ShareExtension.entitlements; sourceTree = "<group>"; };
-		0FB093AF259D5D68007B3DFD /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/ShareViewController.strings; sourceTree = "<group>"; };
-		0FB093B0259D5D6C007B3DFD /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/ShareViewController.strings; sourceTree = "<group>"; };
-		0FB093B1259D5D70007B3DFD /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/ShareViewController.strings; sourceTree = "<group>"; };
-		0FB093B2259D5D73007B3DFD /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/ShareViewController.strings; sourceTree = "<group>"; };
 		0FB276F524B1EDD800695BB1 /* PrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsViewController.swift; sourceTree = "<group>"; };
 		0FB6B15525560A3000363178 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/ShareViewController.strings; sourceTree = "<group>"; };
 		0FB6B15F25560A5700363178 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -401,7 +391,6 @@
 				0FBD9BC424566C1C00332EEB /* He3-dmg */,
 				0F307167246A3D0B00684B84 /* He3 Launcher */,
 				0F8292022495172100B5C205 /* He3 QLExtension */,
-				0FB09381259BE564007B3DFD /* He3ShareExtension */,
 				0F529000244F142800A9B9DC /* Frameworks */,
 				0F2370CE244E8CEA009F7914 /* Products */,
 			);
@@ -556,17 +545,6 @@
 			);
 			name = "He3 QLExtension";
 			path = He3QLExtension;
-			sourceTree = "<group>";
-		};
-		0FB09381259BE564007B3DFD /* He3ShareExtension */ = {
-			isa = PBXGroup;
-			children = (
-				0FB09384259BE564007B3DFD /* ShareViewController.swift */,
-				0FB09386259BE564007B3DFD /* ShareViewController.xib */,
-				0FB09389259BE564007B3DFD /* Info.plist */,
-				0FB0938A259BE564007B3DFD /* He3ShareExtension.entitlements */,
-			);
-			path = He3ShareExtension;
 			sourceTree = "<group>";
 		};
 		0FBD9BC424566C1C00332EEB /* He3-dmg */ = {
@@ -885,7 +863,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0FB09388259BE564007B3DFD /* ShareViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1051,7 +1028,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0FB09385259BE564007B3DFD /* ShareViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1128,18 +1104,6 @@
 				0FB6B16C25560C5B00363178 /* de */,
 				0FB6B16F25560C6C00363178 /* it */,
 				0FB6B193255A12DF00363178 /* fr */,
-			);
-			name = ShareViewController.xib;
-			sourceTree = "<group>";
-		};
-		0FB09386259BE564007B3DFD /* ShareViewController.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				0FB09387259BE564007B3DFD /* Base */,
-				0FB093AF259D5D68007B3DFD /* fr */,
-				0FB093B0259D5D6C007B3DFD /* de */,
-				0FB093B1259D5D70007B3DFD /* it */,
-				0FB093B2259D5D73007B3DFD /* es */,
 			);
 			name = ShareViewController.xib;
 			sourceTree = "<group>";
