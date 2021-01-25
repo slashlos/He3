@@ -24,7 +24,7 @@ public struct k {
 	static let AppName = "He3"
 	static let AppLogo = "Above all else"
     static let Helium = "Helium"
-    static let scheme = "he3"
+    static let scheme = "he3-local"
     static let local = "local" /// cache string
     static let oauth2 = "oauth" /// oauth handler
     static let asset = "asset"

@@ -144,7 +144,9 @@
 			<string>He3</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>he3</string>
+				<string>he3-local</string>
+				<string>asset</string>
+				<string>local</string>
 			</array>
 		</dict>
 	</array>
