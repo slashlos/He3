@@ -231,7 +231,8 @@ extension WebViewController: WKNavigationDelegate {
 				print(String(format: "2AC: didReceive: %p \(error.localizedDescription)", webView))
 			}
 
-			NSApp.presentError(cfError!)
+			///NSApp.presentError(cfError!)
+			Swift.print(cfError as Any)
 			completionHandler(.useCredential, nil)
 			return
 		}
