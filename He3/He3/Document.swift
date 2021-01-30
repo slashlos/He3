@@ -754,8 +754,8 @@ class Document : NSDocument {
     }
     
     override func write(to url: URL, ofType typeName: String) throws {
-		if [k.ItemType,k.PlayType].contains(typeName) {
-			if url.isFileURL, UserSettings.SecureFileEncoding.value {
+		if url.isFileURL, [k.ItemType,k.PlayType].contains(typeName) {
+			if UserSettings.SecureFileEncoding.value {
 				try super.write(to: url, ofType: typeName)
 			}
 			else
