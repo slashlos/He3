@@ -19,8 +19,14 @@
 /* No comment provided by engineer. */
 "ErrorTitle" = "Segnala titolo errore URL";
 
+/* Title of the Social Service */
+"He3 Share" = "He3 Share";
+
 /* Assest */
 "he3_privacy.rtf" = "he3_privacy.rtf.it";
+
+/* Title of the Social Service */
+"He3Share" = "He3 Share";
 
 /* Assest */
 "HISTORY.md" = "HISTORY.md.it";
@@ -52,9 +58,3 @@
 
 /* text token */
 "version" = "version";
-
-/* Title of the Social Service */
-"He3 Share" = "";
-
-/* Title of the Social Service */
-"He3Share" = "";
