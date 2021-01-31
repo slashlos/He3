@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBuildDate</key>
-	<string>20210118.180743</string>
+	<string>20210131.100103</string>
 	<key>CFBuildIncrement</key>
 	<false/>
 	<key>CFBuildMajor</key>
@@ -11,7 +11,7 @@
 	<key>CFBuildMinor</key>
 	<integer>0</integer>
 	<key>CFBuildNumber</key>
-	<string>8414</string>
+	<string>8416</string>
 	<key>CFBuildPatch</key>
 	<integer>4</integer>
 	<key>CFBundleDevelopmentRegion</key>
@@ -144,14 +144,14 @@
 			<string>He3</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>he3-local</string>
+				<string>he3lium</string>
 				<string>asset</string>
 				<string>local</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.0.8414</string>
+	<string>1.0.8416</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>
