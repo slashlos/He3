@@ -15,7 +15,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0FA5B0DE25C5E1FE00FD38E0"
+               BlueprintIdentifier = "0F9D733125CB2CE00047EE45"
                BuildableName = "He3ShareExtension.appex"
                BlueprintName = "He3ShareExtension"
                ReferencedContainer = "container:He3.xcodeproj">

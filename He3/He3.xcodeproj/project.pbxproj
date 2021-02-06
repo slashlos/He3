@@ -46,6 +46,10 @@
 		0F8292092495172100B5C205 /* He3 QLExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0F8291FD2495172000B5C205 /* He3 QLExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0F82920D24952ACF00B5C205 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD2127E2466D7C800EA5D6D /* Types.swift */; };
 		0F82920F249539D900B5C205 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F82920E249539D900B5C205 /* Settings.swift */; };
+		0F9D733525CB2CE00047EE45 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0F9D733425CB2CE00047EE45 /* icon.icns */; };
+		0F9D733725CB2CE00047EE45 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9D733625CB2CE00047EE45 /* ShareViewController.swift */; };
+		0F9D733A25CB2CE00047EE45 /* ShareViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0F9D733825CB2CE00047EE45 /* ShareViewController.xib */; };
+		0F9D733F25CB2CE00047EE45 /* He3ShareExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 0F9D733225CB2CE00047EE45 /* He3ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		0F9EF954247019E6008DDB93 /* itemIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F9EF953247019E6008DDB93 /* itemIcon.png */; };
 		0F9EF9592471FAF9008DDB93 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FD2127E2466D7C800EA5D6D /* Types.swift */; };
 		0F9EF95B24776468008DDB93 /* listIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F9EF95A24776468008DDB93 /* listIcon.png */; };
@@ -113,6 +117,13 @@
 			remoteGlobalIDString = 0F8291FC2495172000B5C205;
 			remoteInfo = "He3-QLExtension";
 		};
+		0F9D733D25CB2CE00047EE45 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0F2370C5244E8CEA009F7914 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0F9D733125CB2CE00047EE45;
+			remoteInfo = He3ShareExtension;
+		};
 		0FBD9BCB24566C5500332EEB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0F2370C5244E8CEA009F7914 /* Project object */;
@@ -130,6 +141,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				0F8292092495172100B5C205 /* He3 QLExtension.appex in Embed App Extensions */,
+				0F9D733F25CB2CE00047EE45 /* He3ShareExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -211,6 +223,12 @@
 		0F8292052495172100B5C205 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0F8292062495172100B5C205 /* He3QLExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = He3QLExtension.entitlements; sourceTree = "<group>"; };
 		0F82920E249539D900B5C205 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		0F9D733225CB2CE00047EE45 /* He3ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = He3ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		0F9D733425CB2CE00047EE45 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
+		0F9D733625CB2CE00047EE45 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		0F9D733925CB2CE00047EE45 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/ShareViewController.xib; sourceTree = "<group>"; };
+		0F9D733B25CB2CE00047EE45 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0F9D733C25CB2CE00047EE45 /* He3ShareExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = He3ShareExtension.entitlements; sourceTree = "<group>"; };
 		0F9EF953247019E6008DDB93 /* itemIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = itemIcon.png; path = "He3/Assets/item Icon/itemIcon.png"; sourceTree = "<group>"; };
 		0F9EF95A24776468008DDB93 /* listIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = listIcon.png; path = "He3/Assets/list Icon/listIcon.png"; sourceTree = "<group>"; };
 		0FACD4C32467953000A23B1F /* PromiseFileProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseFileProvider.swift; sourceTree = "<group>"; };
@@ -289,6 +307,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0F9D732F25CB2CE00047EE45 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0FBD9BC024566C1C00332EEB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -334,6 +359,7 @@
 				0FBD9BC424566C1C00332EEB /* He3-dmg */,
 				0F307167246A3D0B00684B84 /* He3 Launcher */,
 				0F8292022495172100B5C205 /* He3 QLExtension */,
+				0F9D733325CB2CE00047EE45 /* He3ShareExtension */,
 				0F529000244F142800A9B9DC /* Frameworks */,
 				0F2370CE244E8CEA009F7914 /* Products */,
 			);
@@ -348,6 +374,7 @@
 				0FBD9BC324566C1C00332EEB /* He3-dmg */,
 				0F307166246A3D0B00684B84 /* He3 Launcher.app */,
 				0F8291FD2495172000B5C205 /* He3 QLExtension.appex */,
+				0F9D733225CB2CE00047EE45 /* He3ShareExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -468,6 +495,18 @@
 			path = He3QLExtension;
 			sourceTree = "<group>";
 		};
+		0F9D733325CB2CE00047EE45 /* He3ShareExtension */ = {
+			isa = PBXGroup;
+			children = (
+				0F9D733425CB2CE00047EE45 /* icon.icns */,
+				0F9D733625CB2CE00047EE45 /* ShareViewController.swift */,
+				0F9D733825CB2CE00047EE45 /* ShareViewController.xib */,
+				0F9D733B25CB2CE00047EE45 /* Info.plist */,
+				0F9D733C25CB2CE00047EE45 /* He3ShareExtension.entitlements */,
+			);
+			path = He3ShareExtension;
+			sourceTree = "<group>";
+		};
 		0FBD9BC424566C1C00332EEB /* He3-dmg */ = {
 			isa = PBXGroup;
 			children = (
@@ -496,6 +535,7 @@
 			dependencies = (
 				0F30717B246A429D00684B84 /* PBXTargetDependency */,
 				0F8292082495172100B5C205 /* PBXTargetDependency */,
+				0F9D733E25CB2CE00047EE45 /* PBXTargetDependency */,
 			);
 			name = He3;
 			packageProductDependencies = (
@@ -578,6 +618,23 @@
 			productReference = 0F8291FD2495172000B5C205 /* He3 QLExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		0F9D733125CB2CE00047EE45 /* He3ShareExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0F9D734225CB2CE00047EE45 /* Build configuration list for PBXNativeTarget "He3ShareExtension" */;
+			buildPhases = (
+				0F9D732E25CB2CE00047EE45 /* Sources */,
+				0F9D732F25CB2CE00047EE45 /* Frameworks */,
+				0F9D733025CB2CE00047EE45 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = He3ShareExtension;
+			productName = He3ShareExtension;
+			productReference = 0F9D733225CB2CE00047EE45 /* He3ShareExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		0FBD9BC224566C1C00332EEB /* He3-dmg */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0FBD9BC724566C1C00332EEB /* Build configuration list for PBXNativeTarget "He3-dmg" */;
@@ -624,6 +681,9 @@
 					0F8291FC2495172000B5C205 = {
 						CreatedOnToolsVersion = 11.5;
 					};
+					0F9D733125CB2CE00047EE45 = {
+						CreatedOnToolsVersion = 12.0;
+					};
 					0FBD9BC224566C1C00332EEB = {
 						CreatedOnToolsVersion = 11.3.1;
 					};
@@ -658,6 +718,7 @@
 				0FBD9BC224566C1C00332EEB /* He3-dmg */,
 				0F307165246A3D0B00684B84 /* He3 Launcher */,
 				0F8291FC2495172000B5C205 /* He3 QLExtension */,
+				0F9D733125CB2CE00047EE45 /* He3ShareExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -723,6 +784,15 @@
 				0FC4891E24DDDB2F0028032C /* listIcon.jpg in Resources */,
 				0FC4892124DDDB3F0028032C /* itemIcon.jpg in Resources */,
 				0FE20A942545A78300551CF3 /* he3_icnt.icns in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0F9D733025CB2CE00047EE45 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0F9D733A25CB2CE00047EE45 /* ShareViewController.xib in Resources */,
+				0F9D733525CB2CE00047EE45 /* icon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -859,6 +929,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		0F9D732E25CB2CE00047EE45 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0F9D733725CB2CE00047EE45 /* ShareViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		0FBD9BBF24566C1C00332EEB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -889,6 +967,11 @@
 			target = 0F8291FC2495172000B5C205 /* He3 QLExtension */;
 			targetProxy = 0F8292072495172100B5C205 /* PBXContainerItemProxy */;
 		};
+		0F9D733E25CB2CE00047EE45 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0F9D733125CB2CE00047EE45 /* He3ShareExtension */;
+			targetProxy = 0F9D733D25CB2CE00047EE45 /* PBXContainerItemProxy */;
+		};
 		0FBD9BCC24566C5500332EEB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 0F2370CC244E8CEA009F7914 /* He3 */;
@@ -907,6 +990,14 @@
 				0FB6B192255A12DF00363178 /* fr */,
 			);
 			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		0F9D733825CB2CE00047EE45 /* ShareViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0F9D733925CB2CE00047EE45 /* Base */,
+			);
+			name = ShareViewController.xib;
 			sourceTree = "<group>";
 		};
 		0FB6B16025560A5700363178 /* Localizable.strings */ = {
@@ -1269,6 +1360,50 @@
 			};
 			name = Release;
 		};
+		0F9D734025CB2CE00047EE45 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = He3ShareExtension/He3ShareExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = VQYGYPHYGE;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = He3ShareExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.slashlos.he3.He3ShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		0F9D734125CB2CE00047EE45 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = He3ShareExtension/He3ShareExtension.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = VQYGYPHYGE;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = He3ShareExtension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.slashlos.he3.He3ShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		0FBD9BC824566C1C00332EEB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1346,6 +1481,15 @@
 			buildConfigurations = (
 				0F82920B2495172100B5C205 /* Debug */,
 				0F82920C2495172100B5C205 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0F9D734225CB2CE00047EE45 /* Build configuration list for PBXNativeTarget "He3ShareExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0F9D734025CB2CE00047EE45 /* Debug */,
+				0F9D734125CB2CE00047EE45 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
