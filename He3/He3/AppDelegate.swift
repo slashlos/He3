@@ -958,9 +958,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
             if doc.windowControllers.count == 0 { doc.makeWindowControllers() }
             guard let wc = doc.windowControllers.first else { return false }
             
-            guard let window = wc.window else { return false }
-            
-            if let other = otherWindow {
+            if let window = wc.window, let other = otherWindow {
                 other.addTabbedWindow(window, ordered: .above)
             }
 			doc.showWindows()

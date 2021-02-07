@@ -688,9 +688,9 @@ class MyWebView : WKWebView {
                 kUTTypeImage, kUTTypeVideo, kUTTypeMovie, kUTTypeText, kUTTypePDF],
              NSPasteboard.ReadingOptionKey(rawValue: PlayList.className()) : true,
              NSPasteboard.ReadingOptionKey(rawValue: PlayItem.className()) : true]
+		let window = sender.draggingDestinationWindow!
         let pboard = sender.draggingPasteboard
         let items = pboard.pasteboardItems
-        let window = self.window!
         var handled = 0
         
 		//  Use current window, as key re: new creations
