@@ -334,7 +334,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
 		//	Infer muted state when current volume is 0
 		let volume = systemAudioVolume
 		
-		if inQuickQuietMode && lastSystemAudioVolume > 0.0 {
+		if inQuickQuietMode {
 			print("quickQuiet restore macOS system volume: \(lastSystemAudioVolume)")
 			self.systemAudioVolume = lastSystemAudioVolume
 		}
@@ -354,12 +354,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
 	}
 
 	//	https://stackoverflow.com/a/27291862/564870
-	var inQuickQuietMode : Bool {
-		get {
-			return systemAudioVolume == 0.0
-		}
-	}
-	var lastSystemAudioVolume = Float(0.0)
+	dynamic var inQuickQuietMode = false
+	dynamic var lastSystemAudioVolume = Float(0.0)
 	
 	var defaultAudioDeviceID : AudioDeviceID {
 		get {
@@ -1647,6 +1643,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
     func keyDownMonitor(event: NSEvent) -> Bool {
         switch event.modifierFlags.intersection(NSEvent.ModifierFlags.deviceIndependentFlagsMask) {
         case [NSEvent.ModifierFlags.control, NSEvent.ModifierFlags.option, NSEvent.ModifierFlags.command]:
+			self.inQuickQuietMode = inQuickQuietMode ? false : true
 			let notif = Notification(name: .quickQuiet, object: nil)
             NotificationCenter.default.post(notif)
 			print("control-option-command keys are pressed")

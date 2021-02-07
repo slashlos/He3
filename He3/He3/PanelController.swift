@@ -293,6 +293,7 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 	}
 	
 	fileprivate func installTitleFader(_ fadeNow: Bool = false) {
+		guard !appDelegate.inQuickQuietMode else { return }
 		guard !self.isKind(of: ReleaseController.self),
 			autoHideTitlePreference != .never else {
 			NSAnimationContext.runAnimationGroup({ (context) in
