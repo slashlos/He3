@@ -302,7 +302,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
 				}
 				
 				if [.playitem].contains(doc.docGroup) {
-					if ![k.hpi,k.h3i].contains(url.lastPathComponent) {
+					if ![k.hpi,k.h3i].contains(url.pathExtension) {
 						_ = loadURL(url: url)
 					}
 					else
