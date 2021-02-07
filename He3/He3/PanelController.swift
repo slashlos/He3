@@ -395,6 +395,7 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 	override func mouseEntered(with event: NSEvent) {
         if event.modifierFlags.contains(NSEvent.ModifierFlags.shift) {
             NSApp.activate(ignoringOtherApps: true)
+			self.window?.makeKeyAndOrderFront(self)
         }
 
 		guard monitoringMouseEvents() else { return }
