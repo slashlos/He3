@@ -334,20 +334,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
 		//	Infer muted state when current volume is 0
 		let volume = systemAudioVolume
 		
-		if inQuickQuietMode {
-			print("quickQuiet restore macOS system volume: \(lastSystemAudioVolume)")
+		if !inQuickQuietMode {
 			self.systemAudioVolume = lastSystemAudioVolume
 		}
 		else
-		if !inQuickQuietMode {
-			print("quickQuiet muting macOS system volume: \(volume)")
-			
+		{
 			self.systemAudioVolume = 0.0
 			lastSystemAudioVolume = volume
-		}
-		else
-		{
-			print("quickQuiet system volume already at \(volume)")
 		}
 		
 		didChangeValue(forKey: "inQuickQuietMode")
@@ -1646,7 +1639,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
 			self.inQuickQuietMode = inQuickQuietMode ? false : true
 			let notif = Notification(name: .quickQuiet, object: nil)
             NotificationCenter.default.post(notif)
-			print("control-option-command keys are pressed")
+			print("inQuickQuietMode = \(inQuickQuietMode ? "YES" : "NO")")
 /*
             print("control-option-command keys are pressed")
             if self.hiddenWindows.count > 0 {

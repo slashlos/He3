@@ -393,6 +393,8 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
     }
 	
 	override func mouseEntered(with event: NSEvent) {
+		guard !appDelegate.inQuickQuietMode else { return }
+
         if event.modifierFlags.contains(NSEvent.ModifierFlags.shift) {
             NSApp.activate(ignoringOtherApps: true)
 			self.window?.makeKeyAndOrderFront(self)
@@ -406,6 +408,7 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 	}
 	
 	override func mouseExited(with event: NSEvent) {
+		guard !appDelegate.inQuickQuietMode else { return }
 		guard monitoringMouseEvents() else { return }
 
 		self.mouseOver = false
