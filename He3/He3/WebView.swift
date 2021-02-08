@@ -457,9 +457,9 @@ class MyWebView : WKWebView {
             }
             let baseURL = appDelegate.authenticateBaseURL(url)
 			
-			return self.loadFileURL(url, allowingReadAccessTo: baseURL) != nil
+			if self.loadFileURL(url, allowingReadAccessTo: baseURL) != nil { return true }
         }
-        else
+		
 		if url.absoluteString != k.blank, self.load(URLRequest(url: url)) != nil {
 			doc.fileURL = url
 			return true
