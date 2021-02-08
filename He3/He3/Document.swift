@@ -716,7 +716,7 @@ class Document : NSDocument {
             return
         }
 
-		if url.isFileURL, [.playitem,.playlist].contains(docGroup) {
+		if url.isFileURL, [k.hpi,k.hpl].contains(url.pathExtension) {
 			if UserSettings.SecureFileEncoding.value {
 				super.save(to: url, ofType: typeName, for: saveOperation, completionHandler: completionHandler)
 			}
