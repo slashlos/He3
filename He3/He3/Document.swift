@@ -754,7 +754,7 @@ class Document : NSDocument {
     }
     
     override func write(to url: URL, ofType typeName: String) throws {
-		if url.isFileURL, [k.ItemType,k.PlayType].contains(typeName) {
+		if url.isFileURL, [k.hpi,k.hpl].contains(url.pathExtension) {
 			if UserSettings.SecureFileEncoding.value {
 				try super.write(to: url, ofType: typeName)
 			}
@@ -813,19 +813,21 @@ class Document : NSDocument {
     }
     
     override func writeSafely(to url: URL, ofType typeName: String, for saveOperation: NSDocument.SaveOperationType) throws {
-		if saveOperation == .saveOperation || !UserSettings.SecureFileEncoding.value {
-			try write(to: url, ofType: typeName)
+		if url.isFileURL, [k.hpi,k.hpl].contains(url.pathExtension) {
+			if saveOperation == .saveOperation || !UserSettings.SecureFileEncoding.value {
+				try write(to: url, ofType: typeName)
+			}
+			else
+			{
+				try super.writeSafely(to: url, ofType: typeName, for: saveOperation)
+			}
+			updateChangeCount( [.saveOperation                  : .changeCleared,
+								.saveAsOperation                : .changeCleared,
+								.saveToOperation                : .changeCleared,
+								.autosaveElsewhereOperation     : .changeAutosaved,
+								.autosaveInPlaceOperation       : .changeAutosaved,
+								.autosaveAsOperation            : .changeAutosaved][saveOperation] ?? .changeCleared)
 		}
-		else
-		{
-            try super.writeSafely(to: url, ofType: typeName, for: saveOperation)
-        }
-        updateChangeCount( [.saveOperation                  : .changeCleared,
-                            .saveAsOperation                : .changeCleared,
-                            .saveToOperation                : .changeCleared,
-                            .autosaveElsewhereOperation     : .changeAutosaved,
-                            .autosaveInPlaceOperation       : .changeAutosaved,
-                            .autosaveAsOperation            : .changeAutosaved][saveOperation] ?? .changeCleared)
     }
     
     override var shouldRunSavePanelWithAccessoryView: Bool {
