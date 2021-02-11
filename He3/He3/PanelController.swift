@@ -1001,7 +1001,9 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 				url.stopAccessingSecurityScopedResource()
 			}
 			wvc.webView.stopLoading(self)
-			wvc.clear()
+			
+			//	Really, really mean it by loading null
+			_ = wvc.webView.load(URLRequest.init(url: URL.init(string: "about://blank")!))
 		}
 
         vindow.ignoresMouseEvents = true
