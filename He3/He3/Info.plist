@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBuildDate</key>
-	<string>20210207.182753</string>
+	<string>20210212.205329</string>
 	<key>CFBuildIncrement</key>
 	<false/>
 	<key>CFBuildMajor</key>
@@ -145,7 +145,6 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>he3lium</string>
-				<string>asset</string>
 				<string>local</string>
 			</array>
 		</dict>

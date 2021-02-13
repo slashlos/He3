@@ -59,7 +59,8 @@ class DocumentController : NSDocumentController {
         }
 		
 		//	some URLs (asset: scheme) need explicit handling
-		if 0 == doc.windowControllers.count { doc.makeWindowControllers() }
+		if 0 == doc.windowControllers.count, [k.asset].contains(url.scheme) {
+			doc.makeWindowControllers() }
         return doc
     }
     
