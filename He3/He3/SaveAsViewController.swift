@@ -11,7 +11,13 @@ import AppKit
 
 class SaveAsViewController : NSViewController {
 	
+	@objc var document : Document?
+	
 	@IBOutlet var secureFileEncoding: NSButton!
+	@IBAction func secureFileAction(_ sender: Any) {
+		guard let doc = document else { return }
+		doc.secureFileEncoding = secureFileEncoding.state == .on
+	}
 	@IBOutlet var formatPopup: NSPopUpButton!
 	@IBOutlet var webArchiveMenuItem: NSMenuItem!
 }
