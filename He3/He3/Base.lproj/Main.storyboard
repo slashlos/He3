@@ -59,6 +59,9 @@
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="secureFileAction:" target="2D0-oP-LVi" id="kgx-p1-Nav"/>
+                                </connections>
                             </button>
                         </subviews>
                         <constraints>
@@ -1130,7 +1133,7 @@ CA
                                         <constraints>
                                             <constraint firstAttribute="width" constant="64" id="w7G-Zr-5il"/>
                                         </constraints>
-                                        <buttonCell key="cell" type="square" title=" 1.0.4" bezelStyle="shadowlessSquare" image="He3" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="2l2-8g-Dyj">
+                                        <buttonCell key="cell" type="square" title=" 1.0.4" bezelStyle="shadowlessSquare" image="He3" imagePosition="above" alignment="center" imageScaling="proportionallyDown" inset="2" id="2l2-8g-Dyj">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system" size="8"/>
                                         </buttonCell>
