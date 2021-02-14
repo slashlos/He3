@@ -59,6 +59,9 @@
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <binding destination="Ezd-2p-udC" name="value" keyPath="values.secureFileArchiving" id="BcN-ZK-jcS"/>
+                                </connections>
                             </button>
                         </subviews>
                         <constraints>
@@ -75,6 +78,7 @@
                     </connections>
                 </viewController>
                 <customObject id="2ib-kZ-u5l" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <userDefaultsController id="Ezd-2p-udC"/>
             </objects>
             <point key="canvasLocation" x="-616" y="-1247.5"/>
         </scene>
