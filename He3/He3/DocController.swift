@@ -58,9 +58,8 @@ class DocumentController : NSDocumentController {
             doc = try self.makeUntitledDocument(ofType: typeName) as! Document
         }
 		
-		//	some URLs (asset: scheme) need explicit handling
-		if 0 == doc.windowControllers.count, [k.asset].contains(url.scheme) {
-			doc.makeWindowControllers() }
+		//	some non file: schemes need explicit handling
+		if 0 == doc.windowControllers.count, [k.local].contains(url.scheme) { doc.makeWindowControllers() }
         return doc
     }
     
