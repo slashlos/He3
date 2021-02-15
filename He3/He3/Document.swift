@@ -71,7 +71,13 @@ class Document : NSDocument {
     }
     var settings: Settings
     var items: [PlayList]
-	
+	var secureFileEncoding : Bool?
+	var useSecureEncoding : Bool {
+		get {
+			return secureFileEncoding ?? UserSettings.SecureFileEncoding.value
+		}
+	}
+
 	//	We "might" be a global playlist if no fileURL
 	//	as seen when we are our window is restored.
 	var isGlobalPlaylist: Bool = false
@@ -190,11 +196,13 @@ class Document : NSDocument {
 		super.encodeRestorableState(with: coder)
 		
 		coder.encode(isGlobalPlaylist, forKey: "isGlobalPlaylist")
+		coder.encode(useSecureEncoding, forKey: "useSecureEncoding")
 	}
 	override func restoreState(with coder: NSCoder) {
 		super.restoreState(with: coder)
 		
 		isGlobalPlaylist = coder.decodeBool(forKey: "isGlobalPlaylist")
+		secureFileEncoding = coder.decodeBool(forKey: "useSecureEncoding")
 	}
 
     func restoreSettings(with dictionary: Dictionary<String,Any>) {
@@ -669,6 +677,10 @@ class Document : NSDocument {
 				formatPopup?.selectItem(at: 0)
 			}
 			
+			//	Restore or adopt secure file encoding from doucment or defaults
+			saveAsController.secureFileEncoding.state = useSecureEncoding ? .on : .off
+			saveAsController.document = self
+			
 			//	We will only saveAs or write to our own supported types
 			savePanel.nameFieldStringValue = url?.lastPathComponent ?? defaultDraftName()
 			savePanel.allowedFileTypes = [self.fileNameExtension(forType: k.ItemType, saveOperation: .saveAsOperation)!]
@@ -717,7 +729,7 @@ class Document : NSDocument {
         }
 
 		if url.isFileURL, [k.hpi,k.hpl].contains(url.pathExtension) {
-			if UserSettings.SecureFileEncoding.value {
+			if useSecureEncoding {
 				super.save(to: url, ofType: typeName, for: saveOperation, completionHandler: completionHandler)
 			}
 			else
@@ -755,16 +767,11 @@ class Document : NSDocument {
     
     override func write(to url: URL, ofType typeName: String) throws {
 		if url.isFileURL, [k.hpi,k.hpl].contains(url.pathExtension) {
-			if UserSettings.SecureFileEncoding.value {
+			if useSecureEncoding {
 				try super.write(to: url, ofType: typeName)
 			}
 			else
 			{
-				guard ![k.asset,k.local].contains(url.scheme) else {
-					cacheSettings(url)
-					return
-				}
-				
 				switch typeName {
 				case k.ItemType:
 					try NSDictionary(dictionary: self.playitem().dictionary()).write(to: url)
@@ -814,7 +821,7 @@ class Document : NSDocument {
     
     override func writeSafely(to url: URL, ofType typeName: String, for saveOperation: NSDocument.SaveOperationType) throws {
 		if url.isFileURL, [k.hpi,k.hpl].contains(url.pathExtension) {
-			if saveOperation == .saveOperation || !UserSettings.SecureFileEncoding.value {
+			if saveOperation == .saveOperation || useSecureEncoding {
 				try write(to: url, ofType: typeName)
 			}
 			else

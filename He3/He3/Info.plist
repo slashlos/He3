@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBuildDate</key>
-	<string>20210212.205329</string>
+	<string>20210214.163940</string>
 	<key>CFBuildIncrement</key>
 	<false/>
 	<key>CFBuildMajor</key>
@@ -139,9 +139,9 @@
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>CFBundleURLIconFile</key>
-			<string>icntIcon</string>
+			<string>itemIcon</string>
 			<key>CFBundleURLName</key>
-			<string>He3</string>
+			<string>com.slashlos.he3.hpi</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>he3lium</string>
