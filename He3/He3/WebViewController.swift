@@ -107,7 +107,8 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
 
         borderView.frame = view.frame
         view.addSubview(borderView)
-
+		borderView.isReceivingDrag = false
+		
         view.addSubview(loadingIndicator)
 
 		NotificationCenter.default.addObserver(

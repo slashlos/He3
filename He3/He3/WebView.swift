@@ -52,13 +52,14 @@ class WebBorderView : NSView {
         self.isHidden = !isReceivingDrag
 //        print("web borderView drawing \(isHidden ? "NO" : "YES")....")
 
-        if isReceivingDrag {
-            NSColor.selectedKnobColor.set()
+		//	Wipe coloring when not dragging
+		let borderColor = !isReceivingDrag ? NSColor.clear : (self.window?.windowController as? HeliumController)?.homeColor ?? NSColor.selectedKnobColor
+        borderColor.set()
             
-            let path = NSBezierPath(rect:bounds)
-            path.lineWidth = 4
-            path.stroke()
-        }
+		let path = NSBezierPath(rect:bounds)
+		path.lineWidth = 4
+		path.stroke()
+
     }
 }
 
@@ -516,8 +517,6 @@ class MyWebView : WKWebView {
 	override func mouseDown(with event: NSEvent) {
 		let startingPoint = event.locationInWindow
 		let window = self.window!
-		
-		borderView.isReceivingDrag = true
 		
 		// Track events until the mouse is up (in which we interpret as a click), or a drag starts (in which we pass off to the Window Server to perform the drag)
 		var shouldCallSuper = false
