@@ -39,25 +39,31 @@ extension WKNavigationType {
         }
     }
 }
+
 class WebBorderView : NSView {
     var isReceivingDrag = false {
         didSet {
             needsDisplay = true
         }
     }
-    
+	var isMouseOver = false {
+		didSet {
+			needsDisplay = true
+		}
+	}
+	
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
 
-        self.isHidden = !isReceivingDrag
+        self.isHidden = !(isReceivingDrag || isMouseOver)
 //        print("web borderView drawing \(isHidden ? "NO" : "YES")....")
 
 		//	Wipe coloring when not dragging
-		let borderColor = !isReceivingDrag ? NSColor.clear : (self.window?.windowController as? HeliumController)?.homeColor ?? NSColor.selectedKnobColor
+		let borderColor = isReceivingDrag ? NSColor.selectedKnobColor : (self.window?.windowController as? HeliumController)?.homeColor ?? NSColor.highlightColor
         borderColor.set()
             
 		let path = NSBezierPath(rect:bounds)
-		path.lineWidth = 4
+		path.lineWidth = 1
 		path.stroke()
 
     }

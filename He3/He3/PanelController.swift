@@ -82,7 +82,6 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 		self.panel.appearance = NSAppearance(named: .vibrantDark)
 		self.panel.titlebarAppearsTransparent = true
 		self.panel.titleVisibility = .visible
-		self.panel.backgroundColor = .white
 		
 		//	Setup our preferences accessory view and toolbar
 
@@ -144,7 +143,7 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
             }
         }
     }
-        
+	
     func documentDidLoad() {
         // Moved later, called by view, when document is available
         mouseOver = false
@@ -280,6 +279,7 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 			priorOver = mouseOver
 		}
 		didSet {
+			webView?.borderView.isMouseOver = mouseOver
 			mouseIdle = false
 			mouseStateChanged()
 		}
@@ -410,7 +410,8 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 	override func mouseExited(with event: NSEvent) {
 		guard !appDelegate.inQuickQuietMode else { return }
 		guard monitoringMouseEvents() else { return }
-
+		webView?.isReceivingDrag = false
+		
 		self.mouseOver = false
 		
 		installTitleFader(true)
@@ -645,6 +646,12 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
         static let screen   = FloatAboveAllPreference(rawValue: 2)
     }
 
+	@objc var clearBackgroundPreference : Bool = false {
+		didSet {
+			updateTranslucency()
+		}
+	}
+	
     // MARK:- Titling
 	@objc var autoHideValue: Int {
 		get {
@@ -715,14 +722,12 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
         didSet {
             if !NSApplication.shared.isActive {
                 panel.ignoresMouseEvents = currentlyTranslucent
-            }
-            if currentlyTranslucent {
-                panel.alphaValue = alpha
-                panel.isOpaque = false
-            } else {
-                panel.isOpaque = true
-                panel.alphaValue = 1
-            }
+			}
+			
+			panel.hasShadow = !clearBackgroundPreference
+
+			panel.isOpaque = !(currentlyTranslucent || clearBackgroundPreference)
+			panel.alphaValue = currentlyTranslucent ? alpha : 1
         }
     }
 
@@ -802,7 +807,21 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
         if let doc = panel.windowController?.document { doc.updateChangeCount(.changeDone) }
 	}
 	
-    @objc @IBAction func floatOverSpacesPress(_ sender: NSMenuItem) {
+	@IBAction func clearitytPress(_ sender: NSMenuItem) {
+		switch sender.tag {
+			case 0:
+				self.panel.backgroundColor = .windowBackgroundColor
+			default:
+				let storyboard = NSStoryboard(name: "Main", bundle: nil)
+
+				let clearity = storyboard.instantiateController(withIdentifier: "ClearityViewController") as! LaunchViewController
+				self.contentViewController?.presentAsSheet(clearity)
+
+				self.panel.hasShadow = !clearBackgroundPreference
+		}
+	}
+	
+	@objc @IBAction func floatOverSpacesPress(_ sender: NSMenuItem) {
 		self.willChangeValue(forKey: "floatAboveValue")
 		let now = FloatAboveAllPreference(rawValue: sender.tag)
 		let was = floatAboveAllPreference
@@ -1175,6 +1194,7 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 	@IBOutlet var floatPopup: NSPopUpButton!
 	@IBOutlet var transPopup: NSPopUpButton!
 	@IBOutlet var opacityLevel: NSLevelIndicator!
+	@IBOutlet var clearityPopup: NSPopUpButton!
 }
 
 class ReleaseController : HeliumController {
@@ -1188,7 +1208,7 @@ class ReleaseController : HeliumController {
 		///panel.appearance = NSAppearance(named: .vibrantDark)
 		///panel.titlebarAppearsTransparent = true
 		panel.animator().titleVisibility = .visible
-		panel.backgroundColor = .white
+		panel.backgroundColor = .clear
 
         // Remember for later restoration
         NSApp.changeWindowsItem(panel, title: window?.title ?? k.ReleaseNotes, filename: false)
