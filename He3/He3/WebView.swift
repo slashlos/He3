@@ -59,11 +59,12 @@ class WebBorderView : NSView {
 //        print("web borderView drawing \(isHidden ? "NO" : "YES")....")
 
 		//	Wipe coloring when not dragging
-		let borderColor = isReceivingDrag ? NSColor.selectedKnobColor : (self.window?.windowController as? HeliumController)?.homeColor ?? NSColor.highlightColor
+		let hpc : HeliumController = self.window?.windowController as! HeliumController
+		let borderColor = isReceivingDrag ? hpc.homeColor : NSColor.selectedKnobColor
         borderColor.set()
             
 		let path = NSBezierPath(rect:bounds)
-		path.lineWidth = 1
+		path.lineWidth = isReceivingDrag ? 4 : 1
 		path.stroke()
 
     }
