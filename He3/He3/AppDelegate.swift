@@ -1953,7 +1953,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
             }
         }
 
-        //  Have window, but make it active
+		//  Have window or not, but us active
         NSApp.activate(ignoringOtherApps: true)
         
         if let urlWindow = onWindow {
@@ -2146,7 +2146,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
             }
         }
         
-        //  Have window, but make it active
+		//  Have window or not, but us active
         NSApp.activate(ignoringOtherApps: true)
         
         if let urlWindow = onWindow {
@@ -2175,9 +2175,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         }
         else
         {
-            //  No window, so load panel modally
-            NSApp.activate(ignoringOtherApps: true)
-
             switch alert.runModal() {
             case NSApplication.ModalResponse.alertThirdButtonReturn:
                 var newUrl = (alert.buttons[2] as NSButton).toolTip
