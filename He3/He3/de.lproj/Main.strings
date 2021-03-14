@@ -1080,3 +1080,27 @@
 
 /* Class = "NSSegmentedControl"; ibShadowedToolTip = "never, always"; ObjectID = "JWC-19-zca"; */
 "JWC-19-zca.ibShadowedToolTip" = "nie immer";
+
+/* Class = "NSWindow"; title = "Window"; ObjectID = "5lf-pa-RgK"; */
+"5lf-pa-RgK.title" = "Window";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "CRO-io-Lfo"; */
+"CRO-io-Lfo.title" = "Cancel";
+
+/* Class = "NSButtonCell"; title = "BG Color"; ObjectID = "FP0-er-Dm4"; */
+"FP0-er-Dm4.title" = "BG Color";
+
+/* Class = "NSButtonCell"; title = "OK"; ObjectID = "JNl-Rb-ue0"; */
+"JNl-Rb-ue0.title" = "OK";
+
+/* Class = "NSTextFieldCell"; title = "Enter color name or #hex value"; ObjectID = "Xgo-Eb-IRr"; */
+"Xgo-Eb-IRr.title" = "Geben Sie den Farbnamen oder den # Hex-Wert ein";
+
+/* Class = "NSToolbarItem"; label = "BG Color"; ObjectID = "Zff-Jk-P7s"; */
+"Zff-Jk-P7s.label" = "BG Color";
+
+/* Class = "NSToolbarItem"; paletteLabel = "BG Color"; ObjectID = "Zff-Jk-P7s"; */
+"Zff-Jk-P7s.paletteLabel" = "CG Color";
+
+/* Class = "NSButtonCell"; title = "Reset"; ObjectID = "l2l-3v-5sY"; */
+"l2l-3v-5sY.title" = "Reset";

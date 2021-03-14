@@ -3115,7 +3115,7 @@ Gw
                             <allowedToolbarItems>
                                 <toolbarItem implicitItemIdentifier="EB23D248-0E52-4E8D-B863-3C758FF94750" label="Auto Hide Title" paletteLabel="AutoHide" toolTip="auto hide title bar" sizingBehavior="auto" id="FwO-iD-ty3">
                                     <popUpButton key="view" verticalHuggingPriority="750" id="vtP-Pj-U4Y">
-                                        <rect key="frame" x="0.0" y="14" width="100" height="24"/>
+                                        <rect key="frame" x="0.0" y="14" width="87" height="25"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <popUpButtonCell key="cell" type="roundTextured" title="Never" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="sAL-RQ-Lba" id="gJZ-rv-2vH">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -3146,7 +3146,7 @@ Gw
                                 <toolbarItem implicitItemIdentifier="3A1A60F0-2DDF-4975-9770-E065D3B92BBE" label="Float" paletteLabel="Float Above" sizingBehavior="auto" id="faz-Y8-DQM">
                                     <nil key="toolTip"/>
                                     <popUpButton key="view" verticalHuggingPriority="750" id="dyA-ty-CHL">
-                                        <rect key="frame" x="0.0" y="14" width="100" height="24"/>
+                                        <rect key="frame" x="0.0" y="14" width="118" height="25"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <popUpButtonCell key="cell" type="roundTextured" title="All Spaces" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="iu1-bS-9hP" id="iXR-Wz-Xwk">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -3185,7 +3185,7 @@ Gw
                                 <toolbarItem implicitItemIdentifier="20B13993-855E-4E06-8FFE-30575F2AE5E9" label="Translucent" paletteLabel="Translucent" sizingBehavior="auto" id="fJy-ou-YnS">
                                     <nil key="toolTip"/>
                                     <popUpButton key="view" verticalHuggingPriority="750" id="9tS-bB-NGO">
-                                        <rect key="frame" x="0.0" y="14" width="100" height="24"/>
+                                        <rect key="frame" x="0.0" y="14" width="87" height="25"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <popUpButtonCell key="cell" type="roundTextured" title="Never" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="TDR-8g-lQU" id="SZb-sS-Ujd">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -3242,7 +3242,7 @@ Gw
                                 <toolbarItem implicitItemIdentifier="7CAA784E-EAC0-4561-B84E-2524ACF58BBD" label="HideMe" paletteLabel="HideMe" image="NSActionTemplate" sizingBehavior="auto" id="b3i-qz-pXN">
                                     <nil key="toolTip"/>
                                     <button key="view" toolTip="toggle preferences toolbar" verticalHuggingPriority="750" id="KZh-RK-kK3">
-                                        <rect key="frame" x="16" y="14" width="16" height="16"/>
+                                        <rect key="frame" x="17" y="14" width="15" height="15"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <buttonCell key="cell" type="square" title=" " bezelStyle="shadowlessSquare" image="NSActionTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="Pkj-YZ-h8Q">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -3254,9 +3254,24 @@ Gw
                                     </button>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="8jF-0S-hf1"/>
+                                <toolbarItem implicitItemIdentifier="112915F6-1AD8-4874-8799-01FA8C97171B" label="BG Color" paletteLabel="BG Color" image="NSColorPanel" sizingBehavior="auto" id="Zff-Jk-P7s">
+                                    <nil key="toolTip"/>
+                                    <button key="view" verticalHuggingPriority="750" id="k9U-nO-jTd">
+                                        <rect key="frame" x="11" y="14" width="32" height="32"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <buttonCell key="cell" type="square" title="BG Color" bezelStyle="shadowlessSquare" image="NSColorPanel" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="FP0-er-Dm4">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="clearitytPress:" target="B8D-0N-5wS" id="wUf-gF-xXf"/>
+                                        </connections>
+                                    </button>
+                                </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
                                 <toolbarItem reference="FwO-iD-ty3"/>
+                                <toolbarItem reference="Zff-Jk-P7s"/>
                                 <toolbarItem reference="faz-Y8-DQM"/>
                                 <toolbarItem reference="fJy-ou-YnS"/>
                                 <toolbarItem reference="5xX-aY-d3F"/>
@@ -3304,7 +3319,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <button verticalHuggingPriority="750" id="VPa-1T-2cB">
-                                <rect key="frame" x="7" y="-3" width="13" height="13"/>
+                                <rect key="frame" x="7" y="-4" width="13" height="13"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSActionTemplate" imagePosition="overlaps" alignment="right" controlSize="small" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="RWV-jt-wFJ">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -3327,14 +3342,131 @@ Gw
             </objects>
             <point key="canvasLocation" x="-545" y="-577"/>
         </scene>
+        <!--Window Controller-->
+        <scene sceneID="TFn-6b-DZV">
+            <objects>
+                <windowController storyboardIdentifier="ColorController" id="OY1-HG-TfF" customClass="ColorController" customModule="He3" customModuleProvider="target" sceneMemberID="viewController">
+                    <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="5lf-pa-RgK">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="-2135" y="501" width="480" height="270"/>
+                        <rect key="screenRect" x="-2560" y="39" width="2560" height="1415"/>
+                        <view key="contentView" id="1VD-lV-iIS">
+                            <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </view>
+                        <connections>
+                            <outlet property="delegate" destination="OY1-HG-TfF" id="Ybo-zW-ahj"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="9cj-xs-NA4" kind="relationship" relationship="window.shadowedContentViewController" id="wn1-RZ-XwP"/>
+                    </connections>
+                </windowController>
+                <customObject id="ku8-1W-61G" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-919" y="-785"/>
+        </scene>
+        <!--Color View Controller-->
+        <scene sceneID="ZWS-Ei-ymw">
+            <objects>
+                <viewController storyboardIdentifier="ColorViewController" id="9cj-xs-NA4" customClass="ColorViewController" customModule="He3" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="hWB-f1-WuX">
+                        <rect key="frame" x="0.0" y="0.0" width="314" height="144"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="8NI-E5-Q64">
+                                <rect key="frame" x="226" y="13" width="75" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="JNl-Rb-ue0">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="dismiss:" target="9cj-xs-NA4" id="pap-aD-aw4"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MTh-nO-6YA">
+                                <rect key="frame" x="145" y="13" width="76" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="CRO-io-Lfo">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                    <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="dismiss:" target="9cj-xs-NA4" id="8FP-Nd-UHV"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QfT-b5-jKc">
+                                <rect key="frame" x="22" y="13" width="69" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Reset" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="l2l-3v-5sY">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="colorReset:" target="9cj-xs-NA4" id="CE4-Ht-Yps"/>
+                                </connections>
+                            </button>
+                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zkH-gV-aHT">
+                                <rect key="frame" x="206" y="82" width="80" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="w5m-ZF-Gpt">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <action selector="colorFieldAction:" target="9cj-xs-NA4" id="f3W-R4-epz"/>
+                                </connections>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NoF-Fe-iJo">
+                                <rect key="frame" x="96" y="79" width="104" height="28"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" title="Enter color name or #hex value" id="Xgo-Eb-IRr">
+                                    <font key="font" metaFont="smallSystem"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <colorWell fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SdV-Sv-7Sq">
+                                <rect key="frame" x="26" y="81" width="44" height="23"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="colorWellAction:" target="9cj-xs-NA4" id="ESq-ir-KqX"/>
+                                </connections>
+                            </colorWell>
+                            <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="OCx-Fh-kkr">
+                                <rect key="frame" x="29" y="58" width="257" height="5"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </box>
+                        </subviews>
+                    </view>
+                    <connections>
+                        <outlet property="colorField" destination="zkH-gV-aHT" id="Yh2-SK-TP9"/>
+                        <outlet property="colorWell" destination="SdV-Sv-7Sq" id="avW-RN-mBF"/>
+                    </connections>
+                </viewController>
+                <customObject id="5CI-mJ-gCi" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-819" y="-368"/>
+        </scene>
     </scenes>
     <resources>
         <image name="He3" width="512" height="512"/>
         <image name="NSActionTemplate" width="15" height="15"/>
-        <image name="NSAddTemplate" width="15" height="13"/>
+        <image name="NSAddTemplate" width="14" height="13"/>
+        <image name="NSColorPanel" width="32" height="32"/>
         <image name="NSLockLockedTemplate" width="15" height="15"/>
         <image name="NSLockUnlockedTemplate" width="18" height="15"/>
-        <image name="NSRemoveTemplate" width="15" height="4"/>
+        <image name="NSRemoveTemplate" width="14" height="4"/>
         <image name="NSStatusAvailable" width="16" height="16"/>
         <image name="NSStatusUnavailable" width="16" height="16"/>
         <image name="he3_logo" width="512" height="512"/>
