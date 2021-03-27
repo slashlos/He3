@@ -639,6 +639,17 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
 		guard let url = webView.url, url != webView.homeURL else { return }
 		guard var snapshotURL = sender.representedObject as? URL else { return }
 		
+		//	TODO: Remove this hack when it's working again.
+		sheetOKCancel("PDF snaphots are broken. Snapshot anyway?",
+					  info: "Use CMND-SHFT-4 or CMND-SHFT-5 for screen capture instead.",
+					  acceptHandler:
+			{ (button) in
+				//  Make them confirm first
+				if button == NSApplication.ModalResponse.alertFirstButtonReturn {
+					return
+				}
+			})
+		
 		//	URL has only destination, so add name and extension
 		let filename = String(format: "%@ Shapshot at %@",
 							  (url.lastPathComponent as NSString).deletingPathExtension,
