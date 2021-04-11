@@ -165,7 +165,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>Allow camera usage for websites requestion access i.e, OBS</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2017-2021 CD M Santiago. All rights reserved.|Copyright © 2015 Jaden Geller. All rights reserved.</string>
+	<string>Copyright © 2020-2021 CD M Santiago. All rights reserved.| Copyright © 2017-2020 CD M Santiago. All rights reserved.|Copyright © 2015 Jaden Geller. All rights reserved.</string>
 	<key>NSLocationUsageDescription</key>
 	<string>Allow website(s) to know your location, when required to view their content.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>

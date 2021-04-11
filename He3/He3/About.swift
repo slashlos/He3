@@ -164,7 +164,7 @@ class AboutBoxController : NSViewController {
     static let versionStates: Int = 3
     static var creditState: Int = 0
 	static let creditStates: Int = 4
-    static let creditsCount: Int = 2// CDMS, JG, ...
+    static let creditsCount: Int = 3// CDMS, CDS, JG, ...
 
     override func viewWillAppear() {
         let theWindow = appNameField.window
@@ -223,6 +223,9 @@ class AboutBoxController : NSViewController {
         // Setup the copyrights field; each separated by "|"
 		copyrightStrings = NSLocalizedString("copyright", comment: "").components(separatedBy: "|")
         toggleButton.state = .off
+		
+		// We copyright first as Helium 3, then (now) as He3
+		assert(AboutBoxController.creditsCount == NSLocalizedString("copyright", comment: "").components(separatedBy: "|").count, "creditsCount <> copyrightStrings")
 		
 		///creditTabView.selectTabViewItem(at: 0)
     }

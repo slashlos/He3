@@ -4,7 +4,7 @@
 //
 //  Created by Samuel Beek on 16/03/16.
 //  Copyright © 2016 Jaden Geller. All rights reserved.
-//  Copyright © 2017-2019 CD M Santiago. All rights reserved.
+//  Copyright © 2017-2021 CD M Santiago. All rights reserved.
 //
 
 import Foundation
