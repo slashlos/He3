@@ -1104,3 +1104,6 @@
 
 /* Class = "NSButtonCell"; title = "Reset"; ObjectID = "l2l-3v-5sY"; */
 "l2l-3v-5sY.title" = "Reset";
+
+/* Class = "NSTextField"; ibShadowedToolTip = "2 digits ea: alpha, red, green, blue"; ObjectID = "zkH-gV-aHT"; */
+"zkH-gV-aHT.ibShadowedToolTip" = "2 dígitos ea: alfa, roja, verde, azul";
