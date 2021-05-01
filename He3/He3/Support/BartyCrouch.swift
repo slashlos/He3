@@ -14,21 +14,21 @@ import Foundation
 enum BartyCrouch {
 	enum SupportedLanguage: String {
 		// TODO: remove unsupported languages from the following cases list & add any missing languages
-		case arabic = "ar"
-		case chineseSimplified = "zh-Hans"
-		case chineseTraditional = "zh-Hant"
+		///case arabic = "ar"
+		///case chineseSimplified = "zh-Hans"
+		///case chineseTraditional = "zh-Hant"
 		case english = "en"
 		case french = "fr"
 		case german = "de"
-		case hindi = "hi"
+		///case hindi = "hi"
 		case italian = "it"
-		case japanese = "ja"
-		case korean = "ko"
-		case malay = "ms"
-		case portuguese = "pt-BR"
-		case russian = "ru"
+		//case japanese = "ja"
+		///case korean = "ko"
+		///case malay = "ms"
+		///case portuguese = "pt-BR"
+		///case russian = "ru"
 		case spanish = "es"
-		case turkish = "tr"
+		///case turkish = "tr"
 	}
 
 	static func translate(key: String, translations: [SupportedLanguage: String], comment: String? = nil) -> String {
