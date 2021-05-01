@@ -188,7 +188,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
         
         // WebView KVO - load progress, title, url
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), options: .new, context: nil)
-        webView.addObserver(self, forKeyPath: #keyPath(WKWebView.loading), options: .new, context: nil)
+		webView.addObserver(self, forKeyPath: #keyPath(WKWebView.isLoading), options: .new, context: nil)
         webView.addObserver(self, forKeyPath: #keyPath(WKWebView.title), options: .new, context: nil)
 		webView.addObserver(self, forKeyPath: #keyPath(WKWebView.url), options: .new, context: nil)
 
@@ -389,7 +389,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
             // Wind down all observations
             if observing {
 				webView.removeObserver(navDelegate, forKeyPath: #keyPath(WKWebView.estimatedProgress))
-				webView.removeObserver(navDelegate, forKeyPath: #keyPath(WKWebView.loading))
+				webView.removeObserver(navDelegate, forKeyPath: #keyPath(WKWebView.isLoading))
 				webView.removeObserver(navDelegate, forKeyPath: #keyPath(WKWebView.title))
 				webView.removeObserver(navDelegate, forKeyPath: #keyPath(WKWebView.url))/*
 				webView.removeObserver(navDelegate, forKeyPath: "estimatedProgress")
