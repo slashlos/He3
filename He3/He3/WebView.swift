@@ -1149,6 +1149,15 @@ class MyWebView : WKWebView {
         let subPref = NSMenu()
         item.submenu = subPref
 
+		//	Guard unsupported testing
+		if UserSettings.Unsupported.value {
+			item = NSMenuItem(title: "Background", action: #selector(hpc.clearitytPress(_:)), keyEquivalent: "")
+			subPref.addItem(item)
+			item.submenu = NSMenu()
+			item.submenu?.addItem(NSMenuItem(title: "Default", action: #selector(hpc.clearitytPress(_:)), keyEquivalent: ""))
+			item.submenu?.addItem(NSMenuItem(title: "Clearity", action: #selector(hpc.clearitytPress(_:)), keyEquivalent: ""))
+		}
+		
         item = NSMenuItem(title: "Auto-hide Title Bar", action: #selector(menuClicked(_:)), keyEquivalent: "")
         subPref.addItem(item)
         let subAuto = NSMenu()
