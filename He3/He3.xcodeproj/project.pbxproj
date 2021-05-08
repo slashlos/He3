@@ -27,7 +27,6 @@
 		0F37170D2548635200D65218 /* he3_icnt.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0FE20A922545A78300551CF3 /* he3_icnt.icns */; };
 		0F3717182549077600D65218 /* Fuzi in Frameworks */ = {isa = PBXBuildFile; productRef = 0F3717172549077600D65218 /* Fuzi */; };
 		0F371722254907AA00D65218 /* WebArchiver in Frameworks */ = {isa = PBXBuildFile; productRef = 0F371721254907AA00D65218 /* WebArchiver */; };
-		0F3D232E256D3F1E00FF6FC3 /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = 0F3D232D256D3F1E00FF6FC3 /* Down */; };
 		0F529030244F3A5800A9B9DC /* He3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F52902F244F3A5800A9B9DC /* He3Tests.swift */; };
 		0F5290B0244F6C0D00A9B9DC /* UrlHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5290A7244F6C0C00A9B9DC /* UrlHelpers.swift */; };
 		0F5290B1244F6C0D00A9B9DC /* ValueTransformers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5290A8244F6C0C00A9B9DC /* ValueTransformers.swift */; };
@@ -40,6 +39,8 @@
 		0F55CD6A24A67B7100E49C6A /* itemIcon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0F55CD6924A67B7100E49C6A /* itemIcon.jpg */; };
 		0F6FB8D8246C9D9400F5D36B /* LaunchControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6FB8D7246C9D9400F5D36B /* LaunchControllers.swift */; };
 		0F721888246C54D50070F9E4 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5290AA244F6C0D00A9B9DC /* UserSettings.swift */; };
+		0F7353D325EC2E34007BE318 /* ColorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F94608F25E824DF00A7AC03 /* ColorController.swift */; };
+		0F7F173F263E0E1F0045B6F6 /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = 0F7F173E263E0E1F0045B6F6 /* Down */; };
 		0F8291FF2495172100B5C205 /* QuickLookThumbnailing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F8291FE2495172100B5C205 /* QuickLookThumbnailing.framework */; };
 		0F8292012495172100B5C205 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F8292002495172100B5C205 /* Quartz.framework */; };
 		0F8292042495172100B5C205 /* ThumbnailProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8292032495172100B5C205 /* ThumbnailProvider.swift */; };
@@ -223,6 +224,7 @@
 		0F8292052495172100B5C205 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0F8292062495172100B5C205 /* He3QLExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = He3QLExtension.entitlements; sourceTree = "<group>"; };
 		0F82920E249539D900B5C205 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		0F94608F25E824DF00A7AC03 /* ColorController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorController.swift; sourceTree = "<group>"; };
 		0F9D733225CB2CE00047EE45 /* He3ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = He3ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F9D733425CB2CE00047EE45 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		0F9D733625CB2CE00047EE45 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
@@ -273,7 +275,7 @@
 			files = (
 				0F3717182549077600D65218 /* Fuzi in Frameworks */,
 				0F371722254907AA00D65218 /* WebArchiver in Frameworks */,
-				0F3D232E256D3F1E00FF6FC3 /* Down in Frameworks */,
+				0F7F173F263E0E1F0045B6F6 /* Down in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -385,6 +387,7 @@
 				0F2370F4244E904E009F7914 /* About.swift */,
 				0F2370D0244E8CEA009F7914 /* AppDelegate.swift */,
 				0F6FB8D7246C9D9400F5D36B /* LaunchControllers.swift */,
+				0F94608F25E824DF00A7AC03 /* ColorController.swift */,
 				0FD2127C2466D71200EA5D6D /* DocController.swift */,
 				0F2370D4244E8CEA009F7914 /* Document.swift */,
 				0FD212782466441F00EA5D6D /* PlayList.swift */,
@@ -541,7 +544,7 @@
 			packageProductDependencies = (
 				0F3717172549077600D65218 /* Fuzi */,
 				0F371721254907AA00D65218 /* WebArchiver */,
-				0F3D232D256D3F1E00FF6FC3 /* Down */,
+				0F7F173E263E0E1F0045B6F6 /* Down */,
 			);
 			productName = He3;
 			productReference = 0F2370CD244E8CEA009F7914 /* He3.app */;
@@ -661,7 +664,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1200;
-				LastUpgradeCheck = 1200;
+				LastUpgradeCheck = 1250;
 				ORGANIZATIONNAME = "Carlos D. Santiago";
 				TargetAttributes = {
 					0F2370CC244E8CEA009F7914 = {
@@ -706,7 +709,7 @@
 				0F3717162549077600D65218 /* XCRemoteSwiftPackageReference "Fuzi" */,
 				0F371720254907AA00D65218 /* XCRemoteSwiftPackageReference "WebArchiver" */,
 				0FB6B19C255A160F00363178 /* XCRemoteSwiftPackageReference "BartyCrouch" */,
-				0F3D232C256D3F1E00FF6FC3 /* XCRemoteSwiftPackageReference "Down" */,
+				0F7F173D263E0E1F0045B6F6 /* XCRemoteSwiftPackageReference "Down" */,
 			);
 			productRefGroup = 0F2370CE244E8CEA009F7914 /* Products */;
 			projectDirPath = "";
@@ -860,6 +863,7 @@
 			files = (
 				0F0EEE3F247D3283008F1988 /* LoadThumbnailOperation.swift in Sources */,
 				0F2370FF244E9601009F7914 /* PlaylistViewController.swift in Sources */,
+				0F7353D325EC2E34007BE318 /* ColorController.swift in Sources */,
 				0FD2127B2466448500EA5D6D /* PlayItem.swift in Sources */,
 				0F5290B2244F6C0D00A9B9DC /* UserSettings.swift in Sources */,
 				0F6FB8D8246C9D9400F5D36B /* LaunchControllers.swift in Sources */,
@@ -1127,6 +1131,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_INCLUDE_PATHS = "$(inherited) $(PROJECT_DIR)/Carthage/Checkouts/down/Source/cmark";
@@ -1522,12 +1527,12 @@
 				minimumVersion = 1.0.1;
 			};
 		};
-		0F3D232C256D3F1E00FF6FC3 /* XCRemoteSwiftPackageReference "Down" */ = {
+		0F7F173D263E0E1F0045B6F6 /* XCRemoteSwiftPackageReference "Down" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/iwasrobbed/Down.git";
+			repositoryURL = "https://github.com/johnxnguyen/Down";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.9.4;
+				minimumVersion = 0.10.0;
 			};
 		};
 		0FB6B19C255A160F00363178 /* XCRemoteSwiftPackageReference "BartyCrouch" */ = {
@@ -1551,9 +1556,9 @@
 			package = 0F371720254907AA00D65218 /* XCRemoteSwiftPackageReference "WebArchiver" */;
 			productName = WebArchiver;
 		};
-		0F3D232D256D3F1E00FF6FC3 /* Down */ = {
+		0F7F173E263E0E1F0045B6F6 /* Down */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 0F3D232C256D3F1E00FF6FC3 /* XCRemoteSwiftPackageReference "Down" */;
+			package = 0F7F173D263E0E1F0045B6F6 /* XCRemoteSwiftPackageReference "Down" */;
 			productName = Down;
 		};
 /* End XCSwiftPackageProductDependency section */

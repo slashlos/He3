@@ -390,6 +390,8 @@ class MyWebView : WKWebView {
     override var mouseDownCanMoveWindow: Bool {
         get {
             if let window = self.window {
+				let flag = window.isMovableByWindowBackground
+				Swift.print(String(format: "mouseDownCanMoveWindow: %@", flag ? "Yes" : "No"))
                 return window.isMovableByWindowBackground
             }
             else
