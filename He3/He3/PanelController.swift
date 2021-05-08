@@ -646,8 +646,13 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
         static let screen   = FloatAboveAllPreference(rawValue: 2)
     }
 
-	@objc var clearBackgroundPreference : Bool = false {
+	@objc var backgroundColorPreference: NSColor? {
 		didSet {
+			if let themeView = window?.contentView?.superview {
+				themeView.wantsLayer = true
+				themeView.layer?.backgroundColor = backgroundColorPreference?.cgColor
+				Swift.print("themeView.backgroundColor")
+			}
 			updateTranslucency()
 		}
 	}
@@ -724,9 +729,9 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
                 panel.ignoresMouseEvents = currentlyTranslucent
 			}
 			
-			panel.hasShadow = !clearBackgroundPreference
+			panel.hasShadow = nil != backgroundColorPreference
 
-			panel.isOpaque = !(currentlyTranslucent || clearBackgroundPreference)
+			panel.isOpaque = !(currentlyTranslucent || panel.hasShadow)
 			panel.alphaValue = currentlyTranslucent ? alpha : 1
         }
     }
@@ -808,16 +813,16 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 	}
 	
 	@IBAction func clearitytPress(_ sender: NSMenuItem) {
-		switch sender.tag {
+		switch sender.menu?.index(of: sender) {
 			case 0:
 				self.panel.backgroundColor = .windowBackgroundColor
 			default:
 				let storyboard = NSStoryboard(name: "Main", bundle: nil)
 
-				let clearity = storyboard.instantiateController(withIdentifier: "ClearityViewController") as! LaunchViewController
-				self.contentViewController?.presentAsSheet(clearity)
-
-				self.panel.hasShadow = !clearBackgroundPreference
+				let colorView = storyboard.instantiateController(withIdentifier: "ColorViewController") as! ColorViewController
+				colorView.representedObject = self
+				
+				self.contentViewController?.presentAsSheet(colorView)
 		}
 	}
 	
