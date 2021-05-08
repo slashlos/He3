@@ -781,18 +781,18 @@ class MyWebView : WKWebView {
                     }
 
                 case webarchive:
+					if let text = item.string(forType: type) {
+						print("\(type) text \(String(describing: text))")
+						handled += self.text(text) ? 1 : 0
+					}
+					else
                     if let data = item.data(forType: type) {
                         let html = String(decoding: data, as: UTF8.self)
                         handled += self.html(html) ? 1 : 0
                     }
                     else
-                    if let text = item.string(forType: type) {
-                        print("\(type) text \(String(describing: text))")
-                        handled += self.text(text) ? 1 : 0
-                    }
-                    else
-                    if let prop = item.propertyList(forType: type) {
-                        if let html = String.init(data: prop as! Data, encoding: .utf8)  {
+					if let prop = item.propertyList(forType: type), let data = try? PropertyListSerialization.data(fromPropertyList: prop, format: .xml, options: 0) {
+                        if let html = String.init(data: data, encoding: .utf8)  {
                             handled += self.html(html) ? 1 : 0
                         }
                         else
