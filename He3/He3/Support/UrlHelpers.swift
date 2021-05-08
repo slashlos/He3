@@ -156,22 +156,30 @@ extension UrlHelpers.Magic {
 extension UrlHelpers.Magic {
     fileprivate func hTwitch() -> Bool {
         // swiftlint:disable:next force_try
-        let TwitchRegExp = try! NSRegularExpression(pattern: "https?://(?:www\\.)?twitch\\.tv/([\\w\\d\\_]+)(?:/(\\d+))?")
+        let TwitchRegExp = try! NSRegularExpression(pattern: "https?://(?:www\\.)?twitch\\.tv/([\\w\\d\\_]+)(?:/([\\w\\d]+))?")
         
+        // https://dev.twitch.tv/docs/embed/video-and-clips/
         if let match = TwitchRegExp.firstMatch(in: urlString, range: urlString.nsrange),
-            let channel = urlString.substring(with:match.range(at: 1)) {
+            let path = urlString.substring(with:match.range(at: 1)) {
             var magicd = false
-            switch channel {
-            case "directory", "products", "p", "user":
+            switch path {
+            case "directory", "products", "p", "user", "downloads", "jobs", "store", "turbo":
                 break
             case "videos":
                 if let idString = urlString.substring(with:match.range(at: 2)) {
-                    modified.query = "html5&video=v" + idString
+                    modified.query = "?autoplay=true&parent=com.slashlos.he3&video=v" + idString
+                    magicd = true
+                }
+            case "collections":
+                if let idString = urlString.substring(with:match.range(at: 2)) {
+                    modified.query = "?autoplay=true&parent=com.slashlos.he3&collection=" + idString
                     magicd = true
                 }
             default:
-                modified.query = "html5&channel=" + channel
-                magicd = true
+                if let idString = urlString.substring(with:match.range(at:1)) {
+                    modified.query = "?autoplay=true&parent=com.slashlos.he3&channel=" + idString
+                    magicd = true
+                }
             }
             
             if magicd {
