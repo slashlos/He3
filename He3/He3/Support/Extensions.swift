@@ -305,12 +305,28 @@ extension NSColor {
 		self.init(rgb: Int(rgb)!)
 	}
 	convenience init(name: String) {
-		if let value : String = String.cssToHexDictionairy[name.uppercased()] {
+		if let value : String = String.cssToHexDictionairy[name.uppercased()]
+		{
 			self.init(rgb: value)
 		}
 		else
+		if let colorInt = Int(name, radix: 16)
 		{
-			self.init(rgb: Int(name)!)
+			self.init(rgb: colorInt)
+		}
+		else
+		if name.hasPrefix("#"), let colorInt = Int(name.dropFirst(), radix: 16)
+		{
+			self.init(rgb: colorInt)
+		}
+		else
+		if let colorInt = Int(name)
+		{
+			self.init(rgb: colorInt)
+		}
+		else
+		{
+			self.init()
 		}
 	}
 
@@ -321,8 +337,13 @@ extension NSColor {
 		let red = Int(round(rgbColor.redComponent * 0xFF))
 		let green = Int(round(rgbColor.greenComponent * 0xFF))
 		let blue = Int(round(rgbColor.blueComponent * 0xFF))
-		let hexString = NSString(format: "#%02x%02x%02x", red, green, blue)
-		return hexString as String
+		let iAlpha = Int(rgbColor.alphaComponent*255)
+		let hexString = String(format: "#%@%02x%02x%02x",
+								 (iAlpha == 255
+									? ""
+									: String(format: "#%02x", iAlpha)),
+								 red, green, blue)
+		return hexString
 	}
 }
 

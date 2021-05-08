@@ -107,6 +107,7 @@ internal struct UserSettings {
     static let AcceptWebCookie = Setting<Bool>("acceptWebCookie", defaultValue: true)
     static let ShareWebCookies = Setting<Bool>("shareWebCookies", defaultValue: true)
     static let StoreWebCookies = Setting<Bool>("storeWebCookies", defaultValue: true)
+	static let Unsupported = Setting<Bool>("unsupported", defaultValue: false)
 	static let UseLocalAssets = Setting<Bool>("useLocalAssets", defaultValue: false)
 	static let SecureFileEncoding = Setting<Bool>("secureFileArchiving", defaultValue: true)
 	
