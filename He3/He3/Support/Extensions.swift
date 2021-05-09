@@ -341,7 +341,7 @@ extension NSColor {
 		let hexString = String(format: "#%@%02x%02x%02x",
 								 (iAlpha == 255
 									? ""
-									: String(format: "#%02x", iAlpha)),
+									: String(format: "%02x", iAlpha)),
 								 red, green, blue)
 		return hexString
 	}
