@@ -817,17 +817,8 @@
 /* Class = "CocoaBindingsConnection"; ibShadowedIsNilPlaceholder = "1.0.3"; ObjectID = "4OH-h5-EgX"; */
 "4OH-h5-EgX.ibShadowedIsNilPlaceholder" = "1.0.4";
 
-/* Class = "NSMenuItem"; ibShadowedToolTip = "Playitem"; ObjectID = "5z8-gm-Cg3"; */
-"5z8-gm-Cg3.ibShadowedToolTip" = "Playitem";
-
-/* Class = "NSMenuItem"; ibShadowedToolTip = "Playlist"; ObjectID = "d3c-O8-4Kz"; */
-"d3c-O8-4Kz.ibShadowedToolTip" = "Playlist";
-
 /* Class = "NSMenuItem"; title = "New Playlist"; ObjectID = "d3c-O8-4Kz"; */
 "d3c-O8-4Kz.title" = "New Playlist";
-
-/* Class = "NSMenuItem"; ibShadowedToolTip = "Incognito"; ObjectID = "rzt-yA-tvg"; */
-"rzt-yA-tvg.ibShadowedToolTip" = "Incognito";
 
 /* Class = "NSMenuItem"; ibShadowedToolTip = "Playlists"; ObjectID = "14E-f1-zMF"; */
 "14E-f1-zMF.ibShadowedToolTip" = "Playlists";
@@ -1107,3 +1098,6 @@
 
 /* Class = "NSTextField"; ibShadowedToolTip = "2 digits ea: alpha, red, green, blue"; ObjectID = "zkH-gV-aHT"; */
 "zkH-gV-aHT.ibShadowedToolTip" = "2 Ziffern pro Stück: Alpha, Rot, Grün, Blau";
+
+/* Class = "NSMenuItem"; title = "New Incognito Tab"; ObjectID = "RjN-Qz-uSO"; */
+"RjN-Qz-uSO.title" = "New Incognito Tab";

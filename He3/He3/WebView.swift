@@ -1073,7 +1073,7 @@ class MyWebView : WKWebView {
         item = NSMenuItem(title: "New Playlist", action: #selector(docController.altDocument(_:)), keyEquivalent: "")
         item.keyEquivalentModifierMask = NSEvent.ModifierFlags.control
 		item.tag = ViewOptions.i_view.rawValue
-		item.representedObject = k.PlayType
+		item.identifier = NSUserInterfaceItemIdentifier(rawValue: k.PlayType)
         item.isAlternate = true
         item.target = docController
         menu.addItem(item)
@@ -1081,12 +1081,12 @@ class MyWebView : WKWebView {
 		item = NSMenuItem(title: "New Incognito", action: #selector(docController.altDocument(_:)), keyEquivalent: "")
 		item.keyEquivalentModifierMask = NSEvent.ModifierFlags.shift
 		item.tag = ViewOptions.i_view.rawValue
-		item.representedObject = k.IcntType
+		item.identifier = NSUserInterfaceItemIdentifier(rawValue: k.IcntType)
 		item.isAlternate = true
 		item.target = docController
 		menu.addItem(item)
 
-		item = NSMenuItem(title: "New Tab", action: #selector(docController.newDocument(_:)), keyEquivalent: "")
+		item = NSMenuItem(title: "New Tab", action: #selector(docController.altDocument(_:)), keyEquivalent: "")
         item.keyEquivalentModifierMask = NSEvent.ModifierFlags.option
 		item.tag = ViewOptions.t_view.rawValue
         item.representedObject = self.window
@@ -1094,6 +1094,15 @@ class MyWebView : WKWebView {
         item.isAlternate = true
         menu.addItem(item)
         
+		item = NSMenuItem(title: "New Incognito Tab", action: #selector(docController.altDocument(_:)), keyEquivalent: "")
+		item.keyEquivalentModifierMask = NSEvent.ModifierFlags([.option,.shift])
+		item.tag = ViewOptions([.t_view,.i_view]).rawValue
+		item.identifier = NSUserInterfaceItemIdentifier(rawValue: k.IcntType)
+		item.representedObject = self.window
+		item.isAlternate = true
+		item.target = docController
+		menu.addItem(item)
+
         // MARK: TODO: Open/Load files in distinct windows
         let openLoad = url?.isFileURL ?? false
         item = NSMenuItem(title: openLoad ? "Open" : "Load", action: #selector(menuClicked(_:)), keyEquivalent: "")
