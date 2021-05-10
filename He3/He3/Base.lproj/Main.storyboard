@@ -373,18 +373,18 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Location" id="bib-Uj-vzu">
                                     <items>
-                                        <menuItem title="New" tag="1" keyEquivalent="n" toolTip="Playitem" id="5z8-gm-Cg3">
+                                        <menuItem title="New" tag="1" keyEquivalent="n" id="5z8-gm-Cg3">
                                             <connections>
                                                 <action selector="newDocument:" target="Ady-hI-5gd" id="MBG-Bq-nZh"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="New Playlist" tag="1" alternate="YES" keyEquivalent="n" toolTip="Playlist" id="d3c-O8-4Kz">
+                                        <menuItem title="New Playlist" tag="1" alternate="YES" keyEquivalent="n" identifier="com.slashlos.he3.hpl" id="d3c-O8-4Kz">
                                             <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
                                             <connections>
                                                 <action selector="altDocument:" target="Ady-hI-5gd" id="lEP-Ga-fyR"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="New Incognito" tag="4" alternate="YES" keyEquivalent="N" toolTip="Incognito" id="rzt-yA-tvg">
+                                        <menuItem title="New Incognito" tag="4" alternate="YES" keyEquivalent="N" identifier="com.slashlos.he3.hic" id="rzt-yA-tvg">
                                             <connections>
                                                 <action selector="altDocument:" target="Ady-hI-5gd" id="zV9-pp-Kyn"/>
                                             </connections>
@@ -392,7 +392,13 @@
                                         <menuItem title="New Tab" tag="2" alternate="YES" keyEquivalent="n" id="p6F-MQ-MMg">
                                             <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                             <connections>
-                                                <action selector="newDocument:" target="Ady-hI-5gd" id="nfn-nV-h6N"/>
+                                                <action selector="altDocument:" target="Ady-hI-5gd" id="ium-tK-pcG"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="New Incognito Tab" tag="6" alternate="YES" keyEquivalent="N" identifier="com.slashlos.he3.hic" id="RjN-Qz-uSO">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="altDocument:" target="Ady-hI-5gd" id="d2n-Q6-IIJ"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Open" id="wiF-om-ZaY">
@@ -3046,6 +3052,7 @@ Gw
                         <string>tally</string>
                         <string>plays</string>
                     </declaredKeys>
+                    <classReference key="objectClass" className="PlayList"/>
                     <connections>
                         <binding destination="YAy-lX-dae" name="contentArray" keyPath="playlists" id="PMF-ib-hIl"/>
                     </connections>
@@ -3065,6 +3072,7 @@ Gw
                         <string>turl</string>
                         <string>agent</string>
                     </declaredKeys>
+                    <classReference key="objectClass" className="PlayItem"/>
                     <connections>
                         <binding destination="Vul-U2-GKW" name="contentArray" keyPath="selection.list" id="YLG-Or-2uO"/>
                     </connections>
@@ -3113,7 +3121,7 @@ Gw
                         <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1415"/>
                         <toolbar key="toolbar" implicitIdentifier="1D3CCDBC-E75D-4E12-BBC2-B1B8639DD253" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="small" id="cZj-vP-H6e">
                             <allowedToolbarItems>
-                                <toolbarItem implicitItemIdentifier="EB23D248-0E52-4E8D-B863-3C758FF94750" label="Auto Hide Title" paletteLabel="AutoHide" toolTip="auto hide title bar" sizingBehavior="auto" id="FwO-iD-ty3">
+                                <toolbarItem implicitItemIdentifier="EB23D248-0E52-4E8D-B863-3C758FF94750" label="Auto Hide Title" paletteLabel="AutoHide" toolTip="auto hide title bar" title="Never" sizingBehavior="auto" id="FwO-iD-ty3">
                                     <popUpButton key="view" verticalHuggingPriority="750" id="vtP-Pj-U4Y">
                                         <rect key="frame" x="0.0" y="14" width="87" height="25"/>
                                         <autoresizingMask key="autoresizingMask"/>
@@ -3143,7 +3151,7 @@ Gw
                                         </connections>
                                     </popUpButton>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="3A1A60F0-2DDF-4975-9770-E065D3B92BBE" label="Float" paletteLabel="Float Above" sizingBehavior="auto" id="faz-Y8-DQM">
+                                <toolbarItem implicitItemIdentifier="3A1A60F0-2DDF-4975-9770-E065D3B92BBE" label="Float" paletteLabel="Float Above" title="All Spaces" sizingBehavior="auto" id="faz-Y8-DQM">
                                     <nil key="toolTip"/>
                                     <popUpButton key="view" verticalHuggingPriority="750" id="dyA-ty-CHL">
                                         <rect key="frame" x="0.0" y="14" width="118" height="25"/>
@@ -3182,7 +3190,7 @@ Gw
                                         </connections>
                                     </popUpButton>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="20B13993-855E-4E06-8FFE-30575F2AE5E9" label="Translucent" paletteLabel="Translucent" sizingBehavior="auto" id="fJy-ou-YnS">
+                                <toolbarItem implicitItemIdentifier="20B13993-855E-4E06-8FFE-30575F2AE5E9" label="Translucent" paletteLabel="Translucent" title="Never" sizingBehavior="auto" id="fJy-ou-YnS">
                                     <nil key="toolTip"/>
                                     <popUpButton key="view" verticalHuggingPriority="750" id="9tS-bB-NGO">
                                         <rect key="frame" x="0.0" y="14" width="87" height="25"/>

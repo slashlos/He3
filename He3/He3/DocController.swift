@@ -63,16 +63,18 @@ class DocumentController : NSDocumentController {
         return doc
     }
     
-    override func makeUntitledDocument(ofType typeName: String) throws -> NSDocument {
+    override func makeUntitledDocument(ofType type: String) throws -> NSDocument {
         os_signpost(.begin, log: MyWebView.poi, name: "makeUntitledDocument")
         defer { os_signpost(.end, log: DocumentController.poi, name: "makeUntitledDocument") }
 
+		let fileType = [k.ItemType,k.PlayType,k.IcntType].contains(type) ? type : k.ItemType
+
         var doc: Document
         do {
-            doc = try super.makeUntitledDocument(ofType: typeName) as! Document
+            doc = try super.makeUntitledDocument(ofType: fileType) as! Document
         } catch let error {
             NSApp.presentError(error)
-            doc = try Document.init(type: typeName)
+            doc = try Document.init(type: fileType)
             doc.makeWindowControllers()
             doc.revertToSaved(self)
         }
@@ -82,13 +84,20 @@ class DocumentController : NSDocumentController {
     @objc @IBAction func altDocument(_ sender: NSMenuItem) {
         var doc: Document
         do {
-			// MARK: toolTip *must* be English in all locales
-			let typeName = sender.toolTip ?? k.Helium
-			let fileType = [k.Helium:k.ItemType,
-							k.PlayName:k.PlayType,
-							k.IcntName:k.IcntType][typeName] ?? k.Helium
+			// MARK: identifier *must* be English in all locales
+			let type = sender.identifier?.rawValue ?? k.ItemType
+			let fileType = [k.ItemType,k.PlayType,k.IcntType].contains(type) ? type : k.ItemType
+			let viewOptions = ViewOptions(rawValue: sender.tag)
             doc = try makeUntitledDocument(ofType: fileType) as! Document
             if 0 == doc.windowControllers.count { doc.makeWindowControllers() }
+			guard let wc = doc.windowControllers.first else { return }
+			if viewOptions.contains(.t_view) {
+				if let other = (sender.representedObject ?? NSApp.keyWindow as Any) as? NSWindow,
+				   let tabWindow = wc.window {
+					other.addTabbedWindow(tabWindow, ordered: .above)
+				}
+			}
+
 			doc.showWindows()
         } catch let error {
             NSApp.presentError(error)

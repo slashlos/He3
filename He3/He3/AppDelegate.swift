@@ -2209,9 +2209,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         }
 
         //  try for a local file first
-		let fileURL = URL.init(fileURLWithPath: rawURL.path)
-		if FileManager.default.fileExists(atPath: fileURL.path) {
-			if openFileInNewWindow(fileURL) {
+		if rawURL.path.count > 0, FileManager.default.fileExists(atPath: rawURL.path) {
+			if openFileInNewWindow(rawURL) {
 				return
 			}
 		}
