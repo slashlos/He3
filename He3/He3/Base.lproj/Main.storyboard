@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
         <capability name="System colors introduced in macOS 10.14" minToolsVersion="10.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -384,7 +384,7 @@
                                                 <action selector="altDocument:" target="Ady-hI-5gd" id="lEP-Ga-fyR"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="New Incognito" tag="4" alternate="YES" keyEquivalent="N" identifier="com.slashlos.he3.hic" id="rzt-yA-tvg">
+                                        <menuItem title="New Incognito" tag="4" alternate="YES" keyEquivalent="N" identifier="com.slashlos.he3.hic-4" id="rzt-yA-tvg">
                                             <connections>
                                                 <action selector="altDocument:" target="Ady-hI-5gd" id="zV9-pp-Kyn"/>
                                             </connections>
@@ -395,7 +395,7 @@
                                                 <action selector="altDocument:" target="Ady-hI-5gd" id="ium-tK-pcG"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="New Incognito Tab" tag="6" alternate="YES" keyEquivalent="N" identifier="com.slashlos.he3.hic" id="RjN-Qz-uSO">
+                                        <menuItem title="New Incognito Tab" tag="6" alternate="YES" keyEquivalent="N" identifier="com.slashlos.he3.hic-6" id="RjN-Qz-uSO">
                                             <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                             <connections>
                                                 <action selector="altDocument:" target="Ady-hI-5gd" id="d2n-Q6-IIJ"/>
@@ -3247,7 +3247,7 @@ Gw
                                     </levelIndicator>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="Gs2-HS-MJB"/>
-                                <toolbarItem implicitItemIdentifier="7CAA784E-EAC0-4561-B84E-2524ACF58BBD" label="HideMe" paletteLabel="HideMe" image="NSActionTemplate" sizingBehavior="auto" id="b3i-qz-pXN">
+                                <toolbarItem implicitItemIdentifier="7CAA784E-EAC0-4561-B84E-2524ACF58BBD" label="HideMe" paletteLabel="HideMe" image="NSActionTemplate" title=" " sizingBehavior="auto" id="b3i-qz-pXN">
                                     <nil key="toolTip"/>
                                     <button key="view" toolTip="toggle preferences toolbar" verticalHuggingPriority="750" id="KZh-RK-kK3">
                                         <rect key="frame" x="17" y="14" width="15" height="15"/>
@@ -3262,7 +3262,7 @@ Gw
                                     </button>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="8jF-0S-hf1"/>
-                                <toolbarItem implicitItemIdentifier="112915F6-1AD8-4874-8799-01FA8C97171B" label="BG Color" paletteLabel="BG Color" image="NSColorPanel" sizingBehavior="auto" id="Zff-Jk-P7s">
+                                <toolbarItem implicitItemIdentifier="112915F6-1AD8-4874-8799-01FA8C97171B" label="BG Color" paletteLabel="BG Color" image="NSColorPanel" title="BG Color" sizingBehavior="auto" id="Zff-Jk-P7s">
                                     <nil key="toolTip"/>
                                     <button key="view" verticalHuggingPriority="750" id="k9U-nO-jTd">
                                         <rect key="frame" x="11" y="14" width="32" height="32"/>

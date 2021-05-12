@@ -647,7 +647,22 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         else
         {
             appStatusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-            appStatusItem.button?.image = NSImage.init(named: "statusIcon")
+			
+			switch (os.majorVersion, os.minorVersion, os.patchVersion) {
+			case (10, 10, _), (10, 11, _), (10, 12, _), (10, 13, _), (10, 14, _):
+				appStatusItem.button?.image = NSImage.init(named: "statusIcon")
+
+			default:
+				if UserSettings.ColorStatusIcon.value {
+					appStatusItem.button?.image = NSImage.init(named: "statusIcon")
+				}
+				else
+				{
+					let dark = [.darkAqua,.vibrantDark].contains( NSApp.effectiveAppearance.name ) ? 1 : 0
+					let name = String(format: "statusIcon%@", ["Lite","Dark"][dark])
+					appStatusItem.button?.image = NSImage.init(named: name)
+				}
+			}
             let menu : NSMenu = appMenu.copy() as! NSMenu
 
             //  add quit to status menu only - already is in dock
@@ -1411,8 +1426,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
 			object: nil)
 
         //  So they can interact everywhere with us without focus
-        appStatusItem.button?.image = NSImage.init(named: "statusIcon")
-        appStatusItem.menu = appMenu
+		NSApp.addObserver(self, forKeyPath: #keyPath(NSApplication.effectiveAppearance), options: .new, context: nil)
+		syncAppMenuVisibility()
 
         //  Initialize our h:m:s transformer
         ValueTransformer.setValueTransformer(toHMS, forName: NSValueTransformerName(rawValue: "hmsTransformer"))
@@ -1773,6 +1788,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         NSEvent.removeMonitor(localKeyDownMonitor!)
         NSEvent.removeMonitor(globalKeyDownMonitor!)
         
+		//	Forget appearance tracking
+		NSApp.removeObserver(self, forKeyPath: #keyPath(NSApplication.effectiveAppearance))
+
         //  Forget location services
         if !UserSettings.RestoreLocationSvcs.value && isLocationEnabled {
             locationManager?.stopMonitoringSignificantLocationChanges()
@@ -1864,6 +1882,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         subOpen.addItem(item)
         return menu
     }
+	
+	override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+		
+		//  We *must* have a key path
+		guard let keyPath = keyPath else { return }
+		
+		switch keyPath {
+		case #keyPath(NSApplication.effectiveAppearance):
+			syncAppMenuVisibility()
+		default:
+			Swift.print(String(format: "AppDelegate '%@' keyPath unknown", keyPath))
+		}
+	}
     
     //MARK: - handleURLEvent(s)
 

@@ -84,8 +84,8 @@ class DocumentController : NSDocumentController {
     @objc @IBAction func altDocument(_ sender: NSMenuItem) {
         var doc: Document
         do {
-			// MARK: identifier *must* be English in all locales
-			let type = sender.identifier?.rawValue ?? k.ItemType
+			// MARK: identifier *must* be English in all locales; includes -<viewOption tag>
+			let type = sender.identifier?.rawValue.components(separatedBy: "-").first ?? k.ItemType
 			let fileType = [k.ItemType,k.PlayType,k.IcntType].contains(type) ? type : k.ItemType
 			let viewOptions = ViewOptions(rawValue: sender.tag)
             doc = try makeUntitledDocument(ofType: fileType) as! Document
