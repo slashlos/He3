@@ -848,9 +848,12 @@ extension CastingError: CustomStringConvertible {
 // MARK: - Data cast extensions
 
 extension Data {
-	static func data(fromAsset: String) -> Data {
+	static func data(fromAsset: String, type: String = "data") -> Data {
+		if type.hasPrefix("image/"), let asset = NSImage(named: fromAsset) {
+			return asset.tiffRepresentation!
+		}
 		guard let asset = NSDataAsset.init(name: fromAsset) else {
-			Swift.print(String(format: "Unable to locate asset: '%@'", fromAsset))
+			Swift.print(String(format: "+asset: '%@'", fromAsset))
 			return NSImage(named: fromAsset)!.tiffRepresentation!
 		}
 		let data = NSData.init(data: (asset.data))

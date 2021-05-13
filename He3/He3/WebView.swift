@@ -162,7 +162,7 @@ class CacheSchemeHandler : NSObject,WKURLSchemeHandler {
 			}
 			else
 			{
-				data = Data.data(fromAsset: dict[k.text]!)
+				data = Data.data(fromAsset: dict[k.text]!, type: mime)
 			}
 
         case k.html:
