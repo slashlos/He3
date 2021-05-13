@@ -180,6 +180,22 @@ outside a document window, never, or always.&ensp; This preference is document s
 <p>If you want to launch He3 at login, use its perference to do so.</p>
 <center><img src="loginitem.png" style="width:60%" alt="loginitem" /></center>
 
+<h2>Defaults</h2>
+<p>
+He3 uses defaults as its main store. You can read them like so in a terminal window:
+<PRE>
+	1% defaults read -app He3
+</PRE>
+<p>It is <b>not</b> advised to alter defaults directly, however, unless instructed. i.e.,</p>
+<PRE>
+	1% defaults read -app He3 colorStatusIcon
+	1
+	1% defaults write -app He3 colorStatusIcon 0
+	1% defaults read -app He3 colorStatusIcon
+	0
+</PRE>
+
+
 <h2>Status</h2>
 <p>Track status of He3 at its
 <a href="https://github.com/slashlos/He3/wiki">wiki</a>

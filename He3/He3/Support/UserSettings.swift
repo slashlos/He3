@@ -100,7 +100,7 @@ internal struct UserSettings {
     static let AutoHideTitle = Setting<Bool>("autoHideTitle", defaultValue: true)
     static let AutoSaveDocs = Setting<Bool>("autoSaveDocs", defaultValue: true)
     static let AutoSaveTime = Setting<TimeInterval>("autoSaveTimeSeconds", defaultValue: 10.0)
-	static let ColorStatusIcon = Setting<Bool>("colorStatusIcon", defaultValue: false)
+	static let ColorStatusIcon = Setting<Bool>("colorStatusIcon", defaultValue: true)
     static let PromoteHTTPS = Setting<Bool>("promoteHTTPS", defaultValue: true)
     static let RestoreDocAttrs = Setting<Bool>("restoreDocAttrs", defaultValue: true)
     static let RestoreWebURLs = Setting<Bool>("restoreWebURLs", defaultValue: true)
