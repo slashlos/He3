@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "stsIcon-18 b&w.png",
+      "filename" : "stsIcon-18-lite.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "stsIcon-36 b&w.png",
+      "filename" : "stsIcon-36-lite.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "stsIcon-54 b&w.png",
+      "filename" : "stsIcon-54-lite.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
