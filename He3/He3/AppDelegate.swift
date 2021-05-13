@@ -641,10 +641,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         }
     }
     internal func syncAppMenuVisibility() {
-        if UserSettings.HideAppMenu.value {
-            NSStatusBar.system.removeStatusItem(appStatusItem)
-        }
-        else
+		//	Always hide first, avoiding double icons
+        NSStatusBar.system.removeStatusItem(appStatusItem)
+        
+		if !UserSettings.HideAppMenu.value
         {
             appStatusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 			
