@@ -1061,12 +1061,21 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
         }
     }
 	@objc func quickQuiet(_ note: Notification) {
-		print("quickQuiet \(String(describing: webView?.url?.absoluteString))")
 		if let window = self.window, let webView = window.contentView?.subviews.first as? MyWebView, let url = webView.url {
+			print("QQ \(String(describing: url.path))")
 			if window.alphaValue > 0.01 {
 				if url.isFileURL {
 					DispatchQueue.main.async {
-						webView.evaluateJavaScript("window.webview.pause()", completionHandler: nil)
+						let pause = "var vids = document.getElementsByTagName('video'); for( var i = 0; i < vids.length; i++ ){vids.item(i).pause()}"
+						webView.evaluateJavaScript(pause, completionHandler: { (result, error) in
+							if error != nil {
+								Swift.print("PAUSE result: \(String(describing: result)) error:\(String(describing: error))")
+							}
+							else
+							{
+								Swift.print("paused \(url.path)")
+							}
+						})
 					}
 				}
 				window.alphaValue = 0.01
@@ -1082,7 +1091,16 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 					let alpha = CGFloat((window.windowController as! HeliumController).settings.opacityPercentage.value) / 100.0
 					if url.isFileURL {
 						DispatchQueue.main.async {
-							webView.evaluateJavaScript("window.webview.play()", completionHandler: nil)
+							let resume = "var vids = document.getElementsByTagName('video'); for( var i = 0; i < vids.length; i++ ){vids.item(i).play()}"
+							webView.evaluateJavaScript(resume, completionHandler: { (result, error) in
+								if error != nil {
+									Swift.print("PLAY result: \(String(describing: result)) error:\(String(describing: error))")
+								}
+								else
+								{
+									Swift.print("play \(url.path)")
+								}
+							})
 						}
 					}
 					window.alphaValue = alpha

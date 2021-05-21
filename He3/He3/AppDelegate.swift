@@ -327,7 +327,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
 	    }
     }
 	
-	//	MARK: quickQuiet to affect system volume
+	/*	MARK: quickQuiet to affect system volume = deprecated
 	@objc func quickQuiet(_ note: Notification) {
 		willChangeValue(forKey: "inQuickQuietMode")
 
@@ -345,7 +345,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
 		
 		didChangeValue(forKey: "inQuickQuietMode")
 	}
-
+*/
 	//	https://stackoverflow.com/a/27291862/564870
 	dynamic var inQuickQuietMode = false
 	dynamic var lastSystemAudioVolume = Float(0.0)
@@ -1418,12 +1418,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
             andEventID: AEEventID(kAEGetURL)
         )
 
-		//	Monitor to affect system sound volume
+		/*	Monitor to affect system sound volume - deprecated
 		NotificationCenter.default.addObserver(
 			self,
 			selector: #selector(AppDelegate.quickQuiet(_:)),
 			name: .quickQuiet,
-			object: nil)
+			object: nil)*/
 
         //  So they can interact everywhere with us without focus
 		NSApp.addObserver(self, forKeyPath: #keyPath(NSApplication.effectiveAppearance), options: .new, context: nil)
