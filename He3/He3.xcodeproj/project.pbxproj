@@ -235,7 +235,7 @@
 		0F9EF95A24776468008DDB93 /* listIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = listIcon.png; path = "He3/Assets/list Icon/listIcon.png"; sourceTree = "<group>"; };
 		0FACD4C32467953000A23B1F /* PromiseFileProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseFileProvider.swift; sourceTree = "<group>"; };
 		0FB09333259BAAD2007B3DFD /* He3Script.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = He3Script.sh; sourceTree = "<group>"; };
-		0FB0935F259BAD1B007B3DFD /* He3ShareExtensionScript.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = He3ShareExtensionScript.sh; sourceTree = "<group>"; };
+		0FB0935F259BAD1B007B3DFD /* He3Versionator.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = He3Versionator.sh; sourceTree = "<group>"; };
 		0FB276F524B1EDD800695BB1 /* PrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsViewController.swift; sourceTree = "<group>"; };
 		0FB6B15F25560A5700363178 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0FB6B16925560AE400363178 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
@@ -338,7 +338,7 @@
 		0F2370C4244E8CEA009F7914 = {
 			isa = PBXGroup;
 			children = (
-				0FB0935F259BAD1B007B3DFD /* He3ShareExtensionScript.sh */,
+				0FB0935F259BAD1B007B3DFD /* He3Versionator.sh */,
 				0FB09333259BAAD2007B3DFD /* He3Script.sh */,
 				0F3716FD254861FD00D65218 /* he3_icnt.png */,
 				0F3716EE254860CF00D65218 /* icntIcon.jpg */,
@@ -817,7 +817,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nsource He3ShareExtensionScript.sh\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nsource He3Versionator.sh\n";
 		};
 		0FB6B1792558C88400363178 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
