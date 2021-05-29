@@ -30,6 +30,9 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
             return self.window?.contentViewController as! WebViewController
         }
     }
+	var borderView: WebBorderView? {
+		return self.webViewController.view as? WebBorderView
+	}
     var webView: MyWebView? {
         get {
             return self.webViewController.webView
@@ -279,9 +282,11 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 			priorOver = mouseOver
 		}
 		didSet {
-			webView?.borderView.isMouseOver = mouseOver
-			mouseIdle = false
-			mouseStateChanged()
+			if let borderView = self.contentViewController?.view as? WebBorderView {
+				borderView.isMouseOver = mouseOver
+				mouseIdle = false
+				mouseStateChanged()
+			}
 		}
 	}
 	
@@ -410,7 +415,7 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 	override func mouseExited(with event: NSEvent) {
 		guard !appDelegate.inQuickQuietMode else { return }
 		guard monitoringMouseEvents() else { return }
-		webView?.isReceivingDrag = false
+		webView?.borderView?.isReceivingDrag = false
 		
 		self.mouseOver = false
 		

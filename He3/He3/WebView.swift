@@ -51,22 +51,19 @@ class WebBorderView : NSView {
 			needsDisplay = true
 		}
 	}
+	override func viewWillDraw() {
+		self.wantsLayer = true
+		self.layer?.borderWidth = 1
+	}
 	
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
 
-        self.isHidden = !(isReceivingDrag || isMouseOver)
-//        print("web borderView drawing \(isHidden ? "NO" : "YES")....")
-
 		//	Wipe coloring when not dragging
 		let hpc : HeliumController = self.window?.windowController as! HeliumController
 		let borderColor = isReceivingDrag ? hpc.homeColor : NSColor.selectedKnobColor
-        borderColor.set()
-            
-		let path = NSBezierPath(rect:bounds)
-		path.lineWidth = isReceivingDrag ? 4 : 1
-		path.stroke()
-
+		self.layer?.borderColor = borderColor.cgColor
+		self.layer?.borderWidth = isReceivingDrag ? 4 : 1
     }
 }
 
@@ -223,7 +220,12 @@ class MyWebView : WKWebView {
     var acceptableTypes: Set<NSPasteboard.PasteboardType> { return [.URL, .fileURL, .html, .pdf, .png, .rtf, .rtfd, .tiff, finderNode, webarchive] }
     var filteringOptions = [NSPasteboard.ReadingOptionKey.urlReadingContentsConformToTypes:NSImage.imageTypes]
     
-    var borderView = WebBorderView()
+	var borderView : WebBorderView? {
+		get {
+			guard let view = superview as? WebBorderView else { return nil }
+			return view
+		}
+	}
     var loadingIndicator = ProgressIndicator()
     var incognito = false
     var homeURL : URL {
@@ -557,7 +559,7 @@ class MyWebView : WKWebView {
 					}
 					
 					if (abs(currentPoint.x - startingPoint.x) >= 5 || abs(currentPoint.y - startingPoint.y) >= 5) {
-						borderView.isReceivingDrag = true
+						isReceivingDrag = true
 						stop.pointee = true
 						window.performDrag(with: event!)
 					}
@@ -621,10 +623,12 @@ class MyWebView : WKWebView {
     
     var isReceivingDrag : Bool {
         get {
-            return borderView.isReceivingDrag
+			guard let borderView = self.borderView else { return false }
+			return borderView.isReceivingDrag
         }
         set (value) {
-            borderView.isReceivingDrag = value
+			guard let borderView = self.borderView else { return }
+			borderView.isReceivingDrag = value
         }
     }
     
@@ -649,6 +653,7 @@ class MyWebView : WKWebView {
     override func draggingExited(_ sender: NSDraggingInfo?) {
         print("web draggingExited")
         if uiDelegate != nil { isReceivingDrag = false }
+		isReceivingDrag = false
     }
     
     var lastDragSequence : Int = 0

@@ -68,6 +68,8 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
             return hpc
         }
     }
+	
+	@IBOutlet var borderView: WebBorderView!
 
     var trackingTag: NSView.TrackingRectTag? {
         get {
@@ -105,10 +107,6 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
         webView.navigationDelegate = self
         webView.uiDelegate = self
 
-        borderView.frame = view.frame
-        view.addSubview(borderView)
-		borderView.isReceivingDrag = false
-		
         view.addSubview(loadingIndicator)
 
 		NotificationCenter.default.addObserver(
@@ -282,8 +280,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
 		webView.autoresizingMask = [.height,.width]
 		webView.fit(view)
         
-        borderView.autoresizingMask = [.height,.width]
-		borderView.fit(view)
+        view.autoresizingMask = [.height,.width]
         
 		loadingIndicator.center(view)
 		viewLayoutDone = true
@@ -350,10 +347,9 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
         webView.autoresizingMask = [.height,.width]
         webView.fit(webView.superview!)
         
-        borderView.autoresizingMask = [.height,.width]
-		borderView.fit(borderView.superview!)
+        view.autoresizingMask = [.height,.width]
         
-        loadingIndicator.center(loadingIndicator.superview!)
+        loadingIndicator.center(view)
         loadingIndicator.bind(NSBindingName(rawValue: "animate"), to: webView as Any, withKeyPath: "loading", options: nil)
         
         //  ditch loading indicator background
@@ -898,11 +894,6 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
 	var webImageView = NSImageView.init()
 	var webSize = CGSize(width: 0,height: 0)
     
-    var borderView : WebBorderView {
-        get {
-            return webView.borderView
-        }
-    }
     var loadingIndicator : ProgressIndicator {
         get {
             return webView.loadingIndicator
