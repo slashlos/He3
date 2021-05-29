@@ -522,7 +522,7 @@ class MyWebView : WKWebView {
 	let PasteboardFileURLPromise = NSPasteboard.PasteboardType(rawValue: kPasteboardTypeFileURLPromise)
 	let PasteboardFilePromiseContent = NSPasteboard.PasteboardType(rawValue: kPasteboardTypeFilePromiseContent)
 	let PasteboardFilePasteLocation = NSPasteboard.PasteboardType(rawValue: "com.apple.pastelocation")
-	
+	/*
 	override func mouseDown(with event: NSEvent) {
 		let startingPoint = event.locationInWindow
 		let window = self.window!
@@ -585,7 +585,7 @@ class MyWebView : WKWebView {
 		
 		draggingItem.setDraggingFrame(self.bounds, contents: image)
 	}
-	
+	*/
 	override func mouseEntered(with event: NSEvent) {
 		guard !appDelegate.inQuickQuietMode else { return }
 		self.window?.windowController?.mouseEntered(with: event)
