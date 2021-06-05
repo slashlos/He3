@@ -292,10 +292,11 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
 		//	document.fileURL is recent, webView.url is current URL
 		if let doc = self.document, let url = doc.fileURL, url.absoluteString != k.blank {
 			if url != webView.url || [.playitem,.playlist].contains(doc.docGroup) {
-				//	Initially, but after window restoration, restore saved frame
+				//	Finally, restore our rect as we have a window now
 				if let window = self.view.window,
-					!NSEqualRects(window.frame, doc.settings.rect.value),
-					!NSEqualSizes(NSZeroSize, doc.settings.rect.value.size) {
+				   let dict = defaults.dictionary(forKey: url.absoluteString),
+				   let rect = dict[k.rect] as? String {
+					doc.settings.rect.value = NSRectFromString(rect)
 					window.setFrame(doc.settings.rect.value, display: true)
 				}
 				
