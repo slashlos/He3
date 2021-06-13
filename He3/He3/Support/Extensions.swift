@@ -287,6 +287,7 @@ extension Notification.Name {
 	static let optionAndCommandKeysDown = Notification.Name("optionAndCommandKeysDown")
 	static let playitem = Notification.Name(k.ItemName)
 	static let quickQuiet = Notification.Name("quickQuiet")
+	static let saveAll = Notification.Name("SaveAll")
 	static let shiftKeyDown = Notification.Name("shiftKeyDown")
 	static let snapshotAll = Notification.Name("SnapshotAll")
 	static let tvSelectionDidChange = Notification.Name("NSTableViewSelectionDidChange")

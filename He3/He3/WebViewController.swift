@@ -124,6 +124,11 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
             selector: #selector(WebViewController.loadURL(urlString:)),
             name: NSNotification.Name(rawValue: "LoadURLString"),
             object: nil)
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(WebViewController.saveAll(_:)),
+			name: NSNotification.Name(rawValue: "SaveAll"),
+			object: nil)
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(WebViewController.snapshotAll(_:)),
@@ -791,6 +796,10 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
     
 	@objc func archiveAll(_ note: Notification) {
 		archive(note.object as! NSMenuItem)
+	}
+	
+	@objc func saveAll(_ note: Notification) {
+		saveDocument(note.object as! NSMenuItem)
 	}
 	
 	@objc func snapshotAll(_ note: Notification) {

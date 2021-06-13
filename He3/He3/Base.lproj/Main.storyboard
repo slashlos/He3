@@ -480,10 +480,10 @@ CA
                                                 <action selector="saveDocument:" target="Ady-hI-5gd" id="2Da-J9-Bqx"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Save As" alternate="YES" keyEquivalent="s" id="msZ-vZ-9wQ">
+                                        <menuItem title="Save All" alternate="YES" keyEquivalent="s" id="msZ-vZ-9wQ">
                                             <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                             <connections>
-                                                <action selector="saveDocumentAs:" target="Ady-hI-5gd" id="4If-Hb-lU2"/>
+                                                <action selector="saveAllPress:" target="Ady-hI-5gd" id="V3U-ze-xJk"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Revert To Saved…" id="xOh-zJ-vOA">

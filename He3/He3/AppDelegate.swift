@@ -1171,6 +1171,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
 		}
 	}
 	
+	@objc @IBAction func saveAllPress(_ sender: NSMenuItem) {
+		let notif = Notification(name: .saveAll, object: sender)
+		NotificationCenter.default.post(notif)
+	}
+
     @objc @IBAction func snapshotAllPress(_ sender: NSMenuItem) {
 		registerSnaphotsURL(sender) { (snapshotURL) in
 			//	If we have a return object just call them, else notify all
