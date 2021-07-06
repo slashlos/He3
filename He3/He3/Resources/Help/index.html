@@ -188,12 +188,23 @@ He3 uses defaults as its main store. You can read them like so in a terminal win
 </PRE>
 <p>It is <b>not</b> advised to alter defaults directly, however, unless instructed. i.e.,</p>
 <PRE>
-	1% defaults read -app He3 colorStatusIcon
+	% defaults read -app He3 colorStatusIcon
 	1
-	1% defaults write -app He3 colorStatusIcon 0
-	1% defaults read -app He3 colorStatusIcon
+	% defaults write -app He3 colorStatusIcon 0
+	% defaults read -app He3 colorStatusIcon
 	0
 </PRE>
+
+
+<h2>Startup Keys</h2>
+<p>
+He3 startup can be affected by holding down some key modifiers as follows:
+<ul>
+<li><PRE>SHIFT</PRE> - do not reopen previously open documents. This is useful to launch He3 by opening a document.</li>
+<li><PRE>OPTION+SHIFT</PRE> - clear all defaults. A sound wil play to acknowledge clearings.</li>
+</ul>
+</p>
+
 
 
 <h2>Status</h2>

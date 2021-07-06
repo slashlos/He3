@@ -205,6 +205,16 @@ class Document : NSDocument {
 		secureFileEncoding = coder.decodeBool(forKey: "useSecureEncoding")
 	}
 
+	override func restoreWindow(withIdentifier identifier: NSUserInterfaceItemIdentifier, state: NSCoder, completionHandler: @escaping (NSWindow?, Error?) -> Void) {
+		if appDelegate.disableDocumentReOpening {
+		   completionHandler(nil, NSError.init(domain: NSCocoaErrorDomain, code: NSUserCancelledError, userInfo: nil) )
+		}
+		else
+		{
+			super.restoreWindow(withIdentifier: identifier, state: state, completionHandler: completionHandler)
+		}
+	}
+
     func restoreSettings(with dictionary: Dictionary<String,Any>) {
         //  Wait until we're restoring after open or in intialization
         guard !appDelegate.openForBusiness || UserSettings.RestoreDocAttrs.value else { return }

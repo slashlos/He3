@@ -1406,9 +1406,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
 			NSSound.playIf(.purr)
         }
         else
-        //  Don't reopen docs when OPTION is held down at startup
-        if flags.contains(NSEvent.ModifierFlags.option) {
-            print("option at start")
+        //  Don't reopen docs when SHIFT is held down at startup
+        if flags.contains(NSEvent.ModifierFlags.shift) {
+            print("shift at start")
             disableDocumentReOpening = true
         }
         
@@ -1729,7 +1729,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         }
     }
     
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
+    func applicationDidFinishLaunching(_ note: Notification) {
+		if let info = note.userInfo{
+			if let launchURL = info[NSApplication.launchIsDefaultUserInfoKey] as? String  {
+				Swift.print("launchIsDefaultUserInfoKey: notif \(launchURL)")
+				disableDocumentReOpening = launchURL.boolValue
+			}
+			if let notif = info[NSApplication.launchUserNotificationUserInfoKey] as? String {
+				Swift.print("applicationDidFinishLaunching: notif \(notif)")
+				disableDocumentReOpening = true
+			}
+		}
 		
 		//	Run down our launch if still around
         let launcherAppId = "com.slashlos.he3.Launcher"
@@ -1769,8 +1779,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
 		self.autoSaveDocs = UserSettings.AutoSaveDocs.value
 
         //  Restore our web (non file://) document windows if any via
-        guard !disableDocumentReOpening else { return }
-        if let keep = defaults.array(forKey: UserSettings.KeepListName.value) {
+		if !disableDocumentReOpening, let keep = defaults.array(forKey: UserSettings.KeepListName.value) {
             for item in keep {
                 guard let urlString = (item as? String) else { continue }
                 if urlString == UserSettings.HomePageURL.value { continue }

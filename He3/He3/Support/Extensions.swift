@@ -349,6 +349,11 @@ extension NSColor {
 }
 
 extension String {
+	//	https://stackoverflow.com/a/33573532/564870
+	var boolValue: Bool {
+		return (self as NSString).boolValue
+	}
+
 	func toColor (hex:String) -> NSColor {
 		var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
 
