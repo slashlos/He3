@@ -40,21 +40,31 @@ buildIncr=$(/usr/libexec/PlistBuddy -c "Print CFBuildIncrement" $buildPlist)
 if [ "$buildIncr" = "major" ]; then
 
     major=$(($major + 1))
+    /usr/libexec/PlistBuddy -c "Set :CFBuildMajor $major" $buildPlist
+
 	minor=0
+	/usr/libexec/PlistBuddy -c "Set :CFBuildMinor $minor" $buildPlist
+
 	patch=0
+	/usr/libexec/PlistBuddy -c "Set :CFBuildPatch $patch" $buildPlist
 
 elif [ "$buildIncr" = "minor" ]; then
 
     minor=$(($minor + 1))
+    /usr/libexec/PlistBuddy -c "Set :CFBuildMinor $minor" $buildPlist
+
     patch=0
+    /usr/libexec/PlistBuddy -c "Set :CFBuildPatch $patch" $buildPlist
 
 elif [ "$buildIncr" = "patch" ]; then
 
     patch=$(($patch + 1))
+    /usr/libexec/PlistBuddy -c "Set :CFBuildPatch $patch" $buildPlist
 
 elif [ "$buildIncr" = "build" ]; then
 
     build=$(($build + 1))
+    /usr/libexec/PlistBuddy -c "Set :CFBuildNumber $build" $buildPlist
 
 fi
 
@@ -65,45 +75,27 @@ version="${major}.${minor}.${patch}"
 echo "new ${version} (${build})"
 
 # Set the version numbers in the buildPlist
-/usr/libexec/PlistBuddy -c "Set :CFBuildMajor $major" $buildPlist
-/usr/libexec/PlistBuddy -c "Set :CFBuildMinor $minor" $buildPlist
-/usr/libexec/PlistBuddy -c "Set :CFBuildPatch $patch" $buildPlist
-/usr/libexec/PlistBuddy -c "Set :CFBuildNumber $build" $buildPlist
 /usr/libexec/PlistBuddy -c "Set :CFBuildDate $buildDate" $buildPlist
 /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $bundleVersion" $buildPlist
 /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $version" $buildPlist
 
-# Propagate to share m- unless not there
-#/usr/libexec/PlistBuddy -c "Set :CFBuildMajor $major" $sharePlist
-#/usr/libexec/PlistBuddy -c "Set :CFBuildMinor $minor" $sharePlist
-#/usr/libexec/PlistBuddy -c "Set :CFBuildPatch $patch" $sharePlist
-#/usr/libexec/PlistBuddy -c "Set :CFBuildNumber $build" $sharePlist
-#/usr/libexec/PlistBuddy -c "Set :CFBuildDate $buildDate" $sharePlist
+# Propagate to share
 /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $bundleVersion" $sharePlist
 /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $version" $sharePlist
 
 # Propagate to tests
-#/usr/libexec/PlistBuddy -c "Set :CFBuildMajor $major" $testsPlist
-#/usr/libexec/PlistBuddy -c "Set :CFBuildMinor $minor" $testsPlist
-#/usr/libexec/PlistBuddy -c "Set :CFBuildPatch $patch" $testsPlist
 /usr/libexec/PlistBuddy -c "Set :CFBuildNumber $build" $testsPlist
 /usr/libexec/PlistBuddy -c "Set :CFBuildDate $buildDate" $testsPlist
 /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $bundleVersion" $testsPlist
 /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $version" $testsPlist
 
 # Propagate to launcher
-#/usr/libexec/PlistBuddy -c "Set :CFBuildMajor $major" $loginPlist
-#/usr/libexec/PlistBuddy -c "Set :CFBuildMinor $minor" $loginPlist
-#/usr/libexec/PlistBuddy -c "Set :CFBuildPatch $patch" $loginPlist
 /usr/libexec/PlistBuddy -c "Set :CFBuildNumber $build" $loginPlist
 /usr/libexec/PlistBuddy -c "Set :CFBuildDate $buildDate" $loginPlist
 /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $bundleVersion" $loginPlist
 /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $version" $loginPlist
 
 # Propagate to QL Extension
-#/usr/libexec/PlistBuddy -c "Set :CFBuildMajor $major" $qlExtPlist
-#/usr/libexec/PlistBuddy -c "Set :CFBuildMinor $minor" $qlExtPlist
-#/usr/libexec/PlistBuddy -c "Set :CFBuildPatch $patch" $qlExtPlist
 /usr/libexec/PlistBuddy -c "Set :CFBuildNumber $build" $qlExtPlist
 /usr/libexec/PlistBuddy -c "Set :CFBuildDate $buildDate" $qlExtPlist
 /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $bundleVersion" $qlExtPlist
