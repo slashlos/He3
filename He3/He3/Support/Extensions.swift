@@ -283,6 +283,7 @@ extension Notification.Name {
 	static let loadURLString = Notification.Name("LoadURLString")
 	static let locationServiceChange = Notification.Name("locationServiceChange")
 	static let newTitle = Notification.Name("newTitle")
+	static let newClient = Notification.Name("SomeClientPlayingDidChange")
 	static let optionKeyDown = Notification.Name("optionKeyDown")
 	static let optionAndCommandKeysDown = Notification.Name("optionAndCommandKeysDown")
 	static let playitem = Notification.Name(k.ItemName)

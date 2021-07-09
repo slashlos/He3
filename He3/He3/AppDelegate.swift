@@ -1474,6 +1474,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
             locationManager = CLLocationManager()
             locationManager?.delegate = self
         }
+		/*
+		//	Watch for SomeClientPlayingDidChange
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(AppDelegate.haveNewClient(_:)),
+			name: .newClient,
+			object: nil)
+
+		//	Watch everything - debugging
+		NotificationCenter.default.addObserver(forName: nil, object: nil, queue: nil, using: {(note) in
+			DispatchQueue.main.async {
+				Swift.print("note:\(String(describing: note))")
+			}
+		})*/
     }
 
     var itemActions = Dictionary<String, Any>()
@@ -1961,6 +1975,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         NotificationCenter.default.post(notif)
     }
     
+	@objc fileprivate func haveNewClient(_ note: Notification) {
+		Swift.print("name: \(note.name) object:\(String(describing: note.object))")
+	}
+	
     /// Shows alert asking user to input user agent string
     /// Process response locally, validate, dispatch via supplied handler
     func didRequestUserAgent(_ strings: RequestUserStrings,

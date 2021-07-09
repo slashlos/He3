@@ -142,13 +142,13 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
             name: .commandKeyDown,
             object: nil)
         /*
-        //  Watch option + command key changes
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(WebViewController.optionAndCommandKeysDown(_:)),
-            name: NSNotification.Name(rawValue: "optionAndCommandKeysDown"),
-            object: nil)
-        
+		
+		//	Track AV
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(avPlayerViewController(_:)),
+			name: NSNotification.Name(rawValue: "AVPlayerViewController"),
+			object: nil)
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(avPlayerView(_:)),
@@ -175,6 +175,9 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
         let newDidAddSubviewImplementationBlock: @convention(block) (AnyObject?, NSView) -> Void = { (view: AnyObject!, subview: NSView) -> Void in
             castedOriginalDidAddSubviewImplementation(view, Selector(("didAddsubview:")), subview)
 //            print("view: \(subview.className)")
+			if subview.className == "AVPlayerViewController" {
+				NotificationCenter.default.post(name: NSNotification.Name(rawValue: "AVPlayerViewController"), object: subview)
+			}
             if subview.className == "AVPlayerView" {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "AVPlayerView"), object: subview)
             }
@@ -249,15 +252,23 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
 		clear()
     }
     /*
-    @objc func avPlayerView(_ note: NSNotification) {
-        print("AV Player \(String(describing: note.object)) will be opened now")
+	//	AV Watches
+	@objc func avPlayerViewController(_ note: NSNotification) {
+		print("AV Player ViewController \(String(describing: note.object)) will be opened now")
+		guard let view = note.object as? NSView else { return }
+		
+		print("player is \(view.className)")
+	}
+	
+   @objc func avPlayerView(_ note: NSNotification) {
+        print("AV Player View \(String(describing: note.object)) will be opened now")
         guard let view = note.object as? NSView else { return }
         
         print("player is \(view.className)")
     }
     
     @objc func wkFlippedView(_ note: NSNotification) {
-        print("A Player \(String(describing: note.object)) will be opened now")
+        print("wkFlipped View \(String(describing: note.object)) will be opened now")
         guard let view = note.object as? NSView, let scrollView = view.enclosingScrollView else { return }
         
         if scrollView.hasHorizontalScroller {
@@ -269,7 +280,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
     }
     
     @objc func wkScrollView(_ note: NSNotification) {
-        print("WK Scroll View \(String(describing: note.object)) will be opened now")
+        print("wkScroll View \(String(describing: note.object)) will be opened now")
         if let scrollView : NSScrollView = note.object as? NSScrollView {
             scrollView.autohidesScrollers = true
         }
