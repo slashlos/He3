@@ -931,7 +931,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
         switch keyPath {
         case "estimatedProgress":
 
-            if let progress = change?[NSKeyValueChangeKey(rawValue: "new")] as? Float {
+			if let progress = change?[NSKeyValueChangeKey.newKey] as? CGFloat {
                 let percent = progress * 100
                 var title : String = String(format: "Loading... %.2f%%", percent)
                 if percent == 100, let url = (self.webView.url) {
@@ -1026,11 +1026,11 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
             }
             
         case "loading":
-            guard let loading = change?[NSKeyValueChangeKey(rawValue: "new")] as? Bool, loading == loadingIndicator.isHidden else { return }
-            print("loading: \(loading ? "YES" : "NO")")
+			guard let loading = change?[NSKeyValueChangeKey.newKey] as? Bool else { return }
+            print("loading: was:\(loadingIndicator.isHidden  ? "YES" : "NO") now: \(loading ? "YES" : "NO")")
             
-        case "title":
-            if let newTitle = change?[NSKeyValueChangeKey(rawValue: "new")] as? String {
+        case "title","TITLE":
+			if let newTitle = change?[NSKeyValueChangeKey.newKey] as? String {
                 if let window = self.view.window {
                     window.title = newTitle
                     NSApp.changeWindowsItem(window, title: newTitle, filename: false)
@@ -1040,13 +1040,15 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
         case "url","URL":/// #keyPath(WKWebView.url)
 			///DispatchQueue.main.async { self.webView.icon = self.iconForURL() }
 			
-            if let urlString = change?[NSKeyValueChangeKey(rawValue: "new")] as? String {
-				guard let doc = self.document else { return }
-				if let dict = defaults.dictionary(forKey: urlString) {
+			if let newURL = change?[NSKeyValueChangeKey.newKey] as? URL {
+				webView.window?.title = newURL.lastPathComponent
+				
+				guard let doc = self.document else {  return }
+				if let dict = defaults.dictionary(forKey: newURL.absoluteString) {
                     doc.restoreSettings(with: dict)
                 }
 				
-				doc.update(to: URL(string: urlString)!)
+				doc.update(to: newURL)
 				if let hpc = heliumPanelController {
 					hpc.updateTitleBar(didChange: true)
 				}
