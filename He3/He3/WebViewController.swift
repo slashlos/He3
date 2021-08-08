@@ -68,6 +68,8 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
             return hpc
         }
     }
+	
+	@IBOutlet var borderView: WebBorderView!
 
     var trackingTag: NSView.TrackingRectTag? {
         get {
@@ -105,10 +107,6 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
         webView.navigationDelegate = self
         webView.uiDelegate = self
 
-        borderView.frame = view.frame
-        view.addSubview(borderView)
-		borderView.isReceivingDrag = false
-		
         view.addSubview(loadingIndicator)
 
 		NotificationCenter.default.addObserver(
@@ -126,6 +124,11 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
             selector: #selector(WebViewController.loadURL(urlString:)),
             name: NSNotification.Name(rawValue: "LoadURLString"),
             object: nil)
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(WebViewController.saveAll(_:)),
+			name: NSNotification.Name(rawValue: "SaveAll"),
+			object: nil)
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(WebViewController.snapshotAll(_:)),
@@ -139,13 +142,13 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
             name: .commandKeyDown,
             object: nil)
         /*
-        //  Watch option + command key changes
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(WebViewController.optionAndCommandKeysDown(_:)),
-            name: NSNotification.Name(rawValue: "optionAndCommandKeysDown"),
-            object: nil)
-        
+		
+		//	Track AV
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(avPlayerViewController(_:)),
+			name: NSNotification.Name(rawValue: "AVPlayerViewController"),
+			object: nil)
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(avPlayerView(_:)),
@@ -172,6 +175,9 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
         let newDidAddSubviewImplementationBlock: @convention(block) (AnyObject?, NSView) -> Void = { (view: AnyObject!, subview: NSView) -> Void in
             castedOriginalDidAddSubviewImplementation(view, Selector(("didAddsubview:")), subview)
 //            print("view: \(subview.className)")
+			if subview.className == "AVPlayerViewController" {
+				NotificationCenter.default.post(name: NSNotification.Name(rawValue: "AVPlayerViewController"), object: subview)
+			}
             if subview.className == "AVPlayerView" {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "AVPlayerView"), object: subview)
             }
@@ -246,15 +252,23 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
 		clear()
     }
     /*
-    @objc func avPlayerView(_ note: NSNotification) {
-        print("AV Player \(String(describing: note.object)) will be opened now")
+	//	AV Watches
+	@objc func avPlayerViewController(_ note: NSNotification) {
+		print("AV Player ViewController \(String(describing: note.object)) will be opened now")
+		guard let view = note.object as? NSView else { return }
+		
+		print("player is \(view.className)")
+	}
+	
+   @objc func avPlayerView(_ note: NSNotification) {
+        print("AV Player View \(String(describing: note.object)) will be opened now")
         guard let view = note.object as? NSView else { return }
         
         print("player is \(view.className)")
     }
     
     @objc func wkFlippedView(_ note: NSNotification) {
-        print("A Player \(String(describing: note.object)) will be opened now")
+        print("wkFlipped View \(String(describing: note.object)) will be opened now")
         guard let view = note.object as? NSView, let scrollView = view.enclosingScrollView else { return }
         
         if scrollView.hasHorizontalScroller {
@@ -266,7 +280,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
     }
     
     @objc func wkScrollView(_ note: NSNotification) {
-        print("WK Scroll View \(String(describing: note.object)) will be opened now")
+        print("wkScroll View \(String(describing: note.object)) will be opened now")
         if let scrollView : NSScrollView = note.object as? NSScrollView {
             scrollView.autohidesScrollers = true
         }
@@ -282,8 +296,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
 		webView.autoresizingMask = [.height,.width]
 		webView.fit(view)
         
-        borderView.autoresizingMask = [.height,.width]
-		borderView.fit(view)
+        view.autoresizingMask = [.height,.width]
         
 		loadingIndicator.center(view)
 		viewLayoutDone = true
@@ -295,10 +308,11 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
 		//	document.fileURL is recent, webView.url is current URL
 		if let doc = self.document, let url = doc.fileURL, url.absoluteString != k.blank {
 			if url != webView.url || [.playitem,.playlist].contains(doc.docGroup) {
-				//	Initially, but after window restoration, restore saved frame
+				//	Finally, restore our rect as we have a window now
 				if let window = self.view.window,
-					!NSEqualRects(window.frame, doc.settings.rect.value),
-					!NSEqualSizes(NSZeroSize, doc.settings.rect.value.size) {
+				   let dict = defaults.dictionary(forKey: url.absoluteString),
+				   let rect = dict[k.rect] as? String {
+					doc.settings.rect.value = NSRectFromString(rect)
 					window.setFrame(doc.settings.rect.value, display: true)
 				}
 				
@@ -350,10 +364,9 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
         webView.autoresizingMask = [.height,.width]
         webView.fit(webView.superview!)
         
-        borderView.autoresizingMask = [.height,.width]
-		borderView.fit(borderView.superview!)
+        view.autoresizingMask = [.height,.width]
         
-        loadingIndicator.center(loadingIndicator.superview!)
+        loadingIndicator.center(view)
         loadingIndicator.bind(NSBindingName(rawValue: "animate"), to: webView as Any, withKeyPath: "loading", options: nil)
         
         //  ditch loading indicator background
@@ -796,6 +809,10 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
 		archive(note.object as! NSMenuItem)
 	}
 	
+	@objc func saveAll(_ note: Notification) {
+		saveDocument(note.object as! NSMenuItem)
+	}
+	
 	@objc func snapshotAll(_ note: Notification) {
 		snapshot(note.object as! NSMenuItem)
 	}
@@ -898,11 +915,6 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
 	var webImageView = NSImageView.init()
 	var webSize = CGSize(width: 0,height: 0)
     
-    var borderView : WebBorderView {
-        get {
-            return webView.borderView
-        }
-    }
     var loadingIndicator : ProgressIndicator {
         get {
             return webView.loadingIndicator

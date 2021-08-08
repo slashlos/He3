@@ -327,7 +327,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
 	    }
     }
 	
-	//	MARK: quickQuiet to affect system volume
+	/*	MARK: quickQuiet to affect system volume = deprecated
 	@objc func quickQuiet(_ note: Notification) {
 		willChangeValue(forKey: "inQuickQuietMode")
 
@@ -345,7 +345,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
 		
 		didChangeValue(forKey: "inQuickQuietMode")
 	}
-
+*/
 	//	https://stackoverflow.com/a/27291862/564870
 	dynamic var inQuickQuietMode = false
 	dynamic var lastSystemAudioVolume = Float(0.0)
@@ -641,13 +641,28 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         }
     }
     internal func syncAppMenuVisibility() {
-        if UserSettings.HideAppMenu.value {
-            NSStatusBar.system.removeStatusItem(appStatusItem)
-        }
-        else
+		//	Always hide first, avoiding double icons
+        NSStatusBar.system.removeStatusItem(appStatusItem)
+        
+		if !UserSettings.HideAppMenu.value
         {
             appStatusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-            appStatusItem.button?.image = NSImage.init(named: "statusIcon")
+			
+			switch (os.majorVersion, os.minorVersion, os.patchVersion) {
+			case (10, 10, _), (10, 11, _), (10, 12, _), (10, 13, _), (10, 14, _):
+				appStatusItem.button?.image = NSImage.init(named: "statusIcon")
+
+			default:
+				if UserSettings.ColorStatusIcon.value {
+					appStatusItem.button?.image = NSImage.init(named: "statusIcon")
+				}
+				else
+				{
+					let dark = [.darkAqua,.vibrantDark].contains( NSApp.effectiveAppearance.name ) ? 1 : 0
+					let name = String(format: "statusIcon%@", ["Lite","Dark"][dark])
+					appStatusItem.button?.image = NSImage.init(named: name)
+				}
+			}
             let menu : NSMenu = appMenu.copy() as! NSMenu
 
             //  add quit to status menu only - already is in dock
@@ -1156,6 +1171,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
 		}
 	}
 	
+	@objc @IBAction func saveAllPress(_ sender: NSMenuItem) {
+		let notif = Notification(name: .saveAll, object: sender)
+		NotificationCenter.default.post(notif)
+	}
+
     @objc @IBAction func snapshotAllPress(_ sender: NSMenuItem) {
 		registerSnaphotsURL(sender) { (snapshotURL) in
 			//	If we have a return object just call them, else notify all
@@ -1386,9 +1406,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
 			NSSound.playIf(.purr)
         }
         else
-        //  Don't reopen docs when OPTION is held down at startup
-        if flags.contains(NSEvent.ModifierFlags.option) {
-            print("option at start")
+        //  Don't reopen docs when SHIFT is held down at startup
+        if flags.contains(NSEvent.ModifierFlags.shift) {
+            print("shift at start")
             disableDocumentReOpening = true
         }
         
@@ -1403,16 +1423,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
             andEventID: AEEventID(kAEGetURL)
         )
 
-		//	Monitor to affect system sound volume
+		/*	Monitor to affect system sound volume - deprecated
 		NotificationCenter.default.addObserver(
 			self,
 			selector: #selector(AppDelegate.quickQuiet(_:)),
 			name: .quickQuiet,
-			object: nil)
+			object: nil)*/
 
         //  So they can interact everywhere with us without focus
-        appStatusItem.button?.image = NSImage.init(named: "statusIcon")
-        appStatusItem.menu = appMenu
+		NSApp.addObserver(self, forKeyPath: #keyPath(NSApplication.effectiveAppearance), options: .new, context: nil)
+		syncAppMenuVisibility()
 
         //  Initialize our h:m:s transformer
         ValueTransformer.setValueTransformer(toHMS, forName: NSValueTransformerName(rawValue: "hmsTransformer"))
@@ -1454,6 +1474,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
             locationManager = CLLocationManager()
             locationManager?.delegate = self
         }
+		/*
+		//	Watch for SomeClientPlayingDidChange
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(AppDelegate.haveNewClient(_:)),
+			name: .newClient,
+			object: nil)
+
+		//	Watch everything - debugging
+		NotificationCenter.default.addObserver(forName: nil, object: nil, queue: nil, using: {(note) in
+			DispatchQueue.main.async {
+				Swift.print("note:\(String(describing: note))")
+			}
+		})*/
     }
 
     var itemActions = Dictionary<String, Any>()
@@ -1709,7 +1743,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         }
     }
     
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
+    func applicationDidFinishLaunching(_ note: Notification) {
+		if let info = note.userInfo{
+			if let launchURL = info[NSApplication.launchIsDefaultUserInfoKey] as? String  {
+				Swift.print("launchIsDefaultUserInfoKey: notif \(launchURL)")
+				disableDocumentReOpening = launchURL.boolValue
+			}
+			if let notif = info[NSApplication.launchUserNotificationUserInfoKey] as? String {
+				Swift.print("applicationDidFinishLaunching: notif \(notif)")
+				disableDocumentReOpening = true
+			}
+		}
 		
 		//	Run down our launch if still around
         let launcherAppId = "com.slashlos.he3.Launcher"
@@ -1749,8 +1793,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
 		self.autoSaveDocs = UserSettings.AutoSaveDocs.value
 
         //  Restore our web (non file://) document windows if any via
-        guard !disableDocumentReOpening else { return }
-        if let keep = defaults.array(forKey: UserSettings.KeepListName.value) {
+		if !disableDocumentReOpening, let keep = defaults.array(forKey: UserSettings.KeepListName.value) {
             for item in keep {
                 guard let urlString = (item as? String) else { continue }
                 if urlString == UserSettings.HomePageURL.value { continue }
@@ -1773,6 +1816,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         NSEvent.removeMonitor(localKeyDownMonitor!)
         NSEvent.removeMonitor(globalKeyDownMonitor!)
         
+		//	Forget appearance tracking
+		NSApp.removeObserver(self, forKeyPath: #keyPath(NSApplication.effectiveAppearance))
+
         //  Forget location services
         if !UserSettings.RestoreLocationSvcs.value && isLocationEnabled {
             locationManager?.stopMonitoringSignificantLocationChanges()
@@ -1864,6 +1910,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         subOpen.addItem(item)
         return menu
     }
+	
+	override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+		
+		//  We *must* have a key path
+		guard let keyPath = keyPath else { return }
+		
+		switch keyPath {
+		case #keyPath(NSApplication.effectiveAppearance):
+			syncAppMenuVisibility()
+		default:
+			Swift.print(String(format: "AppDelegate '%@' keyPath unknown", keyPath))
+		}
+	}
     
     //MARK: - handleURLEvent(s)
 
@@ -1916,6 +1975,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         NotificationCenter.default.post(notif)
     }
     
+	@objc fileprivate func haveNewClient(_ note: Notification) {
+		Swift.print("name: \(note.name) object:\(String(describing: note.object))")
+	}
+	
     /// Shows alert asking user to input user agent string
     /// Process response locally, validate, dispatch via supplied handler
     func didRequestUserAgent(_ strings: RequestUserStrings,

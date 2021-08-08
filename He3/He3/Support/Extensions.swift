@@ -283,10 +283,12 @@ extension Notification.Name {
 	static let loadURLString = Notification.Name("LoadURLString")
 	static let locationServiceChange = Notification.Name("locationServiceChange")
 	static let newTitle = Notification.Name("newTitle")
+	static let newClient = Notification.Name("SomeClientPlayingDidChange")
 	static let optionKeyDown = Notification.Name("optionKeyDown")
 	static let optionAndCommandKeysDown = Notification.Name("optionAndCommandKeysDown")
 	static let playitem = Notification.Name(k.ItemName)
 	static let quickQuiet = Notification.Name("quickQuiet")
+	static let saveAll = Notification.Name("SaveAll")
 	static let shiftKeyDown = Notification.Name("shiftKeyDown")
 	static let snapshotAll = Notification.Name("SnapshotAll")
 	static let tvSelectionDidChange = Notification.Name("NSTableViewSelectionDidChange")
@@ -348,6 +350,11 @@ extension NSColor {
 }
 
 extension String {
+	//	https://stackoverflow.com/a/33573532/564870
+	var boolValue: Bool {
+		return (self as NSString).boolValue
+	}
+
 	func toColor (hex:String) -> NSColor {
 		var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
 
@@ -848,9 +855,12 @@ extension CastingError: CustomStringConvertible {
 // MARK: - Data cast extensions
 
 extension Data {
-	static func data(fromAsset: String) -> Data {
+	static func data(fromAsset: String, type: String = "data") -> Data {
+		if type.hasPrefix("image/"), let asset = NSImage(named: fromAsset) {
+			return asset.tiffRepresentation!
+		}
 		guard let asset = NSDataAsset.init(name: fromAsset) else {
-			Swift.print(String(format: "Unable to locate asset: '%@'", fromAsset))
+			Swift.print(String(format: "+asset: '%@'", fromAsset))
 			return NSImage(named: fromAsset)!.tiffRepresentation!
 		}
 		let data = NSData.init(data: (asset.data))

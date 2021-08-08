@@ -610,7 +610,7 @@
 /* Class = "NSButtonCell"; title = "Enable Web Inspector"; ObjectID = "mKF-sV-16P"; */
 "mKF-sV-16P.title" = "Activer l'inspecteur Web";
 
-/* Class = "NSMenuItem"; title = "Save As"; ObjectID = "msZ-vZ-9wQ"; */
+/* Class = "NSMenuItem"; title = "Save All"; ObjectID = "msZ-vZ-9wQ"; */
 "msZ-vZ-9wQ.title" = "Enregistrer sous";
 
 /* Class = "NSButtonCell"; title = "Play"; ObjectID = "mvj-Ud-PSU"; */

@@ -51,22 +51,19 @@ class WebBorderView : NSView {
 			needsDisplay = true
 		}
 	}
+	override func viewWillDraw() {
+		self.wantsLayer = true
+		self.layer?.borderWidth = 1
+	}
 	
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
 
-        self.isHidden = !(isReceivingDrag || isMouseOver)
-//        print("web borderView drawing \(isHidden ? "NO" : "YES")....")
-
 		//	Wipe coloring when not dragging
 		let hpc : HeliumController = self.window?.windowController as! HeliumController
 		let borderColor = isReceivingDrag ? hpc.homeColor : NSColor.selectedKnobColor
-        borderColor.set()
-            
-		let path = NSBezierPath(rect:bounds)
-		path.lineWidth = isReceivingDrag ? 4 : 1
-		path.stroke()
-
+		self.layer?.borderColor = borderColor.cgColor
+		self.layer?.borderWidth = isReceivingDrag ? 4 : 1
     }
 }
 
@@ -162,7 +159,7 @@ class CacheSchemeHandler : NSObject,WKURLSchemeHandler {
 			}
 			else
 			{
-				data = Data.data(fromAsset: dict[k.text]!)
+				data = Data.data(fromAsset: dict[k.text]!, type: mime)
 			}
 
         case k.html:
@@ -223,7 +220,12 @@ class MyWebView : WKWebView {
     var acceptableTypes: Set<NSPasteboard.PasteboardType> { return [.URL, .fileURL, .html, .pdf, .png, .rtf, .rtfd, .tiff, finderNode, webarchive] }
     var filteringOptions = [NSPasteboard.ReadingOptionKey.urlReadingContentsConformToTypes:NSImage.imageTypes]
     
-    var borderView = WebBorderView()
+	var borderView : WebBorderView? {
+		get {
+			guard let view = superview as? WebBorderView else { return nil }
+			return view
+		}
+	}
     var loadingIndicator = ProgressIndicator()
     var incognito = false
     var homeURL : URL {
@@ -390,8 +392,6 @@ class MyWebView : WKWebView {
     override var mouseDownCanMoveWindow: Bool {
         get {
             if let window = self.window {
-				let flag = window.isMovableByWindowBackground
-				Swift.print(String(format: "mouseDownCanMoveWindow: %@", flag ? "Yes" : "No"))
                 return window.isMovableByWindowBackground
             }
             else
@@ -522,7 +522,7 @@ class MyWebView : WKWebView {
 	let PasteboardFileURLPromise = NSPasteboard.PasteboardType(rawValue: kPasteboardTypeFileURLPromise)
 	let PasteboardFilePromiseContent = NSPasteboard.PasteboardType(rawValue: kPasteboardTypeFilePromiseContent)
 	let PasteboardFilePasteLocation = NSPasteboard.PasteboardType(rawValue: "com.apple.pastelocation")
-	
+	/*
 	override func mouseDown(with event: NSEvent) {
 		let startingPoint = event.locationInWindow
 		let window = self.window!
@@ -559,7 +559,7 @@ class MyWebView : WKWebView {
 					}
 					
 					if (abs(currentPoint.x - startingPoint.x) >= 5 || abs(currentPoint.y - startingPoint.y) >= 5) {
-						borderView.isReceivingDrag = true
+						isReceivingDrag = true
 						stop.pointee = true
 						window.performDrag(with: event!)
 					}
@@ -585,7 +585,7 @@ class MyWebView : WKWebView {
 		
 		draggingItem.setDraggingFrame(self.bounds, contents: image)
 	}
-	
+	*/
 	override func mouseEntered(with event: NSEvent) {
 		guard !appDelegate.inQuickQuietMode else { return }
 		self.window?.windowController?.mouseEntered(with: event)
@@ -623,10 +623,12 @@ class MyWebView : WKWebView {
     
     var isReceivingDrag : Bool {
         get {
-            return borderView.isReceivingDrag
+			guard let borderView = self.borderView else { return false }
+			return borderView.isReceivingDrag
         }
         set (value) {
-            borderView.isReceivingDrag = value
+			guard let borderView = self.borderView else { return }
+			borderView.isReceivingDrag = value
         }
     }
     
@@ -651,6 +653,7 @@ class MyWebView : WKWebView {
     override func draggingExited(_ sender: NSDraggingInfo?) {
         print("web draggingExited")
         if uiDelegate != nil { isReceivingDrag = false }
+		isReceivingDrag = false
     }
     
     var lastDragSequence : Int = 0

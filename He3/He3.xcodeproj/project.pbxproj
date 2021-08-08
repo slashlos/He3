@@ -25,7 +25,6 @@
 		0F30717C246A42E200684B84 /* He3 Launcher.app in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0F307166246A3D0B00684B84 /* He3 Launcher.app */; };
 		0F3716E62548600700D65218 /* he3_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F3716E52548600700D65218 /* he3_logo.png */; };
 		0F37170D2548635200D65218 /* he3_icnt.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0FE20A922545A78300551CF3 /* he3_icnt.icns */; };
-		0F3717182549077600D65218 /* Fuzi in Frameworks */ = {isa = PBXBuildFile; productRef = 0F3717172549077600D65218 /* Fuzi */; };
 		0F371722254907AA00D65218 /* WebArchiver in Frameworks */ = {isa = PBXBuildFile; productRef = 0F371721254907AA00D65218 /* WebArchiver */; };
 		0F529030244F3A5800A9B9DC /* He3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F52902F244F3A5800A9B9DC /* He3Tests.swift */; };
 		0F5290B0244F6C0D00A9B9DC /* UrlHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5290A7244F6C0C00A9B9DC /* UrlHelpers.swift */; };
@@ -61,6 +60,7 @@
 		0FB6B15E25560A5700363178 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0FB6B16025560A5700363178 /* Localizable.strings */; };
 		0FB6B1822559C3DB00363178 /* BartyCrouch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6B1812559C3DB00363178 /* BartyCrouch.swift */; };
 		0FB6B1832559C3DB00363178 /* BartyCrouch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB6B1812559C3DB00363178 /* BartyCrouch.swift */; };
+		0FB7748A2659F27B0019D70A /* Fuzi in Frameworks */ = {isa = PBXBuildFile; productRef = 0FB774892659F27B0019D70A /* Fuzi */; };
 		0FBD9BAF2454603200332EEB /* he3_logo.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0FBD9BAE2454603200332EEB /* he3_logo.icns */; };
 		0FBD9BB8245473C600332EEB /* itemIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0FBD9BB7245473C500332EEB /* itemIcon.icns */; };
 		0FBD9BBA2454746200332EEB /* listIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 0FBD9BB92454746200332EEB /* listIcon.icns */; };
@@ -235,7 +235,7 @@
 		0F9EF95A24776468008DDB93 /* listIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = listIcon.png; path = "He3/Assets/list Icon/listIcon.png"; sourceTree = "<group>"; };
 		0FACD4C32467953000A23B1F /* PromiseFileProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseFileProvider.swift; sourceTree = "<group>"; };
 		0FB09333259BAAD2007B3DFD /* He3Script.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = He3Script.sh; sourceTree = "<group>"; };
-		0FB0935F259BAD1B007B3DFD /* He3ShareExtensionScript.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = He3ShareExtensionScript.sh; sourceTree = "<group>"; };
+		0FB0935F259BAD1B007B3DFD /* He3Versionator.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = He3Versionator.sh; sourceTree = "<group>"; };
 		0FB276F524B1EDD800695BB1 /* PrefsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsViewController.swift; sourceTree = "<group>"; };
 		0FB6B15F25560A5700363178 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0FB6B16925560AE400363178 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
@@ -273,7 +273,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0F3717182549077600D65218 /* Fuzi in Frameworks */,
+				0FB7748A2659F27B0019D70A /* Fuzi in Frameworks */,
 				0F371722254907AA00D65218 /* WebArchiver in Frameworks */,
 				0F7F173F263E0E1F0045B6F6 /* Down in Frameworks */,
 			);
@@ -338,7 +338,7 @@
 		0F2370C4244E8CEA009F7914 = {
 			isa = PBXGroup;
 			children = (
-				0FB0935F259BAD1B007B3DFD /* He3ShareExtensionScript.sh */,
+				0FB0935F259BAD1B007B3DFD /* He3Versionator.sh */,
 				0FB09333259BAAD2007B3DFD /* He3Script.sh */,
 				0F3716FD254861FD00D65218 /* he3_icnt.png */,
 				0F3716EE254860CF00D65218 /* icntIcon.jpg */,
@@ -542,9 +542,9 @@
 			);
 			name = He3;
 			packageProductDependencies = (
-				0F3717172549077600D65218 /* Fuzi */,
 				0F371721254907AA00D65218 /* WebArchiver */,
 				0F7F173E263E0E1F0045B6F6 /* Down */,
+				0FB774892659F27B0019D70A /* Fuzi */,
 			);
 			productName = He3;
 			productReference = 0F2370CD244E8CEA009F7914 /* He3.app */;
@@ -706,10 +706,9 @@
 			);
 			mainGroup = 0F2370C4244E8CEA009F7914;
 			packageReferences = (
-				0F3717162549077600D65218 /* XCRemoteSwiftPackageReference "Fuzi" */,
 				0F371720254907AA00D65218 /* XCRemoteSwiftPackageReference "WebArchiver" */,
-				0FB6B19C255A160F00363178 /* XCRemoteSwiftPackageReference "BartyCrouch" */,
 				0F7F173D263E0E1F0045B6F6 /* XCRemoteSwiftPackageReference "Down" */,
+				0FB774882659F27B0019D70A /* XCRemoteSwiftPackageReference "Fuzi" */,
 			);
 			productRefGroup = 0F2370CE244E8CEA009F7914 /* Products */;
 			projectDirPath = "";
@@ -817,7 +816,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nsource He3ShareExtensionScript.sh\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nsource He3Versionator.sh\n";
 		};
 		0FB6B1792558C88400363178 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1079,6 +1078,7 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_INCLUDE_PATHS = "$(inherited) $(PROJECT_DIR)/Carthage/Checkouts/down/Source/cmark";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -1136,6 +1136,7 @@
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_INCLUDE_PATHS = "$(inherited) $(PROJECT_DIR)/Carthage/Checkouts/down/Source/cmark";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -1511,14 +1512,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		0F3717162549077600D65218 /* XCRemoteSwiftPackageReference "Fuzi" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/cezheng/Fuzi";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.1.2;
-			};
-		};
 		0F371720254907AA00D65218 /* XCRemoteSwiftPackageReference "WebArchiver" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ernesto-elsaesser/WebArchiver";
@@ -1535,22 +1528,17 @@
 				minimumVersion = 0.10.0;
 			};
 		};
-		0FB6B19C255A160F00363178 /* XCRemoteSwiftPackageReference "BartyCrouch" */ = {
+		0FB774882659F27B0019D70A /* XCRemoteSwiftPackageReference "Fuzi" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Flinesoft/BartyCrouch.git";
+			repositoryURL = "https://github.com/cezheng/Fuzi.git";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.3;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		0F3717172549077600D65218 /* Fuzi */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 0F3717162549077600D65218 /* XCRemoteSwiftPackageReference "Fuzi" */;
-			productName = Fuzi;
-		};
 		0F371721254907AA00D65218 /* WebArchiver */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 0F371720254907AA00D65218 /* XCRemoteSwiftPackageReference "WebArchiver" */;
@@ -1560,6 +1548,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0F7F173D263E0E1F0045B6F6 /* XCRemoteSwiftPackageReference "Down" */;
 			productName = Down;
+		};
+		0FB774892659F27B0019D70A /* Fuzi */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0FB774882659F27B0019D70A /* XCRemoteSwiftPackageReference "Fuzi" */;
+			productName = Fuzi;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

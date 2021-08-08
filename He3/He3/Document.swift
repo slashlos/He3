@@ -205,6 +205,16 @@ class Document : NSDocument {
 		secureFileEncoding = coder.decodeBool(forKey: "useSecureEncoding")
 	}
 
+	override func restoreWindow(withIdentifier identifier: NSUserInterfaceItemIdentifier, state: NSCoder, completionHandler: @escaping (NSWindow?, Error?) -> Void) {
+		if appDelegate.disableDocumentReOpening {
+		   completionHandler(nil, NSError.init(domain: NSCocoaErrorDomain, code: NSUserCancelledError, userInfo: nil) )
+		}
+		else
+		{
+			super.restoreWindow(withIdentifier: identifier, state: state, completionHandler: completionHandler)
+		}
+	}
+
     func restoreSettings(with dictionary: Dictionary<String,Any>) {
         //  Wait until we're restoring after open or in intialization
         guard !appDelegate.openForBusiness || UserSettings.RestoreDocAttrs.value else { return }
@@ -255,13 +265,11 @@ class Document : NSDocument {
                 self.settings.time.value = secs as! TimeInterval
             }
         }
-        if self.settings.rect.value == NSZeroRect, let fileURL = self.fileURL, let dict = defaults.dictionary(forKey: fileURL.absoluteString) {
-            if let rect = dict[k.rect] as? String {
-                self.settings.rect.value = NSRectFromString(rect)
-                if let window = self.windowControllers.first?.window {
-                    window.setFrame(from: rect)
-                }
-            }
+		if let rect = dictionary[k.rect] as? String {
+			self.settings.rect.value = NSRectFromString(rect)
+			if let window = self.windowControllers.first?.window {
+				window.setFrame(from: rect)
+			}
         }
         if let agent : String = dictionary[k.agent] as? String, agent != settings.customUserAgent.value {
             self.settings.customUserAgent.value = agent
