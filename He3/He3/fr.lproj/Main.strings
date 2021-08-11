@@ -1,4 +1,4 @@
-/* Class = "NSTabViewItem"; label = "User Agent String"; ObjectID = "010-Vh-IQ6"; */
+/* Class = "NSTabViewItem"; label = "User Agent"; ObjectID = "010-Vh-IQ6"; */
 "010-Vh-IQ6.label" = "Chaîne de l'agent utilisateur";
 
 /* Class = "NSButton"; ibShadowedToolTip = "cycle through read me, history, liicense, privacy information"; ObjectID = "0NX-wg-Xfe"; */
@@ -244,7 +244,7 @@
 /* Class = "NSButtonCell"; title = "OK"; ObjectID = "Mja-kD-PVK"; */
 "Mja-kD-PVK.title" = "OK";
 
-/* Class = "NSButtonCell"; title = "Hide He3 in menu bar"; ObjectID = "Mk4-h8-ppN"; */
+/* Class = "NSButtonCell"; title = "Show He3 in menu bar"; ObjectID = "Mk4-h8-ppN"; */
 "Mk4-h8-ppN.title" = "Masquer He3 dans la barre de menus";
 
 /* Class = "NSMenuItem"; title = "Services"; ObjectID = "NMo-om-nkz"; */
@@ -1101,3 +1101,12 @@
 
 /* Class = "NSMenuItem"; title = "New Incognito Tab"; ObjectID = "RjN-Qz-uSO"; */
 "RjN-Qz-uSO.title" = "New Incognito Tab";
+
+/* Class = "NSTabViewItem"; label = "Misc."; ObjectID = "XwE-uh-6a7"; */
+"XwE-uh-6a7.label" = "Misc.";
+
+/* Class = "NSButtonCell"; title = "Color Status Icon"; ObjectID = "gdr-yP-6ao"; */
+"gdr-yP-6ao.title" = "Color Status Icon";
+
+/* Class = "NSButtonCell"; title = "Quick Quiet Key Registry"; ObjectID = "iTe-fZ-TYZ"; */
+"iTe-fZ-TYZ.title" = "Quick Quiet Key Registry";
