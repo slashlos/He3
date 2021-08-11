@@ -293,6 +293,9 @@ extension Notification.Name {
 	static let snapshotAll = Notification.Name("SnapshotAll")
 	static let tvSelectionDidChange = Notification.Name("NSTableViewSelectionDidChange")
 }
+extension NSNotification.Name {
+	static let AppleInterfaceThemeChangedNotification = Notification.Name("AppleInterfaceThemeChangedNotification")
+}
 
 extension NSColor {
 	convenience init(rgb: Int) {
