@@ -640,11 +640,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
             print("Menu '\(menuItem.title)' clicked")
         }
     }
+	@objc internal func themeChanged(_ note: Notification) {
+		syncAppMenuVisibility()
+	}
+	
     internal func syncAppMenuVisibility() {
 		//	Always hide first, avoiding double icons
         NSStatusBar.system.removeStatusItem(appStatusItem)
         
-		if !UserSettings.HideAppMenu.value
+		if UserSettings.ShowAppMenu.value
         {
             appStatusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 			
@@ -658,9 +662,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
 				}
 				else
 				{
-					let dark = [.darkAqua,.vibrantDark].contains( NSApp.effectiveAppearance.name ) ? 1 : 0
-					let name = String(format: "statusIcon%@", ["Lite","Dark"][dark])
-					appStatusItem.button?.image = NSImage.init(named: name)
+					//	Address lite/dark tracking "Template" suffix of B&W image
+					appStatusItem.button?.image = NSImage.init(named: "statusIconBWTemplate")
 				}
 			}
             let menu : NSMenu = appMenu.copy() as! NSMenu
@@ -673,8 +676,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
             appStatusItem.menu = menu
         }
     }
-	@objc @IBAction func hideAppStatusItem(_ sender: NSMenuItem) {
-		UserSettings.HideAppMenu.value = (sender.state == .off)
+	@objc @IBAction func showAppStatusItem(_ sender: NSMenuItem) {
+		UserSettings.ShowAppMenu.value = (sender.state == .on)
         self.syncAppMenuVisibility()
 	}
     @objc @IBAction func homePagePress(_ sender: AnyObject) {
@@ -1311,8 +1314,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
 				menuItem.state = UserSettings.StoreWebCookies.value ? .on : .off
 			case "WebView Inspector":
 				menuItem.state = UserSettings.DeveloperExtrasEnabled.value ? .on : .off
-            case "Hide He3 in menu bar":
-                menuItem.state = UserSettings.HideAppMenu.value ? .on : .off
+            case "Show He3 in menu bar":
+                menuItem.state = UserSettings.ShowAppMenu.value ? .on : .off
             case "Keep history record":
                 menuItem.state = UserSettings.HistorySaves.value ? .on : .off
             case "Home Page":
@@ -1432,7 +1435,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
 
         //  So they can interact everywhere with us without focus
 		NSApp.addObserver(self, forKeyPath: #keyPath(NSApplication.effectiveAppearance), options: .new, context: nil)
-		syncAppMenuVisibility()
+		DistributedNotificationCenter.default.addObserver(self, selector: #selector(AppDelegate.themeChanged(_:)), name: .AppleInterfaceThemeChangedNotification, object: nil)
 
         //  Initialize our h:m:s transformer
         ValueTransformer.setValueTransformer(toHMS, forName: NSValueTransformerName(rawValue: "hmsTransformer"))
@@ -1668,52 +1671,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
     func keyDownMonitor(event: NSEvent) -> Bool {
         switch event.modifierFlags.intersection(NSEvent.ModifierFlags.deviceIndependentFlagsMask) {
         case [NSEvent.ModifierFlags.control, NSEvent.ModifierFlags.option, NSEvent.ModifierFlags.command]:
-			self.inQuickQuietMode = inQuickQuietMode ? false : true
-			let notif = Notification(name: .quickQuiet, object: nil)
-            NotificationCenter.default.post(notif)
-			print("inQuickQuietMode = \(inQuickQuietMode ? "YES" : "NO")")
-/*
-            print("control-option-command keys are pressed")
-            if self.hiddenWindows.count > 0 {
-//                print("show all windows")
-                for frame in self.hiddenWindows.keys {
-                    let dict = self.hiddenWindows[frame] as! Dictionary<String,Any>
-                    let alpha = dict["alpha"]
-                    let win = dict["window"] as! NSWindow
-//                    print("show \(frame) to \(String(describing: alpha))")
-                    win.alphaValue = alpha as! CGFloat
-                    if let path = dict["name"], let actions = itemActions[path as! String]
-                    {
-                        if let action = (actions as! Dictionary<String,Any>)["mute"] {
-                            let item = (action as! Dictionary<String,Any>)["item"] as! NSMenuItem
-                            print("action \(item)")
-                        }
-                        if let action = (actions as! Dictionary<String,Any>)["play"] {
-                            let item = (action as! Dictionary<String,Any>)["item"] as! NSMenuItem
-                            print("action \(item)")
-                        }
-                    }
-                }
-                self.hiddenWindows = Dictionary<String,Any>()
-            }
-            else
-            {
-//                print("hide all windows")
-                for win in NSApp.windows {
-                    let frame = NSStringFromRect(win.frame)
-                    let alpha = win.alphaValue
-                    var dict = Dictionary <String,Any>()
-                    dict["alpha"] = alpha
-                    dict["window"] = win
-                    if let wvc = win.contentView?.subviews.first as? MyWebView, let url = wvc.url {
-                        dict["name"] = url.absoluteString
-                    }
-                    self.hiddenWindows[frame] = dict
-//                    print("hide \(frame) to \(String(describing: alpha))")
-                    win.alphaValue = 0.01
-                }
-            }
-*/
+			if UserSettings.QuickQuietMode.value {
+				self.inQuickQuietMode = inQuickQuietMode ? false : true
+				let notif = Notification(name: .quickQuiet, object: nil)
+				NotificationCenter.default.post(notif)
+				print("inQuickQuietMode = \(inQuickQuietMode ? "YES" : "NO")")
+			}
             return true
             
         case [NSEvent.ModifierFlags.option, NSEvent.ModifierFlags.command]:

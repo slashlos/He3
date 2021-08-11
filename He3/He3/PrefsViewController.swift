@@ -71,11 +71,15 @@ class PrefsViewController : NSViewController, NSTabViewDelegate {
 		appDelegate.autoSaveDocs = (sender.state == .on)
 	}
 
+	@IBAction func colorStatusIcon(_ sender: NSButton) {
+		appDelegate.syncAppMenuVisibility()
+	}
+	
 	@IBOutlet var enableWebCheckbox: NSButton!
 	@IBAction func enableWebPress(_ sender: NSButton) {
 	}
 	
-	@IBOutlet var hideHe3MenuCheckbox: NSButton!
+	@IBOutlet var showHe3MenuCheckbox: NSButton!
 	@IBAction func hideHe3MenuPress(_ sender: Any) {
         appDelegate.syncAppMenuVisibility()
 	}

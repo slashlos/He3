@@ -971,8 +971,8 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
             menuItem.state = floatAboveAllPreference.contains(.oneSpace) ? .on : .off
         case "Full Screen":
             menuItem.state = floatAboveAllPreference.contains(.screen) ? .on : .off
-        case "Hide He3 in menu bar":
-            menuItem.state = UserSettings.HideAppMenu.value ? .on : .off
+        case "Show He3 in menu bar":
+            menuItem.state = UserSettings.ShowAppMenu.value ? .on : .off
         case "Home Page":
             break
         case "Magic URL Redirects":
