@@ -653,7 +653,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
             appStatusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 			
 			switch (os.majorVersion, os.minorVersion, os.patchVersion) {
-			case (10, 10, _), (10, 11, _), (10, 12, _), (10, 13, _), (10, 14, _):
+			case (10, 10, _), (10, 11, _), (10, 12, _), (10, 13, _):
 				appStatusItem.button?.image = NSImage.init(named: "statusIcon")
 
 			default:

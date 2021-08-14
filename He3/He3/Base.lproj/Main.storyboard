@@ -1064,7 +1064,7 @@ CA
         <scene sceneID="dah-w1-TSE">
             <objects>
                 <viewController storyboardIdentifier="PrefsViewController" id="6fb-0C-bsO" customClass="PrefsViewController" customModule="He3" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="cge-K8-5cp">
+                    <view key="view" misplaced="YES" id="cge-K8-5cp">
                         <rect key="frame" x="0.0" y="0.0" width="562" height="312"/>
                         <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
                         <userGuides>
@@ -3375,7 +3375,7 @@ Gw
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <button verticalHuggingPriority="750" id="VPa-1T-2cB">
-                                <rect key="frame" x="7" y="-4" width="13" height="13"/>
+                                <rect key="frame" x="7" y="-4.5" width="13" height="13"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSActionTemplate" imagePosition="overlaps" alignment="right" controlSize="small" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" id="RWV-jt-wFJ">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -3520,8 +3520,8 @@ Gw
         <image name="NSActionTemplate" width="15" height="15"/>
         <image name="NSAddTemplate" width="15" height="13"/>
         <image name="NSColorPanel" width="32" height="32"/>
-        <image name="NSLockLockedTemplate" width="15" height="15"/>
-        <image name="NSLockUnlockedTemplate" width="18" height="15"/>
+        <image name="NSLockLockedTemplate" width="14" height="15"/>
+        <image name="NSLockUnlockedTemplate" width="17" height="15"/>
         <image name="NSRemoveTemplate" width="15" height="4"/>
         <image name="NSStatusAvailable" width="16" height="16"/>
         <image name="NSStatusUnavailable" width="16" height="16"/>

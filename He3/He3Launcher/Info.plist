@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CFBuildDate</key>
-	<string>20210812.101350</string>
+	<string>20210814.122952</string>
 	<key>CFBuildNumber</key>
-	<string>8475</string>
+	<string>8476</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -23,7 +23,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0.9</string>
 	<key>CFBundleVersion</key>
-	<string>1.0.8475</string>
+	<string>1.0.8476</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSBackgroundOnly</key>
