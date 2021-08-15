@@ -172,7 +172,9 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 				self.settings.rect.value = sender.frame
 			}
              
-            if let doc = panel.windowController?.document { doc.updateChangeCount(.changeDone) }
+            if let doc = panel.windowController?.document {
+				doc.updateChangeCount(appDelegate.openForBusiness ? .changeDone : .changeCleared)
+			}
         }
     }
     func windowWillResize(_ sender: NSWindow, to frameSize: NSSize) -> NSSize {
@@ -185,7 +187,9 @@ class HeliumController : NSWindowController,NSWindowDelegate,NSFilePromiseProvid
 				self.settings.rect.value = sender.frame
 			}
 
-            if let doc = panel.windowController?.document { doc.updateChangeCount(.changeDone) }
+            if let doc = panel.windowController?.document {
+				doc.updateChangeCount(appDelegate.openForBusiness ? .changeDone : .changeCleared)
+			}
         }
         return frameSize
     }
