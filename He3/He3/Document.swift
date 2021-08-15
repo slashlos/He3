@@ -287,12 +287,7 @@ class Document : NSDocument {
         self.fileURL = url
         
         if let dict = defaults.dictionary(forKey: url.absoluteString) {
-            let item = PlayItem(from: dict)
-            
-            if item.rect != NSZeroRect {
-                self.settings.rect.value = item.rect
-                self.updateChangeCount(.changeDone)
-             }
+			restoreSettings(with: dict)
         }
         if url.isFileURL { _displayImage = nil }
     }
