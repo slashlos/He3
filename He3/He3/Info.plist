@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CFBuildDate</key>
-	<string>20210814.130307</string>
+	<string>20210815.092513</string>
 	<key>CFBuildIncrement</key>
-	<string>patch</string>
+	<string>false</string>
 	<key>CFBuildMajor</key>
 	<integer>1</integer>
 	<key>CFBuildMinor</key>
@@ -13,7 +13,7 @@
 	<key>CFBuildNumber</key>
 	<string>8476</string>
 	<key>CFBuildPatch</key>
-	<integer>10</integer>
+	<integer>11</integer>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -130,7 +130,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.10</string>
+	<string>1.0.11</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
