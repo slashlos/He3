@@ -541,11 +541,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
                 _webPreferences = WKPreferences()
                 
                 // Allow plug-ins such as silverlight
-				if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
-				} else {
-					_webPreferences!.plugInsEnabled = true
-				}
-				
+				_webPreferences!.plugInsEnabled = true
+							
                 ///_webPreferences!.minimumFontSize = 14
                 _webPreferences!.javaScriptCanOpenWindowsAutomatically = true;
                 _webPreferences!.javaScriptEnabled = true
