@@ -100,8 +100,9 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
 
         //  Programmatically create a new web view
         //  with shared config, prefs, cookies(?).
+		view.addSubview(webView)
         webView.frame = view.frame
-        view.addSubview(webView)
+		webView.autoresizingMask = [.width, .height]
         
         //  Wire in ourselves as its delegate
         webView.navigationDelegate = self
@@ -293,11 +294,6 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
 		guard !viewLayoutDone else { return }
 		
         //  the autolayout is complete only when the view has appeared.
-		webView.autoresizingMask = [.height,.width]
-		webView.fit(view)
-        
-        view.autoresizingMask = [.height,.width]
-        
 		loadingIndicator.center(view)
 		viewLayoutDone = true
     }
@@ -361,11 +357,6 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
         //  https://stackoverflow.com/questions/32056874/programmatically-wkwebview-inside-an-uiview-with-auto-layout
  
         //  the autolayout is complete only when the view has appeared.
-        webView.autoresizingMask = [.height,.width]
-        webView.fit(webView.superview!)
-        
-        view.autoresizingMask = [.height,.width]
-        
         loadingIndicator.center(view)
         loadingIndicator.bind(NSBindingName(rawValue: "animate"), to: webView as Any, withKeyPath: "loading", options: nil)
         
