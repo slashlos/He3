@@ -1743,9 +1743,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
             print("We were launched as a startup item")
         }
         
-        //  Developer extras off by default
-        UserSettings.DeveloperExtrasEnabled.value = false
-        
         //  Restore auto save settings
 		self.autoSaveDocs = UserSettings.AutoSaveDocs.value
 
