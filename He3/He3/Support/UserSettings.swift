@@ -86,7 +86,7 @@ internal struct UserSettings {
     
     //  NOTE: UserAgent default is loaded at run-time
     static let UserAgent = Setting<String>("userAgent", defaultValue:
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.5 Safari/605.1.15")
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko)")
 
     //  Snapshots path loading once
     static let SnapshotsURL = Setting<String>("snapshotsURL", defaultValue: "")
