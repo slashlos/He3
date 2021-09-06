@@ -482,14 +482,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
     var  sessionConfiguration : URLSessionConfiguration {
         get {
             if  _sessionConfiguration == nil {
-				if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
-					_sessionConfiguration = URLSessionConfiguration.default
-				} else {
-					_sessionConfiguration = URLSessionConfiguration()
-				}
+				_sessionConfiguration = URLSessionConfiguration()
 				
-                _sessionConfiguration!.httpCookieAcceptPolicy = UserSettings.AcceptWebCookie.value ?.onlyFromMainDocumentDomain : .never
-                _sessionConfiguration!.httpShouldSetCookies = UserSettings.StoreWebCookies.value
+                _sessionConfiguration!.httpCookieAcceptPolicy = acceptWebCookie ?.onlyFromMainDocumentDomain : .never
+                _sessionConfiguration!.httpShouldSetCookies = storeWebCookies
             }
             return _sessionConfiguration!
         }
