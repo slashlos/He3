@@ -195,6 +195,35 @@ class CacheSchemeHandler : NSObject,WKURLSchemeHandler {
 class MyWebView : WKWebView {
     static let poi = OSLog(subsystem: "com.slashlos.he3", category: .pointsOfInterest)
     
+	// Simple url actions
+	@IBAction func cut(_ sender: Any) {
+		guard let url = url else { return }
+		let pb = NSPasteboard.general
+
+		pb.setString(url.absoluteString, forType: url.isFileURL ? .fileURL : .URL)
+		
+		ui.clear()
+		
+		Swift.print("cut \(url.absoluteString)")
+	}
+	@IBAction func copy(_ sender: Any) {
+		guard let url = url else { return }
+		let pb = NSPasteboard.general
+
+		pb.setString(url.absoluteString, forType: url.isFileURL ? .fileURL : .URL)
+		Swift.print("copy \(url.absoluteString)")
+	}
+	@IBAction func paste(_ sender: Any) {
+		if let rawString = NSPasteboard.general.string(forType: NSPasteboard.PasteboardType.string) {
+			if rawString.isValidURL() {
+				guard let url = URL(string: rawString) else { return }
+				Swift.print("paste \(rawString)")
+				
+				_ = load(URLRequest.init(url: url))
+			}
+		}
+	}
+
     // MARK: TODO: load new files in distinct windows
     dynamic var dirty = false
     var docController : DocumentController {
@@ -999,14 +1028,6 @@ class MyWebView : WKWebView {
         //  Intercept these actions so we can record them for later
 		captureMenuItems(menu)
         var item: NSMenuItem
-
-        item = NSMenuItem(title: "Cut", action: #selector(NSText.cut(_:)), keyEquivalent: "")
-        menu.addItem(item)
-        item = NSMenuItem(title: "Copy", action: #selector(NSText.copy(_:)), keyEquivalent: "")
-        menu.addItem(item)
-        item = NSMenuItem(title: "Paste", action: #selector(NSText.paste(_:)), keyEquivalent: "")
-        menu.addItem(item)
-        menu.addItem(NSMenuItem.separator())
 
         //  Add backForwardList navigation if any
         let back = backForwardList.backList
