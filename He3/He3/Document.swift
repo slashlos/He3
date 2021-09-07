@@ -78,9 +78,12 @@ class Document : NSDocument {
 		}
 	}
 
-	//	We "might" be a global playlist if no fileURL
-	//	as seen when we are our window is restored.
-	var isGlobalPlaylist: Bool = false
+	//	Our unique URL - k.PlaylistsURL idenify our globals
+	var isGlobalPlaylist: Bool {
+		get {
+			return url == k.PlaylistsURL
+		}
+	}
     
     var docGroup : DocGroup {
         get {
@@ -399,7 +402,6 @@ class Document : NSDocument {
 			guard url.scheme == k.local else { return }
 			let paths = url.deletingPathExtension().pathComponents
 			guard paths[0] == "/", paths[1] == k.defaults else { return }
-			isGlobalPlaylist = typeName == k.PlayType
         }
     }
     
@@ -524,9 +526,6 @@ class Document : NSDocument {
 						let message = String(format: "Unknown local sub-scheme: %@", paths[1])
 						fatalError(message)
 					}
-					
-					//	A global playlist is a local: defaults URL on our short list
-					self.isGlobalPlaylist = [k.histories,k.playlists].contains(keyPath)
 				}
 				else
 				if oneOfUs

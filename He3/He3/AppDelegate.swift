@@ -1499,7 +1499,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         }
     }
     
-	func restorePlaylists(_  keyPath: String = k.playlists) -> [PlayList] {
+	func restorePlaylists(_  keyPath: String = k.PlaylistsURL.absoluteString) -> [PlayList] {
         var playlists = [PlayList]()
             
         //  read back playlists as [Dictionary] or [String] keys to each [PlayItem]
