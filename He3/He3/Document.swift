@@ -514,13 +514,7 @@ class Document : NSDocument {
 						break
 					
 					case k.defaults:
-						if k.PlayType == typeName {
-							items = appDelegate.restorePlaylists(keyPath)
-						}
-						else
-						{
-							items = appDelegate.restorePlaylists(keyPath)
-						}
+						items = appDelegate.restorePlaylists(keyPath)
 						
 					default:
 						let message = String(format: "Unknown local sub-scheme: %@", paths[1])
