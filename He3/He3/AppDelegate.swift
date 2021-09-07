@@ -1500,7 +1500,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
     }
     
 	func restorePlaylists(_  keyPath: String = k.playlists) -> [PlayList] {
-		assert(k.PlaylistsURL.deletingPathExtension().lastPathComponent == k.playlists, "k.playlists not in URL")
         var playlists = [PlayList]()
             
         //  read back playlists as [Dictionary] or [String] keys to each [PlayItem]
@@ -1554,7 +1553,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
     }
     
     @objc @IBAction func savePlaylists(_ sender: Any) {
-		assert(k.PlaylistsURL.deletingPathExtension().lastPathComponent == k.playlists, "k.playlists not in URL")
 		playlists.saveToDefaults(k.playlists)
 	}
 	
