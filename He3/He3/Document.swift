@@ -272,7 +272,7 @@ class Document : NSDocument {
 			}
         }
         if let agent : String = dictionary[k.agent] as? String, agent != settings.customUserAgent.value {
-            self.settings.customUserAgent.value = agent
+			guard [k.http,k.https].contains(fileURL?.scheme) else { return }
             if let hpc = heliumPanelController, let webView = hpc.webView {
                 webView.customUserAgent = agent
             }
