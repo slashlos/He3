@@ -32,7 +32,7 @@ struct UrlHelpers {
 		if let url = URL.init(string: urlString), [k.scheme,k.local].contains(url.scheme) {
 			let paths = url.pathComponents
 			guard paths.count > 2 else { return false }
-			assert([k.asset,k.defaults].contains(paths[1]))
+			guard [k.asset,k.defaults,k.html,k.text].contains(paths[1]) else { return false }
 			let keyPath = paths[2]
 			
 			switch paths[1] {
