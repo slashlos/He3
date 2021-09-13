@@ -27,7 +27,9 @@ extension PlaylistViewController: NSTableViewDataSource {
     func tableView(_ tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {
 		let arrayController = [playlistArrayController,playitemArrayController][tableView.tag]!
 		let item = (arrayController.arrangedObjects as! [AnyObject])[row]
-		let fileURL = item.fileURL!
+		let fileURL = tableView.tag > 0
+			? (item as! PlayItem).fileURL
+			: (item as! PlayList).fileURL
 		
 		let fileExtension = (tableView as! PlayTableView).pathExtension
 		let typeIdentifier = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension,
@@ -66,7 +68,8 @@ extension PlaylistViewController: NSTableViewDataSource {
         print("source \(String(describing: sourceTableView?.identifier))")
 		
 		if sourceTableView == tableView {
-			dragOperation = [.move]
+			//	OPTION for copy, otherwise move
+			dragOperation = info.draggingSourceOperationMask
 		}
 		else
 		if sourceTableView == playlistTableView || sourceTableView == playitemTableView {

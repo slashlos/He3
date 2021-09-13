@@ -104,7 +104,7 @@ class PlayList : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
         super.init()
 
         list = Array <PlayItem> ()
-		name = String(format:"%@#%@",k.play,UUID().uuidString)
+		name = k.play
 
         //  watch shift key changes affecting our playlist
         NotificationCenter.default.addObserver(
@@ -121,6 +121,20 @@ class PlayList : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
             object: nil)
     }
     
+	convenience init(forController array: NSArrayController) {
+		self.init()
+		
+		if let objs : [AnyObject] = array.arrangedObjects as? [AnyObject] {
+			var orig = name
+			var incr = 1
+			while objs.filter({$0.name == orig}).count > 0 {
+				orig = String(format: "%@ %ld ", name,(1 + incr))
+				incr += 1
+			}
+			name = orig
+		}
+	}
+	
     @objc internal func shiftKeyDown(_ note: Notification) {
 		self.kvoToolTips([Notification.Name.shiftKeyDown.rawValue])
     }

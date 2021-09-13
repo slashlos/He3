@@ -358,6 +358,10 @@ extension String {
 		return (self as NSString).boolValue
 	}
 
+	var isOneOfOurs: Bool {
+		return [k.ItemType,k.ItemName,k.PlayType,k.PlayName,k.IcntType,k.IcntName].contains(self)
+	}
+	
 	func toColor (hex:String) -> NSColor {
 		var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
 

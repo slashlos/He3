@@ -78,12 +78,9 @@ class Document : NSDocument {
 		}
 	}
 
-	//	Our unique URL - k.PlaylistsURL idenify our globals
-	var isGlobalPlaylist: Bool {
-		get {
-			return url == k.PlaylistsURL
-		}
-	}
+	//	We "might" be a global playlist if no fileURL
+	//	as seen when we are our window is restored.
+	var isGlobalPlaylist: Bool = false
     
     var docGroup : DocGroup {
         get {
@@ -398,10 +395,13 @@ class Document : NSDocument {
             fileURL = url
             fileType = typeName
 			
-			//	a global playlists is source from local defaults
+			//	a global playlists is sourced from local defaults
 			guard url.scheme == k.local else { return }
 			let paths = url.deletingPathExtension().pathComponents
 			guard paths[0] == "/", paths[1] == k.defaults else { return }
+			
+			//	Our unique URL - k.PlaylistsURL idenify our globals
+			isGlobalPlaylist = [k.PlaylistsURL,k.HistoriesURL].contains(url)
         }
     }
     
@@ -494,19 +494,12 @@ class Document : NSDocument {
     }
 
     override func read(from url: URL, ofType typeName: String) throws {
-		let oneOfUs = [k.hpi,k.h3i,k.hpl,k.h3l,k.hic].contains(url.pathExtension)
-		
         //	Push to super any file: URLs for our documents.
 		//	Handle local: URLs here, otherwise defer to WkWebView
-		if [k.ItemType,k.ItemName].contains(typeName)
-		|| [k.PlayType,k.PlayName].contains(typeName)
-		|| [k.IcntType,k.IcntName].contains(typeName)
-		|| oneOfUs {
+		if typeName.isOneOfOurs {
 			do {
 				if k.local == url.scheme {
 					let paths = url.pathComponents
-					assert([k.asset,k.defaults].contains(paths[1]))
-					let keyPath = paths[2]
 					
 					switch paths[1] {
 					case k.asset:
@@ -514,22 +507,17 @@ class Document : NSDocument {
 						break
 					
 					case k.defaults:
-						items = appDelegate.restorePlaylists(keyPath)
+						items = appDelegate.restorePlaylists(url.lastPathComponent)
 						
 					default:
-						let message = String(format: "Unknown local sub-scheme: %@", paths[1])
-						fatalError(message)
+						appDelegate.userAlertMessage("Unsupported path for URL scheme.", info: url.absoluteString)
 					}
 				}
 				else
-				if oneOfUs
 				{
 					try super.read(from: url, ofType: typeName)
 				}
 				
-				if let dict = defaults.dictionary(forKey: url.absoluteString) {
-					restoreSettings(with: dict)
-				}
 			} catch let error {
 				if let dict = NSDictionary(contentsOf: url) as? [String : AnyObject] {
 					if let saved = dict["items"] as? [PlayList] {
@@ -544,6 +532,10 @@ class Document : NSDocument {
 					NSApp.presentError(error)
 				}
 			}
+		}
+		
+		if let dict = defaults.dictionary(forKey: url.absoluteString) {
+			restoreSettings(with: dict)
 		}
     }
     
@@ -724,7 +716,7 @@ class Document : NSDocument {
             return
         }
 
-		if url.isFileURL, [k.hpi,k.hpl].contains(url.pathExtension) {
+		if typeName.isOneOfOurs {
 			if useSecureEncoding {
 				super.save(to: url, ofType: typeName, for: saveOperation, completionHandler: completionHandler)
 			}
@@ -762,8 +754,8 @@ class Document : NSDocument {
     }
     
     override func write(to url: URL, ofType typeName: String) throws {
-		if url.isFileURL, [k.hpi,k.hpl].contains(url.pathExtension) {
-			if useSecureEncoding {
+		if typeName.isOneOfOurs {
+			if url.isFileURL && useSecureEncoding {
 				try super.write(to: url, ofType: typeName)
 			}
 			else
@@ -778,19 +770,17 @@ class Document : NSDocument {
 					if k.local == url.scheme {
 						let paths = url.deletingPathExtension().pathComponents
 						assert([k.asset,k.defaults].contains(paths[1]))
-						let keyPath = paths[2]
 
 						switch paths[1] {
 						case k.asset:
-							let message = String(format: "Unwriteable scheme: %@", url.absoluteString)
+							let message = String(format: "Assets are read-only: %@", url.absoluteString)
 							fatalError(message)
 
 						case k.defaults:
-							items.saveToDefaults(keyPath)
+							items.saveToDefaults(url.lastPathComponent)
 							
 						default:
-							let message = String(format: "Unknown scheme: %@", paths[1])
-							fatalError(message)
+							appDelegate.userAlertMessage("Unsupported path for URL scheme.", info: url.absoluteString)
 						}
 					}
 					else
@@ -816,7 +806,7 @@ class Document : NSDocument {
     }
     
     override func writeSafely(to url: URL, ofType typeName: String, for saveOperation: NSDocument.SaveOperationType) throws {
-		if url.isFileURL, [k.hpi,k.hpl].contains(url.pathExtension) {
+		if typeName.isOneOfOurs {
 			if saveOperation == .saveOperation || useSecureEncoding {
 				try write(to: url, ofType: typeName)
 			}

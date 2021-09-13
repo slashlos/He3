@@ -469,8 +469,8 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
 
         // Determine the kind of source drag originating from this app.
         // Note, if you want to allow your app to drag items to the Finder's trash can, add ".delete".
-        playlistTableView.setDraggingSourceOperationMask(.copy, forLocal: false)
-        playitemTableView.setDraggingSourceOperationMask(.copy, forLocal: false)
+        playlistTableView.setDraggingSourceOperationMask(.every, forLocal: true)
+        playitemTableView.setDraggingSourceOperationMask(.every, forLocal: true)
 
         playlistTableView.doubleAction = #selector(doubleAction(_:))
         playitemTableView.doubleAction = #selector(doubleAction(_:))
@@ -675,9 +675,9 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
     @objc @IBAction func addPlaylist(_ sender: AnyObject) {
         let whoAmI = self.view.window?.firstResponder
         
-        //  We want to add to existing play item list
-        if whoAmI == playlistTableView {
-            let item = PlayList()
+        //  We want to add to existing playlist or new if no selecled playlist
+		if whoAmI == playlistTableView || playlistArrayController.selectionIndexes.count == 0 {
+			let item = PlayList(forController: playlistArrayController)
             
             self.add(list: item, atIndex: -1)
         }
@@ -686,7 +686,7 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
             let list: Array<PlayItem> = selectedPlaylist.list.sorted(by: { (lhs, rhs) -> Bool in
                 return lhs.rank < rhs.rank
             })
-            let item = PlayItem()
+            let item = PlayItem(forController: playitemArrayController)
             item.rank = (list.count > 0) ? (list.last?.rank)! + 1 : 1
 
             self.add(item: item, atIndex: -1)
@@ -808,12 +808,43 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
     }
     
     //  MARK:- IBActions
+	func haveActionItems(_ sender: AnyObject) -> Bool {
+		appDelegate.newViewOptions = appDelegate.getViewOptions
+		
+		//  first responder tells us who called so dispatch
+		let whoAmI = self.view.window?.firstResponder
+
+		//  Our rank sorted list from which we'll take last 'throttle' to play
+		var list = Array<PlayItem>()
+
+		if playitemTableView == whoAmI {
+			print("We are in playitemTableView")
+			list.append(contentsOf: playitemArrayController.selectedObjects as! Array<PlayItem>)
+		}
+		else
+		if playlistTableView == whoAmI {
+			print("We are in playlistTableView")
+			for selectedPlaylist in (playlistArrayController.selectedObjects as? [PlayList])! {
+				list.append(contentsOf: selectedPlaylist.list )
+			}
+		}
+		else
+		{
+			print("firstResponder: \(String(describing: whoAmI))")
+			return false
+		}
+		
+		//  Do not exceed program / user specified throttle
+		return list.count > 0
+	}
+	
 	@objc @IBAction func doubleAction(_ sender: AnyObject) {
         //  first responder tells us who called so dispatch
 		
 		//	Guard against "fat finger" events
 		guard let whoami = self.view.window?.firstResponder as? PlayTableView else { return }
 		guard whoami.selectedRowIndexes.count > 0, whoami.clickedRow >= 0 && whoami.clickedColumn >= 0 else { return }
+		guard haveActionItems(sender) else { NSSound.playIf(.sosumi); return }
 		
 		playPlaylist(sender)
 		

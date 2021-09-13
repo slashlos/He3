@@ -151,7 +151,7 @@ class PlayItem : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
 	
 	// MARK:- Functions
     override init() {
-		name = String(format:"%@#%@",k.item,UUID().uuidString)
+		name = k.item
         link = URL.init(string: "about://blank")!
         time = 0.0
         date = Date().timeIntervalSinceReferenceDate
@@ -199,7 +199,20 @@ class PlayItem : NSObject, NSCoding, NSCopying, NSDraggingSource, NSDraggingDest
         self.init()
         self.update(with: dictionary)
     }
-    
+	convenience init(forController array: NSArrayController) {
+		self.init()
+		
+		if let objs : [AnyObject] = array.arrangedObjects as? [AnyObject] {
+			var orig = name
+			var incr = 1
+			while objs.filter({$0.name == orig}).count > 0 {
+				orig = String(format: "%@ %ld ", name,(1 + incr))
+				incr += 1
+			}
+			name = orig
+		}
+	}
+	
     func update(with dictionary: Dictionary<String,Any>) {
         if let name : String = dictionary[k.name] as? String, name != self.name {
             self.name = name
