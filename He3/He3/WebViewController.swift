@@ -395,11 +395,7 @@ class WebViewController: NSViewController, WKScriptMessageHandler, NSMenuDelegat
 				webView.removeObserver(navDelegate, forKeyPath: #keyPath(WKWebView.estimatedProgress))
 				webView.removeObserver(navDelegate, forKeyPath: #keyPath(WKWebView.isLoading))
 				webView.removeObserver(navDelegate, forKeyPath: #keyPath(WKWebView.title))
-				webView.removeObserver(navDelegate, forKeyPath: #keyPath(WKWebView.url))/*
-				webView.removeObserver(navDelegate, forKeyPath: "estimatedProgress")
-                webView.removeObserver(navDelegate, forKeyPath: "loading")
-                webView.removeObserver(navDelegate, forKeyPath: "title")
-				webView.removeObserver(navDelegate, forKeyPath: "url")*/
+				webView.removeObserver(navDelegate, forKeyPath: #keyPath(WKWebView.url))
                 observing = false
             }
         }
