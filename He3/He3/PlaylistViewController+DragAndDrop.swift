@@ -134,31 +134,34 @@ extension PlaylistViewController: NSTableViewDataSource {
 
             if selectedPlaylist != nil && toRow < tableView.numberOfRows {
                 selectedPlaylist = (playlistArrayController.arrangedObjects as! [PlayList])[toRow]
-				selectedPlaylist?.willChangeValue(forKey: k.tally)
+			}
+			else
+			{
+				add(list: PlayList(), atIndex: -1)
+				tableView.scrollRowToVisible(toRow)
+				selectedPlaylist = (playlistArrayController.selectedObjects as! [PlayList]).first
+				playlistTableView.reloadData()
+			}
+			
+			selectedPlaylist?.willChangeValue(forKey: k.tally)
 
-                for index in selectedRowIndexes! {
-                    let item = items[index]
-                    let togo = selectedPlaylist?.list.count
-                    if let undo = self.undoManager {
-                        undo.registerUndo(withTarget: self, handler: {[oldVals = ["item": item, "index": togo!] as [String : Any]] (PlaylistViewController) -> () in
-                            selectedPlaylist?.list.removeLast()
-                            selectedPlaylist?.list.remove(at: oldVals["index"] as! Int)
-                            if !undo.isUndoing {
-                                undo.setActionName("Add PlayItem")
-                            }
-                        })
-                    }
-                    observe(item, keyArray: itemIvars, observing: true)
-                    selectedPlaylist?.list.append(items[index])
-                }
-				selectedPlaylist?.didChangeValue(forKey: k.tally)
-            }
-            else
-            {
-                add(list: PlayList(), atIndex: -1)
-                tableView.scrollRowToVisible(toRow)
-                ///playlistTableView.reloadData()
-            }
+			for index in selectedRowIndexes! {
+				let item = items[index]
+				let togo = selectedPlaylist?.list.count
+				if let undo = self.undoManager {
+					undo.registerUndo(withTarget: self, handler: {[oldVals = ["item": item, "index": togo!] as [String : Any]] (PlaylistViewController) -> () in
+						selectedPlaylist?.list.removeLast()
+						selectedPlaylist?.list.remove(at: oldVals["index"] as! Int)
+						if !undo.isUndoing {
+							undo.setActionName("Add PlayItem")
+						}
+					})
+				}
+				observe(item, keyArray: itemIvars, observing: true)
+				selectedPlaylist?.list.append(item)
+			}
+			
+			selectedPlaylist?.didChangeValue(forKey: k.tally)
 			
 		default:
 			if let view = sourceTableView {
