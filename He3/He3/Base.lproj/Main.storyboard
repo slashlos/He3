@@ -2154,7 +2154,7 @@ Gw
         <scene sceneID="wcG-7U-Dt5">
             <objects>
                 <viewController title="Playlists" storyboardIdentifier="PlaylistViewController" id="YAy-lX-dae" userLabel="Playlists" customClass="PlaylistViewController" customModule="He3" customModuleProvider="target" sceneMemberID="viewController">
-                    <splitView key="view" misplaced="YES" arrangesAllSubviews="NO" dividerStyle="paneSplitter" vertical="YES" id="1fw-gA-tie">
+                    <splitView key="view" misplaced="YES" arrangesAllSubviews="NO" autosaveName="playSplitView.prefs" dividerStyle="paneSplitter" vertical="YES" id="1fw-gA-tie">
                         <rect key="frame" x="0.0" y="0.0" width="641" height="192"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <subviews>
