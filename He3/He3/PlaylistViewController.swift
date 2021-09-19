@@ -514,7 +514,13 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
 			if let titleView = self.view.window?.standardWindowButton(.closeButton)?.superview {
 				titleView.toolTip = url.absoluteString.removingPercentEncoding
 			}
-
+			
+			//	document.fileURL is recent, webView.url is current URL
+			if let dict = defaults.dictionary(forKey: url.absoluteString), let rect = dict[k.rect] as? String {
+				doc.settings.rect.value = NSRectFromString(rect)
+				self.view.window?.setFrame(doc.settings.rect.value, display: true)
+			}
+			
 			//  Start us of cleanly re: change count
 			doc.updateChangeCount(.changeCleared)
 			self.undoManager?.removeAllActions()
@@ -523,27 +529,12 @@ class PlaylistViewController: NSViewController,NSTableViewDelegate,NSMenuDelegat
         // cache our list before editing
         playCache = playlists
         
-        //  Reset split view dimensions
-        self.playlistSplitView.setPosition(120, ofDividerAt: 0)
-        
         //  Start observing any changes
         self.observing = true
 		
-		//	load our thumbnails for all our items
-		if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
-			for playlist in playlists {
-				let loadThumbnails = LoadThumbnailssOperationFor(playlist: playlist)
-				
-				loadThumbnails.completionBlock = {
-					OperationQueue.main.addOperation {
-						for playitem in playlist.list {
-							// Set up ourselves to be notified when this item's thumbnail is ready.
-							playitem.thumbnailDelegate = self
-						}
-					}
-				}
-				self.loaderQueue.addOperation( loadThumbnails )
-			}
+		//	Start with with playlist if any
+		if playlistTableView.numberOfRows > 0 {
+			playlistTableView.selectRowIndexes(IndexSet.init(integer: 0), byExtendingSelection: false)
 		}
     }
     

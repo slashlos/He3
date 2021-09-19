@@ -137,7 +137,7 @@ extension PlaylistViewController: NSTableViewDataSource {
 			}
 			else
 			{
-				add(list: PlayList(), atIndex: -1)
+				add(list: PlayList(forController: playlistArrayController), atIndex: -1)
 				tableView.scrollRowToVisible(toRow)
 				selectedPlaylist = (playlistArrayController.selectedObjects as! [PlayList]).first
 				playlistTableView.reloadData()
@@ -342,7 +342,7 @@ extension PlaylistViewController: NSTableViewDataSource {
 					else
 					{
 						//	We must have a playlist to insert into
-						playlist = PlayList()
+						playlist = PlayList(forController: playlistArrayController)
 						add(list: playlist!, atIndex: -1)
 						playlistTableView.reloadData()
 					}
