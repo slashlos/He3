@@ -1485,7 +1485,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
 
     var itemActions = Dictionary<String, Any>()
 
-    //  Keep playlist names unique by Array entension checking name
+    //  Keep playlist names unique by controller callback checking name
     @objc dynamic var _playlists : [PlayList]?
     @objc dynamic var  playlists : [PlayList] {
         get {
@@ -1503,21 +1503,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
         var playlists = [PlayList]()
             
         //  read back playlists as [Dictionary] or [String] keys to each [PlayItem]
-        if let plists = self.defaults.dictionary(forKey: keyPath) {
-            for (name,plist) in plists {
-                guard let items = plist as? [Dictionary<String,Any>] else {
-                    let playlist = PlayList(name: name, list: [PlayItem]())
-                    playlists.append(playlist)
-                    continue
-                }
-                var list : [PlayItem] = [PlayItem]()
-                for plist in items {
-                    let item = PlayItem(from: plist)
-                    list.append(item)
-                }
-                let playlist = PlayList(name: name, list: list)
-                playlists.append(playlist)
-            }
+        if let pdict = self.defaults.dictionary(forKey: keyPath) {
+			let playlist = PlayList.init(with: pdict)
+			playlists.append(playlist)
         }
         else
         if let dicts = self.defaults.array(forKey: keyPath) as? [Dictionary<String,Any>] {
@@ -1545,11 +1533,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate, CLLocationMa
                 playlists.append(playlist)
             }
         }
-        else
-        {
-            self.defaults.set([Dictionary<String,Any>](), forKey: keyPath)
-        }
-        return playlists
+
+		return playlists
     }
     
     @objc @IBAction func savePlaylists(_ sender: Any) {
