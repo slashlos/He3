@@ -597,32 +597,19 @@ class Document : NSDocument {
 
     @objc @IBAction override func save(_ sender: (Any)?) {
         
-		if let url = url, url.isFileURL, [.playitem,.playlist].contains(docGroup) {
-			do {
-				let typeName = try docController.typeForContents(of: url)
+		guard let url = url else { return }
+		
+		do {
+			let typeName = try docController.typeForContents(of: url)
 
-				save(to: url, ofType: typeName, for: .saveOperation, completionHandler: {_ in
-					self.updateChangeCount(.changeCleared)
-				})
-			} catch let error {
-				NSApp.presentError(error)
-			}
-        }
-        else
-        {
-			do {
-				if let url = fileURL, let type = fileType {
-					try self.write(to: url, ofType: type)
-				}
-				else
-				{
-					cacheSettings(fileURL ?? homeURL)
-				}
-				updateChangeCount(.changeCleared)
-            } catch let error {
-                NSApp.presentError(error)
-            }
-        }
+			save(to: url, ofType: typeName, for: .saveOperation, completionHandler: {_ in
+				self.cacheSettings(url)
+				
+				self.updateChangeCount(.changeCleared)
+			})
+		} catch let error {
+			NSApp.presentError(error)
+		}
     }
     
 	
@@ -708,16 +695,15 @@ class Document : NSDocument {
     }
     
     override func save(to url: URL, ofType typeName: String, for saveOperation: NSDocument.SaveOperationType, completionHandler: @escaping (Error?) -> Void) {
-		cacheSettings(url)
 
-        guard url != homeURL else {
+		guard ![k.http,k.https].contains(url.scheme) else {
 			updateChangeCount(.changeCleared)
 			completionHandler(nil)
             return
         }
 
 		if typeName.isOneOfOurs {
-			if useSecureEncoding {
+			if url.isFileURL && useSecureEncoding {
 				super.save(to: url, ofType: typeName, for: saveOperation, completionHandler: completionHandler)
 			}
 			else
@@ -744,6 +730,8 @@ class Document : NSDocument {
     override func save(withDelegate delegate: Any?, didSave didSaveSelector: Selector?, contextInfo: UnsafeMutableRawPointer?) {
 		//	So we have a delegate but let super and our save() do what is necessary
 		super.save(withDelegate: delegate, didSave: didSaveSelector, contextInfo: contextInfo)
+		
+		if let url = fileURL { cacheSettings(url) }
     }
     
     func cacheSettings(_ url : URL) {
@@ -754,7 +742,7 @@ class Document : NSDocument {
     }
     
     override func write(to url: URL, ofType typeName: String) throws {
-		if typeName.isOneOfOurs {
+		if typeName.isOneOfOurs && ![k.http,k.https,k.scheme].contains(url.scheme) {
 			if url.isFileURL && useSecureEncoding {
 				try super.write(to: url, ofType: typeName)
 			}
@@ -769,7 +757,6 @@ class Document : NSDocument {
 
 					if k.local == url.scheme {
 						let paths = url.deletingPathExtension().pathComponents
-						assert([k.asset,k.defaults].contains(paths[1]))
 
 						switch paths[1] {
 						case k.asset:
@@ -792,34 +779,25 @@ class Document : NSDocument {
 						try NSDictionary(dictionary: [k.Playlists:plists]).write(to: url)
 					}
 					
+				case k.ItemType:// TODO: @@ write itemType
+					Swift.print("NYI write to itemType")
+					
 				default:
-					fatalError("Unknown docGroup: \(docGroup.rawValue) in write(_,:)")
+					fatalError("Unknown typeName: \(typeName) in write(_,:)")
 				}
 			}
 		}
-		
-		//	Regardless of URL, cache settings
-		cacheSettings(url)
-		
-		//  When written, clear its change count
-        self.updateChangeCount(.changeCleared)
     }
     
     override func writeSafely(to url: URL, ofType typeName: String, for saveOperation: NSDocument.SaveOperationType) throws {
 		if typeName.isOneOfOurs {
-			if saveOperation == .saveOperation || useSecureEncoding {
+			if saveOperation == .saveOperation || !url.isFileURL {
 				try write(to: url, ofType: typeName)
 			}
 			else
 			{
 				try super.writeSafely(to: url, ofType: typeName, for: saveOperation)
 			}
-			updateChangeCount( [.saveOperation                  : .changeCleared,
-								.saveAsOperation                : .changeCleared,
-								.saveToOperation                : .changeCleared,
-								.autosaveElsewhereOperation     : .changeAutosaved,
-								.autosaveInPlaceOperation       : .changeAutosaved,
-								.autosaveAsOperation            : .changeAutosaved][saveOperation] ?? .changeCleared)
 		}
     }
     
