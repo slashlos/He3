@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBuildDate</key>
-	<string>20210815.092755</string>
+	<string>20210920.063650</string>
 	<key>CFBuildIncrement</key>
 	<string>false</string>
 	<key>CFBuildMajor</key>
@@ -11,9 +11,9 @@
 	<key>CFBuildMinor</key>
 	<integer>0</integer>
 	<key>CFBuildNumber</key>
-	<string>8476</string>
+	<string>8477</string>
 	<key>CFBuildPatch</key>
-	<integer>11</integer>
+	<integer>12</integer>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -28,6 +28,8 @@
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>itemIcon</string>
+			<key>CFBundleTypeIconSystemGenerated</key>
+			<integer>0</integer>
 			<key>CFBundleTypeName</key>
 			<string>Playitem</string>
 			<key>CFBundleTypeRole</key>
@@ -37,8 +39,6 @@
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.slashlos.he3.hpi</string>
-				<string>com.slashlos.he3.h3i</string>
-				<string>Playitem</string>
 			</array>
 			<key>NSDocumentClass</key>
 			<string>$(PRODUCT_MODULE_NAME).Document</string>
@@ -51,6 +51,8 @@
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>listIcon</string>
+			<key>CFBundleTypeIconSystemGenerated</key>
+			<integer>0</integer>
 			<key>CFBundleTypeName</key>
 			<string>Playlist</string>
 			<key>CFBundleTypeRole</key>
@@ -60,8 +62,6 @@
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.slashlos.he3.hpl</string>
-				<string>com.slashlos.he3.h3l</string>
-				<string>Playlist</string>
 			</array>
 			<key>NSDocumentClass</key>
 			<string>$(PRODUCT_MODULE_NAME).Document</string>
@@ -72,7 +72,9 @@
 				<string>hic</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>icntIcon</string>
+			<string>He3</string>
+			<key>CFBundleTypeIconSystemGenerated</key>
+			<integer>0</integer>
 			<key>CFBundleTypeName</key>
 			<string>Any</string>
 			<key>CFBundleTypeRole</key>
@@ -98,6 +100,8 @@
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>icntIcon</string>
+			<key>CFBundleTypeIconSystemGenerated</key>
+			<integer>0</integer>
 			<key>CFBundleTypeName</key>
 			<string>Incognito</string>
 			<key>CFBundleTypeRole</key>
@@ -107,7 +111,6 @@
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.slashlos.he3.hic</string>
-				<string>Incognito</string>
 			</array>
 			<key>NSDocumentClass</key>
 			<string>$(PRODUCT_MODULE_NAME).Document</string>
@@ -130,7 +133,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.11</string>
+	<string>1.0.12</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -151,7 +154,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.0.8476</string>
+	<string>1.0.8477</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>

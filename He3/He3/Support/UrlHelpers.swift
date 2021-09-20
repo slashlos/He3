@@ -47,6 +47,11 @@ struct UrlHelpers {
 					return true
 				}
 				
+			case k.html, k.text:
+				if nil != defaults.object(forKey: keyPath) {
+					return true
+				}
+
 			default:
 				let message = String(format: "Unknown scheme: %@", paths[1])
 				fatalError(message)

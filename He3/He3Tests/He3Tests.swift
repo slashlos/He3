@@ -132,8 +132,8 @@ class He3Tests: XCTestCase {
        
         defaults.set(aDicts, forKey: t_playlist)
 
-		//	show read back our 5; code from restorePlaylists()
-		let rewind = appDelegate.restorePlaylists(t_playlist)
+		//	show read back our 5; code from restorePlaylist()
+		let rewind = appDelegate.restorePlaylist(t_playlist)
 		print("\(rewind) returned")
 	}
 	
